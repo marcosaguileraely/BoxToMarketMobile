@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pais_select">
+        <item>@string/pais</item>
+        <item>Colombia</item>
+        <item>Chile</item>
+        <item>Mexico</item>
+        <item>Estados Unidos</item>
+        <item>España</item>
+        <item>Alemania</item>
+        <item>Argentina</item>
+        <item>Australia</item>
+        <item>Bolivia</item>
+        <item>Brasil</item>
+        <item>Canada</item>
+        <item>Costa Rica</item>
+        <item>China</item>
+        <item>Francia</item>
+        <item>Guatemala</item>
+        <item>Honduras</item>
+        <item>Hong Kong</item>
+        <item>Holanda</item>
+        <item>India</item>
+        <item>Reino Unido</item>
+        <item>Irlanda</item>
+        <item>Italia</item>
+        <item>Japón</item>
+        <item>Nicaragua</item>
+        <item>Panamá</item>
+        <item>Paraguay</item>
+        <item>Perú</item>
+        <item>Portugal</item>
+        <item>Suiza</item>
+        <item>Suecia</item>
+        <item>Uruguay</item>
+        <item>Venezuela</item>
+        <item>Ecuador</item>
+    </string-array>
+
+    <string-array name="recarga">
+        <item>Token</item>
+        <item>Tarjeta de Credito</item>
+    </string-array>
+
+    <string-array name="tipo_compra">
+        <item>@string/tipo_creditos</item>
+        <item>@string/tipo_tarjeta</item>
+    </string-array>
+
+    <string-array name="mes">
+        <item>Enero</item>
+        <item>Febrero</item>
+        <item>Marzo</item>
+        <item>Abril</item>
+        <item>Mayo</item>
+        <item>Junio</item>
+        <item>Julio</item>
+        <item>Agosto</item>
+        <item>Septiembre</item>
+        <item>Octubre</item>
+        <item>Noviembre</item>
+        <item>Diciembre</item>
+    </string-array>
+
+    <string-array name="compensacion">
+        <item>@string/tipo_compensacion</item>
+    </string-array>
+
+    <string-array name="opcional">
+        <item>wFET0oqRqoJNkIPA3xWnq7kPrADg9A2FK/artD/TNT6BLDRAu6sE0C4Kri6eCo5m</item>
+        <item>gbLOlObMY4nDk3evCTsC2D3sXdMhN+47VOwly5OTO13V+68Nu8VufovfG+WXzEdK</item>
+        <item>TBhTyuVKnEfaFsFnrC/bdZeFShwMwlrDKMx1N+y0AnI=</item>
+        <item>OThiNDk2MGVmN2Y1MDQxMjg1N2MxYjU0NzA2YTIzZmU=</item>
+        <item>9AQruffgOL4J1eCQo8leeM3tdQXKFzfrmZ8OO61uXl/lE3oojSsz1RNygYitCL6cb7BT0iaYr/HBk+OLrStLlg==</item>
+    </string-array>
+</resources>

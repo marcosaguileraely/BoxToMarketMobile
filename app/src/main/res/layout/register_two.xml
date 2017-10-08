@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="@string/nombres"
+        android:ems="10"
+        android:padding="10dp"
+        android:background="@drawable/backgound_edit_text"
+        android:layout_margin="10dp"
+        android:id="@+id/editText7"
+        android:layout_weight="1" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="@string/apellidos"
+        android:ems="10"
+        android:padding="10dp"
+        android:background="@drawable/backgound_edit_text"
+        android:layout_margin="10dp"
+        android:id="@+id/editText8"
+        android:layout_weight="1" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:layout_weight="1"
+        android:entries="@array/pais_select"
+        android:spinnerMode="dialog" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:hint="@string/telefono_mov_l"
+        android:ems="10"
+        android:padding="10dp"
+        android:background="@drawable/backgound_edit_text"
+        android:layout_margin="10dp"
+        android:id="@+id/editText11"
+        android:layout_weight="1" />
+
+    <CheckBox
+        android:text="@string/checkbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBox"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:layout_weight="1" />
+
+    <Button
+        android:text="@string/registrese"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button3"
+        android:layout_weight="1"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:onClick="catchData"
+        android:textColor="@android:color/white"
+        android:background="@drawable/background_button"/>
+
+</LinearLayout>

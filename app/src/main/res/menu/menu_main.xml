@@ -1,0 +1,29 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="btm.app.MainActivity">
+    <item
+        android:id="@+id/action_pass"
+        android:orderInCategory="100"
+        android:title="@string/action_pass"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_perfil"
+        android:title="Perfil"
+        android:orderInCategory="96"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_bp"
+        android:title="@string/action_ascender"
+        android:orderInCategory="98"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_close"
+        android:title="@string/cerrar"
+        android:orderInCategory="101"
+        app:showAsAction="never"/>
+
+</menu>
