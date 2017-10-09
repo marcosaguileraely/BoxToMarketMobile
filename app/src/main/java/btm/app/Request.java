@@ -69,8 +69,7 @@ public class Request {
         RequestQueue queue = Volley.newRequestQueue(context);
         StringRequest postRequest = new StringRequest(com.android.volley.Request.Method.GET, url,
                 response,
-                new Response.ErrorListener()
-                {
+                new Response.ErrorListener(){
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -78,8 +77,8 @@ public class Request {
                         Log.d("Error.Response", error.toString());
                         Toast.makeText(context ,error.getMessage(),Toast.LENGTH_SHORT).show();
                     }
-                }
-        );
+                });
+
         queue.add(postRequest.setRetryPolicy(new DefaultRetryPolicy(30000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
