@@ -11,159 +11,166 @@
     tools:context="btm.app.MainActivity$PlaceholderFragment">
 
 
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-
-            <TextView
-                android:text="@string/saldo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textViewSaldoCredito"
-                android:layout_toLeftOf="@+id/button_add_money"
-                android:gravity="center"
-                android:layout_below="@+id/textViewCreditos"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:textStyle="normal|bold"
-                android:textSize="30sp" />
-
-            <TextView
-                android:text="@string/transacciones_recientes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textViewTransacciones"
-                android:gravity="center"
-                android:layout_alignLeft="@+id/textViewSaldoCredito"
-                android:layout_alignStart="@+id/textViewSaldoCredito"
-                android:layout_toLeftOf="@+id/button_cc"
-                android:layout_toStartOf="@+id/button_cc"
-                android:layout_alignBottom="@+id/button_cc"
-                android:layout_below="@+id/textViewSaldoCredito" />
-
-            <Button
-                android:text="@string/tipo_tarjeta"
-                android:textColor="@android:color/white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/button_cc"
-                android:background="@color/colorPrimary"
-                android:layout_margin="3dp"
-                android:layout_below="@+id/button_add_money"
-                android:layout_toRightOf="@+id/textViewSaldoCredito"
-                android:layout_toEndOf="@+id/textViewSaldoCredito"
-                android:onClick="onCC"/>
-
-            <Button
-                android:text="@string/recarga"
-                android:textColor="@android:color/white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/button_add_money"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:background="@color/colorPrimary"
-                android:layout_margin="3dp"
-                android:onClick="onRecargar" />
-
-            <TextView
-                android:text="@string/tipo_creditos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textViewCreditos"
-                android:gravity="center"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_toLeftOf="@+id/button_add_money"
-                android:layout_toStartOf="@+id/button_add_money" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-
-            <TextView
-                android:text="@string/transacciones_recientes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textViewTransaccionesCompensacion"
-                android:gravity="center"
-                android:layout_alignLeft="@+id/textViewSaldoCompensacion"
-                android:layout_alignStart="@+id/textViewSaldoCompensacion"
-                android:layout_alignBottom="@+id/button_request"
-                android:layout_toLeftOf="@+id/button_request"
-                android:layout_toStartOf="@+id/button_request"
-                android:layout_below="@+id/textViewSaldoCompensacion" />
-
-            <TextView
-                android:text="@string/saldo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textViewSaldoCompensacion"
-                android:gravity="center"
-                android:textStyle="normal|bold"
-                android:textSize="30sp"
-                android:layout_below="@+id/textViewCompensacion"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_toLeftOf="@+id/button_bank_account"
-                android:layout_toStartOf="@+id/button_bank_account" />
-
-            <Button
-                android:text="@string/solicitar"
-                android:textColor="@android:color/white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/button_bank_account"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_margin="3dp"
-                android:background="@color/colorOrange"
-                android:onClick="onSolicitar" />
-
-            <TextView
-                android:text="@string/compensacion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textViewCompensacion"
-                android:gravity="center"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_toLeftOf="@+id/button_bank_account"
-                android:layout_toStartOf="@+id/button_bank_account" />
-
-            <Button
-                android:text="@string/cuenta_bancaria"
-                android:textColor="@android:color/white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/button_request"
-                android:background="@color/colorOrange"
-                android:layout_marginTop="3dp"
-                android:layout_below="@+id/button_bank_account"
-                android:layout_alignLeft="@+id/button_bank_account"
-                android:layout_alignStart="@+id/button_bank_account"
-                android:onClick="onRegistrarCuenta"
-                android:layout_alignRight="@+id/button_bank_account"
-                android:layout_alignEnd="@+id/button_bank_account"
-                android:enabled="false"/>
-        </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp">
 
         <TextView
-            android:id="@+id/textViewTrm"
+            android:id="@+id/textViewSaldoCredito"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textViewCreditos"
+            android:layout_toLeftOf="@+id/button_add_money"
             android:gravity="center"
-            android:layout_margin="10dp"
+            android:text="@string/saldo"
+            android:textAlignment="viewStart"
+            android:textSize="36sp"
+            android:textStyle="normal|bold"
+            tools:ignore="NotSibling,RtlHardcoded" />
+
+        <TextView
+            android:id="@+id/textViewCreditos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/button_add_money"
+            android:layout_toStartOf="@+id/button_add_money"
+            android:gravity="center"
+            android:text="@string/tipo_creditos"
+            android:textAlignment="viewStart"
+            android:textSize="18sp"
             android:textStyle="bold"
-            android:text="@string/dolar_hoy"/>
+            tools:ignore="NotSibling" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewSaldoCredito"
+            android:layout_toLeftOf="@+id/button_cc"
+            android:layout_toStartOf="@+id/button_cc"
+            android:orientation="horizontal"
+            tools:ignore="NotSibling">
+
+            <Button
+                android:id="@+id/button_add_money"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:onClick="onRecargar"
+                android:text="@string/recarga"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                tools:ignore="ButtonStyle,RtlHardcoded" />
+
+            <Button
+                android:id="@+id/button_cc"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:onClick="onCC"
+                android:text="@string/tipo_tarjeta"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                tools:ignore="ButtonStyle" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp">
+
+        <TextView
+            android:id="@+id/textViewSaldoCompensacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textViewCompensacion"
+            android:gravity="center"
+            android:text="@string/saldo"
+            android:textAlignment="viewStart"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewCompensacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:text="@string/compensacion"
+            android:textAlignment="viewStart"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textViewSaldoCompensacion"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_bank_account"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="@color/colorOrange"
+                android:onClick="onSolicitar"
+                android:text="@string/solicitar"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/button_request"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_alignEnd="@+id/button_bank_account"
+                android:layout_alignLeft="@+id/button_bank_account"
+                android:layout_alignRight="@+id/button_bank_account"
+                android:layout_alignStart="@+id/button_bank_account"
+                android:layout_below="@+id/button_bank_account"
+                android:layout_marginTop="3dp"
+                android:layout_weight="1"
+                android:background="@color/colorOrange"
+                android:enabled="false"
+                android:onClick="onRegistrarCuenta"
+                android:text="@string/cuenta_bancaria"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textViewTrm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:text="@string/dolar_hoy"
+        android:textStyle="bold"
+        android:visibility="gone" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -180,7 +187,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/button9"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                tools:ignore="ButtonStyle,SpUsage" />
 
             <Button
                 android:text="@string/comprar_token"
@@ -190,9 +198,10 @@
                 android:id="@+id/button10"
                 android:textColor="@android:color/black"
                 android:textStyle="bold"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:layout_weight="1"
-                android:onClick="onComprarToken" />
+                android:onClick="onComprarToken"
+                tools:ignore="ButtonStyle" />
         </LinearLayout>
 
         <LinearLayout
@@ -208,8 +217,9 @@
                 android:layout_height="match_parent"
                 android:id="@+id/button11"
                 android:layout_weight="1"
-                android:textSize="15dp"
-                android:textStyle="bold"/>
+                android:textSize="15sp"
+                android:textStyle="bold"
+                tools:ignore="ButtonStyle" />
 
             <Button
                 android:text="@string/transferencia"
@@ -219,9 +229,10 @@
                 android:id="@+id/button12"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:layout_weight="1"
-                android:onClick="onTransfer"/>
+                android:onClick="onTransfer"
+                tools:ignore="ButtonStyle" />
         </LinearLayout>
 
 

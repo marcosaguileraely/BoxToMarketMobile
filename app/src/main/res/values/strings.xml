@@ -20,7 +20,7 @@
     <string name="inf_dialog">"Process. Please wait"</string>
 
     <string name="tipo_tarjeta">Credit Card</string>
-    <string name="tipo_creditos">Credits</string>
+    <string name="tipo_creditos">Credits:</string>
     <string name="preferencias">preferencias</string><!-- -->
     <string name="tipo_compensacion">Transfer</string>
     <string name="password">Password</string>

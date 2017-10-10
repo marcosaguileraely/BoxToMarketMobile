@@ -26,6 +26,8 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 
+import org.apache.commons.lang3.text.WordUtils;
+
 public class MainActivity extends AppCompatActivity {
 
     /**
@@ -321,18 +323,19 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 1;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
+                    //return WordUtils.uncapitalize(getString(R.string.mi_billetera));
                     return getString(R.string.mi_billetera);
-                case 1:
+                /*case 1:
                     return getString(R.string.vender);
                 case 2:
-                    return getString(R.string.comprar);
+                    return getString(R.string.comprar);*/
             }
             return null;
         }

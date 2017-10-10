@@ -20,12 +20,12 @@
     <string name="inf_dialog">"Procesando. Por favor espere"</string>
 
     <string name="tipo_tarjeta">Tarjeta de Credito</string>
-    <string name="tipo_creditos">Creditos</string>
+    <string name="tipo_creditos">Créditos:</string>
     <string name="preferencias">preferencias</string><!-- -->
     <string name="tipo_compensacion">Transferencia</string>
     <string name="password">Clave</string>
     <string name="recarga">Recargar</string>
-    <string name="compensacion">Compensacion</string>
+    <string name="compensacion">Compensación</string>
     <string name="token_buy">Comprar Token</string>
     <string name="transferencia">Transferencia</string>
     <string name="alerta_terminos">Debe aceptar terminos y condiciones</string>
