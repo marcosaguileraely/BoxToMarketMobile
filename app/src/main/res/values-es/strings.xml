@@ -25,7 +25,7 @@
     <string name="tipo_compensacion">Transferencia</string>
     <string name="password">Clave</string>
     <string name="recarga">Recargar</string>
-    <string name="compensacion">Compensación</string>
+    <string name="compensacion">Compensación:</string>
     <string name="token_buy">Comprar Token</string>
     <string name="transferencia">Transferencia</string>
     <string name="alerta_terminos">Debe aceptar terminos y condiciones</string>

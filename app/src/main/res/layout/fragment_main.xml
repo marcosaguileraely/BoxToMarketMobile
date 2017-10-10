@@ -8,6 +8,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
+    android:background="@drawable/fondo_cleared"
     tools:context="btm.app.MainActivity$PlaceholderFragment">
 
 
@@ -27,6 +28,7 @@
             android:gravity="center"
             android:text="@string/saldo"
             android:textAlignment="viewStart"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="36sp"
             android:textStyle="normal|bold"
             tools:ignore="NotSibling,RtlHardcoded" />
@@ -43,6 +45,7 @@
             android:gravity="center"
             android:text="@string/tipo_creditos"
             android:textAlignment="viewStart"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="18sp"
             android:textStyle="bold"
             tools:ignore="NotSibling" />
@@ -62,7 +65,7 @@
                 android:layout_height="40dp"
                 android:layout_margin="3dp"
                 android:layout_weight="1"
-                android:background="@color/colorPrimary"
+                android:background="#007AFF"
                 android:onClick="onRecargar"
                 android:text="@string/recarga"
                 android:textAllCaps="false"
@@ -76,7 +79,7 @@
                 android:layout_height="40dp"
                 android:layout_margin="3dp"
                 android:layout_weight="1"
-                android:background="@color/colorPrimary"
+                android:background="#007AFF"
                 android:onClick="onCC"
                 android:text="@string/tipo_tarjeta"
                 android:textAllCaps="false"
@@ -101,6 +104,7 @@
             android:gravity="center"
             android:text="@string/saldo"
             android:textAlignment="viewStart"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="36sp"
             android:textStyle="bold" />
 
@@ -114,6 +118,7 @@
             android:gravity="center"
             android:text="@string/compensacion"
             android:textAlignment="viewStart"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -222,16 +227,16 @@
                 tools:ignore="ButtonStyle" />
 
             <Button
-                android:text="@string/transferencia"
-                android:background="@color/colorOrange"
+                android:id="@+id/button12"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/button12"
-                android:textColor="@android:color/white"
-                android:textStyle="bold"
-                android:textSize="15sp"
                 android:layout_weight="1"
+                android:background="@color/colorOrange"
                 android:onClick="onTransfer"
+                android:text="@string/transferencia"
+                android:textColor="@android:color/white"
+                android:textSize="15sp"
+                android:textStyle="bold"
                 tools:ignore="ButtonStyle" />
         </LinearLayout>
 
