@@ -93,7 +93,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp">
+        android:layout_marginBottom="10dp">
 
         <TextView
             android:id="@+id/textViewSaldoCompensacion"
@@ -151,7 +151,6 @@
                 android:id="@+id/button_request"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:layout_alignEnd="@+id/button_bank_account"
                 android:layout_alignLeft="@+id/button_bank_account"
                 android:layout_alignRight="@+id/button_bank_account"
                 android:layout_alignStart="@+id/button_bank_account"
@@ -180,69 +179,72 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:gravity="bottom|center"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/button10"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_marginLeft="2dp"
                 android:layout_marginRight="2dp"
-                android:layout_weight="1"
+                android:layout_marginTop="2dp"
                 android:background="@drawable/comprar_token"
+                android:minHeight="0dp"
                 android:onClick="onComprarToken"
                 android:textColor="@android:color/black"
-                android:textSize="15sp"
                 android:textStyle="bold"
                 tools:ignore="ButtonStyle" />
 
             <Button
                 android:id="@+id/button9"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
                 android:layout_marginLeft="2dp"
-                android:layout_weight="1"
+                android:layout_marginRight="2dp"
+                android:layout_marginTop="2dp"
                 android:background="@drawable/mis_suscripciones"
                 android:textColor="@android:color/white"
-                android:textSize="15dp"
                 android:textStyle="bold"
                 tools:ignore="ButtonStyle,SpUsage" />
+
+            <Button
+                android:id="@+id/button12"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/transferencia"
+                android:onClick="onTransfer"
+                android:textStyle="bold"
+                tools:ignore="ButtonStyle" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:gravity="top|center"
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button12"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginRight="2dp"
-                android:layout_weight="1"
-                android:background="@drawable/transferencia"
-                android:onClick="onTransfer"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                tools:ignore="ButtonStyle" />
-
-            <Button
                 android:id="@+id/button11"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_marginBottom="2dp"
                 android:layout_marginLeft="2dp"
-                android:layout_weight="1"
+                android:layout_marginRight="2dp"
+                android:layout_marginTop="2dp"
                 android:background="@drawable/bleecard"
                 android:textSize="15sp"
                 android:textStyle="bold"
