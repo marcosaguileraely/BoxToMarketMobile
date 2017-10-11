@@ -9,7 +9,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     android:background="@drawable/fondo_cleared"
-    tools:context="btm.app.MainActivity$PlaceholderFragment">
+    tools:context="btm.app.MainActivity$PlaceholderFragment"
+    android:baselineAligned="false">
 
 
     <RelativeLayout
@@ -92,7 +93,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="25dp">
+        android:layout_marginBottom="5dp">
 
         <TextView
             android:id="@+id/textViewSaldoCompensacion"
@@ -177,70 +178,79 @@
         android:textStyle="bold"
         android:visibility="gone" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="80dp">
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
             <Button
-                android:drawableBottom="@mipmap/ic_btm_club"
-                android:text="@string/btm_club"
+                android:id="@+id/button10"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/comprar_token"
+                android:onClick="onComprarToken"
+                android:textColor="@android:color/black"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                tools:ignore="ButtonStyle" />
+
+            <Button
+                android:id="@+id/button9"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/mis_suscripciones"
+                android:textColor="@android:color/white"
                 android:textSize="15dp"
                 android:textStyle="bold"
-                android:textColor="@android:color/white"
-                android:background="@color/colorPrimary"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/button9"
-                android:layout_weight="1"
                 tools:ignore="ButtonStyle,SpUsage" />
 
-            <Button
-                android:text="@string/comprar_token"
-                android:background="@android:color/white"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/button10"
-                android:textColor="@android:color/black"
-                android:textStyle="bold"
-                android:textSize="15sp"
-                android:layout_weight="1"
-                android:onClick="onComprarToken"
-                tools:ignore="ButtonStyle" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            >
-
-            <Button
-                android:text="@string/chat"
-                android:background="@android:color/white"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/button11"
-                android:layout_weight="1"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                tools:ignore="ButtonStyle" />
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/button12"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginRight="2dp"
                 android:layout_weight="1"
-                android:background="@color/colorOrange"
+                android:background="@drawable/transferencia"
                 android:onClick="onTransfer"
-                android:text="@string/transferencia"
-                android:textColor="@android:color/white"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 tools:ignore="ButtonStyle" />
+
+            <Button
+                android:id="@+id/button11"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/bleecard"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                tools:ignore="ButtonStyle" />
+
         </LinearLayout>
 
-
+    </LinearLayout>
 
 
 </LinearLayout>
