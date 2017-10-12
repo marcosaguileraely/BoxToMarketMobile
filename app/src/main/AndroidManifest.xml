@@ -45,11 +45,11 @@
         <activity
             android:name=".CardActivity"
             android:label="@string/tarjeta_credito"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".RegisterActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/registrese"/>
+            android:label="@string/registrese"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
@@ -57,23 +57,29 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Recargar"
-            android:screenOrientation="portrait"
-            android:label="@string/recarga"/>
+            android:label="@string/recarga"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Compensacion"
-            android:screenOrientation="portrait"
-            android:label="@string/compensacion"/>
+            android:label="@string/compensacion"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".RegistrarBanco"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".CompraToken"
-            android:screenOrientation="portrait"
-            android:label="@string/token_buy"/>
+            android:label="@string/token_buy"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".TransferActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/transferencia"/>
+            android:label="@string/transferencia"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ForgotPassActivity"
+            android:label="@string/forgot_activity_title"
+            android:screenOrientation="portrait">
+
+        </activity>
     </application>
 
 </manifest>

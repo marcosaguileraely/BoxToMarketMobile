@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">BoxToMarket</string>
+    <string name="app_name">Box To Market</string>
     <string name="TvLogin">Forgot your password?</string>
     <string name="login">Login</string>
     <string name="registrese">Register</string>
-    <string name="title_activity_main">BoxToMarket</string>
+    <string name="title_activity_main">Box To Market</string>
     <string name="action_pass">Change Password</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="pais">Select your country</string>
@@ -73,4 +73,10 @@
     <string name="nombres">Firts Name</string>
     <string name="error_monto">Please enter a correct value</string>
     <string name="please_check_your_info_and_clic_for_continue">Please check your info and click for continue.</string>
+
+    <!-- Forgot password UI-->
+    <string name="forgot_emailbox_hint">Enter your email</string>
+    <string name="forgot_button_send">Send email</string>
+    <string name="forgot_activity_title">Forgot password?</string>
+
 </resources>

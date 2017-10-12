@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
         this.startActivity(intent);
     }
 
-
     public void onRecargar(View view){
         Intent intent = new Intent(this, Recargar.class);
         this.startActivity(intent);

@@ -60,8 +60,8 @@ public class Request {
     }
 
     public void http_get(String metodo, String datos, Response.Listener<String> response, final ProgressDialog pd){
-
         pd.show();
+
         String url = "https://www.boxtomarket.com/index.php?r=app/"
                 + metodo
                 + datos;

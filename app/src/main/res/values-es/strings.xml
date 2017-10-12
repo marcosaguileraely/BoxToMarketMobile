@@ -73,4 +73,12 @@
     <string name="nombres">Nombres</string>
     <string name="error_monto">ingrese un valor diferente de cero</string>
     <string name="please_check_your_info_and_clic_for_continue">Por favor verifique la info y de clic para continuar el registro</string>
+
+    <!-- Forgot password UI-->
+    <string name="forgot_button_send">Enviar correo</string>
+    <string name="forgot_emailbox_hint">Ingrese su correo</string>
+    <string name="forgot_activity_title">¿Olvidaste tu clave?</string>
+
+
+
 </resources>

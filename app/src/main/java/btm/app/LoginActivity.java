@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -24,16 +25,18 @@ public class LoginActivity extends AppCompatActivity {
     public static final String TOKEN = "TOKEN";
     private EditText user, password;
     private Button login, signup;
+    private TextView forgot_pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         getSupportActionBar().hide();
-        user     = (EditText) findViewById(R.id.editText);
-        password = (EditText) findViewById(R.id.editText2);
-        login    = (Button) findViewById(R.id.buttonLogin);
-        signup   = (Button) findViewById(R.id.signup);
+        user        = (EditText) findViewById(R.id.editText);
+        password    = (EditText) findViewById(R.id.editText2);
+        login       = (Button) findViewById(R.id.buttonLogin);
+        signup      = (Button) findViewById(R.id.signup);
+        forgot_pass = (TextView) findViewById(R.id.forgot_pass_tv);
 
         /*
          * Este ejecuta el método Ingrese cuando se presiona el botón.
@@ -55,6 +58,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        forgot_pass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                forgetPass(v);
+            }
+        });
+
+
     }
 
     public void registrar(View view){
@@ -64,9 +75,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void  forgetPass(View view){
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.boxtomarket.com/index.php?r=site%2Frequest-password-reset"));
-        startActivity(intent);
-
+        //Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.boxtomarket.com/index.php?r=site%2Frequest-password-reset"));
+        Intent gotoForgot =  new Intent(LoginActivity.this, ForgotPassActivity.class);
+        startActivity(gotoForgot);
     }
 
     public void login(View view){
