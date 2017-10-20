@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BoxToMarket</string>
+    <string name="app_name">Box To Market</string>
     <string name="TvLogin">¿Olvidó su clave?</string>
     <string name="login">Ingresar</string>
     <string name="registrese">Registrarse</string>
@@ -10,7 +10,7 @@
     <string name="apellidos">Apellidos</string>
     <string name="de_identificaci_n"># de Identificación</string>
     <string name="telefono_mov_l">Telefono Movil</string>
-    <string name="checkbox">Acepto terminos y condiciones</string>
+    <string name="checkbox">Acepto términos y condiciones</string>
     <string name="siguiente">Siguiente</string>
     <string name="usuario">Usuario</string>
     <string name="clave_de_4_digitos">Clave de 4 Digitos</string>
@@ -19,7 +19,7 @@
     <string name="info_fallas_comunicacion">FALLA EN LA COMUNICACION INTENTE MAS TARDE</string>
     <string name="inf_dialog">"Procesando. Por favor espere"</string>
 
-    <string name="tipo_tarjeta">Tarjeta de Credito</string>
+    <string name="tipo_tarjeta">Transacciones</string>
     <string name="tipo_creditos">Créditos:</string>
     <string name="preferencias">preferencias</string><!-- -->
     <string name="tipo_compensacion">Transferencia</string>
@@ -36,7 +36,7 @@
     <string name="Info">Info</string>
     <string name="tarjeta_credito">Registro Tarjeta de Credito</string>
     <string name="solicitar">Solicitar</string>
-    <string name="cuenta_bancaria">Cuenta Bancaria</string>
+    <string name="cuenta_bancaria">Transacciones</string>
     <string name="transacciones_recientes">Transacciones Recientes</string>
     <string name="dolar_hoy">Dolar en  %2$s hoy: $%1$s</string>
     <string name="mi_billetera">Mi Billetera</string>
