@@ -205,7 +205,7 @@
                 tools:ignore="ButtonStyle" />
 
             <Button
-                android:id="@+id/button9"
+                android:id="@+id/my_subscriptions_btn"
                 android:layout_width="110dp"
                 android:layout_height="110dp"
                 android:layout_marginLeft="2dp"
