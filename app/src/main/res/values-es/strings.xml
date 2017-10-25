@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Box To Market</string>
+    <string name="app_name">Box to Market</string>
     <string name="TvLogin">¿Olvidó su clave?</string>
     <string name="login">Ingresar</string>
     <string name="registrese">Registrarse</string>
@@ -9,7 +9,7 @@
     <string name="pais">Seleccione el pais</string>
     <string name="apellidos">Apellidos</string>
     <string name="de_identificaci_n"># de Identificación</string>
-    <string name="telefono_mov_l">Telefono Movil</string>
+    <string name="telefono_mov_l">Teléfono Movil</string>
     <string name="checkbox">Acepto términos y condiciones</string>
     <string name="siguiente">Siguiente</string>
     <string name="usuario">Usuario</string>
@@ -20,7 +20,7 @@
     <string name="inf_dialog">"Procesando. Por favor espere"</string>
 
     <string name="tipo_tarjeta">Transacciones</string>
-    <string name="tipo_creditos">Créditos:</string>
+    <string name="tipo_creditos">Mi Billetera:</string>
     <string name="preferencias">preferencias</string><!-- -->
     <string name="tipo_compensacion">Transferencia</string>
     <string name="password">Clave</string>

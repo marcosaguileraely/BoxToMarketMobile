@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Box To Market</string>
+    <string name="app_name">Box to Market</string>
     <string name="TvLogin">Forgot your password?</string>
     <string name="login">Login</string>
     <string name="registrese">Register</string>
@@ -20,7 +20,7 @@
     <string name="inf_dialog">"Process. Please wait"</string>
 
     <string name="tipo_tarjeta">Credit Card</string>
-    <string name="tipo_creditos">Credits:</string>
+    <string name="tipo_creditos">My Wallet:</string>
     <string name="preferencias">preferencias</string><!-- -->
     <string name="tipo_compensacion">Transfer</string>
     <string name="password">Password</string>
