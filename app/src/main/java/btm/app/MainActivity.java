@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.Response;
@@ -45,7 +46,11 @@ public class MainActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
     private String pais;
-    private String data;
+    private static String data;
+    private static String username_global;
+
+    public static final String USER_GLOBAL = "USERNAME";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +72,9 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        pais = getIntent().getStringArrayExtra(LoginActivity.PAIS)[1];
-        data = getIntent().getStringExtra(LoginActivity.DATOS);
-
+        pais            = getIntent().getStringArrayExtra(LoginActivity.PAIS)[1];
+        data            = getIntent().getStringExtra(LoginActivity.DATOS);
+        username_global = getIntent().getStringExtra(LoginActivity.USERNAME);
     }
 
     public void onCC(View view){
@@ -101,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, TransferActivity.class);
         this.startActivity(intent);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -147,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
         private static final String ARG_SECTION_NUMBER = "section_number";
         private static final String ARG_SECTION_DATA = "section_data";
         private TextView textViewTrm, textViewSaldoCreditos, textViewSaldoCompensacion;
+        private Button Subscriptions;
 
         public PlaceholderFragment() {
         }
@@ -165,14 +170,23 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+            View rootView               = inflater.inflate(R.layout.fragment_main, container, false);
+            textViewTrm                 = (TextView) rootView.findViewById(R.id.textViewTrm);
+            textViewSaldoCompensacion   = (TextView) rootView.findViewById(R.id.textViewSaldoCompensacion);
+            textViewSaldoCreditos       = (TextView) rootView.findViewById(R.id.textViewSaldoCredito);
+            Subscriptions               = (Button) rootView.findViewById(R.id.my_subscriptions_btn);
 
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            textViewTrm = (TextView) rootView.findViewById(R.id.textViewTrm);
-            textViewSaldoCompensacion = (TextView) rootView.findViewById(R.id.textViewSaldoCompensacion);
-            textViewSaldoCreditos = (TextView) rootView.findViewById(R.id.textViewSaldoCredito);
+            Subscriptions.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("DEV -> Main ", username_global);
+                    Intent intent = new Intent(getActivity(), SubscriptionsActivity.class);
+                    startActivity(intent.putExtra(USER_GLOBAL, username_global));
+                    startActivity(intent);
+                }
+            });
 
             return rootView;
         }

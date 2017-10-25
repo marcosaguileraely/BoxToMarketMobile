@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -50,7 +51,6 @@ public class NetActions {
         queue.add(postRequest.setRetryPolicy(new DefaultRetryPolicy(30000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
-
     }
 
     public String tkTime(){
@@ -64,6 +64,39 @@ public class NetActions {
     public String datoBase64(String datos){
         return Base64.encodeToString(datos.getBytes(), Base64.DEFAULT);
     }
+
+    public void listSubscriptions(String username, Response.Listener<String> response, final ProgressDialog pd){
+        pd.show();
+
+        Log.d("DEV -> NetActions ", this.tkTime());
+
+        String url = "https://www.boxtomarket.com/index.php?r=app/listadosuscripciones&username=" + username + "&token=" + this.tkTime();
+        Log.d("DEV -> NetActions ", url);
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+
+        // Request a string response from the provided URL.
+        StringRequest Request = new StringRequest(GET, url,
+                response,
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("DEV -> NetActions ", "That didn't work!");
+                        Toast.makeText(context ,error.getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+        });
+
+        queue.add(Request.setRetryPolicy(new DefaultRetryPolicy(30000,
+                                                                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                                                                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
+    }
+
+    public void createSubscriptions(){
+
+
+
+    }
+
 
 
 

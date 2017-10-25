@@ -64,14 +64,11 @@ public class LoginActivity extends AppCompatActivity {
                 forgetPass(v);
             }
         });
-
-
     }
 
     public void registrar(View view){
         Intent intent = new Intent(this, RegisterActivity.class);
         this.startActivity(intent);
-
     }
 
     public void  forgetPass(View view){
@@ -84,6 +81,7 @@ public class LoginActivity extends AppCompatActivity {
 
         final String datos = "&username="+user.getText().toString()+
                              "&password="+password.getText().toString();
+
         final ProgressDialog progress = new ProgressDialog(this);
         progress.setMessage(getString(R.string.inf_dialog));
         //progress.show();
@@ -102,11 +100,14 @@ public class LoginActivity extends AppCompatActivity {
                           .putString(PASSPIN, password.getText().toString())
                           .apply();
                     editor.commit();
+
                     Log.d("===>", editor.toString());
+                    String username_global = user.getText().toString();
 
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     LoginActivity.this.startActivity(intent.putExtra(PAIS, response.replace("|",";").split(";"))
-                    .putExtra(DATOS, datos));
+                                                           .putExtra(USERNAME, username_global)
+                                                           .putExtra(DATOS, datos));
 
                     password.setText("");
                     user.setText("");
