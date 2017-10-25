@@ -93,7 +93,7 @@
             android:layout_alignStart="@+id/editText2"
             android:layout_below="@+id/editText2"
             android:layout_marginTop="15dp"
-            android:background="#007AFF"
+            android:background="#007aff"
             android:text="@string/registrese"
             android:textAllCaps="false"
             android:textColor="@android:color/white"

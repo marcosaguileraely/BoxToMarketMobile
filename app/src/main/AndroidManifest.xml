@@ -77,9 +77,8 @@
         <activity
             android:name=".ForgotPassActivity"
             android:label="@string/forgot_activity_title"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".SubscriptionsActivity"></activity>
     </application>
 
 </manifest>
