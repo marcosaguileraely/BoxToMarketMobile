@@ -1,7 +1,10 @@
 package btm.app;
 
+import android.content.Context;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +25,12 @@ public class RegisterActivity extends DataJp {
     private String datos;
     private CheckBox checkbox_terminos;
     private Button saveData;
+
+    private EditText editText;
+    private String blockCharacterSet = "~#^|$%&*!ñÑáéíóú. ";
+    private Context context = this;
+    private Toast toast;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +61,8 @@ public class RegisterActivity extends DataJp {
         pais              = (Spinner) findViewById(R.id.spinner);
         celular           = (EditText) findViewById(R.id.editText11);
         checkbox_terminos = (CheckBox) findViewById(R.id.checkBox);
+
+        username.setFilters(new InputFilter[] { filter });
 
         if(username.getText().toString().contains(" ")){
             Toast.makeText(this, R.string.alerta_usuario_espacio, Toast.LENGTH_SHORT).show();
@@ -131,6 +142,20 @@ public class RegisterActivity extends DataJp {
             }
         });
     }
+
+    private InputFilter filter = new InputFilter() {
+
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+
+            if (source != null && blockCharacterSet.contains(("" + source))) {
+                Toast toast = Toast.makeText(context, "El usuario no permite caracteres especiales.", Toast.LENGTH_SHORT);
+                toast.show();
+                return "";
+            }
+            return null;
+        }
+    };
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

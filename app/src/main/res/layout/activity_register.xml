@@ -25,6 +25,7 @@
             android:layout_marginTop="6dp"
             android:background="@drawable/backgound_edit_text"
             android:hint="@string/usuario"
+            android:digits="-0123456789qwertzuiopasdfghjklyxcvbnm_"
             android:inputType="textPersonName"
             android:padding="7dp" />
 
@@ -37,6 +38,7 @@
             android:hint="@string/clave_de_4_digitos"
             android:inputType="numberPassword"
             android:padding="7dp"
+            android:maxLength="4"
             tools:ignore="NestedWeights" />
 
         <EditText
@@ -47,6 +49,7 @@
             android:background="@drawable/backgound_edit_text"
             android:hint="@string/confirmar_clave"
             android:inputType="numberPassword"
+            android:maxLength="4"
             android:padding="7dp" />
 
         <EditText
@@ -90,6 +93,14 @@
             android:inputType="textPersonName"
             android:padding="7dp" />
 
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="6dp"
+            android:entries="@array/pais_select"
+            android:spinnerMode="dialog" />
+
         <EditText
             android:id="@+id/editText11"
             android:layout_width="match_parent"
@@ -99,14 +110,6 @@
             android:hint="@string/telefono_mov_l"
             android:inputType="phone"
             android:padding="7dp" />
-
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="6dp"
-            android:entries="@array/pais_select"
-            android:spinnerMode="dialog" />
 
         <CheckBox
             android:id="@+id/checkBox"

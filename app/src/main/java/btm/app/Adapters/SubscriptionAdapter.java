@@ -5,7 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,11 +51,13 @@ public class SubscriptionAdapter extends ArrayAdapter<Subscriptions> {
 
         // 3. Get the two text view from the rowView
         TextView total  = (TextView) rowView.findViewById(R.id.subs_total_txt);
+        ImageView img   = (ImageView) rowView.findViewById(R.id.img_url);
 
         Subscriptions subscriptions = (Subscriptions) subscriptionsArrayList.get(position);
 
         // 4. Set the text for textView
         total.setText(String.valueOf(subscriptions.getQty()+ " Productos disponibles para reclamar en BtM"));
+        Glide.with(context).load(subscriptions.getImg_uri()).into(img);
 
         // 5. return rowView
         return rowView;
