@@ -145,7 +145,8 @@
                 android:text="@string/solicitar"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                tools:ignore="ButtonStyle,ObsoleteLayoutParam" />
 
             <Button
                 android:id="@+id/button_request"
@@ -163,7 +164,8 @@
                 android:text="@string/cuenta_bancaria"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                tools:ignore="ButtonStyle,ObsoleteLayoutParam,RtlHardcoded" />
         </LinearLayout>
     </RelativeLayout>
 
@@ -181,14 +183,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:ignore="InefficientWeight">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="bottom|center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            tools:ignore="NestedWeights">
 
             <Button
                 android:id="@+id/button10"

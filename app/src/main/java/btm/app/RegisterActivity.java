@@ -41,7 +41,8 @@ public class RegisterActivity extends DataJp {
         setContentView(R.layout.activity_register);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        username = (EditText) findViewById(R.id.editText3);
+        username       = (EditText) findViewById(R.id.editText3);
+        identificacion = (EditText) findViewById(R.id.editText9);
 
         saveData = (Button) findViewById(R.id.button3);
         saveData.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +74,7 @@ public class RegisterActivity extends DataJp {
                             "Por favor introduce un nombre de Usuario",
                             Toast.LENGTH_LONG);
                     aviso.show();*/
-                    username.setError("Por favor introduce un nombre de Usuario");
+                    username.setError("Ingrese un usuario");
 
                 } else if (!nombre.matches("[a-zA-Z.? ]*")) {
                     /*Toast aviso = Toast
@@ -100,7 +101,23 @@ public class RegisterActivity extends DataJp {
                     //Toast.makeText(getApplicationContext(), "Got the focus", Toast.LENGTH_SHORT).show();
                 } else {
                     if (nombre.length() == 0) {
-                        username.setError("Por favor introduce un nombre de Usuario");
+                        username.setError("Ingrese un usuario");
+                    }
+                }
+            }
+        });
+
+        //When identificacion textEdit is onFocus or not
+        identificacion.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                String nombre = identificacion.getText().toString();
+
+                if (hasFocus) {
+                    //Toast.makeText(getApplicationContext(), "Got the focus", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (nombre.length() == 0) {
+                        username.setError("Ingrese un No. identificación.");
                     }
                 }
             }
