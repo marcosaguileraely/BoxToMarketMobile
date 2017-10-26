@@ -77,8 +77,12 @@
         <activity
             android:name=".ForgotPassActivity"
             android:label="@string/forgot_activity_title"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".SubscriptionsActivity"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".SubscriptionsActivity" />
+        <activity
+            android:name=".SnackbarActivity"
+            android:label="@string/title_activity_snackbar"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
