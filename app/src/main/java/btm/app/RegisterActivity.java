@@ -76,7 +76,7 @@ public class RegisterActivity extends DataJp {
                     aviso.show();*/
                     username.setError("Ingrese un usuario");
 
-                } else if (!nombre.matches("[a-zA-Z.? ]*")) {
+                } else if (!nombre.matches("[a-zA-Z0-9_.? ]*")) {
                     /*Toast aviso = Toast
                             .makeText(
                                     getApplicationContext(),
@@ -111,13 +111,13 @@ public class RegisterActivity extends DataJp {
         identificacion.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                String nombre = identificacion.getText().toString();
+                String id = identificacion.getText().toString();
 
                 if (hasFocus) {
                     //Toast.makeText(getApplicationContext(), "Got the focus", Toast.LENGTH_SHORT).show();
                 } else {
-                    if (nombre.length() == 0) {
-                        username.setError("Ingrese un No. identificación.");
+                    if (id.length() == 0) {
+                        identificacion.setError("Ingrese un No. identificación.");
                     }
                 }
             }
