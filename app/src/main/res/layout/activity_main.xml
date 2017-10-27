@@ -18,12 +18,14 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/white"
+            android:background="#e95c17"
+
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             android:theme="@style/ToolbarTheme"
-            app:titleTextAppearance="@style/Toolbar.TitleText"
+            app:titleTextAppearance="@style/Toolbar.TitleTextCustom"
             android:visibility="visible">
+            <!-- android:background="@android:color/white" -->
 
         </android.support.v7.widget.Toolbar>
 

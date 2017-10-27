@@ -32,13 +32,21 @@
         <item name="selectableItemBackgroundBorderless">?android:selectableItemBackground</item>
         -->
         <item name="android:icon">@mipmap/ic_toolbar</item>
-        <item name="android:background">@android:color/white</item>
+        <item name="android:background">#e95c17</item>
+        <!-- <item name="android:background">@android:color/white</item> -->
     </style>
 
     <!-- This configures the styles for the title within the Toolbar  -->
     <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">21sp</item>
         <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="Toolbar.TitleTextCustom" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">21sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/colorWhite</item>
+
     </style>
 
 </resources>
