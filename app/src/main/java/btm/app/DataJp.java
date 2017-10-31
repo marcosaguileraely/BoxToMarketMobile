@@ -24,8 +24,7 @@ public class DataJp extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 
 		ClienteIso.Pref =  getSharedPreferences("com.app", Context.MODE_PRIVATE);
-		ClienteIso.wifi = (WifiManager) this.getSystemService(
-                Context.WIFI_SERVICE);
+		ClienteIso.wifi = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
 		ClienteIso.contextTW = this.getApplicationContext();
 		
 		//System.out.println("INICIANDO CLASE EXTENDIDA "+getLocalClassName());
@@ -99,8 +98,7 @@ public class DataJp extends AppCompatActivity {
 		alert.show();
 	}
 	
-/*CLIENTE ISO*/
-	
+	/*CLIENTE ISO*/
 	private class isoResult{
 	   	 String[] result = new String[7];
 	   	 String code = "";
@@ -164,26 +162,24 @@ public class DataJp extends AppCompatActivity {
 			pDialog.dismiss();	
 			
 			if (resp.e != null){
-					 //System.out.println(resp.e);
-					 //Toast.makeText(getApplicationContext(), resp.e.toString(), Toast.LENGTH_SHORT).show();
-					 //return;
+				 //System.out.println(resp.e);
+				 //Toast.makeText(getApplicationContext(), resp.e.toString(), Toast.LENGTH_SHORT).show();
+				 //return;
+			}
+
+			c39 = (Integer) Integer.parseInt(resp.result[0]);
+			if(c39 == 0){
+				infoOk(resp.result[1], resp.code);
+			} else {
+				String aviso;
+				try {
+					aviso = (resp.result[1].isEmpty())?getResources().getString(R.string.info_fallas_comunicacion)+" - E-01":resp.result[1];
+				} catch (Exception e) {
+					aviso = getResources().getString(R.string.info_fallas_comunicacion)+" - E-00";
 				}
-				
-				c39 = (Integer) Integer.parseInt(resp.result[0]);
-				if(c39 == 0){
-					infoOk(resp.result[1], resp.code);
-				} else {
-					String aviso;
-					try {
-						aviso = (resp.result[1].isEmpty())?getResources().getString(R.string.info_fallas_comunicacion)+" - E-01":resp.result[1];
-					} catch (Exception e) {
-						aviso = getResources().getString(R.string.info_fallas_comunicacion)+" - E-00";
-					}
-					
-					infoFalla(aviso, resp.code);
-					
-				}
-								
+
+				infoFalla(aviso, resp.code);
+			}
 		}
 
 	}

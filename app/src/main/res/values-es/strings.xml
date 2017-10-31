@@ -17,9 +17,9 @@
     <string name="confirmar_clave">Confirmar Clave</string>
     <string name="email">Email</string>
     <string name="info_fallas_comunicacion">FALLA EN LA COMUNICACION INTENTE MAS TARDE</string>
-    <string name="inf_dialog">"Procesando. Por favor espere"</string>
+    <string name="inf_dialog">"Procesando. Por favor espere..."</string>
 
-    <string name="tipo_tarjeta">Transacciones</string>
+    <string name="tipo_tarjeta">Tarjeta de Credito</string>
     <string name="tipo_creditos">Mi Billetera:</string>
     <string name="preferencias">preferencias</string><!-- -->
     <string name="tipo_compensacion">Transferencia</string>
@@ -78,7 +78,8 @@
     <string name="forgot_button_send">Enviar correo</string>
     <string name="forgot_emailbox_hint">Ingrese su correo</string>
     <string name="forgot_activity_title">¿Olvidaste tu clave?</string>
-
+    <string name="metodo_de_recarga">Seleccione un metodo de recarga</string>
+    <string name="add_credit_card">Agregar tarjeta de crédito</string>
 
 
 </resources>

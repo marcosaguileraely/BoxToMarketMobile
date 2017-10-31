@@ -36,9 +36,9 @@ public class CardActivity extends DataJp {
         setContentView(R.layout.activity_card);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        tVCc = (TextView) findViewById(R.id.textViewCC);
-        buttonReg = (Button) findViewById(R.id.button5);
-        pb = new ProgressDialog(this);
+        tVCc        = (TextView) findViewById(R.id.textViewCC);
+        buttonReg   = (Button) findViewById(R.id.button5);
+        pb          = new ProgressDialog(this);
         pb.setMessage(getString(R.string.inf_dialog));
 
         Intent scanIntent = new Intent(this, CardIOActivity.class);
@@ -64,7 +64,7 @@ public class CardActivity extends DataJp {
                 //pb.show();
                 //buttonReg.setEnabled(false);
                 final String datos = "&username="+user
-                        +"&datos="+infocard;
+                                    +"&datos="+infocard;
                 //tVCc.setText(datos);
 
                 new Request(CardActivity.this).http_get("registrocard", datos, new Response.Listener<String>() {
@@ -75,9 +75,8 @@ public class CardActivity extends DataJp {
                         //buttonReg.setEnabled(true);
                         //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
                         alert_info(response, getString(R.string.Info), android.R.drawable.ic_dialog_info);
-
                     }
-                },pb);
+                }, pb);
             }
         });
     }
@@ -129,7 +128,7 @@ public class CardActivity extends DataJp {
             }
             // do something with resultDisplayStr, maybe display it in a textView
             // resultTextView.setText(resultDisplayStr);
-            //Toast.makeText(this, resultDisplayStr, Toast.LENGTH_LONG).show();
+            // Toast.makeText(this, resultDisplayStr, Toast.LENGTH_LONG).show();
             tVCc.setText(resultDisplayStr);
 
             //new Request(this).http_get("registrocard", datos, response);

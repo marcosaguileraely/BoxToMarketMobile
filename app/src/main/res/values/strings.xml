@@ -17,7 +17,7 @@
     <string name="confirmar_clave">Confirm Password</string>
     <string name="email">Email</string>
     <string name="info_fallas_comunicacion">COMMUNICATION FAIL TRY LATER</string>
-    <string name="inf_dialog">"Process. Please wait"</string>
+    <string name="inf_dialog">"In process. Please wait..."</string>
 
     <string name="tipo_tarjeta">Credit Card</string>
     <string name="tipo_creditos">My Wallet:</string>
@@ -78,6 +78,7 @@
     <string name="forgot_emailbox_hint">Enter your email</string>
     <string name="forgot_button_send">Send email</string>
     <string name="forgot_activity_title">Forgot password?</string>
-    <string name="title_activity_snackbar">SnackbarActivity</string>
+    <string name="metodo_de_recarga">Select a method for add money</string>
+    <string name="add_credit_card">Add credit card</string>
 
 </resources>

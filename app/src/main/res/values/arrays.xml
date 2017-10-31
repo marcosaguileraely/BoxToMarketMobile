@@ -39,7 +39,7 @@
 
     <string-array name="recarga">
         <item>Token</item>
-        <item>Tarjeta de Credito</item>
+        <item>Tarjeta de Crédito</item>
     </string-array>
 
     <string-array name="tipo_compra">

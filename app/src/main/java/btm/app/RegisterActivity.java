@@ -32,8 +32,6 @@ public class RegisterActivity extends DataJp {
     //private String blockCharacterSet = "~#^|$%&*!ñÑáéíóú. ";
     private String blockCharacterSet = "~#^|$%&*!";
     private Context context = this;
-    private Toast toast;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

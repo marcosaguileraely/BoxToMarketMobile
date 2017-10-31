@@ -9,8 +9,15 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="btm.app.Recargar"
-    android:orientation="vertical"
-    android:weightSum="1">
+    android:orientation="vertical">
+
+    <TextView
+        android:text="@string/seleccione_el_metodo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView4"
+        android:layout_margin="10dp"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
     <Spinner
         android:layout_width="match_parent"
@@ -27,8 +34,7 @@
         android:id="@+id/editTextToken"
         android:hint="Token #"
         android:background="@drawable/backgound_edit_text"
-        android:padding="10dp"
-        tools:ignore="HardcodedText" />
+        android:padding="10dp" />
 
     <Spinner
         android:layout_width="match_parent"
@@ -59,13 +65,6 @@
         android:id="@+id/button2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button"
-        tools:ignore="HardcodedText" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="Button" />
 
 </LinearLayout>

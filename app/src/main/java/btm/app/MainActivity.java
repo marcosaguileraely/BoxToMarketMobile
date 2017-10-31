@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String USER_GLOBAL = "USERNAME";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onRecargar(View view){
-        Intent intent = new Intent(this, Recargar.class);
+        Intent intent = new Intent(this, ChargeActivity.class);
         this.startActivity(intent);
     }
 

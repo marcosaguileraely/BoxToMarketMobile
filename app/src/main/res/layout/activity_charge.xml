@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical|center_horizontal"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:weightSum="1"
+    tools:context="btm.app.ChargeActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/metodo_de_recarga"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+
+    <Spinner
+        android:id="@+id/spinnerTipoRecarga"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_margin="10dp"
+        android:entries="@array/recarga" />
+
+    <EditText
+        android:id="@+id/token"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/ingrese_token"
+        android:inputType="textPersonName" />
+
+    <Spinner
+        android:id="@+id/spinnerCreditCards"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_margin="10dp"
+        android:entries="@array/recarga" />
+
+    <Button
+        android:id="@+id/addCreditCardButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorBlueBtm"
+        android:text="@string/add_credit_card"
+        android:textColor="@color/colorWhite" />
+
+    <EditText
+        android:id="@+id/value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/ingrese_valor"
+        android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/ChargeButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorOrange"
+        android:text="@string/recarga"
+        android:textColor="@color/colorWhite" />
+
+</LinearLayout>
