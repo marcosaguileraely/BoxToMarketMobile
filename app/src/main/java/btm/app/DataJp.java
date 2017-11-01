@@ -16,6 +16,7 @@ import android.view.View;
 
 
 public class DataJp extends AppCompatActivity {
+	private Context context = this;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +25,10 @@ public class DataJp extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 
 		ClienteIso.Pref =  getSharedPreferences("com.app", Context.MODE_PRIVATE);
-		ClienteIso.wifi = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
-		ClienteIso.contextTW = this.getApplicationContext();
-		
+		ClienteIso.wifi = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+		//ClienteIso.contextTW = this.getApplicationContext();
+		ClienteIso.contextTW = context.getApplicationContext();
+
 		//System.out.println("INICIANDO CLASE EXTENDIDA "+getLocalClassName());
 	}
 	
@@ -50,9 +52,9 @@ public class DataJp extends AppCompatActivity {
         .setIcon(icon)
         .setPositiveButton(android.R.string.ok,
                 new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-            	finish();
-            }
+				public void onClick(DialogInterface dialog, int which) {
+					finish();
+				}
          })
         .setOnCancelListener(new DialogInterface.OnCancelListener() {
             public void onCancel(DialogInterface dialog) {
@@ -106,13 +108,11 @@ public class DataJp extends AppCompatActivity {
 	    }
 	
 	private class DataISO extends AsyncTask<Object, Void, isoResult> {
-		
-		ProgressDialog pDialog = new ProgressDialog(DataJp.this);
+		//ProgressDialog pDialog = new ProgressDialog(context);
     	Integer c39 = -1;
     	
     	protected void onPreExecute (){
-       		
-            pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            /*pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             pDialog.setMessage(getResources().getString(R.string.inf_dialog));
             pDialog.setCancelable(false);
             
@@ -122,9 +122,7 @@ public class DataJp extends AppCompatActivity {
                 	DataISO.this.cancel(false);
                 }
             });
-     
-                pDialog.show();
-       		
+                pDialog.show();*/
        	 }
 
 		@Override
@@ -132,17 +130,19 @@ public class DataJp extends AppCompatActivity {
 			isoResult task = new isoResult();
 			try {
 				task.code = (String)param[1];
+				Log.d("DEV", task.code = (String)param[1]);
 				if(param.length == 7){
-				task.result=ClienteIso.msjIso((Integer)param[0], (String)param[1], (String)param[2], (String)param[3],
+				task.result = ClienteIso.msjIso((Integer)param[0], (String)param[1], (String)param[2], (String)param[3],
 						(String)param[4], (String)param[5], (Integer)param[6]);
 					Log.d("parametros", (String) param[1]);
 	            	for(String out:task.result){
 	            		//System.out.println(out);
 	            	}
+
 				} else {
-					task.result=ClienteIso.msjIso_h((Integer)param[0], (String)param[1], (String)param[2], (String)param[3],
+					task.result = ClienteIso.msjIso_h((Integer)param[0], (String)param[1], (String)param[2], (String)param[3],
 							(String)param[4], (String)param[5], (Integer)param[6], (Integer)param[7] );
-	            	for(String out:task.result){
+	            	for(String out : task.result){
 	            		//System.out.println(out);
 	            	}
 				}
@@ -159,7 +159,7 @@ public class DataJp extends AppCompatActivity {
 		@Override
 	    protected void onPostExecute(isoResult resp) {
 			
-			pDialog.dismiss();	
+			//pDialog.dismiss();
 			
 			if (resp.e != null){
 				 //System.out.println(resp.e);

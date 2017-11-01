@@ -57,10 +57,10 @@ public class ClienteIso implements Runnable {
 							0x31,0x30,0x31 };*/
 		//String host = Pref.getString("INFO_HOST", "184.94.158.101");
 		//107.170.126.94
-		byte[] host_dir = {0x31, 0x30, 0x37, 0x2E,
-				0x31, 0x37, 0x30, 0x2E,
-				0x31, 0x32, 0x36, 0x2E,
-				0x39, 0x34};
+		byte[] host_dir = { 0x31, 0x30, 0x37, 0x2E,
+							0x31, 0x37, 0x30, 0x2E,
+							0x31, 0x32, 0x36, 0x2E,
+							0x39, 0x34 };
 		String host = new String(host_dir);
 		int port = 12552;
 		sock = socket; 
@@ -301,10 +301,10 @@ public class ClienteIso implements Runnable {
 							0x31,0x30,0x31 };*/
 		//String host = Pref.getString("INFO_HOST", "184.94.158.101");
 		//69.175.118.243
-		byte[] host_dir = {0x31, 0x30, 0x37, 0x2E,
-				0x31, 0x37, 0x30, 0x2E,
-				0x31, 0x32, 0x36, 0x2E,
-				0x39, 0x34};
+		byte[] host_dir = { 0x31, 0x30, 0x37, 0x2E,
+							0x31, 0x37, 0x30, 0x2E,
+							0x31, 0x32, 0x36, 0x2E,
+							0x39, 0x34 };
 		String host = new String(host_dir);
 		sock = socket; 
 		sock.connect(new InetSocketAddress(host,port),20000);
@@ -324,8 +324,11 @@ public class ClienteIso implements Runnable {
 			//URL url_conf = new URL ("http://192.168.0.5/config.xml");
 			//mfact = ConfigParser.createFromUrl(url_conf); 
 			InfoOpcional.contextTW = contextTW;
-			mfact = ConfigParser.createFromClasspathConfig(new String(InfoOpcional.decrypt(contextTW.getResources().
-					getStringArray(R.array.opcional)[1])));
+			mfact = ConfigParser.createFromClasspathConfig(new String(InfoOpcional.decrypt("wFET0oqRqoJNkIPA3xWnq7kPrADg9A2FK/artD/TNT6BLDRAu6sE0C4Kri6eCo5m")));
+
+			//mfact = ConfigParser.createFromClasspathConfig(new String(InfoOpcional.decrypt(contextTW.getResources().
+			//		getStringArray(R.array.opcional)[1])));
+
 			mfact.setAssignDate(true);
 			//mfact.setTraceNumberGenerator(new SimpleTraceGenerator((int)(System.currentTimeMillis() % 10000)));
 			mfact.setTraceNumberGenerator(new SimpleTraceGenerator(Pref.getInt("STAN",1)));

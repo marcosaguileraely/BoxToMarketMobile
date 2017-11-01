@@ -52,9 +52,12 @@ public class InfoOpcional {
 	      System.arraycopy(toDecrypt, 0, iv, 0, iv.length);
 	      byte[] encripData = new byte[toDecrypt.length-iv.length];
 	      System.arraycopy(toDecrypt, iv.length, encripData, 0, encripData.length);
-	      byte [] key = hexStringToByteArray(new String(Base64.decode(contextTW.getResources().
-				  getStringArray(R.array.opcional)[3], Base64.DEFAULT)));
-	      /*
+	      byte [] key = hexStringToByteArray(new String(Base64.decode("OThiNDk2MGVmN2Y1MDQxMjg1N2MxYjU0NzA2YTIzZmU", Base64.DEFAULT)));
+
+		  /*byte [] key = hexStringToByteArray(new String(Base64.decode(contextTW.getResources().
+				  getStringArray(R.array.opcional)[3], Base64.DEFAULT)));*/
+
+		  /*
 	      byte [] key = {	(byte)0x98, (byte)0xb4, (byte)0x96, (byte)0x0c,
 	      		(byte)0xd7, (byte)0xf5, (byte)0x04, (byte)0x11,
 	      		(byte)0x80, (byte)0x0c, (byte)0x1b, (byte)0x54,
@@ -171,6 +174,6 @@ public class InfoOpcional {
 	
 	      return new String(decrypted);
 	  }*/
-	  
-	  
+
+
 }
