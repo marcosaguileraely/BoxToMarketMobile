@@ -129,5 +129,11 @@ public class SubscriptionsActivity extends AppCompatActivity {
         return jsonArray;
     }
 
+    /*public void onBackPressed() {
+        Log.d(TAG, "onBackPressed Called");
+        Intent intent = new Intent(SubscriptionsActivity.this, MainActivity.class);
+        startActivity(intent);
+    }*/
+
 
 }

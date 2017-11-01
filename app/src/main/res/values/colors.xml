@@ -6,6 +6,7 @@
     <color name="colorOrange">#e95c17</color>
     <color name="colorBlueBtm">#5b90cc</color>
     <color name="colorWhite">#ffffff</color>
+    <color name="TextColor">#000000</color>
 
 
 </resources>
