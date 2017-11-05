@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -26,12 +27,15 @@ import btm.app.Model.Subscriptions;
 
 public class SubscriptionsActivity extends AppCompatActivity {
     public static final String TAG = "DEV -> Subscriptions";
+    private Context context = this;
 
+    public static final String USER_GLOBAL = "USERNAME";
     private static String username_global;
-    private Button getData;
+    private Button buy_button;
     private ListView listView;
     private SubscriptionAdapter adapter;
     private View v;
+
 
 
     @Override
@@ -42,9 +46,37 @@ public class SubscriptionsActivity extends AppCompatActivity {
         username_global =  getIntent().getStringExtra(MainActivity.USER_GLOBAL);
         Log.d(TAG, username_global);
 
-        listView = (ListView) findViewById(R.id.subscriptions_list);
+        listView   = (ListView) findViewById(R.id.subscriptions_list);
+        buy_button = (Button) findViewById(R.id.buy_subscriptions_button);
 
         listSubscriptions(v);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                int id_sub = adapter.getSubscriptionId(position);
+                //String nombre_instalacion = adapter.getInstalacionName(position);
+
+                Toast.makeText(context, "Item clicked, "+" pos: " + position + " Id: " + id_sub, Toast.LENGTH_SHORT).show();
+
+                //aux_id_inst     = id_instalacion;       // Set that value to a Global Variable to use later.
+                //aux_name_inst   = nombre_instalacion;   // Set that value to a Global Variable to use later.
+
+                //Intent goToEquipos = new Intent(MainActivity.this, EquipoActivity.class);
+                //goToEquipos.putExtra("id_inst", id_instalacion);
+                //startActivity(goToEquipos);
+            }
+        });
+
+        buy_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent gotoBuy = new Intent(SubscriptionsActivity.this, BuyActivity.class);
+                gotoBuy.putExtra(USER_GLOBAL, username_global);
+                startActivity(gotoBuy);
+            }
+        });
     }
 
     public void listSubscriptions(View view){
@@ -66,7 +98,7 @@ public class SubscriptionsActivity extends AppCompatActivity {
                     Log.d(TAG, "Tiene al menos un resultado.");
 
                     // This method transforms the String to a Array String to populate the Subscriptions list
-                    //getSubscriptionsList(response);
+                    // getSubscriptionsList(response);
                     adapter = new SubscriptionAdapter(SubscriptionsActivity.this, getSubscriptionsList(response));
                     listView.setAdapter(adapter);
 
