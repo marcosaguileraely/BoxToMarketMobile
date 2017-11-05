@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fondo_cleared"
     android:orientation="vertical"
     tools:context="btm.app.SubscriptionsActivity">
+    <!--android:background="@drawable/fondo_cleared" -->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,7 +21,16 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="60dp"
-            android:layout_weight="1" />
+            android:layout_weight="0.86" />
+
+        <Button
+            android:id="@+id/buy_subscriptions_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.02"
+            android:background="@color/colorOrange"
+            android:text="@string/buy_subscriptions"
+            android:textColor="@color/colorWhite" />
     </LinearLayout>
 
 </LinearLayout>
