@@ -81,5 +81,8 @@
     <string name="metodo_de_recarga">Seleccione un metodo de recarga</string>
     <string name="add_credit_card">Agregar tarjeta de crédito</string>
 
+    <!-- Subscriptions UI-->
+    <string name="buy_subscriptions">Comprar</string>
+
 
 </resources>

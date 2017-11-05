@@ -81,4 +81,8 @@
     <string name="metodo_de_recarga">Select a method for add money</string>
     <string name="add_credit_card">Add credit card</string>
 
+    <!-- Subscriptions UI-->
+    <string name="buy_subscriptions">Buy subscriptions</string>
+
+
 </resources>
