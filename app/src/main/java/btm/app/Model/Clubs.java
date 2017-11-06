@@ -5,21 +5,21 @@ package btm.app.Model;
  */
 
 public class Clubs {
-    public int id;
+    public String id;
     public String title;
     public String img_uri;
 
-    public Clubs(int id, String title, String img_uri) {
+    public Clubs(String id, String title, String img_uri) {
         this.id = id;
         this.title = title;
         this.img_uri = img_uri;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
