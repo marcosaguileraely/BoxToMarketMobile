@@ -36,8 +36,6 @@ public class SubscriptionsActivity extends AppCompatActivity {
     private SubscriptionAdapter adapter;
     private View v;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -40,7 +40,6 @@ public class SubscriptionAdapter extends ArrayAdapter<Subscriptions> {
         return super.getCount();
     }
 
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // 1. Create inflater
