@@ -45,19 +45,6 @@ public class BuyActivity extends AppCompatActivity {
         Log.d(TAG, username_global);
 
         listClubsPublic(v);
-
-        dataSet = new ArrayList<>();
-        for (int i=0; i<=50; i++){
-            dataSet.add("Title movie # " + i);
-        }
-
-
-        recyclerView = (RecyclerView) findViewById(R.id.ClubsRVCardView);
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(layoutManager);
-        adapter = new ClubAdapter(dataSet);
-        recyclerView.setAdapter(adapter);
     }
 
 
@@ -78,11 +65,17 @@ public class BuyActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = sharedPref.edit();
 
                     Log.d(TAG, "Tiene al menos un resultado.");
-
                     // This method transforms the String to a Array String to populate the Subscriptions list
                     // getSubscriptionsList(response);
-                    // adapter = new SubscriptionAdapter(context, getSubscriptionsList(response));
+                    // adapter = new SubscriptionAdapter(context, );
                     // listView.setAdapter(adapter);
+
+                    recyclerView = (RecyclerView) findViewById(R.id.ClubsRVCardView);
+                    recyclerView.setHasFixedSize(true);
+                    layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+                    recyclerView.setLayoutManager(layoutManager);
+                    adapter = new ClubAdapter(getClubsList(response));
+                    recyclerView.setAdapter(adapter);
 
                 } else {
                     Toast.makeText(context, response, Toast.LENGTH_LONG).show();
@@ -90,9 +83,8 @@ public class BuyActivity extends AppCompatActivity {
             }
         };
 
-        new btm.app.Network.NetActions(this).listSubscriptions(username_global, response, progress);
+        new btm.app.Network.NetActions(this).listClubsPublic(username_global, response, progress);
     }
-
 
     public ArrayList<Clubs> getClubsList(String response){
         ArrayList<Clubs> items = new ArrayList<Clubs>();
@@ -106,10 +98,10 @@ public class BuyActivity extends AppCompatActivity {
             jsonObject        = new JSONObject();
             try {
                 jsonObject.put("id", subToken[0]);
-                jsonObject.put("qty", subToken[1]);
+                jsonObject.put("title", subToken[1]);
                 jsonObject.put("img_uri", subToken[2]);
                 jsonArray.put(jsonObject);
-                items.add(new Clubs(Integer.parseInt(subToken[0]), subToken[1], subToken[2]));
+                items.add(new Clubs(subToken[0], subToken[1], subToken[2]));
 
             } catch (JSONException e) {
                 e.printStackTrace();
