@@ -1,14 +1,17 @@
 package btm.app.Adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import com.bumptech.glide.Glide;
 
+import btm.app.Model.Clubs;
 import btm.app.R;
 
 /**
@@ -18,9 +21,10 @@ import btm.app.R;
 public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ViewHolder> {
 
     private ArrayList<String> dataSet;
+    ArrayList<Clubs> clubsArrayList;
 
-    public ClubAdapter(ArrayList<String> dataSet) {
-        this.dataSet = dataSet;
+    public ClubAdapter(ArrayList<Clubs> clubsArrayList) {
+        this.clubsArrayList = clubsArrayList;
     }
 
     @Override
@@ -33,28 +37,27 @@ public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ViewHolder> {
         return vh;
     }
 
-
     @Override
     public void onBindViewHolder(ClubAdapter.ViewHolder holder, int position) {
-        holder.title.setText(dataSet.get(position));
+        Clubs clubs = (Clubs) clubsArrayList.get(position);
+        holder.title.setText(String.valueOf(clubs.getTitle()));
+        Glide.with(holder.itemView.getContext()).load(clubs.getImg_uri()).into(holder.img_uri);
     }
 
     @Override
     public int getItemCount() {
-        return dataSet.size();
+        return clubsArrayList.size();
     }
-
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         public TextView title;
+        public ImageView img_uri;
 
         public ViewHolder(View itemView) {
             super(itemView);
-
-            title = (TextView) itemView.findViewById(R.id.title);
-
-
+            title   = (TextView) itemView.findViewById(R.id.title);
+            img_uri = (ImageView) itemView.findViewById(R.id.img_url);
         }
     }
 }
