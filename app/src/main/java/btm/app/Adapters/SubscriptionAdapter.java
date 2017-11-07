@@ -69,9 +69,4 @@ public class SubscriptionAdapter extends ArrayAdapter<Subscriptions> {
             return 0;
         }
     }
-
-
-
-
-
 }
