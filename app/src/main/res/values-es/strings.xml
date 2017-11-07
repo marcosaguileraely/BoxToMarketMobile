@@ -83,6 +83,9 @@
 
     <!-- Subscriptions UI-->
     <string name="buy_subscriptions">Comprar</string>
+    <string name="buy_subscription">Comprar</string>
+    <string name="list_clubs_available">Listado de clubes disponibles</string>
+    <string name="list_subscriptions_available">Listado de suscripciones disponibles</string>
 
 
 </resources>
