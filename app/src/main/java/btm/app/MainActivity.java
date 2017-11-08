@@ -25,10 +25,13 @@ import android.view.ViewGroup;
 
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 
 import org.apache.commons.lang3.text.WordUtils;
+
+import btm.app.DataHolder.DataHolder;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,11 +49,14 @@ public class MainActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-    private String pais;
+    private static String pais;
     private static String data;
     private static String username_global;
 
     public static final String USER_GLOBAL = "USERNAME";
+    public static final String TAG = "DEV -> Main";
+
+    public Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +81,12 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        pais            = getIntent().getStringArrayExtra(LoginActivity.PAIS)[1];
+        //pais          = getIntent().getStringArrayExtra(LoginActivity.PAIS)[1];
+               pais     = DataHolder.getId_country();
+        String username = DataHolder.getUsername();
+               data     = DataHolder.getData();
+
+        Log.d(TAG, "-> pais:" + pais + "-> user:"+ username + "-> data:" + data);
         data            = getIntent().getStringExtra(LoginActivity.DATOS);
         username_global = getIntent().getStringExtra(LoginActivity.USERNAME);
     }
@@ -184,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
             Subscriptions.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("DEV -> Main ", username_global);
+                    Log.d("DEV -> Main ", "-> " + username_global);
                     Intent intent = new Intent(getActivity(), SubscriptionsActivity.class);
                     startActivity(intent.putExtra(USER_GLOBAL, username_global));
                     startActivity(intent);
@@ -197,6 +208,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onResume() {
             super.onResume();
+
             Response.Listener<String> response = new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
@@ -207,14 +219,22 @@ public class MainActivity extends AppCompatActivity {
                     SharedPreferences sharedPref = getContext().getSharedPreferences(getResources().getString(R.string.preferencias), Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPref.edit();
                     editor.putString(LoginActivity.TOKEN, resptrm[1])
-                            .apply();
+                          .apply();
                     editor.commit();
                 }
             };
 
+            //I need to fix something here!
             String datos = "&pais="+getArguments().getInt(ARG_SECTION_NUMBER);
+            //String datos = "&pais="+Integer.valueOf(pais);
+            //String datos = data;
+            Log.d("DEV -> Main ", " datos -> " + datos + " -> ARG_SECTION_NUMBER "+ARG_SECTION_NUMBER);
             new Request(getContext()).http_get("trm",datos, response);
-            datos = getArguments().getString(ARG_SECTION_DATA);
+
+            //datos = getArguments().getString(ARG_SECTION_DATA);
+            String datos_saldos = DataHolder.getData();
+            //String datos_saldos = getArguments().getString(ARG_SECTION_DATA);
+            Log.d("DEV -> Main ", " datos -> " + datos_saldos + " -> ARG_SECTION_DATA "+ARG_SECTION_DATA);
 
             response = new Response.Listener<String>() {
                 @Override
@@ -228,8 +248,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("Response", response);
                 }
             };
-            new Request(getContext()).http_get("saldos",datos, response);
-
+            new Request(getContext()).http_get("saldos", datos_saldos, response);
         }
     }
 
@@ -361,4 +380,16 @@ public class MainActivity extends AppCompatActivity {
     public void onClose(View view){
         finish();
     }
+
+    public void onResume(){
+        super.onResume();
+
+        pais = DataHolder.getId_country();
+        username_global = DataHolder.getUsername();
+    }
+
+    public void onBackPressed(){
+        Toast.makeText(context, "¿Parece que quieres salir?. Cierra sesión", Toast.LENGTH_LONG).show();
+    }
+
 }
