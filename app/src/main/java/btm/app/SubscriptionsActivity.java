@@ -30,6 +30,7 @@ public class SubscriptionsActivity extends AppCompatActivity {
     private Context context = this;
 
     public static final String USER_GLOBAL = "USERNAME";
+    public static final String USER_GLOBAL_GETTER = "USERNAME";
     private static String username_global;
     private Button buy_button;
     private ListView listView;
@@ -54,16 +55,7 @@ public class SubscriptionsActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 int id_sub = adapter.getSubscriptionId(position);
-                //String nombre_instalacion = adapter.getInstalacionName(position);
-
                 Toast.makeText(context, "Item clicked, "+" pos: " + position + " Id: " + id_sub, Toast.LENGTH_SHORT).show();
-
-                //aux_id_inst     = id_instalacion;       // Set that value to a Global Variable to use later.
-                //aux_name_inst   = nombre_instalacion;   // Set that value to a Global Variable to use later.
-
-                //Intent goToEquipos = new Intent(MainActivity.this, EquipoActivity.class);
-                //goToEquipos.putExtra("id_inst", id_instalacion);
-                //startActivity(goToEquipos);
             }
         });
 
@@ -159,11 +151,18 @@ public class SubscriptionsActivity extends AppCompatActivity {
         return jsonArray;
     }
 
-    /*public void onBackPressed() {
+    public void onBackPressed() {
         Log.d(TAG, "onBackPressed Called");
         Intent intent = new Intent(SubscriptionsActivity.this, MainActivity.class);
         startActivity(intent);
-    }*/
+    }
+
+    public void onResume(){
+        super.onResume();
+        username_global = getIntent().getStringExtra(BuyActivity.USER_GLOBAL_SENDER);
+
+        listSubscriptions(v);
+    }
 
 
 }

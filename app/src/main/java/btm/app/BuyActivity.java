@@ -2,6 +2,7 @@ package btm.app;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,7 +32,7 @@ public class BuyActivity extends AppCompatActivity {
     private static String username_global;
     public static final String TAG = "DEV -> Buy Subs & clubs";
 
-    public static final String USER_GLOBAL_SENDER = "USERNAME";
+    public static final String USER_GLOBAL_SENDER = "USERNAME"; //this variable set username data vía intent
 
     private GridView subsGridView;
     private RecyclerView recyclerView;
@@ -187,5 +188,12 @@ public class BuyActivity extends AppCompatActivity {
 
         listClubsPublic(v);
         listSubscriptionsPublic(v);
+    }
+
+    public void onBackPressed(){
+        Log.d(TAG, "onBackPressed Called");
+        Intent gotoSubscripionsList = new Intent(context, SubscriptionsActivity.class);
+        gotoSubscripionsList.putExtra(USER_GLOBAL_SENDER , username_global);
+        startActivity(gotoSubscripionsList);
     }
 }
