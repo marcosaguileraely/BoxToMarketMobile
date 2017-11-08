@@ -30,7 +30,7 @@ public class SubscriptionsActivity extends AppCompatActivity {
     private Context context = this;
 
     public static final String USER_GLOBAL = "USERNAME";
-    public static final String USER_GLOBAL_GETTER = "USERNAME";
+    public static final String USER_GLOBAL_SENDER = "USERNAME";
     private static String username_global;
     private Button buy_button;
     private ListView listView;
@@ -43,7 +43,7 @@ public class SubscriptionsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_subscriptions);
 
         username_global =  getIntent().getStringExtra(MainActivity.USER_GLOBAL);
-        Log.d(TAG, username_global);
+        Log.d(TAG, "-> "+ username_global);
 
         listView   = (ListView) findViewById(R.id.subscriptions_list);
         buy_button = (Button) findViewById(R.id.buy_subscriptions_button);
@@ -123,7 +123,7 @@ public class SubscriptionsActivity extends AppCompatActivity {
             }
         }
 
-        Log.d(TAG, jsonArray.toString());
+        Log.d(TAG, "-> "+jsonArray.toString());
         return items;
     }
 
@@ -147,14 +147,14 @@ public class SubscriptionsActivity extends AppCompatActivity {
             }
         }
 
-        Log.d(TAG, jsonArray.toString());
+        Log.d(TAG, "-> "+jsonArray.toString());
         return jsonArray;
     }
 
     public void onBackPressed() {
-        Log.d(TAG, "onBackPressed Called");
-        Intent intent = new Intent(SubscriptionsActivity.this, MainActivity.class);
-        startActivity(intent);
+        Intent gotoMain = new Intent(SubscriptionsActivity.this, MainActivity.class);
+        gotoMain.putExtra(USER_GLOBAL_SENDER, username_global);
+        startActivity(gotoMain);
     }
 
     public void onResume(){
