@@ -157,4 +157,38 @@ public class NetActions {
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
     }
+
+    /*
+    * Este metódo obtiene el listado de clubes de la sección
+    * Interfaz Inicial > Botón Subscripciones BTM Mini> Comprar Subcripciones
+    * ::RecyclerView -> Scroll Horizontal
+    * */
+    public void getDetailsSubscriptions(String username, Response.Listener<String> response, final ProgressDialog pd, int idSub){
+        pd.show();
+
+        Log.d("DEV -> NetActions ", this.tkTime());
+        //listadoclubes
+        String url = "https://www.boxtomarket.com/index.php?r=app/detalleproductossuscripcion&username=" + username
+                     +"&token=" + this.tkTime() + "&id=" + idSub;
+        Log.d("DEV -> NetActions ", url);
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+
+        // Request a string response from the provided URL.
+        StringRequest Request = new StringRequest(GET, url,
+                response,
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("DEV -> NetActions ", "That didn't work!");
+                        Toast.makeText(context ,error.getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        queue.add(Request.setRetryPolicy(new DefaultRetryPolicy(30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
+    }
+
+
 }

@@ -31,6 +31,8 @@ public class BuyActivity extends AppCompatActivity {
     private static String username_global;
     public static final String TAG = "DEV -> Buy Subs & clubs";
 
+    public static final String USER_GLOBAL_SENDER = "USERNAME";
+
     private GridView subsGridView;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -48,7 +50,7 @@ public class BuyActivity extends AppCompatActivity {
         username_global =  getIntent().getStringExtra(SubscriptionsActivity.USER_GLOBAL);
         subsGridView    = (GridView) findViewById(R.id.SubsGridView);
 
-        Log.d(TAG, username_global);
+        //Log.d(TAG, username_global);
 
         listClubsPublic(v);
         listSubscriptionsPublic(v);
@@ -69,7 +71,7 @@ public class BuyActivity extends AppCompatActivity {
                     SharedPreferences sharedPref    = getSharedPreferences("preferencias", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPref.edit();
 
-                    Log.d(TAG, "Tiene al menos un resultado.");
+                    //Log.d(TAG, "Tiene al menos un resultado.");
 
                     recyclerView = (RecyclerView) findViewById(R.id.ClubsRVCardView);
                     recyclerView.setHasFixedSize(true);
@@ -103,8 +105,14 @@ public class BuyActivity extends AppCompatActivity {
 
                     Log.d(TAG, "Tiene al menos un resultado.");
 
-                    subsPublicAdapter = new SubsPublicAdapter(context, getSubscriptionsPublicList(response));
+                    subsPublicAdapter = new SubsPublicAdapter(context, getSubscriptionsPublicList(response), username_global);
                     subsGridView.setAdapter(subsPublicAdapter);
+
+                    /* Si estas viendo esta pieza de código quizá
+                     * estes buscando la función quue realiza el Intent,
+                     * dicha funcione no se encuentra aquí, para verla dirigete la clase: Adapters > SubsPublicAdapter.class
+                     * y en la línea 58 lo encontrarás.
+                     */
 
                 } else {
                     Toast.makeText(context, response, Toast.LENGTH_LONG).show();
@@ -165,7 +173,19 @@ public class BuyActivity extends AppCompatActivity {
             }
         }
 
-        Log.d(TAG, jsonArray.toString());
+        //Log.d(TAG, jsonArray.toString());
         return items;
+    }
+
+    public void onResume(){
+        super.onResume();
+
+        username_global =  getIntent().getStringExtra(SubscriptionsDetailsActivity.USER_GLOBAL_SENDER);
+        subsGridView    = (GridView) findViewById(R.id.SubsGridView);
+
+        //Log.d(TAG, username_global);
+
+        listClubsPublic(v);
+        listSubscriptionsPublic(v);
     }
 }
