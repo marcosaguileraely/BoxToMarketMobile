@@ -215,6 +215,7 @@ public class MainActivity extends AppCompatActivity {
             String datos = "&pais="+getArguments().getInt(ARG_SECTION_NUMBER);
             new Request(getContext()).http_get("trm",datos, response);
             datos = getArguments().getString(ARG_SECTION_DATA);
+
             response = new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
