@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.android.volley.Response;
 
+import btm.app.DataHolder.DataHolder;
+
 public class LoginActivity extends AppCompatActivity {
 
     public static final String PAIS = "PAIS";
@@ -101,6 +103,8 @@ public class LoginActivity extends AppCompatActivity {
                           .apply();
                     editor.commit();
 
+
+
                     Log.d("===>", editor.toString());
                     String username_global = user.getText().toString();
 
@@ -108,6 +112,9 @@ public class LoginActivity extends AppCompatActivity {
                     LoginActivity.this.startActivity(intent.putExtra(PAIS, response.replace("|",";").split(";"))
                                                            .putExtra(USERNAME, username_global)
                                                            .putExtra(DATOS, datos));
+                    DataHolder.setId_country(response.replace("|",";").split(";")[1]);
+                    DataHolder.setUsername(username_global);
+                    DataHolder.setData(datos);
 
                     password.setText("");
                     user.setText("");
