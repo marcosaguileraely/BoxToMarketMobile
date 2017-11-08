@@ -15,10 +15,9 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-import btm.app.ForgotPassActivity;
-import btm.app.MainActivity;
 import btm.app.Model.SubscriptionsPublic;
 import btm.app.R;
+import btm.app.SubscriptionsDetailsActivity;
 
 /**
  * Created by maguilera on 11/6/17.
@@ -28,12 +27,16 @@ public class SubsPublicAdapter extends BaseAdapter{
 
     private Context context;
     ArrayList<SubscriptionsPublic> subscriptionsPublics;
-    private ArrayList<String> arrayList;
     private LayoutInflater layoutInflater;
+    private static String username_global;
+    public static final String USER_GLOBAL = "USERNAME";
+    public static final String ID_GLOBAL   = "IDSUB";
+    public static final String URI_IMG     = "URI_IMG";
 
-    public SubsPublicAdapter(Context context, ArrayList<SubscriptionsPublic> subscriptionsPublics) {
+    public SubsPublicAdapter(Context context, ArrayList<SubscriptionsPublic> subscriptionsPublics, String username_global) {
         this.context = context;
         this.subscriptionsPublics = subscriptionsPublics;
+        this.username_global = username_global;
     }
 
     @Override
@@ -59,9 +62,14 @@ public class SubsPublicAdapter extends BaseAdapter{
             @Override
             public void onClick(View v) {
                 String title = subscriptionsPublic.getTitle();
-                int id = subscriptionsPublic.getId();
+                int id       = subscriptionsPublic.getId();
+
                 Toast.makeText(context, "Button clicked "+title + " id: "+id, Toast.LENGTH_SHORT).show();
-                Intent goToDetails = new Intent(context, ForgotPassActivity.class);
+
+                Intent goToDetails = new Intent(context, SubscriptionsDetailsActivity.class);
+                context.startActivity(goToDetails.putExtra(USER_GLOBAL, username_global));
+                context.startActivity(goToDetails.putExtra(ID_GLOBAL, id));
+                context.startActivity(goToDetails.putExtra(URI_IMG, subscriptionsPublic.getImg_uri()));
                 context.startActivity(goToDetails);
             }
         });
