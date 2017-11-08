@@ -84,8 +84,12 @@
         <activity
             android:name=".ChargeActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".BuyActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".BuyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SubscriptionsDetailsActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
