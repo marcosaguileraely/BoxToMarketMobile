@@ -19,6 +19,8 @@ import com.android.volley.Response;
 
 import java.util.ArrayList;
 
+import btm.app.Network.NetActions;
+
 public class Recargar extends DataJp {
 
     private Button clic;
@@ -26,9 +28,10 @@ public class Recargar extends DataJp {
     private Spinner metodo, tC;
     private ArrayList<CC> listTc;
     private TextView user_text;
+    public Context context = this;
+
 
     public static final String TAG = "DEV -> Recargar";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,15 +39,18 @@ public class Recargar extends DataJp {
         setContentView(R.layout.activity_recargar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        final Request request = new Request(context);
+        final NetActions netActions = new NetActions(context);
+
         tC      = (Spinner) findViewById(R.id.spinnerTC);
         metodo  = (Spinner) findViewById(R.id.spinnerTipoRecarga);
         token   = (EditText) findViewById(R.id.editTextToken);
         monto   = (EditText) findViewById(R.id.editTextMonto);
         clic    = (Button) findViewById(R.id.buttonRecargar);
-        user_text = (TextView) findViewById(R.id.textView2);
+        //user_text = (TextView) findViewById(R.id.textView2);
 
         tC.setVisibility(View.GONE);
-        user_text.setText("XXXXXXX");
+        //user_text.setText("XXXXXXX");
 
         listTc = new ArrayList<CC>();
 
@@ -61,16 +67,15 @@ public class Recargar extends DataJp {
 
                 //if(modo.contains(getResources().getString(R.string.tipo_tarjeta))){
                 if(modo.equals("Credit Card") || modo.equals("Tarjeta de Crédito")){
-                    Log.d(TAG, "1");
+                    String tk = netActions.tkTime();
+                    Log.d(TAG, " tk ->"+tk);
                     tC.setVisibility(View.VISIBLE);
                     monto.setVisibility(View.VISIBLE);
                     token.setVisibility(View.GONE);
-                    Log.d(TAG, "2");
-                    Request request = new Request(getApplicationContext());
-                    String datos = "&username="+user
-                                   +"&token="+request.tk();
 
-                    request.http_get("menutarjetas", datos, new Response.Listener<String>() {
+                    String datos = "&username="+user;
+
+                    netActions.http_get_data("menutarjetas", datos, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
                             if (response.contains("Token")) {
@@ -85,8 +90,7 @@ public class Recargar extends DataJp {
                             }
 
                             String[] inf = response.replace("|", ";").split(";");
-                            for (String cc :
-                                    inf) {
+                            for (String cc : inf) {
                                 listTc.add(new CC(cc));
                             }
 
@@ -94,9 +98,9 @@ public class Recargar extends DataJp {
                             // Specify the layout to use when the list of choices appears
                             //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             tC.setAdapter(adapter);
-
                         }
                     });
+
                 } else {
                     listTc = new ArrayList<CC>();
                     //tC.setVisibility(View.GONE);
