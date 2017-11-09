@@ -30,12 +30,22 @@
                 android:layout_height="150dp" />
 
             <Button
-                android:id="@+id/button6"
+                android:id="@+id/pay_subscription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/buy_subscription"
                 android:textAllCaps="false"
                 android:theme="@style/OrangeButton" />
+
+            <TextView
+                android:id="@+id/detail_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/detail_type"

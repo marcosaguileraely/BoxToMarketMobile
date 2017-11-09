@@ -42,6 +42,12 @@
         <item>Tarjeta de Crédito</item>
     </string-array>
 
+    <string-array name="pago_subs">
+        <item>Tarjeta de Crédito</item>
+        <item>Créditos BtM</item>
+        <item>Token</item>
+    </string-array>
+
     <string-array name="tipo_compra">
         <item>@string/tipo_creditos</item>
         <item>@string/tipo_tarjeta</item>

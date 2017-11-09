@@ -74,7 +74,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void  forgetPass(View view){
-        //Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.boxtomarket.com/index.php?r=site%2Frequest-password-reset"));
         Intent gotoForgot =  new Intent(LoginActivity.this, ForgotPassActivity.class);
         startActivity(gotoForgot);
     }
@@ -112,6 +111,7 @@ public class LoginActivity extends AppCompatActivity {
                     LoginActivity.this.startActivity(intent.putExtra(PAIS, response.replace("|",";").split(";"))
                                                            .putExtra(USERNAME, username_global)
                                                            .putExtra(DATOS, datos));
+
                     DataHolder.setId_country(response.replace("|",";").split(";")[1]);
                     DataHolder.setUsername(username_global);
                     DataHolder.setData(datos);

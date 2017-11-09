@@ -90,6 +90,9 @@
         <activity
             android:name=".SubscriptionsDetailsActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".BuySubscriptionConfirmActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

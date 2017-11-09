@@ -32,6 +32,7 @@ public class SubsPublicAdapter extends BaseAdapter{
     public static final String USER_GLOBAL = "USERNAME";
     public static final String ID_GLOBAL   = "IDSUB";
     public static final String URI_IMG     = "URI_IMG";
+    public static final String TITLE       = "TITLE";
 
     public SubsPublicAdapter(Context context, ArrayList<SubscriptionsPublic> subscriptionsPublics, String username_global) {
         this.context = context;
@@ -70,6 +71,7 @@ public class SubsPublicAdapter extends BaseAdapter{
                 context.startActivity(goToDetails.putExtra(USER_GLOBAL, username_global));
                 context.startActivity(goToDetails.putExtra(ID_GLOBAL, id));
                 context.startActivity(goToDetails.putExtra(URI_IMG, subscriptionsPublic.getImg_uri()));
+                context.startActivity(goToDetails.putExtra(TITLE, subscriptionsPublic.getTitle()));
                 context.startActivity(goToDetails);
             }
         });
