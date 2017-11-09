@@ -84,17 +84,21 @@ public class Request {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
     }
 
-    public static String tkTime(){
+    public String tkTime(){
         long time = System.currentTimeMillis();
         Date date = new Date(time);
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", new Locale("es_CO"));
         String tk_ = ("aplicacionbtm1"+formatter.format(date));
+        Log.d("tktime11---->", "--->::::"+tk_);
+        Log.d("tktime11---->", "--->::::"+Base64.encodeToString(tk_.getBytes(), Base64.DEFAULT));
         return Base64.encodeToString(tk_.getBytes(), Base64.DEFAULT);
     }
 
     public String tk(){
         SharedPreferences shPref = context.getSharedPreferences(context.getResources().getString(R.string.preferencias), Context.MODE_PRIVATE);
-        String ret = shPref.getString(LoginActivity.TOKEN,tkTime());
+        String ret = shPref.getString(LoginActivity.TOKEN, tkTime());
+        Log.d("tktime22---->", "--->::::"+ret);
+        Log.d("tktime22---->", "--->::::"+Base64.encodeToString(("aplicacionbtm1"+ret).getBytes(), Base64.DEFAULT));
         return Base64.encodeToString(("aplicacionbtm1"+ret).getBytes(), Base64.DEFAULT);
     }
 
