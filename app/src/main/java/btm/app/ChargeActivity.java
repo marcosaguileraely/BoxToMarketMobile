@@ -19,6 +19,8 @@ import com.android.volley.Response;
 
 import java.util.ArrayList;
 
+import btm.app.Network.NetActions;
+
 public class ChargeActivity extends AppCompatActivity {
 
     public static final String TAG = "DEV -> Add money";
@@ -35,6 +37,8 @@ public class ChargeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_charge);
+
+        final NetActions netActions = new NetActions(context);
 
         creditCardList    = (Spinner) findViewById(R.id.spinnerCreditCards);
         addMoneyMethod    = (Spinner) findViewById(R.id.spinnerTipoRecarga);
@@ -68,10 +72,11 @@ public class ChargeActivity extends AppCompatActivity {
                     creditCardList.setVisibility(View.VISIBLE);
 
                     Log.d(TAG, "2");
+                    Log.d(TAG, "22222222");
                     Request request = new Request(getApplicationContext());
-                    String datos = "&username="+user +"&token="+request.tk();
+                    String datos = "&username="+user;
 
-                    request.http_get("menutarjetas", datos, new Response.Listener<String>() {
+                    netActions.http_get_data("menutarjetas", datos, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
                             if (response.contains("Token")) {
@@ -87,8 +92,7 @@ public class ChargeActivity extends AppCompatActivity {
                             }
 
                             String[] inf = response.replace("|", ";").split(";");
-                            for (String cc :
-                                    inf) {
+                            for (String cc : inf) {
                                 listTc.add(new CC(cc));
                             }
 
