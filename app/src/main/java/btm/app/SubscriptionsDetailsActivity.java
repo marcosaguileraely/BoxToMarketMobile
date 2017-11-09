@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import btm.app.Adapters.SubsPublicAdapter;
+import btm.app.DataHolder.DataHolderSubs;
 import btm.app.Model.Clubs;
 import btm.app.Model.SubscriptionsDetails;
 import btm.app.Model.SubscriptionsPublic;
@@ -35,7 +37,7 @@ public class SubscriptionsDetailsActivity extends AppCompatActivity {
 
     public static final String USER_GLOBAL_SENDER = "USERNAME";
 
-    private static String username_global, img_uri_txt;
+    private static String username_global, img_uri_txt, title;
     private static int id;
 
     private Context context = this;
@@ -43,27 +45,39 @@ public class SubscriptionsDetailsActivity extends AppCompatActivity {
 
     ArrayList<SubscriptionsDetails> subscriptionsDetailsArrayList;
 
-    private TextView type, category, qty, price, seller, location, description;
+    private TextView name, type, category, qty, price, seller, location, description;
     private ImageView img_uri;
+    private Button pay_subscription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_subscriptions_details);
 
-        username_global = getIntent().getStringExtra(SubsPublicAdapter.USER_GLOBAL);
-        id              = getIntent().getIntExtra(SubsPublicAdapter.ID_GLOBAL, 0);
-        img_uri_txt     = getIntent().getStringExtra(SubsPublicAdapter.URI_IMG);
+        username_global  = getIntent().getStringExtra(SubsPublicAdapter.USER_GLOBAL);
+        id               = getIntent().getIntExtra(SubsPublicAdapter.ID_GLOBAL, 0);
+        img_uri_txt      = getIntent().getStringExtra(SubsPublicAdapter.URI_IMG);
+        title            = getIntent().getStringExtra(SubsPublicAdapter.TITLE);
 
-        type        = (TextView) findViewById(R.id.detail_data_type);
-        category    = (TextView) findViewById(R.id.detail_data_category);
-        qty         = (TextView) findViewById(R.id.detail_data_qty);
-        price       = (TextView) findViewById(R.id.detail_data_price);
-        seller      = (TextView) findViewById(R.id.detail_data_seller);
-        description = (TextView) findViewById(R.id.detail_data_description);
-        img_uri     = (ImageView) findViewById(R.id.detail_img);
+        name             = (TextView) findViewById(R.id.detail_title);
+        type             = (TextView) findViewById(R.id.detail_data_type);
+        category         = (TextView) findViewById(R.id.detail_data_category);
+        qty              = (TextView) findViewById(R.id.detail_data_qty);
+        price            = (TextView) findViewById(R.id.detail_data_price);
+        seller           = (TextView) findViewById(R.id.detail_data_seller);
+        description      = (TextView) findViewById(R.id.detail_data_description);
+        img_uri          = (ImageView) findViewById(R.id.detail_img);
+        pay_subscription = (Button) findViewById(R.id.pay_subscription);
 
         Toast.makeText(context, "Data passed-> Username: "+username_global + " id: "+id, Toast.LENGTH_SHORT).show();
+
+        pay_subscription.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent gotoPay = new Intent(context, BuySubscriptionConfirmActivity.class);
+                startActivity(gotoPay);
+            }
+        });
 
         getSubscriptionsPublicDetails(v);
     }
@@ -102,6 +116,8 @@ public class SubscriptionsDetailsActivity extends AppCompatActivity {
                     Log.d(TAG, "I'm in! "+ "-> "+type + "-> "+category);
 
                     Glide.with(context).load(img_uri_txt).into(img_uri);
+                    name.setText(title);
+                    type.setText(type_data);
                     type.setText(type_data);
                     category.setText(category_data);
                     qty.setText(String.valueOf(qty_data));
@@ -147,6 +163,12 @@ public class SubscriptionsDetailsActivity extends AppCompatActivity {
                                                     mainToken[5],
                                                     mainToken[6],
                                                     mainToken[8]));
+
+                DataHolderSubs.setId(id);
+                DataHolderSubs.setImg_url(img_uri_txt);
+                DataHolderSubs.setName(title);
+                DataHolderSubs.setProduct_type(mainToken[0]);
+                DataHolderSubs.setPrice(mainToken[4]);
 
             } catch (JSONException e) {
                 e.printStackTrace();

@@ -58,6 +58,8 @@ public class NetActions {
         Date date = new Date(time);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         String tk_ = ("aplicacionbtm1"+formatter.format(date));
+        Log.d("Time gen ", "data: "+tk_);
+        Log.d("Time gen ", "data: "+Base64.encodeToString(tk_.getBytes(), Base64.DEFAULT));
         return Base64.encodeToString(tk_.getBytes(), Base64.DEFAULT);
     }
 
@@ -190,5 +192,28 @@ public class NetActions {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
     }
 
+    public void http_get_data(String metodo, String datos, Response.Listener<String> response){
 
+        String url = "https://www.boxtomarket.com/index.php?r=app/"
+                + metodo
+                + datos
+                + "&token="+this.tkTime();
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+        StringRequest postRequest = new StringRequest(com.android.volley.Request.Method.GET, url,
+                response,
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", error.toString());
+                        Toast.makeText(context ,error.getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+        queue.add(postRequest.setRetryPolicy(new DefaultRetryPolicy(30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
+    }
 }
