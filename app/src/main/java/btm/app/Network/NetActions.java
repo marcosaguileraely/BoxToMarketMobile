@@ -216,4 +216,27 @@ public class NetActions {
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
     }
+
+    public void buySubscription(String datos, Response.Listener<String> response, final ProgressDialog pd){
+
+        String url = "https://www.boxtomarket.com/index.php?r=app/comprarsuscripcion&token="+this.tkTime()
+                   + "&datos="+this.datoBase64(datos);
+        Log.d("->", "->"+url);
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+        StringRequest postRequest = new StringRequest(com.android.volley.Request.Method.GET, url,
+                response,
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", error.toString());
+                        Toast.makeText(context ,error.getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+        queue.add(postRequest.setRetryPolicy(new DefaultRetryPolicy(30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
+    }
 }

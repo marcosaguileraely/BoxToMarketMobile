@@ -10,6 +10,8 @@ public class DataHolder {
     private static String pass;
     private static String id_country;
 
+    private static String pin;
+
     public static String getUsername() {
         return username;
     }
@@ -40,5 +42,10 @@ public class DataHolder {
 
     public static String setData(String data) {
        return DataHolder.data = data;
+    }
+
+    public static String getPin() {
+
+        return pin;
     }
 }

@@ -9,6 +9,7 @@ import android.util.Log;
 public class CC {
 
     private String id;
+
     private String num;
 
     public CC(String inf) {
@@ -20,6 +21,10 @@ public class CC {
 
     public String getId() {
         return id;
+    }
+
+    public String getNum() {
+        return num;
     }
 
     @Override

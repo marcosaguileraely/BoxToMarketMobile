@@ -68,7 +68,8 @@
                 android:id="@+id/spinnerCreditCards"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:layout_margin="10dp" />
+                android:layout_margin="10dp"
+                android:visibility="gone" />
 
 
             <EditText
@@ -76,10 +77,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="number" />
+                android:inputType="number"
+                android:visibility="gone" />
 
             <Button
-                android:id="@+id/button6"
+                android:id="@+id/pay_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/buy_subscription"
