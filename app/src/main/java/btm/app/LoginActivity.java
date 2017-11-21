@@ -120,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
                     user.setText("");
 
                 } else {
-                    Toast.makeText(LoginActivity.this, response, Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "No ha sido posible iniciar sesión. Verfica los datos e intenta nuevamente", Toast.LENGTH_LONG).show();
                 }
             }
         };

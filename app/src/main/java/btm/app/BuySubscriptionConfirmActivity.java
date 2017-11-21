@@ -167,10 +167,12 @@ public class BuySubscriptionConfirmActivity extends AppCompatActivity {
                 String pin     = pinData[1];
                 Log.d(TAG, "passtxt: "+ passtxt + " pin: " + pin);
 
-                String card_id_aux = "";
-                String datos = "";
+                token_number = token.getText().toString();
 
-                if(modo.equals("Tarjeta de Crédito") || modo.equals("Credit card")){
+                //String card_id_aux = "";
+                //String datos = "";
+
+                /*if(modo.equals("Tarjeta de Crédito") || modo.equals("Credit card")){
                     card_id_aux = card_id;
                     token_number = "";
 
@@ -207,16 +209,16 @@ public class BuySubscriptionConfirmActivity extends AppCompatActivity {
                             + "|" + DataHolderSubs.getId()
                             + "|";
                     Log.d(TAG, "datos -> "+ datos);
-                }
+                }*/
 
-                       /*datos = "&datos=" + DataHolder.getUsername()
+                String datos = DataHolder.getUsername()
                              + "|" + pin
                              + "|" + convertPaymentMode(modo)
-                             + "|" + card_id_aux
+                             + "|" + card_id
                              + "|" + token_number
                              + "|" + DataHolderSubs.getId()
                              + "|";
-                Log.d(TAG, "datos -> "+ datos);*/
+                Log.d(TAG, "datos -> "+ datos);
 
                 //if(token.getText().toString().length() > 0 ){ //Need to be sure if the user put a Token
 
