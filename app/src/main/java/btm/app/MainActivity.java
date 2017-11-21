@@ -4,10 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -29,8 +26,7 @@ import android.widget.Toast;
 
 import com.android.volley.Response;
 
-import org.apache.commons.lang3.text.WordUtils;
-
+import btm.app.BleecardUI.BleecardMainActivity;
 import btm.app.DataHolder.DataHolder;
 
 public class MainActivity extends AppCompatActivity {
@@ -165,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
         private static final String ARG_SECTION_NUMBER = "section_number";
         private static final String ARG_SECTION_DATA = "section_data";
         private TextView textViewTrm, textViewSaldoCreditos, textViewSaldoCompensacion;
-        private Button Subscriptions;
+        private Button Subscriptions, Bleecard;
 
         public PlaceholderFragment() {
         }
@@ -184,13 +180,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 
             View rootView               = inflater.inflate(R.layout.fragment_main, container, false);
             textViewTrm                 = (TextView) rootView.findViewById(R.id.textViewTrm);
             textViewSaldoCompensacion   = (TextView) rootView.findViewById(R.id.textViewSaldoCompensacion);
             textViewSaldoCreditos       = (TextView) rootView.findViewById(R.id.textViewSaldoCredito);
             Subscriptions               = (Button) rootView.findViewById(R.id.my_subscriptions_btn);
+            Bleecard                    = (Button) rootView.findViewById(R.id.bleecard_btn);
 
             Subscriptions.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -199,6 +196,14 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(getActivity(), SubscriptionsActivity.class);
                     startActivity(intent.putExtra(USER_GLOBAL, username_global));
                     startActivity(intent);
+                }
+            });
+
+            Bleecard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent gotoBleecard = new Intent(getActivity(), BleecardMainActivity.class);
+                    startActivity(gotoBleecard);
                 }
             });
 
