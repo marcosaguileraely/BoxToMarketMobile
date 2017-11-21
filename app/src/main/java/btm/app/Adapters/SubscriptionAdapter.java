@@ -36,11 +36,6 @@ public class SubscriptionAdapter extends ArrayAdapter<Subscriptions> {
     }
 
     @Override
-    public int getCount() {
-        return super.getCount();
-    }
-
-    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // 1. Create inflater
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -60,6 +55,11 @@ public class SubscriptionAdapter extends ArrayAdapter<Subscriptions> {
 
         // 5. return rowView
         return rowView;
+    }
+
+    @Override
+    public int getCount() {
+        return super.getCount();
     }
 
     public int getSubscriptionId(int position) {
