@@ -221,7 +221,7 @@ public class NetActions {
 
         String url = "https://www.boxtomarket.com/index.php?r=app/comprarsuscripcion&token="+this.tkTime()
                    + "&datos="+this.datoBase64(datos);
-        Log.d("->", "->"+url);
+        Log.d("->", "->"+url + " ---- "+datos);
 
         RequestQueue queue = Volley.newRequestQueue(context);
         StringRequest postRequest = new StringRequest(com.android.volley.Request.Method.GET, url,

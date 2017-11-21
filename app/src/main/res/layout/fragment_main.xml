@@ -242,7 +242,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button11"
+                android:id="@+id/bleecard_btn"
                 android:layout_width="110dp"
                 android:layout_height="110dp"
                 android:layout_marginBottom="2dp"
