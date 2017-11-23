@@ -86,6 +86,7 @@
     <string name="buy_subscription">Buy</string>
     <string name="list_clubs_available">Clubs list available</string>
     <string name="list_subscriptions_available">Subscriptions list available</string>
+    <string name="search_bluethoot">Search devices</string>
 
 
 </resources>
