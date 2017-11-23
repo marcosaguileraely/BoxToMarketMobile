@@ -217,10 +217,39 @@ public class NetActions {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
     }
 
+    /*
+    * Este metódo permite la compra de suscripciones
+    * Interfaz Inicial > Botón Subscripciones BTM Mini> Comprar Subcripciones > Seleccionar suscripciones > detalles > comprar
+    * */
     public void buySubscription(String datos, Response.Listener<String> response, final ProgressDialog pd){
 
         String url = "https://www.boxtomarket.com/index.php?r=app/comprarsuscripcion&token="+this.tkTime()
                    + "&datos="+this.datoBase64(datos);
+        Log.d("->", "->"+url + " ---- "+datos);
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+        StringRequest postRequest = new StringRequest(com.android.volley.Request.Method.GET, url,
+                response,
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", error.toString());
+                        Toast.makeText(context ,error.getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+        queue.add(postRequest.setRetryPolicy(new DefaultRetryPolicy(30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
+    }
+
+    public void getBleecarddata(String datos, Response.Listener<String> response, String ssidsdata,final ProgressDialog pd){
+
+        String url = "https://www.bleecard.com/api/getMachines.do"
+                   + "&token=tk_test_ZQokik736473jklWgH4olfk2"
+                   + "&key=pk_test_6pRNAHGGoqiwFHFKjkj4XMrh"
+                   + "&ssids="+ssidsdata;
         Log.d("->", "->"+url + " ---- "+datos);
 
         RequestQueue queue = Volley.newRequestQueue(context);
