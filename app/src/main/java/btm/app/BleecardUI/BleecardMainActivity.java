@@ -38,13 +38,11 @@ public class BleecardMainActivity extends AppCompatActivity {
 
     public Context context = this;
     ArrayList<Bluethoot> items = new ArrayList<Bluethoot>();
-    //ArrayList<Bluethoot> items = new ArrayList<Bluethoot>();
-    public ArrayList<BluetoothDevice> mBTDevices = new ArrayList<>();
     BluethAdapter adapter;
     BluetoothAdapter mBluetoothAdapter;
 
     ListView blueList;
-    Button getBlue;
+    Button getDevices;
 
     public View v;
 
@@ -53,8 +51,8 @@ public class BleecardMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bleecard_main);
 
-        blueList = (ListView) findViewById(R.id.blue_listview);
-        getBlue  = (Button) findViewById(R.id.getBleeData);
+        blueList    = (ListView) findViewById(R.id.blue_listview);
+        getDevices  = (Button) findViewById(R.id.search_devices_button);
 
         Log.d(TAG, "forzar encendido del BT");
         enableBTFull(v);
@@ -79,12 +77,20 @@ public class BleecardMainActivity extends AppCompatActivity {
             }
         }, 2000);
 
-        /*getBlue.setOnClickListener(new View.OnClickListener() {
+        getDevices.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //clearing the data before new search of devices
+                adapter.clear();
+                adapter.notifyDataSetChanged();
+                Toast.makeText(context,"Searching...", Toast.LENGTH_SHORT).show();
 
+                //Enabling the bluethoot hardware
+                enableBTFull(v);
+                //Starting a new search
+                btnDiscover(v);
             }
-        });*/
+        });
     }
 
     //This options need the user permission
@@ -128,13 +134,15 @@ public class BleecardMainActivity extends AppCompatActivity {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 String deviceName = device.getName();
                 String deviceHardwareAddress = device.getAddress(); // MAC address
-                Log.d(TAG, "Data " + "Name: " + deviceName + "Mac: "+ deviceHardwareAddress);
+                Log.d(TAG, "Data " + "Name: " + deviceName + " Mac: "+ deviceHardwareAddress);
             }
         }
     };
 
-
-
+    /**
+     *
+     * This method initialized the Bluethoot devices search
+     */
     public void btnDiscover(View view) {
         Log.d(TAG, "btnDiscover: Looking for unpaired devices.");
 
@@ -194,7 +202,6 @@ public class BleecardMainActivity extends AppCompatActivity {
 
     }
 
-
     /**
      * This method is required for all devices running API23+
      * Android must programmatically check the permissions for bluetooth. Putting the proper permissions
@@ -219,7 +226,7 @@ public class BleecardMainActivity extends AppCompatActivity {
 
     /**
      * Broadcast Receiver for listing devices that are not yet paired
-     * -Executed by btnDiscover() method.
+     * Executed by btnDiscover() method.
      */
     private BroadcastReceiver mBroadcastReceiver3 = new BroadcastReceiver() {
         @Override
@@ -233,11 +240,14 @@ public class BleecardMainActivity extends AppCompatActivity {
                 BluetoothDevice device = intent.getParcelableExtra (BluetoothDevice.EXTRA_DEVICE);
                 //mBTDevices.add(device);
                 Log.d(TAG, "onReceive: " + device.getName() + ": " + device.getAddress());
-
-                //mDeviceListAdapter = new DeviceListAdapter(context, R.layout.device_adapter_view, mBTDevices);
-                //lvNewDevices.setAdapter(mDeviceListAdapter);
-
-                items.add(new Bluethoot(device.getName(), device.getAddress(), device.getAddress()));
+                if (device.getName().contains("BLECard")){
+                    Log.d(TAG, "onReceive: " + "hay al menos un dispositivo blee");
+                    items.add(new Bluethoot(device.getName(), device.getAddress(), device.getAddress()));
+                }else if (device.getName().contains("BLECard")){
+                    Log.d(TAG, "onReceive: " + "Device with null name");
+                }else {
+                    Log.d(TAG, "onReceive: " + "ups no dispositivos de tipo BLECard detectados");
+                }
             }
             adapter = new BluethAdapter(context, items);
             blueList.setAdapter(adapter);
