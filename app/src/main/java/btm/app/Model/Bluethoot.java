@@ -16,7 +16,7 @@ public class Bluethoot {
     }
 
     public String getUuid() {
-        return uuid;
+        return uuid.toString();
     }
 
     public void setUuid(String uuid) {

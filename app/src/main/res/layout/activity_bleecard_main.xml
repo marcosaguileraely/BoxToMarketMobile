@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5dp"
+    android:orientation="vertical"
     tools:context="btm.app.BleecardUI.BleecardMainActivity">
 
     <LinearLayout
@@ -14,13 +13,6 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/getBleeData"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Show Bluethoot"
-            android:visibility="gone" />
-
         <ListView
             android:id="@+id/blue_listview"
             android:layout_width="match_parent"
@@ -28,6 +20,16 @@
             android:layout_weight="1"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="8dp" />
+
     </LinearLayout>
+
+    <Button
+        android:id="@+id/search_devices_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.02"
+        android:background="@color/colorOrange"
+        android:text="@string/search_bluethoot"
+        android:textColor="@color/colorWhite" />
 
 </LinearLayout>

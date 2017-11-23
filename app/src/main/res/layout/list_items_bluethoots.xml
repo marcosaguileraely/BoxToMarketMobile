@@ -45,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center_vertical"
+                android:gravity="bottom"
                 android:text="TextView"
                 android:textColor="@color/colorOrange"
                 android:textSize="18sp"

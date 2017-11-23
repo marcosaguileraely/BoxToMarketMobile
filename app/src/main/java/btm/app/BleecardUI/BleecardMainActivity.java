@@ -72,14 +72,25 @@ public class BleecardMainActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                //Do something after 100ms
+                //Do something after 2000ms
                 btnDiscover(v);
             }
         }, 2000);
 
         getDevices.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
+                searchAgainManually(v);
+            }
+        });
+    }
+
+    public void searchAgainManually(View view){
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //Do something after 2000ms
                 //clearing the data before new search of devices
                 adapter.clear();
                 adapter.notifyDataSetChanged();
@@ -90,8 +101,10 @@ public class BleecardMainActivity extends AppCompatActivity {
                 //Starting a new search
                 btnDiscover(v);
             }
-        });
+        }, 2000);
     }
+
+
 
     //This options need the user permission
     public void enableBT(View view){
@@ -230,7 +243,7 @@ public class BleecardMainActivity extends AppCompatActivity {
      */
     private BroadcastReceiver mBroadcastReceiver3 = new BroadcastReceiver() {
         @Override
-        public void onReceive(Context context, Intent intent) {
+        public void onReceive(Context context, Intent intent) throws NullPointerException {
 
             final String action = intent.getAction();
             Log.d(TAG, "onReceive: ACTION FOUND.");
@@ -239,16 +252,24 @@ public class BleecardMainActivity extends AppCompatActivity {
                 //
                 BluetoothDevice device = intent.getParcelableExtra (BluetoothDevice.EXTRA_DEVICE);
                 //mBTDevices.add(device);
-                Log.d(TAG, "onReceive: " + device.getName() + ": " + device.getAddress());
-                if (device.getName().contains("BLECard")){
-                    Log.d(TAG, "onReceive: " + "hay al menos un dispositivo blee");
-                    items.add(new Bluethoot(device.getName(), device.getAddress(), device.getAddress()));
-                }else if (device.getName().contains("BLECard")){
-                    Log.d(TAG, "onReceive: " + "Device with null name");
-                }else {
-                    Log.d(TAG, "onReceive: " + "ups no dispositivos de tipo BLECard detectados");
+                Log.d(TAG, "onReceive: " + device.getName() + " : " + device.getAddress());
+
+                String deviceName = device.getName();
+
+                if(deviceName == null){
+                    Log.d(TAG, "onReceive: " + "Device with null name filtered");
+                }
+                else{
+                    if (deviceName.equals("BLECard")){
+                        Log.d(TAG, "onReceive: " + "hay al menos un dispositivo blee");
+                        items.add(new Bluethoot(device.getName(), device.getAddress(), device.getAddress()));
+
+                    }else {
+                        Log.d(TAG, "onReceive: " + "No BLECard device detected");
+                    }
                 }
             }
+
             adapter = new BluethAdapter(context, items);
             blueList.setAdapter(adapter);
             adapter.notifyDataSetChanged();

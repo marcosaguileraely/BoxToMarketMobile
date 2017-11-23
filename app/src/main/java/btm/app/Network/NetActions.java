@@ -244,13 +244,14 @@ public class NetActions {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
     }
 
-    public void getBleecarddata(String datos, Response.Listener<String> response, String ssidsdata,final ProgressDialog pd){
+    public void getBleeCardData(String datos, Response.Listener<String> response, String ssidsdata,final ProgressDialog pd){
 
         String url = "https://www.bleecard.com/api/getMachines.do"
+                   + "operation=dataMachines"
                    + "&token=tk_test_ZQokik736473jklWgH4olfk2"
                    + "&key=pk_test_6pRNAHGGoqiwFHFKjkj4XMrh"
                    + "&ssids="+ssidsdata;
-        Log.d("->", "->"+url + " ---- "+datos);
+        Log.d("->", "->"+ url);
 
         RequestQueue queue = Volley.newRequestQueue(context);
         StringRequest postRequest = new StringRequest(com.android.volley.Request.Method.GET, url,
