@@ -70,7 +70,6 @@ public class SubscriptionsActivity extends AppCompatActivity {
     }
 
     public void listSubscriptions(View view){
-
         final ProgressDialog progress = new ProgressDialog(this);
         progress.setMessage(getString(R.string.inf_dialog));
         //progress.show();
@@ -97,7 +96,6 @@ public class SubscriptionsActivity extends AppCompatActivity {
                 }
             }
         };
-
         new btm.app.Network.NetActions(this).listSubscriptions(username_global, response, progress);
     }
 
