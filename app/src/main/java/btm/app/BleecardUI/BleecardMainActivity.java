@@ -2,12 +2,14 @@ package btm.app.BleecardUI;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
@@ -15,10 +17,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.android.volley.Response;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +39,7 @@ import btm.app.Model.Bluethoot;
 import btm.app.Model.DeviceItem;
 import btm.app.Model.Subscriptions;
 import btm.app.R;
+import btm.app.SubscriptionsActivity;
 
 import static android.R.attr.filter;
 
@@ -83,6 +93,19 @@ public class BleecardMainActivity extends AppCompatActivity {
                 searchAgainManually(v);
             }
         });
+
+
+        blueList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String macAddr = adapter.getMacAddr(position);
+                Toast.makeText(context, "Item clicked, "+" pos: " + position + " Id: " + macAddr, Toast.LENGTH_SHORT).show();
+                String object = getBleecardData(macAddr);
+                Log.d(TAG, "Json: " + object);
+
+                getBleeDetails(view, macAddr.toLowerCase());
+            }
+        });
     }
 
     public void searchAgainManually(View view){
@@ -92,7 +115,11 @@ public class BleecardMainActivity extends AppCompatActivity {
             public void run() {
                 //Do something after 2000ms
                 //clearing the data before new search of devices
-                adapter.clear();
+                if(adapter.isEmpty()){
+                    //nothing to do
+                }else {
+                    adapter.clear();
+                }
                 adapter.notifyDataSetChanged();
                 Toast.makeText(context,"Searching...", Toast.LENGTH_SHORT).show();
 
@@ -103,8 +130,6 @@ public class BleecardMainActivity extends AppCompatActivity {
             }
         }, 2000);
     }
-
-
 
     //This options need the user permission
     public void enableBT(View view){
@@ -263,6 +288,10 @@ public class BleecardMainActivity extends AppCompatActivity {
                     if (deviceName.equals("BLECard")){
                         Log.d(TAG, "onReceive: " + "hay al menos un dispositivo blee");
                         items.add(new Bluethoot(device.getName(), device.getAddress(), device.getAddress()));
+                        items.add(new Bluethoot("BLECard1", "50:8C:B1:6A:68:0E", "50:8C:B1:6A:68:0E"));
+                        items.add(new Bluethoot("BLECard2", "18:93:D7:54:F7:A4", "18:93:D7:54:F7:A4"));
+                        items.add(new Bluethoot("BLECard3", "50:8C:B1:6A:68:0E", "50:8C:B1:6A:68:0E"));
+                        items.add(new Bluethoot("BLECard4", "34:15:13:f4:59:f1", "34:15:13:d4:59:f1"));
 
                     }else {
                         Log.d(TAG, "onReceive: " + "No BLECard device detected");
@@ -347,6 +376,58 @@ public class BleecardMainActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mBroadcastReceiver2);
     }
 
+    public void getBleeDetails(View view, String bleeaddr){
+        final ProgressDialog progress = new ProgressDialog(this);
+        progress.setMessage(getString(R.string.inf_dialog));
+        //progress.show();
+
+        Response.Listener<String> response = new Response.Listener<String>(){
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "1 "+ response);
+
+                progress.dismiss();
+                if(response.contains(".jpg")){
+                    //SharedPreferences sharedPref    = getSharedPreferences("preferencias",Context.MODE_PRIVATE);
+                    //SharedPreferences.Editor editor = sharedPref.edit();
+
+                    Log.d(TAG, "Tiene al menos un resultado." + response + "length: "+response.length());
+
+                    // This method transforms the String to a Array String to populate the Subscriptions list
+                    // getSubscriptionsList(response);
+                    //adapter = new SubscriptionAdapter(SubscriptionsActivity.this, getSubscriptionsList(response));
+                    //listView.setAdapter(adapter);
+
+                } else {
+                    Toast.makeText(context, response, Toast.LENGTH_LONG).show();
+                }
+            }
+        };
+
+        try {
+            new btm.app.Network.NetActions(this).getBleeCardData(response, bleeaddr, progress);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getBleecardData(String macaddr){
+        JSONArray jsonArray   = new JSONArray();
+        JSONArray jsonArray2  = new JSONArray();
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.put("mac", macaddr);
+            jsonArray.put(jsonObject);
+            jsonArray2.put(jsonArray);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.d(TAG, "-> "+jsonArray2.toString());
+        return jsonArray2.toString();
+    }
 
 
 }
