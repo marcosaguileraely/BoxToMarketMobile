@@ -68,4 +68,12 @@ public class BluethAdapter extends ArrayAdapter<Bluethoot> {
     public long getItemId(int position) {
         return super.getItemId(position);
     }
+
+    public String getMacAddr(int position) {
+        if (bluethootArrayList != null) {
+            return bluethootArrayList.get(position).getAddress();
+        }else{
+            return "no mac found";
+        }
+    }
 }
