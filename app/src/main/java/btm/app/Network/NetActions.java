@@ -6,17 +6,27 @@ import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import static com.android.volley.Request.Method.GET;
 
@@ -31,20 +41,20 @@ public class NetActions {
         this.context = context;
     }
 
-    public void resetPassword(String metodo, String datos, Response.Listener<String> response, final ProgressDialog pd){
+    public void resetPassword(String metodo, String datos, Response.Listener<String> response, final ProgressDialog pd) {
         pd.show();
-        String url = "https://www.boxtomarket.com/index.php?r=app/" + metodo + "&datos="+this.datoBase64(datos) + "&token=" + this.tkTime();
+        String url = "https://www.boxtomarket.com/index.php?r=app/" + metodo + "&datos=" + this.datoBase64(datos) + "&token=" + this.tkTime();
         Log.d("Url Response", url.toString());
 
         RequestQueue queue = Volley.newRequestQueue(context);
         StringRequest postRequest = new StringRequest(GET, url, response,
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
                         pd.dismiss();
                         Log.d("Error.Response", error.toString());
-                        Toast.makeText(context ,error.getMessage(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -53,17 +63,17 @@ public class NetActions {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
     }
 
-    public String tkTime(){
+    public String tkTime() {
         long time = System.currentTimeMillis();
         Date date = new Date(time);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-        String tk_ = ("aplicacionbtm1"+formatter.format(date));
-        Log.d("Time gen ", "data: "+tk_);
-        Log.d("Time gen ", "data: "+Base64.encodeToString(tk_.getBytes(), Base64.DEFAULT));
+        String tk_ = ("aplicacionbtm1" + formatter.format(date));
+        Log.d("Time gen ", "data: " + tk_);
+        Log.d("Time gen ", "data: " + Base64.encodeToString(tk_.getBytes(), Base64.DEFAULT));
         return Base64.encodeToString(tk_.getBytes(), Base64.DEFAULT);
     }
 
-    public String datoBase64(String datos){
+    public String datoBase64(String datos) {
         return Base64.encodeToString(datos.getBytes(), Base64.DEFAULT);
     }
 
@@ -72,7 +82,7 @@ public class NetActions {
     * Interfaz Inicial > Botón Subscripciones BTM Mini
     * ::Listview
     * */
-    public void listSubscriptions(String username, Response.Listener<String> response, final ProgressDialog pd){
+    public void listSubscriptions(String username, Response.Listener<String> response, final ProgressDialog pd) {
         pd.show();
 
         Log.d("DEV -> NetActions ", this.tkTime());
@@ -89,13 +99,13 @@ public class NetActions {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d("DEV -> NetActions ", "That didn't work!");
-                        Toast.makeText(context ,error.getMessage(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-        });
+                });
 
         queue.add(Request.setRetryPolicy(new DefaultRetryPolicy(30000,
-                                                                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                                                                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
     }
 
     /*
@@ -103,7 +113,7 @@ public class NetActions {
     * Interfaz Inicial > Botón Subscripciones BTM Mini> Comprar Subcripciones
     * ::Gridview -> 3 columnas (Cardview)
     * */
-    public void listSubscriptionsPublic(String username, Response.Listener<String> response, final ProgressDialog pd){
+    public void listSubscriptionsPublic(String username, Response.Listener<String> response, final ProgressDialog pd) {
         pd.show();
 
         Log.d("DEV -> NetActions ", this.tkTime());
@@ -120,7 +130,7 @@ public class NetActions {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d("DEV -> NetActions ", "That didn't work!");
-                        Toast.makeText(context ,error.getMessage(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -134,7 +144,7 @@ public class NetActions {
     * Interfaz Inicial > Botón Subscripciones BTM Mini> Comprar Subcripciones
     * ::RecyclerView -> Scroll Horizontal
     * */
-    public void listClubsPublic(String username, Response.Listener<String> response, final ProgressDialog pd){
+    public void listClubsPublic(String username, Response.Listener<String> response, final ProgressDialog pd) {
         pd.show();
 
         Log.d("DEV -> NetActions ", this.tkTime());
@@ -151,7 +161,7 @@ public class NetActions {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d("DEV -> NetActions ", "That didn't work!");
-                        Toast.makeText(context ,error.getMessage(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -165,13 +175,13 @@ public class NetActions {
     * Interfaz Inicial > Botón Subscripciones BTM Mini> Comprar Subcripciones
     * ::RecyclerView -> Scroll Horizontal
     * */
-    public void getDetailsSubscriptions(String username, Response.Listener<String> response, final ProgressDialog pd, int idSub){
+    public void getDetailsSubscriptions(String username, Response.Listener<String> response, final ProgressDialog pd, int idSub) {
         pd.show();
 
         Log.d("DEV -> NetActions ", this.tkTime());
         //listadoclubes
         String url = "https://www.boxtomarket.com/index.php?r=app/detalleproductossuscripcion&username=" + username
-                     +"&token=" + this.tkTime() + "&id=" + idSub;
+                + "&token=" + this.tkTime() + "&id=" + idSub;
         Log.d("DEV -> NetActions ", url);
 
         RequestQueue queue = Volley.newRequestQueue(context);
@@ -183,7 +193,7 @@ public class NetActions {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d("DEV -> NetActions ", "That didn't work!");
-                        Toast.makeText(context ,error.getMessage(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -192,23 +202,22 @@ public class NetActions {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
     }
 
-    public void http_get_data(String metodo, String datos, Response.Listener<String> response){
+    public void http_get_data(String metodo, String datos, Response.Listener<String> response) {
 
         String url = "https://www.boxtomarket.com/index.php?r=app/"
-                + metodo
-                + datos
-                + "&token="+this.tkTime();
+                   + metodo
+                   + datos
+                   + "&token=" + this.tkTime();
 
         RequestQueue queue = Volley.newRequestQueue(context);
         StringRequest postRequest = new StringRequest(com.android.volley.Request.Method.GET, url,
                 response,
-                new Response.ErrorListener()
-                {
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
                         Log.d("Error.Response", error.toString());
-                        Toast.makeText(context ,error.getMessage(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
         );
@@ -221,21 +230,21 @@ public class NetActions {
     * Este metódo permite la compra de suscripciones
     * Interfaz Inicial > Botón Subscripciones BTM Mini> Comprar Subcripciones > Seleccionar suscripciones > detalles > comprar
     * */
-    public void buySubscription(String datos, Response.Listener<String> response, final ProgressDialog pd){
+    public void buySubscription(String datos, Response.Listener<String> response, final ProgressDialog pd) {
 
-        String url = "https://www.boxtomarket.com/index.php?r=app/comprarsuscripcion&token="+this.tkTime()
-                   + "&datos="+this.datoBase64(datos);
-        Log.d("->", "->"+url + " ---- "+datos);
+        String url = "https://www.boxtomarket.com/index.php?r=app/comprarsuscripcion&token=" + this.tkTime()
+                   + "&datos=" + this.datoBase64(datos);
+        Log.d("->", "->" + url + " ---- " + datos);
 
         RequestQueue queue = Volley.newRequestQueue(context);
         StringRequest postRequest = new StringRequest(com.android.volley.Request.Method.GET, url,
                 response,
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
                         Log.d("Error.Response", error.toString());
-                        Toast.makeText(context ,error.getMessage(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
         );
@@ -244,27 +253,65 @@ public class NetActions {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
     }
 
-    public void getBleeCardData(String datos, Response.Listener<String> response, String ssidsdata,final ProgressDialog pd){
+    /*
+    * Este metódo permite obtener los detalles de la blee card entregandole la mac address
+    * Interfaz Inicial > Botón Bleecard > Listado de dispositivos Bluethooth
+    * */
+    public void getBleeCardData(Response.Listener<String> response, final String ssidsdata, final ProgressDialog pd)throws JSONException {
 
-        String url = "https://www.bleecard.com/api/getMachines.do"
-                   + "operation=dataMachines"
-                   + "&token=tk_test_ZQokik736473jklWgH4olfk2"
-                   + "&key=pk_test_6pRNAHGGoqiwFHFKjkj4XMrh"
-                   + "&ssids="+ssidsdata;
-        Log.d("->", "->"+ url);
+        String url = "https://www.bleecard.com/api/getMachines.do";
+
+        /*
+         * Genera un Array de Array de objecto
+         * No debe convertirse en String ya que el webservice espera la el ssid así:
+         *            [[ { "mac": ""xx:xx:xx:xx:xx } ]]  <-- debe pasarse así
+         * en vez de "[[ { "mac": ""xx:xx:xx:xx:xx } ]]" <-- no debe pasarse así
+         * notese que al ser String es invalido y debe pasarse en forma de Arraglo y no String
+         */
+        JSONObject obmacAdd = new JSONObject();
+                   JSONArray array     = new JSONArray();
+                   JSONArray array2    = new JSONArray();
+                   obmacAdd.put("mac", ssidsdata);
+                   array.put(obmacAdd);
+                   array2.put(array);
+
+        JSONObject jsonBody = new JSONObject();
+                   jsonBody.put("operation", "dataMachines");
+                   jsonBody.put("key", "pk_test_6pRNAHGGoqiwFHFKjkj4XMrh");
+                   jsonBody.put("token", "tk_test_ZQokik736473jklWgH4olfk2");
+                   jsonBody.put("ssids", array2);
+
+        final String mRequestBody = jsonBody.toString();
 
         RequestQueue queue = Volley.newRequestQueue(context);
-        StringRequest postRequest = new StringRequest(com.android.volley.Request.Method.GET, url,
-                response,
-                new Response.ErrorListener(){
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("Response", response);
+                    }
+                },
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // error
-                        Log.d("Error.Response", error.toString());
-                        Toast.makeText(context ,error.getMessage(),Toast.LENGTH_SHORT).show();
+                        Log.d("ERROR", "error => " + error.toString());
                     }
                 }
-        );
+        ) {
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                try {
+                    return mRequestBody == null ? null : mRequestBody.getBytes("utf-8");
+                } catch (UnsupportedEncodingException uee) {
+                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", mRequestBody, "utf-8");
+                    return null;
+                }
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+        };
         queue.add(postRequest.setRetryPolicy(new DefaultRetryPolicy(30000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
