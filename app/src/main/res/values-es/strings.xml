@@ -14,7 +14,7 @@
     <string name="siguiente">Siguiente</string>
     <string name="usuario">Usuario</string>
     <string name="clave_de_4_digitos">Clave de 4 Digitos</string>
-    <string name="confirmar_clave">Confirmar Clave</string>
+    <string name="confirmar_clave">Confirmar Clave 4 Digitos</string>
     <string name="email">Email</string>
     <string name="info_fallas_comunicacion">FALLA EN LA COMUNICACION INTENTE MAS TARDE</string>
     <string name="inf_dialog">"Procesando. Por favor espere..."</string>
