@@ -35,6 +35,8 @@ import static com.android.volley.Request.Method.GET;
  */
 
 public class NetActions {
+    public static final String TAG = "DEV -> Net ";
+
     Context context;
 
     public NetActions(Context context) {
@@ -268,6 +270,7 @@ public class NetActions {
          * en vez de "[[ { "mac": ""xx:xx:xx:xx:xx } ]]" <-- no debe pasarse así
          * notese que al ser String es invalido y debe pasarse en forma de Arraglo y no String
          */
+
         JSONObject obmacAdd = new JSONObject();
                    JSONArray array     = new JSONArray();
                    JSONArray array2    = new JSONArray();
@@ -284,16 +287,12 @@ public class NetActions {
         final String mRequestBody = jsonBody.toString();
 
         RequestQueue queue = Volley.newRequestQueue(context);
-        StringRequest postRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("Response", response);
-                    }
-                },
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                response,
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("ERROR", "error => " + error.toString());
+                        Log.d(TAG, "error => " + error.toString());
                     }
                 }
         ) {
@@ -312,6 +311,7 @@ public class NetActions {
                 return "application/json";
             }
         };
+
         queue.add(postRequest.setRetryPolicy(new DefaultRetryPolicy(30000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
