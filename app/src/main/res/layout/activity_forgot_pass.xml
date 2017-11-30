@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fondo_cleared"
     tools:context="btm.app.ForgotPassActivity">
 
     <LinearLayout
@@ -20,7 +21,8 @@
         <EditText
             android:id="@+id/forgot_email"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:background="@drawable/backgound_edit_text"
             android:ems="10"
             android:hint="@string/forgot_emailbox_hint"
             android:inputType="textEmailAddress" />
@@ -29,9 +31,12 @@
             android:id="@+id/forgot_btn1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
+            android:layout_marginTop="40dp"
             android:background="@drawable/background_button"
-            android:text="@string/forgot_button_send" />
+            android:text="@string/forgot_button_send"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
 
     </LinearLayout>
 </RelativeLayout>
