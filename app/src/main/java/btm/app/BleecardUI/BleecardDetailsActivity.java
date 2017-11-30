@@ -79,7 +79,6 @@ public class BleecardDetailsActivity extends AppCompatActivity {
         });
 
         blee_id_data = BleeDetails.getId();
-
         blee_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,6 +101,7 @@ public class BleecardDetailsActivity extends AppCompatActivity {
 
                 if(response.contains("rsaToken")){
                     Log.d(TAG, "Tiene al menos un resultado. " + response + " length: "+response.length());
+                    Toast.makeText(context, response, Toast.LENGTH_LONG).show();
 
                 } else {
                     Toast.makeText(context, response, Toast.LENGTH_LONG).show();
