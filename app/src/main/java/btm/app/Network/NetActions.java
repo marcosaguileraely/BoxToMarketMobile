@@ -316,4 +316,54 @@ public class NetActions {
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
     }
+
+    /*
+    * Este metódo permite obtener el código RSA enviando el id del Bleecard y el precio a pagar
+    * Interfaz Inicial > Botón Bleecard > Listado de dispositivos Bluethooth > detalles del
+    * bleecard seleccionado
+    * */
+    public void getRsa(Response.Listener<String> response, final String id_blee, final String price_blee, final ProgressDialog pd)throws JSONException {
+
+        String url = "https://www.bleecard.com/api/getRsa.do";
+
+        JSONObject jsonBody = new JSONObject();
+                   jsonBody.put("operation", "dataRsa");
+                   jsonBody.put("key", "pk_test_6pRNAHGGoqiwFHFKjkj4XMrh");
+                   jsonBody.put("token", "tk_test_ZQokik736473jklWgH4olfk2");
+                   jsonBody.put("id", id_blee);
+                   jsonBody.put("price", price_blee);
+                   jsonBody.put("info", "enviado por @marcode_ey");
+
+        final String mRequestBody = jsonBody.toString();
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                response,
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d(TAG, "error => " + error.toString());
+                    }
+                }
+        ) {
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                try {
+                    return mRequestBody == null ? null : mRequestBody.getBytes("utf-8");
+                } catch (UnsupportedEncodingException uee) {
+                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", mRequestBody, "utf-8");
+                    return null;
+                }
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+        };
+
+        queue.add(postRequest.setRetryPolicy(new DefaultRetryPolicy(30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
+    }
 }
