@@ -75,7 +75,7 @@ public class BleecardMainActivity extends AppCompatActivity {
             public void run() {  // <-- Do something after 2000ms
                 btnDiscover(v);
             }
-        }, 2000);
+        }, 3000);
 
         getDevices.setOnClickListener(new View.OnClickListener() {
             @Override
