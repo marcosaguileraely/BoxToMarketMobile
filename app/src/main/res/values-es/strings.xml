@@ -87,6 +87,7 @@
     <string name="list_clubs_available">Listado de clubes disponibles</string>
     <string name="list_subscriptions_available">Listado de suscripciones disponibles</string>
     <string name="search_bluethoot">Buscar dispositivos</string>
+    <string name="blee_click_to_pay">Toca para pagar</string>
 
 
 </resources>
