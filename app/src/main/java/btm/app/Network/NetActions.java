@@ -20,6 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -27,6 +28,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+
+import okhttp3.OkHttpClient;
 
 import static com.android.volley.Request.Method.GET;
 
@@ -177,13 +180,14 @@ public class NetActions {
     * Interfaz Inicial > Botón Subscripciones BTM Mini> Comprar Subcripciones
     * ::RecyclerView -> Scroll Horizontal
     * */
-    public void getDetailsSubscriptions(String username, Response.Listener<String> response, final ProgressDialog pd, int idSub) {
-        pd.show();
+    public void getDetailsSubscriptions(String username, Response.Listener<String> response, int idSub) {
+        //pd.show();
 
         Log.d("DEV -> NetActions ", this.tkTime());
         //listadoclubes
-        String url = "https://www.boxtomarket.com/index.php?r=app/detalleproductossuscripcion&username=" + username
-                + "&token=" + this.tkTime() + "&id=" + idSub;
+        String url = "https://www.boxtomarket.com/index.php?format=json&r=app/detalleproductossuscripcion&username="
+                   + username
+                   + "&token=" + this.tkTime() + "&id=" + idSub;
         Log.d("DEV -> NetActions ", url);
 
         RequestQueue queue = Volley.newRequestQueue(context);
@@ -194,14 +198,45 @@ public class NetActions {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("DEV -> NetActions ", "That didn't work!");
+                        Log.d("DEV -> NetActions ", "That didn't work!" + error.toString());
+                        VolleyError responseError = new VolleyError( new String(error.networkResponse.data) );
+                        Log.d("DEV -> NetActions ", "shit man: " + responseError);
                         Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
+                //return Response.success(new String(jsonString), cacheEntry);
+
+
         queue.add(Request.setRetryPolicy(new DefaultRetryPolicy(30000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
+    }
+
+    /*
+     * Using OkHTTP
+     */
+
+    private OkHttpClient client = new OkHttpClient();
+
+    /**
+     *
+     * @throws IOException
+     * @throws NullPointerException
+     */
+    public String getFullDetails(String username, int idSub) throws IOException, NullPointerException {
+        Log.d(TAG, " id: " + idSub);
+        String url = "https://www.boxtomarket.com/index.php?format=json&r=app/detalleproductossuscripcion&username="
+                   + username
+                   + "&token=" + this.tkTime() + "&id=" + 0;
+        Log.d("DEV -> NetActions ", url);
+
+        okhttp3.Request requesthttp = new okhttp3.Request.Builder()
+                .url(url)
+                .build();
+
+        okhttp3.Response response = client.newCall(requesthttp).execute();
+        return response.body().string();
     }
 
     public void http_get_data(String metodo, String datos, Response.Listener<String> response) {

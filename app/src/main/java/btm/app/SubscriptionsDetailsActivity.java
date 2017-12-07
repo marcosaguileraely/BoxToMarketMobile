@@ -1,9 +1,12 @@
 package btm.app;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,11 +18,13 @@ import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,6 +35,7 @@ import btm.app.Model.Clubs;
 import btm.app.Model.SubscriptionsDetails;
 import btm.app.Model.SubscriptionsPublic;
 
+import static btm.app.R.id.textView;
 import static java.util.Arrays.asList;
 
 public class SubscriptionsDetailsActivity extends AppCompatActivity {
@@ -56,6 +62,7 @@ public class SubscriptionsDetailsActivity extends AppCompatActivity {
 
         username_global  = getIntent().getStringExtra(SubsPublicAdapter.USER_GLOBAL);
         id               = getIntent().getIntExtra(SubsPublicAdapter.ID_GLOBAL, 0);
+        Log.d(TAG, " id: " + id);
         img_uri_txt      = getIntent().getStringExtra(SubsPublicAdapter.URI_IMG);
         title            = getIntent().getStringExtra(SubsPublicAdapter.TITLE);
 
@@ -79,59 +86,93 @@ public class SubscriptionsDetailsActivity extends AppCompatActivity {
             }
         });
 
-        getSubscriptionsPublicDetails(v);
+        new AsyncGetHttpData().execute("");
     }
 
-    public void getSubscriptionsPublicDetails(View view){
-        final ProgressDialog progress = new ProgressDialog(this);
-        progress.setMessage(getString(R.string.inf_dialog));
-        //progress.show();
 
-        Response.Listener<String> response = new Response.Listener<String>(){
-            @Override
-            public void onResponse(String response) {
-                Log.d(TAG, "1 "+ response);
+    private class AsyncGetHttpData extends AsyncTask<String, Void, String> {
+        ProgressDialog progress = new ProgressDialog(context);
 
-                progress.dismiss();
-                if(response.contains("|")){
-                    SharedPreferences sharedPref    = getSharedPreferences("preferencias", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPref.edit();
+        @Override
+        protected void onPreExecute() {
+            progress.setMessage(getString(R.string.inf_dialog));
+            progress.show();
+        }
 
-                    Log.d(TAG, "Tiene al menos un resultado.");
-                    Log.d(TAG, getSubscriptionsDetailsList(response).toString());
-                    Log.d(TAG, "size " + String.valueOf(getSubscriptionsDetailsList(response).size()));
+        @Override
+        protected String doInBackground(String... params) {
+            //runOnUiThread(new Runnable() {
+            //    @Override
+            //    public void run() {
+                    getSubscriptionsPublicDetails(SubscriptionsDetailsActivity.this);
+            //    }
+            //});
+            return "Executed";
+        }
 
-                    int response_size = getSubscriptionsDetailsList(response).size();
-                    ArrayList<SubscriptionsDetails> model = getSubscriptionsDetailsList(response);
+        @Override
+        protected void onPostExecute(String result) {
+           // ProgressDialog progress = new ProgressDialog(context);
+           progress.dismiss();
+        }
 
-                    String type_data        = model.get(0).getType();        //getting type from model
-                    String category_data    = model.get(1).getCategory();    //getting category from model
-                    int qty_data            = model.get(2).getQty();         //getting qty=quantity from model
-                    String aux_data         = model.get(3).getAux();         //getting aux from model
-                    String price_data       = model.get(4).getPrice();       //getting price from model
-                    String seller_data      = model.get(5).getSeller();      //getting seller from model
-                    String location_data    = model.get(6).getLocation();    //getting location from model
-                    String description_data = model.get(7).getDescription(); //getting description from model
+        @Override
+        protected void onProgressUpdate(Void... values) {}
+    }
 
-                    Log.d(TAG, "I'm in! "+ "-> "+type + "-> "+category);
+    public void getSubscriptionsPublicDetails(Activity view){
+        try {
+            final String data = new btm.app.Network.NetActions(this).getFullDetails(username_global, id);
+            int data_lenth = data.length();
+            Log.d(TAG, "OkHttp: " + data);
 
-                    Glide.with(context).load(img_uri_txt).into(img_uri);
-                    name.setText(title);
-                    type.setText(type_data);
-                    type.setText(type_data);
-                    category.setText(category_data);
-                    qty.setText(String.valueOf(qty_data));
-                    price.setText(price_data);
-                    seller.setText(seller_data);
-                    description.setText(description_data);
+            if(data.contains("|")){
+                Log.d(TAG, "Tiene al menos un resultado.");
+                Log.d(TAG, "size " + data_lenth);
 
-                } else {
-                    Toast.makeText(context, response, Toast.LENGTH_LONG).show();
-                }
+                ArrayList<SubscriptionsDetails> model = getSubscriptionsDetailsList(data);
+
+                final String type_data        = model.get(0).getType();        //getting type from model
+                final String category_data    = model.get(1).getCategory();    //getting category from model
+                final int qty_data            = model.get(2).getQty();         //getting qty = quantity from model
+                final String aux_data         = model.get(3).getAux();         //getting aux from model
+                final String price_data       = model.get(4).getPrice();       //getting price from model
+                final String seller_data      = model.get(5).getSeller();      //getting seller from model
+                final String location_data    = model.get(6).getLocation();    //getting location from model
+                final String description_data = model.get(7).getDescription(); //getting description from model
+
+                Log.d(TAG, "I'm in! "+ "-> " + type + "-> "+category);
+
+                view.runOnUiThread(new Runnable() {
+                    public void run(){
+
+                        Glide.with(context)
+                                .load(img_uri_txt)
+                                .into(img_uri);
+
+                        name.setText(title);
+                        type.setText(type_data);
+                        category.setText(category_data);
+                        qty.setText(String.valueOf(qty_data));
+                        price.setText(price_data);
+                        seller.setText(seller_data);
+                        description.setText(description_data);
+                    }
+                });
+
+            } else {
+                view.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(context, "¡Ups! algo no esta funcionando bien. Verifica tu red e intenta nuevamente.", Toast.LENGTH_LONG).show();
+                        Log.d(TAG, "Some mesagge: " + data);
+                    }
+                });
             }
-        };
 
-        new btm.app.Network.NetActions(this).getDetailsSubscriptions(username_global, response, progress, id);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public ArrayList<SubscriptionsDetails> getSubscriptionsDetailsList(String response){
