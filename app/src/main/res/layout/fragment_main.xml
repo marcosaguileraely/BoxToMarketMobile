@@ -7,11 +7,12 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/fondoimg"
     android:orientation="vertical"
-    android:background="@drawable/fondo_cleared"
     tools:context="btm.app.MainActivity$PlaceholderFragment"
     android:baselineAligned="false">
 
+    <!-- android:background="@drawable/fondoimg" -->
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -25,14 +26,16 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/textViewCreditos"
+            android:textAlignment="viewStart"
             android:layout_toLeftOf="@+id/button_add_money"
             android:gravity="center"
             android:text="@string/saldo"
-            android:textAlignment="viewStart"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="36sp"
-            android:textStyle="normal|bold"
-            tools:ignore="NotSibling,RtlHardcoded" />
+        android:textSize="36sp"
+        android:textStyle="normal|bold"
+        tools:ignore="NotSibling,RtlHardcoded" />
+
+        <!--   android:textAlignment="viewStart" -->
 
         <TextView
             android:id="@+id/textViewCreditos"
@@ -41,15 +44,16 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
+            android:textAlignment="viewStart"
             android:layout_toLeftOf="@+id/button_add_money"
             android:layout_toStartOf="@+id/button_add_money"
             android:gravity="center"
             android:text="@string/tipo_creditos"
-            android:textAlignment="viewStart"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            tools:ignore="NotSibling" />
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:ignore="NotSibling" />
+        <!-- android:textAlignment="viewStart" -->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -101,13 +105,14 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+            android:textAlignment="viewStart"
             android:layout_below="@+id/textViewCompensacion"
             android:gravity="center"
             android:text="@string/saldo"
-            android:textAlignment="viewStart"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="36sp"
-            android:textStyle="bold" />
+        android:textSize="36sp"
+        android:textStyle="bold" />
+        <!--    android:textAlignment="viewStart" -->
 
         <TextView
             android:id="@+id/textViewCompensacion"
@@ -117,11 +122,13 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:gravity="center"
-            android:text="@string/compensacion"
             android:textAlignment="viewStart"
+            android:text="@string/compensacion"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+        <!--  android:textAlignment="viewStart" -->
 
         <LinearLayout
             android:layout_width="match_parent"

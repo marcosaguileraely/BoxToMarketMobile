@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Handler;
+import android.os.ParcelUuid;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,6 +28,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import btm.app.Adapters.BluethAdapter;
 import btm.app.Model.BleeDetails;
@@ -251,6 +254,70 @@ public class BleecardMainActivity extends AppCompatActivity {
      }
 
     /**
+     * Broadcast Receiver for listing devices that are not yet paired
+     * Executed by btnDiscover() method.
+     */
+    private BroadcastReceiver mBroadcastReceiver3 = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) throws NullPointerException {
+
+            final String action = intent.getAction();
+            Log.d(TAG, "onReceive: ACTION FOUND.");
+
+            if (action.equals(BluetoothDevice.ACTION_FOUND)){
+                BluetoothDevice device = intent.getParcelableExtra (BluetoothDevice.EXTRA_DEVICE);
+                Log.d(TAG, "onReceive: " + device.getName() + " : " + device.getAddress() + " : " );
+
+                String deviceName = device.getName();
+
+                try {
+                    getUuid();
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+
+                if(deviceName == null){
+                    Log.d(TAG, "onReceive: " + "Device with null name filtered");
+                }
+                else{
+                    if (deviceName.equals("BLECard")){
+                        Log.d(TAG, "onReceive: " + "hay al menos un dispositivo blee" );
+                        items.add(new Bluethoot(device.getName(), device.getAddress(), device.getAddress()));
+                        items.add(new Bluethoot("BLECard1", "50:8C:B1:6A:68:0E", "50:8C:B1:6A:68:0E"));
+                        items.add(new Bluethoot("BLECard2", "18:93:D7:54:F7:A4", "18:93:D7:54:F7:A4"));
+                        items.add(new Bluethoot("BLECard3", "50:8C:B1:6A:68:0E", "50:8C:B1:6A:68:0E"));
+                        items.add(new Bluethoot("BLECard4", "34:15:13:f4:59:f1", "34:15:13:d4:59:f1"));
+
+                    }else {
+                        Log.d(TAG, "onReceive: " + "No BLECard device detected");
+                    }
+                }
+            }
+
+            adapter = new BluethAdapter(context, items);
+            blueList.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        }
+    };
+
+    public void getUuid() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+
+        Method getUuidsMethod = BluetoothAdapter.class.getDeclaredMethod("getUuids", null);
+
+        ParcelUuid[] uuids = (ParcelUuid[]) getUuidsMethod.invoke(adapter, null);
+
+        for (ParcelUuid uuid: uuids) {
+            Log.d(TAG, "UUID: " + uuid.getUuid().toString());
+        }
+    }
+
+
+    /**
      *
      * This method initialized the Bluethoot devices search
      */
@@ -315,7 +382,7 @@ public class BleecardMainActivity extends AppCompatActivity {
     }
 
     /**
-     * This method is required for all devices running API23+
+     * This method is required for all devices running API 23+
      * Android must programmatically check the permissions for bluetooth. Putting the proper permissions
      * in the manifest is not enough.
      *
@@ -334,50 +401,6 @@ public class BleecardMainActivity extends AppCompatActivity {
             Log.d(TAG, "checkBTPermissions: No need to check permissions. SDK version < LOLLIPOP.");
         }
     }
-
-
-    /**
-     * Broadcast Receiver for listing devices that are not yet paired
-     * Executed by btnDiscover() method.
-     */
-    private BroadcastReceiver mBroadcastReceiver3 = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) throws NullPointerException {
-
-            final String action = intent.getAction();
-            Log.d(TAG, "onReceive: ACTION FOUND.");
-
-            if (action.equals(BluetoothDevice.ACTION_FOUND)){
-                //
-                BluetoothDevice device = intent.getParcelableExtra (BluetoothDevice.EXTRA_DEVICE);
-                //mBTDevices.add(device);
-                Log.d(TAG, "onReceive: " + device.getName() + " : " + device.getAddress());
-
-                String deviceName = device.getName();
-
-                if(deviceName == null){
-                    Log.d(TAG, "onReceive: " + "Device with null name filtered");
-                }
-                else{
-                    if (deviceName.equals("BLECard")){
-                        Log.d(TAG, "onReceive: " + "hay al menos un dispositivo blee");
-                        items.add(new Bluethoot(device.getName(), device.getAddress(), device.getAddress()));
-                        items.add(new Bluethoot("BLECard1", "50:8C:B1:6A:68:0E", "50:8C:B1:6A:68:0E"));
-                        items.add(new Bluethoot("BLECard2", "18:93:D7:54:F7:A4", "18:93:D7:54:F7:A4"));
-                        items.add(new Bluethoot("BLECard3", "50:8C:B1:6A:68:0E", "50:8C:B1:6A:68:0E"));
-                        items.add(new Bluethoot("BLECard4", "34:15:13:f4:59:f1", "34:15:13:d4:59:f1"));
-
-                    }else {
-                        Log.d(TAG, "onReceive: " + "No BLECard device detected");
-                    }
-                }
-            }
-
-            adapter = new BluethAdapter(context, items);
-            blueList.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
-        }
-    };
 
     /**
      * Broadcast Receiver for changes made to bluetooth states such as:

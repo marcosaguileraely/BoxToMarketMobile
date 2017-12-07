@@ -47,6 +47,12 @@
         <item>@string/tipo_tarjeta</item>
     </string-array>
 
+    <string-array name="pago_subs">
+        <item>Tarjeta de Crédito</item>
+        <item>Créditos BtM</item>
+        <item>Token</item>
+    </string-array>
+
     <string-array name="mes">
         <item>Enero</item>
         <item>Febrero</item>

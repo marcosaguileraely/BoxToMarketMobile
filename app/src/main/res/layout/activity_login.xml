@@ -9,10 +9,12 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/fondoimg"
     tools:context="btm.app.LoginActivity"
     android:gravity="center"
-    android:background="@drawable/fondo_cleared"
     android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
+    <!-- android:background="@drawable/fondo_cleared" -->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,11 +37,11 @@
                 android:layout_width="220dp"
                 android:layout_height="100dp"
                 android:layout_alignRight="@+id/editText"
-                android:layout_alignStart="@+id/editText"
                 android:layout_marginBottom="15dp"
                 app:srcCompat="@drawable/btm_logo"
                 tools:ignore="ContentDescription,ObsoleteLayoutParam,RtlHardcoded" />
         </LinearLayout>
+              <!--  android:layout_alignStart="@+id/editText" -->
 
         <EditText
             android:id="@+id/editText"

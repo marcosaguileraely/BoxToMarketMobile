@@ -4,7 +4,7 @@
     android:id="@+id/activity_register"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fondo_cleared"
+    android:background="@drawable/fondoimg"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     tools:context="btm.app.RegisterActivity">
