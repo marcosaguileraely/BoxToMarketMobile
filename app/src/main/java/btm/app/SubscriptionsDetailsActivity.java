@@ -62,7 +62,6 @@ public class SubscriptionsDetailsActivity extends AppCompatActivity {
 
         username_global  = getIntent().getStringExtra(SubsPublicAdapter.USER_GLOBAL);
         id               = getIntent().getIntExtra(SubsPublicAdapter.ID_GLOBAL, 0);
-        Log.d(TAG, " id: " + id);
         img_uri_txt      = getIntent().getStringExtra(SubsPublicAdapter.URI_IMG);
         title            = getIntent().getStringExtra(SubsPublicAdapter.TITLE);
 
@@ -76,8 +75,7 @@ public class SubscriptionsDetailsActivity extends AppCompatActivity {
         img_uri          = (ImageView) findViewById(R.id.detail_img);
         pay_subscription = (Button) findViewById(R.id.pay_subscription);
 
-        Toast.makeText(context, "Data passed-> Username: "+username_global + " id: "+id, Toast.LENGTH_SHORT).show();
-
+        //Toast.makeText(context, "Data passed-> Username: "+username_global + " id: "+id, Toast.LENGTH_SHORT).show();
         pay_subscription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,8 +83,7 @@ public class SubscriptionsDetailsActivity extends AppCompatActivity {
                 startActivity(gotoPay);
             }
         });
-
-        new AsyncGetHttpData().execute("");
+        new AsyncGetHttpData().execute(""); //AsyncTask to improve the performance in the app *
     }
 
 
@@ -112,7 +109,6 @@ public class SubscriptionsDetailsActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-           // ProgressDialog progress = new ProgressDialog(context);
            progress.dismiss();
         }
 

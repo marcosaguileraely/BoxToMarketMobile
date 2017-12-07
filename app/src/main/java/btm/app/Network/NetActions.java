@@ -176,47 +176,11 @@ public class NetActions {
     }
 
     /*
-    * Este metódo obtiene el listado de clubes de la sección
-    * Interfaz Inicial > Botón Subscripciones BTM Mini> Comprar Subcripciones
-    * ::RecyclerView -> Scroll Horizontal
-    * */
-    public void getDetailsSubscriptions(String username, Response.Listener<String> response, int idSub) {
-        //pd.show();
-
-        Log.d("DEV -> NetActions ", this.tkTime());
-        //listadoclubes
-        String url = "https://www.boxtomarket.com/index.php?format=json&r=app/detalleproductossuscripcion&username="
-                   + username
-                   + "&token=" + this.tkTime() + "&id=" + idSub;
-        Log.d("DEV -> NetActions ", url);
-
-        RequestQueue queue = Volley.newRequestQueue(context);
-
-        // Request a string response from the provided URL.
-        StringRequest Request = new StringRequest(GET, url,
-                response,
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("DEV -> NetActions ", "That didn't work!" + error.toString());
-                        VolleyError responseError = new VolleyError( new String(error.networkResponse.data) );
-                        Log.d("DEV -> NetActions ", "shit man: " + responseError);
-                        Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-                //return Response.success(new String(jsonString), cacheEntry);
-
-
-        queue.add(Request.setRetryPolicy(new DefaultRetryPolicy(30000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
-    }
-
-    /*
      * Using OkHTTP
-     */
-
+     * Este metódo obtiene el listado de clubes de la sección
+     * Interfaz Inicial > Botón Subscripciones BTM Mini> Comprar Subcripciones
+     * ::RecyclerView -> Scroll Horizontal
+     **/
     private OkHttpClient client = new OkHttpClient();
 
     /**
@@ -228,7 +192,7 @@ public class NetActions {
         Log.d(TAG, " id: " + idSub);
         String url = "https://www.boxtomarket.com/index.php?format=json&r=app/detalleproductossuscripcion&username="
                    + username
-                   + "&token=" + this.tkTime() + "&id=" + 0;
+                   + "&token=" + this.tkTime() + "&id=" + idSub;
         Log.d("DEV -> NetActions ", url);
 
         okhttp3.Request requesthttp = new okhttp3.Request.Builder()
