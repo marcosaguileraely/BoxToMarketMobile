@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //getActionBar().setIcon(R.drawable.);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setIcon(R.mipmap.ic_toolbar);
@@ -193,7 +195,8 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Log.d("DEV -> Main ", "-> " + username_global);
-                    Intent intent = new Intent(getActivity(), SubscriptionsActivity.class);
+                    Intent intent = new Intent(getActivity(), BuyActivity.class);
+                    //Intent intent = new Intent(getActivity(), SubscriptionsActivity.class); <-- Before
                     startActivity(intent.putExtra(USER_GLOBAL, username_global));
                     startActivity(intent);
                 }

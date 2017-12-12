@@ -65,7 +65,7 @@ public class SubsPublicAdapter extends BaseAdapter{
                 String title = subscriptionsPublic.getTitle();
                 int id       = subscriptionsPublic.getId();
 
-                Toast.makeText(context, "Button clicked "+title + " id: "+id, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "Button clicked "+title + " id: "+id, Toast.LENGTH_SHORT).show();
 
                 Intent goToDetails = new Intent(context, SubscriptionsDetailsActivity.class);
                 context.startActivity(goToDetails.putExtra(USER_GLOBAL, username_global));

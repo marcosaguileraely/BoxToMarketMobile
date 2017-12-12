@@ -86,7 +86,6 @@ public class SubscriptionsDetailsActivity extends AppCompatActivity {
         new AsyncGetHttpData().execute(""); //AsyncTask to improve the performance in the app *
     }
 
-
     private class AsyncGetHttpData extends AsyncTask<String, Void, String> {
         ProgressDialog progress = new ProgressDialog(context);
 

@@ -192,8 +192,8 @@ public class BuyActivity extends AppCompatActivity {
 
     public void onBackPressed(){
         Log.d(TAG, "onBackPressed Called");
-        Intent gotoSubscripionsList = new Intent(context, SubscriptionsActivity.class);
-        gotoSubscripionsList.putExtra(USER_GLOBAL_SENDER , username_global);
-        startActivity(gotoSubscripionsList);
+        Intent gotoMain = new Intent(BuyActivity.this, MainActivity.class);
+        gotoMain.putExtra(USER_GLOBAL_SENDER, username_global);
+        startActivity(gotoMain);
     }
 }
