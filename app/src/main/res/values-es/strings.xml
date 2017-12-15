@@ -13,8 +13,8 @@
     <string name="checkbox">Acepto términos y condiciones</string>
     <string name="siguiente">Siguiente</string>
     <string name="usuario">Usuario</string>
-    <string name="clave_de_4_digitos">Clave de 4 Digitos</string>
-    <string name="confirmar_clave">Confirmar Clave 4 Digitos</string>
+    <string name="clave_de_4_digitos">Clave de 4 dígitos</string>
+    <string name="confirmar_clave">Confirmar clave de 4 dígitos</string>
     <string name="email">Email</string>
     <string name="info_fallas_comunicacion">FALLA EN LA COMUNICACION INTENTE MAS TARDE</string>
     <string name="inf_dialog">"Procesando. Por favor espere..."</string>
@@ -75,8 +75,8 @@
     <string name="please_check_your_info_and_clic_for_continue">Por favor verifique la info y de clic para continuar el registro</string>
 
     <!-- Forgot password UI-->
-    <string name="forgot_button_send">Enviar correo</string>
-    <string name="forgot_emailbox_hint">Ingrese su correo</string>
+    <string name="forgot_button_send">Enviar email</string>
+    <string name="forgot_emailbox_hint">Ingrese su email</string>
     <string name="forgot_activity_title">¿Olvidaste tu clave?</string>
     <string name="metodo_de_recarga">Seleccione un metodo de recarga</string>
     <string name="add_credit_card">Agregar tarjeta de crédito</string>

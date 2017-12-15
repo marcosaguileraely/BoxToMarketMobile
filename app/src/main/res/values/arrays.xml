@@ -2,39 +2,42 @@
 <resources>
     <string-array name="pais_select">
         <item>@string/pais</item>
-        <item>Colombia</item>
-        <item>Chile</item>
-        <item>Mexico</item>
-        <item>Estados Unidos</item>
-        <item>España</item>
-        <item>Alemania</item>
+        <item>+67 Alemania</item>
         <item>Argentina</item>
         <item>Australia</item>
         <item>Bolivia</item>
         <item>Brasil</item>
         <item>Canada</item>
         <item>Costa Rica</item>
+        <item>+57 Colombia</item>
         <item>China</item>
+        <item>Chile</item>
+        <item>Ecuador</item>
+        <item>España</item>
+        <item>Estados Unidos</item>
         <item>Francia</item>
         <item>Guatemala</item>
         <item>Honduras</item>
         <item>Hong Kong</item>
         <item>Holanda</item>
         <item>India</item>
-        <item>Reino Unido</item>
         <item>Irlanda</item>
         <item>Italia</item>
         <item>Japón</item>
+        <item>Malasia</item>
+        <item>México</item>
         <item>Nicaragua</item>
         <item>Panamá</item>
         <item>Paraguay</item>
         <item>Perú</item>
         <item>Portugal</item>
+        <item>República Dominicana</item>
+        <item>Reino Unido</item>
         <item>Suiza</item>
+        <item>Tailandia</item>
         <item>Suecia</item>
         <item>Uruguay</item>
         <item>Venezuela</item>
-        <item>Ecuador</item>
     </string-array>
 
     <string-array name="recarga">

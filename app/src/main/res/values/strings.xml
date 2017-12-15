@@ -13,8 +13,8 @@
     <string name="checkbox">I agree terms and conditions</string>
     <string name="siguiente">Next</string>
     <string name="usuario">User</string>
-    <string name="clave_de_4_digitos">4 digits for Password</string>
-    <string name="confirmar_clave">Confirm Password</string>
+    <string name="clave_de_4_digitos">4 digits for password</string>
+    <string name="confirmar_clave">Confirm 4 digits password</string>
     <string name="email">Email</string>
     <string name="info_fallas_comunicacion">COMMUNICATION FAIL TRY LATER</string>
     <string name="inf_dialog">"In process. Please wait..."</string>
