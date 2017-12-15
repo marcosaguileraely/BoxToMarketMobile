@@ -55,7 +55,6 @@ public class BleecardMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bleecard_main);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         blueList    = (ListView) findViewById(R.id.blue_listview);
@@ -290,10 +289,10 @@ public class BleecardMainActivity extends AppCompatActivity {
                     if (deviceName.equals("BLECard")){
                         Log.d(TAG, "onReceive: " + "hay al menos un dispositivo blee" );
                         items.add(new Bluethoot(device.getName(), device.getAddress(), device.getAddress()));
-                        items.add(new Bluethoot("BLECard1", "50:8C:B1:6A:68:0E", "50:8C:B1:6A:68:0E"));
-                        items.add(new Bluethoot("BLECard2", "18:93:D7:54:F7:A4", "18:93:D7:54:F7:A4"));
-                        items.add(new Bluethoot("BLECard3", "50:8C:B1:6A:68:0E", "50:8C:B1:6A:68:0E"));
-                        items.add(new Bluethoot("BLECard4", "34:15:13:f4:59:f1", "34:15:13:d4:59:f1"));
+                        //items.add(new Bluethoot("BLECard1", "50:8C:B1:6A:68:0E", "50:8C:B1:6A:68:0E"));
+                        //items.add(new Bluethoot("BLECard2", "18:93:D7:54:F7:A4", "18:93:D7:54:F7:A4"));
+                        //items.add(new Bluethoot("BLECard3", "50:8C:B1:6A:68:0E", "50:8C:B1:6A:68:0E"));
+                        //items.add(new Bluethoot("BLECard4", "34:15:13:f4:59:f1", "34:15:13:d4:59:f1"));
 
                     }else {
                         Log.d(TAG, "onReceive: " + "No BLECard device detected");
@@ -318,7 +317,6 @@ public class BleecardMainActivity extends AppCompatActivity {
             Log.d(TAG, "UUID: " + uuid.getUuid().toString());
         }
     }
-
 
     /**
      *

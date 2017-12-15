@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -46,6 +47,7 @@ public class BleecardDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bleecard_details);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         blee_id         = (TextView) findViewById(R.id.blee_id);
         blee_img        = (ImageView) findViewById(R.id.blee_img_uri);
@@ -120,5 +122,16 @@ public class BleecardDetailsActivity extends AppCompatActivity {
         List<String> items = Arrays.asList(prices.split("\\s*,\\s*"));
         Log.d(TAG, " "+items);
         return items;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
