@@ -1,6 +1,7 @@
 package btm.app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,6 +24,8 @@ public class Compensacion extends DataJp {
     private Spinner tipo;
     private TextView tvcuenta;
     private CuentaB cuenta;
+
+    Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +82,11 @@ public class Compensacion extends DataJp {
                 });
             }
         });
+    }
+
+    public void onBackPressed(){
+        Intent gotoHome = new Intent(context, MainActivity.class);
+        startActivity(gotoHome);
     }
 
     @Override

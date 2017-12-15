@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -41,6 +42,7 @@ public class SubscriptionsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subscriptions);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         username_global =  getIntent().getStringExtra(MainActivity.USER_GLOBAL);
         Log.d(TAG, "-> "+ username_global);
@@ -162,5 +164,15 @@ public class SubscriptionsActivity extends AppCompatActivity {
         listSubscriptions(v);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 }

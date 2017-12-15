@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -37,6 +38,8 @@ public class ChargeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_charge);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         final NetActions netActions = new NetActions(context);
 
@@ -193,5 +196,21 @@ public class ChargeActivity extends AppCompatActivity {
         Log.d(TAG, "I'm in back...");
         reloadCreditCardsList();
     }*/
+
+    public void onBackPressed(){
+        Intent gotoHome = new Intent(context, MainActivity.class);
+        startActivity(gotoHome);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 }

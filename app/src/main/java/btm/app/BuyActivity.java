@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.Toast;
@@ -47,6 +48,8 @@ public class BuyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         username_global =  getIntent().getStringExtra(SubscriptionsActivity.USER_GLOBAL);
         subsGridView    = (GridView) findViewById(R.id.SubsGridView);
@@ -110,7 +113,7 @@ public class BuyActivity extends AppCompatActivity {
                     subsGridView.setAdapter(subsPublicAdapter);
 
                     /* Si estas viendo esta pieza de código quizá
-                     * estes buscando la función quue realiza el Intent,
+                     * estes buscando la función que realiza el Intent,
                      * dicha funcione no se encuentra aquí, para verla dirigete la clase: Adapters > SubsPublicAdapter.class
                      * y en la línea 58 lo encontrarás.
                      */
@@ -195,5 +198,16 @@ public class BuyActivity extends AppCompatActivity {
         Intent gotoMain = new Intent(BuyActivity.this, MainActivity.class);
         gotoMain.putExtra(USER_GLOBAL_SENDER, username_global);
         startActivity(gotoMain);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

@@ -84,10 +84,11 @@
     <!-- Subscriptions UI-->
     <string name="buy_subscriptions">Buy subscriptions</string>
     <string name="buy_subscription">Buy</string>
-    <string name="list_clubs_available">Clubs list available</string>
-    <string name="list_subscriptions_available">Subscriptions list available</string>
+    <string name="list_clubs_available">Clubs subscriptions</string>
+    <string name="list_subscriptions_available">Available subscriptions</string>
     <string name="search_bluethoot">Search devices</string>
     <string name="blee_click_to_pay">Touch to pay</string>
+    <string name="log_out">Go to Close Session to exit</string>
 
 
 </resources>

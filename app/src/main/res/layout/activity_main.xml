@@ -20,6 +20,8 @@
             android:layout_height="?attr/actionBarSize"
             android:background="#e95c17"
 
+            android:layout_gravity="center_horizontal"
+
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             android:theme="@style/ToolbarTheme"

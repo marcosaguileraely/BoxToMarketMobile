@@ -71,7 +71,6 @@
                 android:layout_margin="3dp"
                 android:layout_weight="1"
                 android:background="#007AFF"
-                android:onClick="onRecargar"
                 android:text="@string/recarga"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
@@ -91,6 +90,7 @@
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
                 tools:ignore="ButtonStyle" />
+
         </LinearLayout>
     </RelativeLayout>
 
@@ -139,7 +139,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button_bank_account"
+                android:id="@+id/button_request"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_alignParentEnd="true"
@@ -148,7 +148,6 @@
                 android:layout_margin="3dp"
                 android:layout_weight="1"
                 android:background="@color/colorOrange"
-                android:onClick="onSolicitar"
                 android:text="@string/solicitar"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
@@ -156,7 +155,7 @@
                 tools:ignore="ButtonStyle,ObsoleteLayoutParam" />
 
             <Button
-                android:id="@+id/button_request"
+                android:id="@+id/button_bank_account"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_alignLeft="@+id/button_bank_account"
@@ -167,7 +166,6 @@
                 android:layout_weight="1"
                 android:background="@color/colorOrange"
                 android:enabled="false"
-                android:onClick="onRegistrarCuenta"
                 android:text="@string/cuenta_bancaria"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
@@ -204,10 +202,11 @@
             <Button
                 android:id="@+id/button10"
                 android:layout_width="110dp"
-                android:layout_height="110dp"
+                android:layout_height="90dp"
                 android:layout_marginLeft="2dp"
                 android:layout_marginRight="2dp"
                 android:layout_marginTop="2dp"
+                android:layout_weight="1"
                 android:background="@drawable/comprar_token"
                 android:minHeight="0dp"
                 android:onClick="onComprarToken"
@@ -218,10 +217,11 @@
             <Button
                 android:id="@+id/my_subscriptions_btn"
                 android:layout_width="110dp"
-                android:layout_height="110dp"
+                android:layout_height="90dp"
                 android:layout_marginLeft="2dp"
                 android:layout_marginRight="2dp"
                 android:layout_marginTop="2dp"
+                android:layout_weight="1"
                 android:background="@drawable/mis_suscripciones"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
@@ -230,12 +230,26 @@
             <Button
                 android:id="@+id/button12"
                 android:layout_width="110dp"
-                android:layout_height="110dp"
+                android:layout_height="90dp"
                 android:layout_marginLeft="2dp"
                 android:layout_marginRight="2dp"
                 android:layout_marginTop="2dp"
+                android:layout_weight="1"
                 android:background="@drawable/transferencia"
                 android:onClick="onTransfer"
+                android:textStyle="bold"
+                tools:ignore="ButtonStyle" />
+
+            <Button
+                android:id="@+id/bleecard_btn"
+                android:layout_width="110dp"
+                android:layout_height="90dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginTop="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/bleecard"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 tools:ignore="ButtonStyle" />
 
@@ -247,19 +261,6 @@
             android:layout_weight="1"
             android:gravity="top|center"
             android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/bleecard_btn"
-                android:layout_width="110dp"
-                android:layout_height="110dp"
-                android:layout_marginBottom="2dp"
-                android:layout_marginLeft="2dp"
-                android:layout_marginRight="2dp"
-                android:layout_marginTop="2dp"
-                android:background="@drawable/bleecard"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                tools:ignore="ButtonStyle" />
 
         </LinearLayout>
 

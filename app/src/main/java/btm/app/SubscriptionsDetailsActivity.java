@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -59,6 +60,7 @@ public class SubscriptionsDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_subscriptions_details);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         username_global  = getIntent().getStringExtra(SubsPublicAdapter.USER_GLOBAL);
         id               = getIntent().getIntExtra(SubsPublicAdapter.ID_GLOBAL, 0);
@@ -221,6 +223,18 @@ public class SubscriptionsDetailsActivity extends AppCompatActivity {
         Intent gotoBuy = new Intent(context, BuyActivity.class);
         gotoBuy.putExtra(USER_GLOBAL_SENDER, username_global);
         startActivity(gotoBuy);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 }

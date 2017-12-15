@@ -3,9 +3,14 @@ package btm.app;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
@@ -13,7 +18,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +32,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
+
+import java.util.ArrayList;
 
 import btm.app.BleecardUI.BleecardMainActivity;
 import btm.app.DataHolder.DataHolder;
@@ -54,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
     public Context context = this;
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,10 +73,11 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setIcon(R.mipmap.ic_toolbar);
-        getSupportActionBar().setTitle("Mi Billetera");
-        //getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        //getSupportActionBar().setCustomView(R.layout.app_custom_appbar);
+        //getSupportActionBar().setIcon(R.mipmap.ic_toolbar);
+
+        //toolbar.setNavigationIcon(R.mipmap.ic_arrow_back_white_48dp);
+        getSupportActionBar().setIcon(R.mipmap.ic_home_white_36dp);
+        getSupportActionBar().setTitle(getString(R.string.mi_billetera));
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -91,26 +102,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void onCC(View view){
         Intent intent = new Intent(this, CardActivity.class);
-        this.startActivity(intent);
-    }
-
-    public void onRecargar(View view){
-        Intent intent = new Intent(this, ChargeActivity.class);
-        this.startActivity(intent);
-    }
-
-    public void onSolicitar(View view){
-        Intent intent = new Intent(this, Compensacion.class);
-        this.startActivity(intent);
-    }
-
-    public void onRegistrarCuenta(View view){
-        Intent intent = new Intent(this, RegistrarBanco.class);
-        this.startActivity(intent);
-    }
-
-    public void onComprarToken(View view){
-        Intent intent = new Intent(this, CompraToken.class);
         this.startActivity(intent);
     }
 
@@ -163,7 +154,8 @@ public class MainActivity extends AppCompatActivity {
         private static final String ARG_SECTION_NUMBER = "section_number";
         private static final String ARG_SECTION_DATA = "section_data";
         private TextView textViewTrm, textViewSaldoCreditos, textViewSaldoCompensacion;
-        private Button Subscriptions, Bleecard;
+        public Button Subscriptions, Bleecard, AddMoney, RequestMoney, AddBankAccount;
+        public Button BuyToken;
 
         public PlaceholderFragment() {
         }
@@ -190,6 +182,10 @@ public class MainActivity extends AppCompatActivity {
             textViewSaldoCreditos       = (TextView) rootView.findViewById(R.id.textViewSaldoCredito);
             Subscriptions               = (Button) rootView.findViewById(R.id.my_subscriptions_btn);
             Bleecard                    = (Button) rootView.findViewById(R.id.bleecard_btn);
+            AddMoney                    = (Button) rootView.findViewById(R.id.button_add_money);
+            RequestMoney                = (Button) rootView.findViewById(R.id.button_request);
+            AddBankAccount              = (Button) rootView.findViewById(R.id.button_bank_account);
+            BuyToken                    = (Button) rootView.findViewById(R.id.button10);
 
             Subscriptions.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -207,6 +203,38 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent gotoBleecard = new Intent(getActivity(), BleecardMainActivity.class);
                     startActivity(gotoBleecard);
+                }
+            });
+
+            AddMoney.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), ChargeActivity.class);
+                    startActivity(intent);
+                }
+            });
+
+            RequestMoney.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), Compensacion.class);
+                    startActivity(intent);
+                }
+            });
+
+            AddBankAccount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), RegistrarBanco.class);
+                    startActivity(intent);
+                }
+            });
+
+            BuyToken.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), CompraToken.class);
+                    startActivity(intent);
                 }
             });
 
@@ -397,7 +425,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onBackPressed(){
-        Toast.makeText(context, "¿Parece que quieres salir?. Cierra sesión", Toast.LENGTH_LONG).show();
+        Toast.makeText(context, getString(R.string.log_out), Toast.LENGTH_LONG).show();
     }
 
 }

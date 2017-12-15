@@ -1,6 +1,7 @@
 package btm.app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.text.Editable;
@@ -232,6 +233,11 @@ public class RegisterActivity extends DataJp {
             return null;
         }
     };
+
+    public void onBackPressed(){
+        Intent gotoLogin = new Intent(context, LoginActivity.class);
+        startActivity(gotoLogin);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

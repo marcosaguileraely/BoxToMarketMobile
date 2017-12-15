@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +20,9 @@ import btm.app.Network.NetActions;
 
 
 public class ForgotPassActivity extends AppCompatActivity {
+
+    Context context = this;
+
     private Button send_email;
     private EditText email;
 
@@ -26,10 +31,21 @@ public class ForgotPassActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
+
         setContentView(R.layout.activity_forgot_pass);
 
         send_email = (Button) findViewById(R.id.forgot_btn1);
         email      = (EditText) findViewById(R.id.forgot_email);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //7getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        //getSupportActionBar().setHomeAsUpIndicator(R.mipmap.ic_arrow_back_white_48dp);
 
         //Invoke the send email event
         send_email.setOnClickListener(new View.OnClickListener() {
@@ -72,5 +88,21 @@ public class ForgotPassActivity extends AppCompatActivity {
             }
         };
         netActions.resetPassword("olvidoclave", datos, response, progress);
+    }
+
+    public void onBackPressed(){
+        Intent gotoLogin = new Intent(context, LoginActivity.class);
+        startActivity(gotoLogin);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
