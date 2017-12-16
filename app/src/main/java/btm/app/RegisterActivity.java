@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -22,6 +23,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 public class RegisterActivity extends DataJp {
+    public static final String TAG = "DEV -> Register";
     private FragmentTransaction ft;
     private EditText username, pass_1, pass_2, email, nombres, apellidos, identificacion, celular;
     private Spinner pais;
@@ -40,8 +42,16 @@ public class RegisterActivity extends DataJp {
         setContentView(R.layout.activity_register);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        username       = (EditText) findViewById(R.id.editText3);
-        identificacion = (EditText) findViewById(R.id.editText9);
+        username          = (EditText) findViewById(R.id.editText3);
+        pass_1            = (EditText) findViewById(R.id.editText4);
+        pass_2            = (EditText) findViewById(R.id.editText5);
+        email             = (EditText) findViewById(R.id.editText6);
+        identificacion    = (EditText) findViewById(R.id.editText9);
+        nombres           = (EditText) findViewById(R.id.editText7);
+        apellidos         = (EditText) findViewById(R.id.editText8);
+        pais              = (Spinner) findViewById(R.id.spinner);
+        celular           = (EditText) findViewById(R.id.editText11);
+        checkbox_terminos = (CheckBox) findViewById(R.id.checkBox);
 
         saveData = (Button) findViewById(R.id.button3);
         saveData.setOnClickListener(new View.OnClickListener() {
@@ -122,23 +132,23 @@ public class RegisterActivity extends DataJp {
             }
         });
 
+        pais.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String country  = parent.getItemAtPosition(position).toString();
+                Log.d(TAG, "areaCode: "+ getAreaCode(country));
+                celular.setText(getAreaCode(country));
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     public void catchData(final View view){
         view.setEnabled(false);
-
-        username          = (EditText) findViewById(R.id.editText3);
-        pass_1            = (EditText) findViewById(R.id.editText4);
-        pass_2            = (EditText) findViewById(R.id.editText5);
-        email             = (EditText) findViewById(R.id.editText6);
-        identificacion    = (EditText) findViewById(R.id.editText9);
-        nombres           = (EditText) findViewById(R.id.editText7);
-        apellidos         = (EditText) findViewById(R.id.editText8);
-        pais              = (Spinner) findViewById(R.id.spinner);
-        celular           = (EditText) findViewById(R.id.editText11);
-        checkbox_terminos = (CheckBox) findViewById(R.id.checkBox);
-
         if(username.getText().toString().contains(" ")){
             Toast.makeText(this, R.string.alerta_usuario_espacio, Toast.LENGTH_SHORT).show();
             return;
@@ -248,6 +258,13 @@ public class RegisterActivity extends DataJp {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public String getAreaCode(String areacode){
+        String[] separated = areacode.split("-");
+        String finalAreaCode = separated[0].trim();
+        Log.d(TAG, "areaCode: " + finalAreaCode);
+        return finalAreaCode;
     }
 
     /*

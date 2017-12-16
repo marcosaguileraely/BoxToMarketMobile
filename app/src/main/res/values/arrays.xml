@@ -2,42 +2,42 @@
 <resources>
     <string-array name="pais_select">
         <item>@string/pais</item>
-        <item>+67 Alemania</item>
-        <item>Argentina</item>
-        <item>Australia</item>
-        <item>Bolivia</item>
-        <item>Brasil</item>
-        <item>Canada</item>
-        <item>Costa Rica</item>
-        <item>+57 Colombia</item>
-        <item>China</item>
-        <item>Chile</item>
-        <item>Ecuador</item>
-        <item>España</item>
-        <item>Estados Unidos</item>
-        <item>Francia</item>
-        <item>Guatemala</item>
-        <item>Honduras</item>
-        <item>Hong Kong</item>
-        <item>Holanda</item>
-        <item>India</item>
-        <item>Irlanda</item>
-        <item>Italia</item>
-        <item>Japón</item>
-        <item>Malasia</item>
-        <item>México</item>
-        <item>Nicaragua</item>
-        <item>Panamá</item>
-        <item>Paraguay</item>
-        <item>Perú</item>
-        <item>Portugal</item>
-        <item>República Dominicana</item>
-        <item>Reino Unido</item>
-        <item>Suiza</item>
-        <item>Tailandia</item>
-        <item>Suecia</item>
-        <item>Uruguay</item>
-        <item>Venezuela</item>
+        <item>+54 - Argentina</item>
+        <item>+43 - Australia</item>
+        <item>+591 - Bolivia</item>
+        <item>+55 - Brazil</item>
+        <item>+1 - Canada</item>
+        <item>+506 - Costa Rica</item>
+        <item>+57 - Colombia</item>
+        <item>+86 - China</item>
+        <item>+56 - Chile</item>
+        <item>+593 - Ecuador</item>
+        <item>+33 - France</item>
+        <item>+502 - Guatemala</item>
+        <item>+49 - Germany</item>
+        <item>+504 - Honduras</item>
+        <item>+852 - Hong Kong</item>
+        <item>+31 - Netherland</item>
+        <item>+91 - India</item>
+        <item>+353 - Irland</item>
+        <item>+39 - Italy</item>
+        <item>+81 - Japan</item>
+        <item>+60 - Malaysia</item>
+        <item>+52 - Mexico</item>
+        <item>+505 - Nicaragua</item>
+        <item>+507 - Panama</item>
+        <item>+595 - Paraguay</item>
+        <item>+51 - Peru</item>
+        <item>+351 - Portugal</item>
+        <item>+1 - Dominican Republic</item>
+        <item>+44 - United Kingdom</item>
+        <item>+34 - Spain</item>
+        <item>+41 - Switzerland</item>
+        <item>+66 - Thailand</item>
+        <item>+46 - Sweden</item>
+        <item>+1 - United States</item>
+        <item>+598 - Uruguay</item>
+        <item>+58 - Venezuela</item>
     </string-array>
 
     <string-array name="recarga">

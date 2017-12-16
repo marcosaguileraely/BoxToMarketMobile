@@ -53,6 +53,8 @@ public class BuySubscriptionConfirmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_subscription_confirm);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getString(R.string.detail_buy_subscription_confirm));
+
 
         final NetActions netActions =  new NetActions(context);
 
@@ -67,8 +69,8 @@ public class BuySubscriptionConfirmActivity extends AppCompatActivity {
         pay            = (Button) findViewById(R.id.pay_button);
 
         String img_uri    = DataHolderSubs.getImg_url();
-        String type_prod  = "Tipo de producto: " + DataHolderSubs.getProduct_type();
-        String price_prod = "Precio: " + DataHolderSubs.getPrice();
+        String type_prod  = "Tipo: " + DataHolderSubs.getProduct_type();
+        String price_prod = DataHolderSubs.getPrice();
 
         token.setVisibility(GONE);
         listTc = new ArrayList<CC>();

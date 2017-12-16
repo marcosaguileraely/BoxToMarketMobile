@@ -84,11 +84,14 @@
     <!-- Subscriptions UI-->
     <string name="buy_subscriptions">Comprar</string>
     <string name="buy_subscription">Comprar</string>
-    <string name="list_clubs_available">Suscripciones a Clubes</string>
-    <string name="list_subscriptions_available">Suscripciones disponibles</string>
+    <string name="list_clubs_available">Mis Clubes</string>
+    <string name="list_subscriptions_available">Suscripciones Disponibles</string>
     <string name="search_bluethoot">Buscar dispositivos</string>
     <string name="blee_click_to_pay">Toca para pagar</string>
     <string name="log_out">Para salir ve a Cerrar Sesión</string>
+    <string name="buy_clubs_subscription">Clubes de Suscriptores</string>
+    <string name="detail_buy_subscriptions">Comprar Suscripción</string>
+    <string name="detail_buy_subscription_confirm">Confirmar Compra</string>
 
 
 </resources>

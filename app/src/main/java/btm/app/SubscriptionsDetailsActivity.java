@@ -60,7 +60,9 @@ public class SubscriptionsDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_subscriptions_details);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getString(R.string.detail_buy_subscriptions));
 
         username_global  = getIntent().getStringExtra(SubsPublicAdapter.USER_GLOBAL);
         id               = getIntent().getIntExtra(SubsPublicAdapter.ID_GLOBAL, 0);

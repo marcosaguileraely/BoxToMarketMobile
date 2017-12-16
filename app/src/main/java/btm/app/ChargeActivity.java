@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import btm.app.Network.NetActions;
 
 public class ChargeActivity extends AppCompatActivity {
-
     public static final String TAG = "DEV -> Add money";
     private Context context = this;
 

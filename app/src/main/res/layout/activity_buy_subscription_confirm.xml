@@ -42,20 +42,24 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/pay_detail_type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="TextView"
-                android:textSize="14sp" />
-
-            <TextView
                 android:id="@+id/pay_detail_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:text="TextView"
-                android:textSize="14sp" />
+                android:textAlignment="center"
+                android:textColor="@color/colorOrange"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/pay_detail_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="TextView"
+                android:textAlignment="center"
+                android:textSize="18sp" />
 
             <Spinner
                 android:layout_width="match_parent"

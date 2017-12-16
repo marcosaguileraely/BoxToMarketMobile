@@ -51,6 +51,8 @@ public class BuyActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        getSupportActionBar().setTitle(getString(R.string.buy_clubs_subscription));
+
         username_global =  getIntent().getStringExtra(SubscriptionsActivity.USER_GLOBAL);
         subsGridView    = (GridView) findViewById(R.id.SubsGridView);
 
