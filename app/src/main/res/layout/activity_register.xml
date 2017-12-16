@@ -16,7 +16,8 @@
         android:gravity="center_vertical|center_horizontal"
         android:orientation="vertical"
         android:paddingLeft="15dp"
-        android:paddingRight="15dp">
+        android:paddingRight="15dp"
+        android:paddingTop="15dp">
 
         <EditText
             android:id="@+id/editText3"

@@ -136,8 +136,16 @@ public class RegisterActivity extends DataJp {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String country  = parent.getItemAtPosition(position).toString();
-                Log.d(TAG, "areaCode: "+ getAreaCode(country));
-                celular.setText(getAreaCode(country));
+
+                Log.d(TAG, "Lenght: "+ getAreaCode(country));
+                if(getAreaCode(country).length() > 4){
+                    celular.setText("");
+                }else {
+                    Log.d(TAG, "areaCode: "+ getAreaCode(country));
+                    celular.setText(getAreaCode(country));
+                    celular.setSelection(getAreaCode(country).length());
+                    celular.requestFocus();
+                }
             }
 
             @Override
