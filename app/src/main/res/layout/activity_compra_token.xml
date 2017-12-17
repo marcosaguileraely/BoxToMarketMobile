@@ -5,22 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="btm.app.CompraToken"
+    android:background="@drawable/fondoimg"
     android:orientation="vertical">
 
     <TextView
-        android:text="@string/seleccione_el_metodo"
+        android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textView4"
-        android:layout_margin="10dp"
-        android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="70dp"
+        android:text="@string/select_payment_method"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+        android:textColor="@color/TextColor"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <Spinner
-        android:layout_width="match_parent"
         android:id="@+id/spinnerTipoCompra"
-        android:layout_margin="10dp"
-        android:entries="@array/tipo_compra"
-        android:layout_height="45dp" />
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:entries="@array/tipo_compra" />
 
     <Spinner
         android:layout_width="match_parent"
@@ -38,7 +45,7 @@
         android:inputType="textEmailAddress"
         android:ems="10"
         android:id="@+id/editTextEmail"
-        android:hint="E-mail"
+        android:hint="Email"
         android:layout_margin="10dp" />
 
     <EditText
@@ -54,11 +61,13 @@
         android:hint="@string/ingrese_valor" />
 
     <Button
-        android:text="@string/comprar_token"
+        android:id="@+id/buttonCompraToken"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/buttonCompraToken"
-        android:layout_margin="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="50dp"
         android:background="@drawable/background_button"
-        android:textColor="@android:color/white"/>
+        android:text="@string/buy_a_token_title"
+        android:textColor="@android:color/white" />
 </LinearLayout>

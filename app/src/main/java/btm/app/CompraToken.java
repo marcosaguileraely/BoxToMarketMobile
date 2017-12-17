@@ -29,6 +29,7 @@ public class CompraToken extends DataJp{
         setContentView(R.layout.activity_compra_token);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getString(R.string.buy_a_token_title));
 
         SharedPreferences pref = getSharedPreferences(getString(R.string.preferencias), Context.MODE_PRIVATE);
         final String user = pref.getString(LoginActivity.USERNAME,"-");
