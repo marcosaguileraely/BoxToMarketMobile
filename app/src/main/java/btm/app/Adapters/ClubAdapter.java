@@ -40,7 +40,8 @@ public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ClubAdapter.ViewHolder holder, int position) {
         Clubs clubs = (Clubs) clubsArrayList.get(position);
-        holder.title.setText(String.valueOf(clubs.getTitle()));
+        //holder.title.setText(String.valueOf(clubs.getTitle()));
+        holder.title.setText(String.valueOf(clubs.getAvailable_qty()));
         Glide.with(holder.itemView.getContext()).load(clubs.getImg_uri()).into(holder.img_uri);
     }
 

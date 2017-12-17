@@ -5,14 +5,17 @@ package btm.app.Model;
  */
 
 public class Clubs {
+
     public String id;
     public String title;
     public String img_uri;
+    public String available_qty;
 
-    public Clubs(String id, String title, String img_uri) {
+    public Clubs(String id, String title, String img_uri, String available_qty) {
         this.id = id;
         this.title = title;
         this.img_uri = img_uri;
+        this.available_qty = available_qty;
     }
 
     public String getId() {
@@ -38,4 +41,14 @@ public class Clubs {
     public void setImg_uri(String img_uri) {
         this.img_uri = img_uri;
     }
+
+    public String getAvailable_qty() {
+        return available_qty;
+    }
+
+    public void setAvailable_qty(String available_qty) {
+        this.available_qty = available_qty;
+    }
+
+
 }
