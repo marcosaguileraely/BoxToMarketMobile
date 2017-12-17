@@ -8,7 +8,7 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="pais">Select your country</string>
     <string name="apellidos">Last Name</string>
-    <string name="de_identificaci_n">ID number</string>
+    <string name="de_identificaci_n">Recipent user ID number</string>
     <string name="telefono_mov_l">Mobile Number</string>
     <string name="checkbox">I agree terms and conditions</string>
     <string name="siguiente">Next</string>
@@ -25,7 +25,8 @@
     <string name="tipo_compensacion">Transfer</string>
     <string name="password">Password</string>
     <string name="recarga">Add Money</string>
-    <string name="compensacion">Request</string>
+    <string name="compensacion">Request Compensation</string>
+    <string name="compensacion_home">Compensation:</string>
     <string name="token_buy">Get your Token</string>
     <string name="transferencia">Transfer</string>
     <string name="alerta_terminos">Please check terms and conditions</string>
@@ -36,7 +37,7 @@
     <string name="Info">Info</string>
     <string name="tarjeta_credito">Enroll Credit Card</string>
     <string name="solicitar">Request</string>
-    <string name="cuenta_bancaria">Account Bank</string>
+    <string name="cuenta_bancaria">Bank account registered:</string>
     <string name="transacciones_recientes">Recent Transactions</string>
     <string name="saldo">USD $%1$s</string>
     <string name="dolar_hoy">Dolar today in %2$s: $%1$s</string>
@@ -46,7 +47,7 @@
     <string name="seleccione_el_metodo">Select a payment method</string>
     <string name="monto">Value</string>
     <string name="error_token">Try later</string>
-    <string name="ingrese_valor">Enter the value</string>
+    <string name="ingrese_valor">Enter the value in US Dollars</string>
     <string name="ingrese_token">Enter the token number</string>
     <string name="confirmacion">Confirm</string>
     <string name="registrar_tarjeta_de_credito">add a Credit Card</string>
@@ -68,8 +69,8 @@
     <string name="id_del_destinatario">Recipient ID #</string>
     <string name="valor_a_transferir">Value to transfer</string>
     <string name="cerrar">Close Session</string>
-    <string name="transferir_creditos">credits to transfer</string>
-    <string name="informaci_n_del_destinatario">information to Recipient</string>
+    <string name="transferir_creditos">Transfer</string>
+    <string name="informaci_n_del_destinatario">Transfer from My Wallet to another user</string>
     <string name="nombres">Firts Name</string>
     <string name="error_monto">Please enter a correct value</string>
     <string name="please_check_your_info_and_clic_for_continue">Please check your info and click for continue.</string>
@@ -82,8 +83,8 @@
     <string name="add_credit_card">Add credit card</string>
 
     <!-- Subscriptions UI-->
-    <string name="buy_subscriptions">Buy subscriptions</string>
-    <string name="buy_subscription">Buy</string>
+    <string name="buy_subscriptions">Buy</string>
+    <string name="pay_subscription">Confirm Payment</string>
     <string name="list_clubs_available">My Clubs</string>
     <string name="list_subscriptions_available">Available Subscriptions</string>
     <string name="search_bluethoot">Search devices</string>
@@ -91,7 +92,11 @@
     <string name="log_out">Go to Close Session to exit</string>
     <string name="buy_clubs_subscription">Subscriptors Clubs</string>
     <string name="detail_buy_subscriptions">Buy Subscriptions</string>
-    <string name="detail_buy_subscription_confirm">Pay Confirmation</string>
-
+    <string name="detail_buy_subscription_confirm">Confirm Payment</string>
+    <string name="select_payment_method">Select a payment method:</string>
+    <string name="buy_a_token_title">Buy a Token</string>
+    <string name="transfer_to_another_user">Transfer to user</string>
+    <string name="help_compensation_text">Compensation for sales on the platform</string>
+    <string name="home_button_transactions">Transactions</string>
 
 </resources>

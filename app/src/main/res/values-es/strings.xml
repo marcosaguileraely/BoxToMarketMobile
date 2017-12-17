@@ -8,7 +8,7 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="pais">Seleccione el pais</string>
     <string name="apellidos">Apellidos</string>
-    <string name="de_identificaci_n"># de Identificación</string>
+    <string name="de_identificaci_n"># de Identificación del usuario</string>
     <string name="telefono_mov_l">Teléfono Movil</string>
     <string name="checkbox">Acepto términos y condiciones</string>
     <string name="siguiente">Siguiente</string>
@@ -25,7 +25,8 @@
     <string name="tipo_compensacion">Transferencia</string>
     <string name="password">Clave</string>
     <string name="recarga">Recargar</string>
-    <string name="compensacion">Compensación:</string>
+    <string name="compensacion">Solicitar Compensación</string>
+    <string name="compensacion_home">Compensación:</string>
     <string name="token_buy">Comprar Token</string>
     <string name="transferencia">Transferencia</string>
     <string name="alerta_terminos">Debe aceptar terminos y condiciones</string>
@@ -36,16 +37,16 @@
     <string name="Info">Info</string>
     <string name="tarjeta_credito">Registro Tarjeta de Credito</string>
     <string name="solicitar">Solicitar</string>
-    <string name="cuenta_bancaria">Transacciones</string>
+    <string name="cuenta_bancaria">Cuenta bancaria registrada:</string>
     <string name="transacciones_recientes">Transacciones Recientes</string>
     <string name="dolar_hoy">Dolar en  %2$s hoy: $%1$s</string>
     <string name="mi_billetera">Mi Billetera</string>
     <string name="comprar">Comprar</string>
     <string name="vender">Vender</string>
-    <string name="seleccione_el_metodo">Seleccione el metodo de Pago</string>
+    <string name="seleccione_el_metodo">Seleccione el método de Pago</string>
     <string name="monto">Valor</string>
     <string name="error_token">Intente mas tarde</string>
-    <string name="ingrese_valor">Ingrese el valor</string>
+    <string name="ingrese_valor">Ingrese el valor en dolares americanos</string>
     <string name="ingrese_token">Ingrese el token</string>
     <string name="confirmacion">Confirmacion</string>
     <string name="registrar_tarjeta_de_credito">Registre su tarjeta de credito</string>
@@ -68,8 +69,8 @@
     <string name="id_del_destinatario"># identificación del destinatario</string>
     <string name="valor_a_transferir">Valor a transferir</string>
     <string name="cerrar">Cerrar Sesion</string>
-    <string name="transferir_creditos">transferir creditos</string>
-    <string name="informaci_n_del_destinatario">información del destinatario</string>
+    <string name="transferir_creditos">Transferir Saldo</string>
+    <string name="informaci_n_del_destinatario">Transferir de Mi Billetera a otro usuario</string>
     <string name="nombres">Nombres</string>
     <string name="error_monto">ingrese un valor diferente de cero</string>
     <string name="please_check_your_info_and_clic_for_continue">Por favor verifique la info y de clic para continuar el registro</string>
@@ -83,7 +84,7 @@
 
     <!-- Subscriptions UI-->
     <string name="buy_subscriptions">Comprar</string>
-    <string name="buy_subscription">Comprar</string>
+    <string name="pay_subscription">Confirmar Pago</string>
     <string name="list_clubs_available">Mis Clubes</string>
     <string name="list_subscriptions_available">Suscripciones Disponibles</string>
     <string name="search_bluethoot">Buscar dispositivos</string>
@@ -92,6 +93,11 @@
     <string name="buy_clubs_subscription">Clubes de Suscriptores</string>
     <string name="detail_buy_subscriptions">Comprar Suscripción</string>
     <string name="detail_buy_subscription_confirm">Confirmar Compra</string>
+    <string name="select_payment_method">Seleccione un método de pago:</string>
+    <string name="buy_a_token_title">Comprar Token</string>
+    <string name="transfer_to_another_user">Transferir a usuario</string>
+    <string name="help_compensation_text">Compensación por ventas en la plataforma</string>
+    <string name="home_button_transactions">Transacciones</string>
 
 
 </resources>
