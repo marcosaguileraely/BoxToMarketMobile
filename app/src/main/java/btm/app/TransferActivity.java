@@ -21,6 +21,7 @@ public class TransferActivity extends DataJp {
         setContentView(R.layout.activity_transfer);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getString(R.string.transfer_to_another_user));
 
         SharedPreferences pref = getSharedPreferences(getString(R.string.preferencias), Context.MODE_PRIVATE);
         final String user = pref.getString(LoginActivity.USERNAME,"-");
