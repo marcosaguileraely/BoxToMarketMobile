@@ -39,7 +39,7 @@ public class ChargeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_charge);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        getSupportActionBar().setTitle(getString(R.string.recarga));
         final NetActions netActions = new NetActions(context);
 
         creditCardList    = (Spinner) findViewById(R.id.spinnerCreditCards);
