@@ -33,6 +33,8 @@ public class Compensacion extends DataJp {
         setContentView(R.layout.activity_compensacion);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        getSupportActionBar().setTitle(getString(R.string.compensacion));
+
         SharedPreferences shPref = getSharedPreferences(getResources().getString(R.string.preferencias), Context.MODE_PRIVATE);
         final String user = shPref.getString(LoginActivity.USERNAME,"--");
         final String userp = shPref.getString(LoginActivity.PASSPIN,"0000");
