@@ -34,7 +34,7 @@
                 android:id="@+id/pay_subscription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/buy_subscription"
+                android:text="@string/buy_subscriptions"
                 android:textAllCaps="false"
                 android:theme="@style/OrangeButton" />
 

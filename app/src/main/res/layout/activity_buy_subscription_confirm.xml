@@ -61,6 +61,17 @@
                 android:textAlignment="center"
                 android:textSize="18sp" />
 
+            <TextView
+                android:id="@+id/select_payment_method"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="25dp"
+                android:text="@string/select_payment_method"
+                android:textColor="@color/TextColor"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -88,7 +99,7 @@
                 android:id="@+id/pay_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/buy_subscription"
+                android:text="@string/pay_subscription"
                 android:textAllCaps="false"
                 android:theme="@style/OrangeButton" />
 

@@ -116,7 +116,7 @@ public class BuyActivity extends AppCompatActivity {
 
                     /* Si estas viendo esta pieza de código quizá
                      * estes buscando la función que realiza el Intent,
-                     * dicha funcione no se encuentra aquí, para verla dirigete la clase: Adapters > SubsPublicAdapter.class
+                     * dicha funcion no se encuentra aquí, para verla dirigete la clase: Adapters > SubsPublicAdapter.class
                      * y en la línea 58 lo encontrarás.
                      */
 
@@ -127,7 +127,6 @@ public class BuyActivity extends AppCompatActivity {
         };
 
         new btm.app.Network.NetActions(this).listSubscriptionsPublic(username_global, response, progress);
-
     }
 
     public ArrayList<Clubs> getClubsList(String response){
@@ -144,8 +143,9 @@ public class BuyActivity extends AppCompatActivity {
                 jsonObject.put("id", subToken[0]);
                 jsonObject.put("title", subToken[1]);
                 jsonObject.put("img_uri", subToken[2]);
+                jsonObject.put("available_qty", subToken[3]);
                 jsonArray.put(jsonObject);
-                items.add(new Clubs(subToken[0], subToken[1], subToken[2]));
+                items.add(new Clubs(subToken[0], subToken[1], subToken[2], subToken[3]));
 
             } catch (JSONException e) {
                 e.printStackTrace();
