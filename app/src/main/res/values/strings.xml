@@ -98,5 +98,9 @@
     <string name="transfer_to_another_user">Transfer to user</string>
     <string name="help_compensation_text">Compensation for sales on the platform</string>
     <string name="home_button_transactions">Transactions</string>
+    <string name="transfer_compensation_mywallet">Transfer compensation to My Wallet</string>
+    <string name="transfer">Transfer</string>
+    <string name="help_transfer_compensation_wallt">Transfer from Compensation to My Wallet</string>
+    <string name="title_transfer_comp_wallet">Transfer Compensation to My Wallet</string>
 
 </resources>

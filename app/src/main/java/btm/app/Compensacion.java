@@ -19,7 +19,7 @@ import com.android.volley.Response;
 
 public class Compensacion extends DataJp {
 
-    private Button clic;
+    private Button clic, transferComp;
     private EditText monto;
     private Spinner tipo;
     private TextView tvcuenta;
@@ -31,18 +31,19 @@ public class Compensacion extends DataJp {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compensacion);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getString(R.string.compensacion));
 
         SharedPreferences shPref = getSharedPreferences(getResources().getString(R.string.preferencias), Context.MODE_PRIVATE);
         final String user = shPref.getString(LoginActivity.USERNAME,"--");
         final String userp = shPref.getString(LoginActivity.PASSPIN,"0000");
 
-        clic = (Button) findViewById(R.id.buttonCompensacion);
-        monto = (EditText) findViewById(R.id.editTextMonto);
-        tipo = (Spinner) findViewById(R.id.spinnerTipoCompensacion);
-        tvcuenta = (TextView) findViewById(R.id.textViewCuentaCompensacion);
+        clic         = (Button) findViewById(R.id.buttonCompensacion);
+        transferComp = (Button) findViewById(R.id.transferCompButton);
+        monto        = (EditText) findViewById(R.id.editTextMonto);
+        tipo         = (Spinner) findViewById(R.id.spinnerTipoCompensacion);
+        tvcuenta     = (TextView) findViewById(R.id.textViewCuentaCompensacion);
 
         final Request request = new Request(this);
         String datos = "&username=" + user+"&token="+request.tk();
@@ -82,6 +83,14 @@ public class Compensacion extends DataJp {
                         alert_info(response, getString(R.string.Info), android.R.drawable.ic_dialog_info);
                     }
                 });
+            }
+        });
+
+        transferComp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent gotoComp = new Intent(context, TransferCompensationActivity.class);
+                startActivity(gotoComp);
             }
         });
     }

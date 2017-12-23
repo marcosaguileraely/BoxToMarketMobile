@@ -136,7 +136,9 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_close:
-                finish();
+                //finish();
+                Intent intent = new Intent(context, LoginActivity.class);
+                startActivity(intent);
                 return true;
         }
 

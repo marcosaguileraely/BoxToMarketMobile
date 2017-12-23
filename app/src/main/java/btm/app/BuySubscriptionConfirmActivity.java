@@ -173,48 +173,6 @@ public class BuySubscriptionConfirmActivity extends AppCompatActivity {
 
                 token_number = token.getText().toString();
 
-                //String card_id_aux = "";
-                //String datos = "";
-
-                /*if(modo.equals("Tarjeta de Crédito") || modo.equals("Credit card")){
-                    card_id_aux = card_id;
-                    token_number = "";
-
-                    datos =   DataHolder.getUsername()
-                            + "|" + pin
-                            + "|" + convertPaymentMode(modo)
-                            + "|" + card_id_aux
-                            + "|" + DataHolderSubs.getId()
-                            + "|";
-                    Log.d(TAG, "datos -> "+ datos);
-
-
-                }else if(modo.equals("token") || modo.equals("Token")){
-                    token_number = token.getText().toString();
-                    card_id_aux = "";
-
-                    datos = "&datos=" + DataHolder.getUsername()
-                            + "|" + pin
-                            + "|" + convertPaymentMode(modo)
-                            + "|" + token_number
-                            + "|" + DataHolderSubs.getId()
-                            + "|";
-                    Log.d(TAG, "datos -> "+ datos);
-                }
-                else if(modo.contains("Créditos BtM") || modo.contains("BtM Credit")){
-                    token_number = "";
-                    card_id_aux = "";
-
-                    datos = "&datos=" + DataHolder.getUsername()
-                            + "|" + pin
-                            + "|" + convertPaymentMode(modo)
-                            + "|" + card_id_aux
-                            + "|" + token_number
-                            + "|" + DataHolderSubs.getId()
-                            + "|";
-                    Log.d(TAG, "datos -> "+ datos);
-                }*/
-
                 String datos = DataHolder.getUsername()
                              + "|" + pin
                              + "|" + convertPaymentMode(modo)
