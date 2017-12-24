@@ -73,8 +73,8 @@
         android:id="@+id/transferCompButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/background_button"
+        android:layout_marginTop="70dp"
+        android:background="@color/colorPrimary"
         android:text="@string/transfer_compensation_mywallet"
         android:textColor="@android:color/white"
         android:textSize="12sp" />

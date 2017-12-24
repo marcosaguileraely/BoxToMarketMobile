@@ -85,7 +85,7 @@
                 android:layout_weight="1"
                 android:background="#007AFF"
                 android:onClick="onCC"
-                android:text="@string/home_button_transactions"
+                android:text="@string/tipo_tarjeta"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"

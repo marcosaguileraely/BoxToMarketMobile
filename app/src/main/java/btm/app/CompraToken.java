@@ -35,11 +35,11 @@ public class CompraToken extends DataJp{
         final String user = pref.getString(LoginActivity.USERNAME,"-");
         final String userp = pref.getString(LoginActivity.PASSPIN,"0000");
 
-        tC = (Spinner) findViewById(R.id.spinnerTipoTC);
-        metodo = (Spinner) findViewById(R.id.spinnerTipoCompra);
-        email = (EditText) findViewById(R.id.editTextEmail);
-        monto = (EditText) findViewById(R.id.editTextMonto);
-        clic = (Button) findViewById(R.id.buttonCompraToken);
+        tC      = (Spinner) findViewById(R.id.spinnerTipoTC);
+        metodo  = (Spinner) findViewById(R.id.spinnerTipoCompra);
+        email   = (EditText) findViewById(R.id.editTextEmail);
+        monto   = (EditText) findViewById(R.id.editTextMonto);
+        clic    = (Button) findViewById(R.id.buttonCompraToken);
         tC.setVisibility(View.GONE);
 
         listTc = new ArrayList<CC>();
@@ -54,7 +54,8 @@ public class CompraToken extends DataJp{
                     Request request = new Request(getApplicationContext());
 
                     String datos = "&username="+user
-                            +"&token="+request.tk();
+                                 + "&token="+request.tk();
+
                     request.http_get("menutarjetas", datos, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -88,7 +89,6 @@ public class CompraToken extends DataJp{
                     tC.setVisibility(View.GONE);
                     tC.setAdapter(null);
                 }
-
                 //Toast.makeText(getApplicationContext(),parent.getItemAtPosition(position).toString(),Toast.LENGTH_LONG).show();
             }
 

@@ -98,7 +98,7 @@
     <string name="transfer_to_another_user">Transferir a usuario</string>
     <string name="help_compensation_text">Compensación por ventas en la plataforma</string>
     <string name="home_button_transactions">Transacciones</string>
-    <string name="transfer_compensation_mywallet">Transferir compensación a Mi Billetera</string>
+    <string name="transfer_compensation_mywallet">Transferir de compensación a Mi Billetera</string>
     <string name="transfer">Transferir</string>
     <string name="help_transfer_compensation_wallt">Transferir de Comensación a Mi Billetera</string>
     <string name="title_transfer_comp_wallet">Transferir Compensación a Mi Billetera</string>
