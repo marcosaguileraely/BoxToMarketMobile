@@ -19,12 +19,13 @@
     <string name="info_fallas_comunicacion">FALLA EN LA COMUNICACION INTENTE MAS TARDE</string>
     <string name="inf_dialog">"Procesando. Por favor espere..."</string>
 
-    <string name="tipo_tarjeta">Tarjeta de Credito</string>
+    <string name="tipo_tarjeta">Tarjeta de Crédito</string>
     <string name="tipo_creditos">Mi Billetera:</string>
     <string name="preferencias">preferencias</string><!-- -->
     <string name="tipo_compensacion">Transferencia</string>
     <string name="password">Clave</string>
     <string name="recarga">Recargar</string>
+    <string name="title_recarga">Recargar Mi Billetera</string>
     <string name="compensacion">Solicitar Compensación</string>
     <string name="compensacion_home">Compensación:</string>
     <string name="token_buy">Comprar Token</string>
@@ -35,7 +36,7 @@
     <string name="alerta_usuario_pass_lon">Password debe tener 4 digitos</string>
     <string name="alerta_usuario_email">Email invalido</string>
     <string name="Info">Info</string>
-    <string name="tarjeta_credito">Registro Tarjeta de Credito</string>
+    <string name="tarjeta_credito">Registro Tarjeta de Crédito</string>
     <string name="solicitar">Solicitar</string>
     <string name="cuenta_bancaria">Cuenta bancaria registrada:</string>
     <string name="transacciones_recientes">Transacciones Recientes</string>
@@ -49,8 +50,8 @@
     <string name="ingrese_valor">Ingrese el valor en Dólares Americanos</string>
     <string name="ingrese_token">Ingrese el token</string>
     <string name="confirmacion">Confirmacion</string>
-    <string name="registrar_tarjeta_de_credito">Registre su tarjeta de credito</string>
-    <string name="cc_cancelada">El reconocimiento de la tarjeta fue cancelado.</string>
+    <string name="registrar_tarjeta_de_credito">Registre su tarjeta de crédito</string>
+    <string name="cc_cancelada">El reconocimiento visual de la tarjeta de crédito fue cancelado</string>
     <string name="postal">"Codigo Postal: "</string>
     <string name="cvvcc">"CVV tiene "</string>
     <string name="expira">"Fecha de Expiracion: "</string>
@@ -79,7 +80,7 @@
     <string name="forgot_button_send">Enviar email</string>
     <string name="forgot_emailbox_hint">Ingrese su email</string>
     <string name="forgot_activity_title">¿Olvidaste tu clave?</string>
-    <string name="metodo_de_recarga">Seleccione un metodo de recarga</string>
+    <string name="metodo_de_recarga">Seleccione un método de pago</string>
     <string name="add_credit_card">Agregar tarjeta de crédito</string>
 
     <!-- Subscriptions UI-->
@@ -95,13 +96,14 @@
     <string name="detail_buy_subscription_confirm">Confirmar Compra</string>
     <string name="select_payment_method">Seleccione un método de pago:</string>
     <string name="buy_a_token_title">Comprar Token</string>
-    <string name="transfer_to_another_user">Transferir a usuario</string>
+    <string name="transfer_to_another_user">Transferencias de Saldo</string>
     <string name="help_compensation_text">Compensación por ventas en la plataforma</string>
     <string name="home_button_transactions">Transacciones</string>
     <string name="transfer_compensation_mywallet">Transferir de compensación a Mi Billetera</string>
     <string name="transfer">Transferir</string>
     <string name="help_transfer_compensation_wallt">Transferir de Comensación a Mi Billetera</string>
     <string name="title_transfer_comp_wallet">Transferir Compensación a Mi Billetera</string>
+    <string name="go_to_home">Volver a Mi Billetera</string>
 
 
 </resources>

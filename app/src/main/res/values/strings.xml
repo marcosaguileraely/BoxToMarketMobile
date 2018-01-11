@@ -25,6 +25,7 @@
     <string name="tipo_compensacion">Transfer</string>
     <string name="password">Password</string>
     <string name="recarga">Add Money</string>
+    <string name="title_recarga">Add Money to My Wallet</string>
     <string name="compensacion">Request Compensation</string>
     <string name="compensacion_home">Compensation:</string>
     <string name="token_buy">Get your Token</string>
@@ -51,7 +52,7 @@
     <string name="ingrese_token">Enter the token number</string>
     <string name="confirmacion">Confirm</string>
     <string name="registrar_tarjeta_de_credito">add a Credit Card</string>
-    <string name="cc_cancelada">Scan was canceled.</string>
+    <string name="cc_cancelada">Visual credit card scan was canceled</string>
     <string name="postal">"Postal Code: "</string>
     <string name="cvvcc">"CVV has "</string>
     <string name="expira">"Expiration Date: "</string>
@@ -79,7 +80,7 @@
     <string name="forgot_emailbox_hint">Enter your email</string>
     <string name="forgot_button_send">Send email</string>
     <string name="forgot_activity_title">Forgot password?</string>
-    <string name="metodo_de_recarga">Select a method for add money</string>
+    <string name="metodo_de_recarga">Select a payment method</string>
     <string name="add_credit_card">Add credit card</string>
 
     <!-- Subscriptions UI-->
@@ -95,12 +96,13 @@
     <string name="detail_buy_subscription_confirm">Confirm Payment</string>
     <string name="select_payment_method">Select a payment method:</string>
     <string name="buy_a_token_title">Buy a Token</string>
-    <string name="transfer_to_another_user">Transfer to user</string>
+    <string name="transfer_to_another_user">Transfers</string>
     <string name="help_compensation_text">Compensation for sales on the platform</string>
     <string name="home_button_transactions">Transactions</string>
     <string name="transfer_compensation_mywallet">Transfer from compensation to My Wallet</string>
     <string name="transfer">Transfer</string>
     <string name="help_transfer_compensation_wallt">Transfer from Compensation to My Wallet</string>
     <string name="title_transfer_comp_wallet">Transfer Compensation to My Wallet</string>
+    <string name="go_to_home">Back to My Wallet</string>
 
 </resources>
