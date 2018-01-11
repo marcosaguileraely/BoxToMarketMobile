@@ -1,6 +1,7 @@
 package btm.app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,7 +13,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class TransferActivity extends DataJp {
-    private Button transferir;
+    Context context = this;
+    private Button transferir, transferComp;
     private EditText monto, idusert;
 
     @Override
@@ -27,9 +29,10 @@ public class TransferActivity extends DataJp {
         final String user = pref.getString(LoginActivity.USERNAME,"-");
         final String userp = pref.getString(LoginActivity.PASSPIN,"0000");
 
-        transferir = (Button) findViewById(R.id.buttonTransfer);
-        monto = (EditText) findViewById(R.id.editTextMontoTransfer);
-        idusert = (EditText) findViewById(R.id.editTextIdTransfer);
+        transferir   = (Button) findViewById(R.id.buttonTransfer);
+        transferComp = (Button) findViewById(R.id.transferCompButton);
+        monto        = (EditText) findViewById(R.id.editTextMontoTransfer);
+        idusert      = (EditText) findViewById(R.id.editTextIdTransfer);
 
         transferir.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +57,13 @@ public class TransferActivity extends DataJp {
             }
         });
 
+        transferComp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent gotoComp = new Intent(context, TransferCompensationActivity.class);
+                startActivity(gotoComp);
+            }
+        });
     }
 
     @Override

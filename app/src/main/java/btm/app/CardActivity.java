@@ -22,9 +22,11 @@ import io.card.payment.CreditCard;
 
 public class CardActivity extends DataJp {
 
+    Context context = this;
+
     private static final int MY_SCAN_REQUEST_CODE = 0xA1B9;
     private TextView tVCc;
-    private Button buttonReg;
+    Button home, home2;
     private String infocard;
     private String user;
     private SharedPreferences shPref;
@@ -37,9 +39,11 @@ public class CardActivity extends DataJp {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         tVCc        = (TextView) findViewById(R.id.textViewCC);
-        buttonReg   = (Button) findViewById(R.id.button5);
+        home2       = (Button) findViewById(R.id.button7);
         pb          = new ProgressDialog(this);
         pb.setMessage(getString(R.string.inf_dialog));
+
+        home2.setText(getString(R.string.go_to_home));
 
         Intent scanIntent = new Intent(this, CardIOActivity.class);
 
@@ -51,32 +55,17 @@ public class CardActivity extends DataJp {
         scanIntent.putExtra(CardIOActivity.EXTRA_REQUIRE_CARDHOLDER_NAME, false);
         scanIntent.putExtra(CardIOActivity.EXTRA_SUPPRESS_MANUAL_ENTRY, true);
 
-                // MY_SCAN_REQUEST_CODE is arbitrary and is only used within this activity.
+        // MY_SCAN_REQUEST_CODE is arbitrary and is only used within this activity.
         startActivityForResult(scanIntent, MY_SCAN_REQUEST_CODE);
-
 
         shPref = getSharedPreferences(getString(R.string.preferencias), Context.MODE_PRIVATE);
         user = shPref.getString(LoginActivity.USERNAME,"--");
 
-        buttonReg.setOnClickListener(new View.OnClickListener() {
+        home2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //pb.show();
-                //buttonReg.setEnabled(false);
-                final String datos = "&username="+user
-                                    +"&datos="+infocard;
-                //tVCc.setText(datos);
-
-                new Request(CardActivity.this).http_get("registrocard", datos, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        //tVCc.setText(datos);
-                        pb.dismiss();
-                        //buttonReg.setEnabled(true);
-                        //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
-                        alert_info(response, getString(R.string.Info), android.R.drawable.ic_dialog_info);
-                    }
-                }, pb);
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -98,6 +87,7 @@ public class CardActivity extends DataJp {
 
         if (requestCode == MY_SCAN_REQUEST_CODE) {
             String resultDisplayStr;
+
             if (data != null && data.hasExtra(CardIOActivity.EXTRA_SCAN_RESULT)) {
                 CreditCard scanResult = data.getParcelableExtra(CardIOActivity.EXTRA_SCAN_RESULT);
 
@@ -124,7 +114,7 @@ public class CardActivity extends DataJp {
             }
             else {
                 resultDisplayStr = getString(R.string.cc_cancelada);
-                buttonReg.setEnabled(false);
+                //home2.setEnabled(false);
             }
             // do something with resultDisplayStr, maybe display it in a textView
             // resultTextView.setText(resultDisplayStr);

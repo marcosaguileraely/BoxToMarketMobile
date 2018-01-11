@@ -19,7 +19,7 @@ import com.android.volley.Response;
 
 public class Compensacion extends DataJp {
 
-    private Button clic, transferComp;
+    private Button clic;
     private EditText monto;
     private Spinner tipo;
     private TextView tvcuenta;
@@ -40,7 +40,6 @@ public class Compensacion extends DataJp {
         final String userp = shPref.getString(LoginActivity.PASSPIN,"0000");
 
         clic         = (Button) findViewById(R.id.buttonCompensacion);
-        transferComp = (Button) findViewById(R.id.transferCompButton);
         monto        = (EditText) findViewById(R.id.editTextMonto);
         tipo         = (Spinner) findViewById(R.id.spinnerTipoCompensacion);
         tvcuenta     = (TextView) findViewById(R.id.textViewCuentaCompensacion);
@@ -83,14 +82,6 @@ public class Compensacion extends DataJp {
                         alert_info(response, getString(R.string.Info), android.R.drawable.ic_dialog_info);
                     }
                 });
-            }
-        });
-
-        transferComp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent gotoComp = new Intent(context, TransferCompensationActivity.class);
-                startActivity(gotoComp);
             }
         });
     }
