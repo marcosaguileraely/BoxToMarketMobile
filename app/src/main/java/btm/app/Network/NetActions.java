@@ -222,6 +222,25 @@ public class NetActions {
         return response.body().string();
     }
 
+    /**
+     *
+     * @throws IOException
+     * @throws NullPointerException
+     */
+    public String changePassword(String datos) throws IOException, NullPointerException {
+        Log.d(TAG, " id: " + datos);
+        String url = "https://www.boxtomarket.com/index.php?r=app/cambiarclave"
+                + "&token=" + this.tkTime() + "&datos=" + this.datoBase64(datos);
+        Log.d("DEV -> NetActions ", url);
+
+        okhttp3.Request requesthttp = new okhttp3.Request.Builder()
+                .url(url)
+                .build();
+
+        okhttp3.Response response = client.newCall(requesthttp).execute();
+        return response.body().string();
+    }
+
     public void http_get_data(String metodo, String datos, Response.Listener<String> response) {
 
         String url = "https://www.boxtomarket.com/index.php?r=app/"
