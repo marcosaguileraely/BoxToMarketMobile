@@ -104,6 +104,7 @@ public class TransferCompensationActivity extends AppCompatActivity {
                     String fulldata = data2 + "|" + data4 + "|" + value; // Forma de enviar datos: username|pin|montousd => e.j: cachi|0000|2
 
                     Log.d(TAG, "" + fulldata);
+
                     try {
                         final String data = new btm.app.Network.NetActions(context).transferCompensation(fulldata);
                         Log.d(TAG, "xxx xxx xxx " + data);

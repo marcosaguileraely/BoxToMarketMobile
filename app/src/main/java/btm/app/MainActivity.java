@@ -127,6 +127,8 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         switch (id){
             case R.id.action_pass:
+                Intent gotoChangePass = new Intent(context, ChangePassActivity.class);
+                startActivity(gotoChangePass);
                 return true;
 
             case R.id.action_perfil:
@@ -136,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_close:
-                //finish();
+                finish();
                 Intent intent = new Intent(context, LoginActivity.class);
                 startActivity(intent);
                 return true;

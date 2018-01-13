@@ -50,7 +50,6 @@ public class BuyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_buy);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         getSupportActionBar().setTitle(getString(R.string.buy_clubs_subscription));
 
         username_global =  getIntent().getStringExtra(SubscriptionsActivity.USER_GLOBAL);
