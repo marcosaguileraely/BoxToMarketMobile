@@ -104,6 +104,13 @@
     <string name="help_transfer_compensation_wallt">Transferir de Comensación a Mi Billetera</string>
     <string name="title_transfer_comp_wallet">Transferir Compensación a Mi Billetera</string>
     <string name="go_to_home">Volver a Mi Billetera</string>
+    <string name="change_password">Cambiar clave</string>
+    <string name="ui_change_pass_actualpass">Ingrese su clave actual</string>
+    <string name="ui_change_pass_newpass">Ingrese Nueva Clave</string>
+    <string name="ui_change_pass_re_newpass">Confirme Nueva Clave</string>
+    <string name="ui_change_pass_button_name">Cambiar</string>
+    <string name="ui_change_pass_msg_sucess">La contraseña se ha cambiado correctamente</string>
+    <string name="ui_pass_change_msg_warning">Contraseña no cambiada. Intente nuevamente</string>
 
 
 </resources>

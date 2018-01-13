@@ -104,5 +104,12 @@
     <string name="help_transfer_compensation_wallt">Transfer from Compensation to My Wallet</string>
     <string name="title_transfer_comp_wallet">Transfer Compensation to My Wallet</string>
     <string name="go_to_home">Back to My Wallet</string>
+    <string name="change_password">Change password</string>
+    <string name="ui_change_pass_actualpass">Enter your current password</string>
+    <string name="ui_change_pass_newpass">Enter New Password</string>
+    <string name="ui_change_pass_re_newpass">Confirm New Password</string>
+    <string name="ui_change_pass_button_name">Change</string>
+    <string name="ui_change_pass_msg_sucess">Password changed successfully</string>
+    <string name="ui_pass_change_msg_warning">Password not changed. Please try again</string>
 
 </resources>
