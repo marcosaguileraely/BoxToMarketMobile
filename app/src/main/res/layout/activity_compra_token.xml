@@ -36,6 +36,15 @@
         android:layout_margin="10dp"
         android:spinnerMode="dialog" />
 
+    <Button
+        android:id="@+id/addCreditCardButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@color/colorBlueBtm"
+        android:text="@string/add_credit_card"
+        android:textColor="@color/colorWhite" />
+
     <EditText
         android:background="@drawable/backgound_edit_text"
         android:padding="10dp"

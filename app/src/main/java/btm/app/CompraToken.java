@@ -1,6 +1,8 @@
 package btm.app;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,10 +19,13 @@ import com.android.volley.Response;
 
 import java.util.ArrayList;
 
+import btm.app.Network.NetActions;
+
 public class CompraToken extends DataJp{
+    Context context = this;
     private Spinner tC, metodo;
     private EditText email, monto;
-    private Button clic;
+    private Button clic, addCreditCard;
     private ArrayList<CC> listTc;
 
     @Override
@@ -35,40 +40,46 @@ public class CompraToken extends DataJp{
         final String user = pref.getString(LoginActivity.USERNAME,"-");
         final String userp = pref.getString(LoginActivity.PASSPIN,"0000");
 
-        tC      = (Spinner) findViewById(R.id.spinnerTipoTC);
-        metodo  = (Spinner) findViewById(R.id.spinnerTipoCompra);
-        email   = (EditText) findViewById(R.id.editTextEmail);
-        monto   = (EditText) findViewById(R.id.editTextMonto);
-        clic    = (Button) findViewById(R.id.buttonCompraToken);
+        tC            = (Spinner) findViewById(R.id.spinnerTipoTC);
+        metodo        = (Spinner) findViewById(R.id.spinnerTipoCompra);
+        email         = (EditText) findViewById(R.id.editTextEmail);
+        monto         = (EditText) findViewById(R.id.editTextMonto);
+        addCreditCard = (Button) findViewById(R.id.addCreditCardButton);
+        clic          = (Button) findViewById(R.id.buttonCompraToken);
+
         tC.setVisibility(View.GONE);
+        addCreditCard.setVisibility(View.GONE);
 
         listTc = new ArrayList<CC>();
 
         metodo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, final View view, int position, long id) {
+                final ProgressDialog progress = new ProgressDialog(context);
+                progress.setMessage(getString(R.string.inf_dialog));
 
                 String modo = parent.getItemAtPosition(position).toString();
+                Log.d("Comprar token ", "--> "+ modo);
+
                 if(modo.contains(getResources().getString(R.string.tipo_tarjeta))){
                     tC.setVisibility(View.VISIBLE);
-                    Request request = new Request(getApplicationContext());
+                    String datos = "&username="+user;
 
-                    String datos = "&username="+user
-                                 + "&token="+request.tk();
-
-                    request.http_get("menutarjetas", datos, new Response.Listener<String>() {
+                    Response.Listener<String> response = new Response.Listener<String>(){
                         @Override
                         public void onResponse(String response) {
+                            //progress.show();
                             if (response.contains("Token")) {
+                                //progress.dismiss();
                                 Toast.makeText(getApplicationContext(), response + getString(R.string.error_token), Toast.LENGTH_LONG).show();
-                                finish();
-                                return;
+                                //return;
                             }
 
                             if (response.contains("No tiene")) {
+                                //progress.dismiss();
+                                addCreditCard.setVisibility(View.VISIBLE);
                                 Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
-                                tC.setVisibility(View.GONE);
-                                return;
+                                //return;
                             }
 
                             String[] inf = response.replace("|", ";").split(";");
@@ -81,10 +92,12 @@ public class CompraToken extends DataJp{
                             // Specify the layout to use when the list of choices appears
                             //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             tC.setAdapter(adapter);
-
                         }
-                    });
+                    };
+                    new btm.app.Network.NetActions(context).http_get_data("menutarjetas", datos, response);
+
                 } else {
+                    addCreditCard.setVisibility(View.GONE);
                     listTc = new ArrayList<CC>();
                     tC.setVisibility(View.GONE);
                     tC.setAdapter(null);
@@ -120,6 +133,14 @@ public class CompraToken extends DataJp{
         });
         //_varios = metodopago|idtarjetas|asociado_fecel
         //metodo=creditos,tarjeta,paypal
+
+        addCreditCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, CardActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

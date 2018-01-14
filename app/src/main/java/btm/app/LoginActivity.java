@@ -102,8 +102,6 @@ public class LoginActivity extends AppCompatActivity {
                           .apply();
                     editor.commit();
 
-
-
                     Log.d("===>", editor.toString());
                     String username_global = user.getText().toString();
 
@@ -124,7 +122,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         };
-
         new btm.app.Request(this).http_get("login", datos, response, progress);
     }
 }
