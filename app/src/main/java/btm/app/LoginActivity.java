@@ -112,6 +112,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     DataHolder.setId_country(response.replace("|",";").split(";")[1]);
                     DataHolder.setUsername(username_global);
+                    DataHolder.setPass(password.getText().toString());
                     DataHolder.setData(datos);
 
                     password.setText("");
