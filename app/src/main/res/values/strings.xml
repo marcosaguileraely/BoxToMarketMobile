@@ -13,7 +13,7 @@
     <string name="checkbox">I agree terms and conditions</string>
     <string name="siguiente">Next</string>
     <string name="usuario">User</string>
-    <string name="clave_de_4_digitos">4 digits for password</string>
+    <string name="clave_de_4_digitos">4 digits password</string>
     <string name="confirmar_clave">Confirm 4 digits password</string>
     <string name="email">Email</string>
     <string name="info_fallas_comunicacion">COMMUNICATION FAIL TRY LATER</string>
@@ -106,10 +106,14 @@
     <string name="go_to_home">Back to My Wallet</string>
     <string name="change_password">Change password</string>
     <string name="ui_change_pass_actualpass">Enter your current password</string>
-    <string name="ui_change_pass_newpass">Enter New Password</string>
-    <string name="ui_change_pass_re_newpass">Confirm New Password</string>
+    <string name="ui_change_pass_newpass">Enter 4 Digits New Password</string>
+    <string name="ui_change_pass_re_newpass">Confirm 4 Digits New Password</string>
     <string name="ui_change_pass_button_name">Change</string>
     <string name="ui_change_pass_msg_sucess">Password changed successfully</string>
     <string name="ui_pass_change_msg_warning">Password not changed. Please try again</string>
+    <string name="ui_transfer_money_message_fields_empty">All fields are required. Try again</string>
+    <string name="ui_transfer_money_message_zero_money">Please enter a correct value</string>
+    <string name="ui_transfer_money_message_successful_transfer">Transfer has been successful</string>
+    <string name="ui_transfer_money_message_warning_transfer">Transfer has not been completed. Try again</string>
 
 </resources>

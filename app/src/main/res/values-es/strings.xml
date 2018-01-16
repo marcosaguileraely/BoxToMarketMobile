@@ -101,16 +101,20 @@
     <string name="home_button_transactions">Transacciones</string>
     <string name="transfer_compensation_mywallet">Transferir de compensación a Mi Billetera</string>
     <string name="transfer">Transferir</string>
-    <string name="help_transfer_compensation_wallt">Transferir de Comensación a Mi Billetera</string>
+    <string name="help_transfer_compensation_wallt">Transferir de Compensación a Mi Billetera</string>
     <string name="title_transfer_comp_wallet">Transferir Compensación a Mi Billetera</string>
     <string name="go_to_home">Volver a Mi Billetera</string>
     <string name="change_password">Cambiar clave</string>
     <string name="ui_change_pass_actualpass">Ingrese su clave actual</string>
-    <string name="ui_change_pass_newpass">Ingrese Nueva Clave</string>
-    <string name="ui_change_pass_re_newpass">Confirme Nueva Clave</string>
+    <string name="ui_change_pass_newpass">Ingrese Nueva Clave de 4 Digitos</string>
+    <string name="ui_change_pass_re_newpass">Confirme Nueva Clave de 4 Digitos</string>
     <string name="ui_change_pass_button_name">Cambiar</string>
     <string name="ui_change_pass_msg_sucess">La contraseña se ha cambiado correctamente</string>
     <string name="ui_pass_change_msg_warning">Contraseña no cambiada. Intente nuevamente</string>
+    <string name="ui_transfer_money_message_fields_empty">Todos los campos son requeridos. Intenta nuevamente</string>
+    <string name="ui_transfer_money_message_zero_money">Ingrese un valor diferente de cero</string>
+    <string name="ui_transfer_money_message_successful_transfer">La transferencia ha sido exitosa.</string>
+    <string name="ui_transfer_money_message_warning_transfer">La transferencia no ha sido completada. Intenta nuevamente</string>
 
 
 </resources>
