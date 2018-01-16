@@ -1,8 +1,12 @@
 package btm.app;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,15 +16,30 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.IOException;
+
+import btm.app.DataHolder.DataHolder;
+
 public class TransferActivity extends DataJp {
+    public static final String TAG = "DEV -> Transfer money ";
+
     Context context = this;
     private Button transferir, transferComp;
     private EditText monto, idusert;
+    private String username, password, userid;
+    private int val;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transfer);
+
+        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+        if (SDK_INT > 8) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getString(R.string.transfer_to_another_user));
@@ -37,23 +56,21 @@ public class TransferActivity extends DataJp {
         transferir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(monto.getText().toString().isEmpty()){
-                    Toast.makeText(getApplicationContext(), R.string.error_monto, Toast.LENGTH_LONG).show();
+
+                username  = DataHolder.getUsername();
+                password  = DataHolder.getPass();
+                val       = convertMontoValue(monto.getText().toString());
+                userid    = idusert.getText().toString();
+
+                if(monto.getText().toString().isEmpty() || idusert.getText().toString().isEmpty()){
+                    Toast.makeText(getApplicationContext(), R.string.ui_transfer_money_message_fields_empty, Toast.LENGTH_LONG).show();
                     return;
-                }
-                if(idusert.getText().toString().isEmpty()){
-                    Toast.makeText(getApplicationContext(), R.string.id_del_destinatario, Toast.LENGTH_LONG).show();
+                } else if(idusert.getText().toString().isEmpty()){
+                    Toast.makeText(getApplicationContext(), R.string.ui_transfer_money_message_zero_money, Toast.LENGTH_LONG).show();
                     return;
+                } else {
+                    new AsyncGetHttpData().execute("");
                 }
-                int val = Integer.valueOf(monto.getText().toString());
-                if(val==0){
-                    Toast.makeText(getApplicationContext(), R.string.error_monto, Toast.LENGTH_LONG).show();
-                    return;
-                }
-                String userid = idusert.getText().toString();
-                //transferencia
-                //username, cc de envio, pin, monto
-                jp_h(0x100,"162000", "", user, userid, userp, val, 12552);
             }
         });
 
@@ -62,6 +79,65 @@ public class TransferActivity extends DataJp {
             public void onClick(View v) {
                 Intent gotoComp = new Intent(context, TransferCompensationActivity.class);
                 startActivity(gotoComp);
+            }
+        });
+    }
+
+    public int convertMontoValue(String valur_str){
+        if(valur_str.isEmpty()){
+            return 0;
+        }else{
+            return Integer.valueOf(valur_str);
+        }
+    }
+
+    private class AsyncGetHttpData extends AsyncTask<String, Void, String> {
+        ProgressDialog progress = new ProgressDialog(context);
+
+        @Override
+        protected void onPreExecute() {
+            progress.setMessage(getString(R.string.inf_dialog));
+            progress.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String datos = "h0m3data|g0ldfish1|" + username + "|" + password + "|" + userid + "|" + val + "|";
+            Log.d(TAG, " --> " + password + " Datos : " + datos);
+
+            try {
+                final String data = new btm.app.Network.NetActions(context).transferMoneyToUser(datos);
+                Log.d(TAG, " oKHttp response: " + data);
+
+                    if(data.equals("La transferencia ha sido exitosa.")){
+                        String success_msg = getString(R.string.ui_transfer_money_message_successful_transfer);
+                        pushToast(TransferActivity.this, success_msg);
+                        Intent intent = new Intent(context, MainActivity.class);
+                        startActivity(intent);
+                    }else{
+                        String warning_msg = getString(R.string.ui_transfer_money_message_warning_transfer);
+                        pushToast(TransferActivity.this, warning_msg);
+                    }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return "Executed";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            progress.dismiss();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {}
+    }
+
+    public void pushToast(Activity view, final String message){
+        view.runOnUiThread(new Runnable() {
+            public void run(){
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
             }
         });
     }
