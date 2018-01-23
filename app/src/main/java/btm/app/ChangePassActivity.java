@@ -1,8 +1,10 @@
 package btm.app;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.StrictMode;
@@ -66,7 +68,23 @@ public class ChangePassActivity extends AppCompatActivity {
                 }
 
                 else{
-                    new AsyncGetHttpData().execute("");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    // Add the buttons
+                    builder.setMessage(R.string.ui_change_pass_actualpass_message_dialog);
+                    builder.setPositiveButton(R.string.ui_buy_token_ok_button, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            new AsyncGetHttpData().execute("");
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.setNegativeButton(R.string.ui_buy_token_cancel_button, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 }
             }
         });
