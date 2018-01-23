@@ -208,6 +208,50 @@ public class NetActions {
      * @throws IOException
      * @throws NullPointerException
      */
+    public String getCardList(String datos) throws IOException, NullPointerException {
+        Log.d(TAG, " Datos card list: " + datos);
+        String url = "https://www.boxtomarket.com/index.php?r=app/menutarjetas"
+                   + "&token=" + this.tkTime()
+                   + "&username=" + datos;
+        Log.d("DEV -> NetActions ", url);
+
+        okhttp3.Request requesthttp = new okhttp3.Request.Builder()
+                .url(url)
+                .build();
+
+        okhttp3.Response response = client.newCall(requesthttp).execute();
+        return response.body().string();
+    }
+
+    public void http_get_data(String metodo, String datos, Response.Listener<String> response) {
+
+        String url = "https://www.boxtomarket.com/index.php?r=app/"
+                + metodo
+                + datos
+                + "&token=" + this.tkTime();
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+        StringRequest postRequest = new StringRequest(com.android.volley.Request.Method.GET, url,
+                response,
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", error.toString());
+                        Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+        queue.add(postRequest.setRetryPolicy(new DefaultRetryPolicy(30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
+    }
+
+    /**
+     *
+     * @throws IOException
+     * @throws NullPointerException
+     */
     public String transferCompensation(String datos) throws IOException, NullPointerException {
         Log.d(TAG, " id: " + datos);
         String url = "https://www.boxtomarket.com/index.php?r=app/autotransferir"
@@ -248,7 +292,7 @@ public class NetActions {
      */
     public String transferMoneyToUser(String datos) throws IOException, NullPointerException {
         Log.d(TAG, " id: " + datos);
-        String url = "https://www.boxtomarket.com/index.php?r=app/transferir"
+        String url = "https://www.boxtomarket.com/index.php?r=app/comprartoken"
                 + "&token=" + this.tkTime() + "&datos=" + this.datoBase64(datos);
         Log.d("DEV -> NetActions ", url);
 
@@ -260,28 +304,18 @@ public class NetActions {
         return response.body().string();
     }
 
-    public void http_get_data(String metodo, String datos, Response.Listener<String> response) {
+    public String buyToken(String datos) throws IOException, NullPointerException {
+        Log.d(TAG, " id: " + datos);
+        String url = "https://www.boxtomarket.com/index.php?r=app/comprartoken"
+                + "&token=" + this.tkTime() + "&datos=" + this.datoBase64(datos);
+        Log.d("DEV -> NetActions ", url);
 
-        String url = "https://www.boxtomarket.com/index.php?r=app/"
-                   + metodo
-                   + datos
-                   + "&token=" + this.tkTime();
+        okhttp3.Request requesthttp = new okhttp3.Request.Builder()
+                .url(url)
+                .build();
 
-        RequestQueue queue = Volley.newRequestQueue(context);
-        StringRequest postRequest = new StringRequest(com.android.volley.Request.Method.GET, url,
-                response,
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // error
-                        Log.d("Error.Response", error.toString());
-                        Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-        );
-        queue.add(postRequest.setRetryPolicy(new DefaultRetryPolicy(30000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
+        okhttp3.Response response = client.newCall(requesthttp).execute();
+        return response.body().string();
     }
 
     /*
