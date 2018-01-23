@@ -124,6 +124,7 @@
     <string name="ui_transfer_money_message_dialog">¿Estas seguro de Transferir Compensación?</string>
     <string name="ui_change_pass_actualpass_message_dialog">¿Estas seguro de Cambiar la Clave?</string>
     <string name="ui_transfer_money_message_dialog_to_another_user">¿Estas seguro de Transferir de Mi Billetera a otro Usuario?</string>
+    <string name="ui_main_my_wallet_title">Mi Billetera:</string>
 
 
 </resources>

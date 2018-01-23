@@ -48,7 +48,7 @@
             android:layout_toLeftOf="@+id/button_add_money"
             android:layout_toStartOf="@+id/button_add_money"
             android:gravity="center"
-            android:text="@string/tipo_creditos"
+            android:text="@string/ui_main_my_wallet_title"
             android:textColor="?android:attr/textColorPrimary"
         android:textSize="18sp"
         android:textStyle="bold"
