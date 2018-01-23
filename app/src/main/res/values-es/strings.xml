@@ -19,8 +19,8 @@
     <string name="info_fallas_comunicacion">FALLA EN LA COMUNICACION INTENTE MAS TARDE</string>
     <string name="inf_dialog">"Procesando. Por favor espere..."</string>
 
-    <string name="tipo_tarjeta">Tarjeta de Crédito</string>
-    <string name="tipo_creditos">Mi Billetera:</string>
+    <string name="tipo_tarjeta">Tarjeta</string>
+    <string name="tipo_creditos">Créditos</string>
     <string name="preferencias">preferencias</string><!-- -->
     <string name="tipo_compensacion">Transferencia</string>
     <string name="password">Clave</string>
@@ -47,7 +47,7 @@
     <string name="seleccione_el_metodo">Seleccione el método de Pago</string>
     <string name="monto">Valor</string>
     <string name="error_token">Intente mas tarde</string>
-    <string name="ingrese_valor">Ingrese el valor en Dólares Americanos</string>
+    <string name="ingrese_valor">Ingrese el valor en moneda local</string>
     <string name="ingrese_token">Ingrese el token</string>
     <string name="confirmacion">Confirmacion</string>
     <string name="registrar_tarjeta_de_credito">Registre su tarjeta de crédito</string>
@@ -73,7 +73,7 @@
     <string name="transferir_creditos">Transferir Saldo</string>
     <string name="informaci_n_del_destinatario">Transferir de Mi Billetera a otro usuario</string>
     <string name="nombres">Nombres</string>
-    <string name="error_monto">ingrese un valor diferente de cero</string>
+    <string name="error_monto">Ingrese un valor diferente de cero</string>
     <string name="please_check_your_info_and_clic_for_continue">Por favor verifique la info y de clic para continuar el registro</string>
 
     <!-- Forgot password UI-->
@@ -115,6 +115,15 @@
     <string name="ui_transfer_money_message_zero_money">Ingrese un valor diferente de cero</string>
     <string name="ui_transfer_money_message_successful_transfer">La transferencia ha sido exitosa.</string>
     <string name="ui_transfer_money_message_warning_transfer">La transferencia no ha sido completada. Intenta nuevamente</string>
+    <string name="ui_buy_token_empty_fields">Todos los campos son requeridos. Intenta nuevamente</string>
+    <string name="ui_buy_token_no_credit_cards">No tiene tarjetas registradas</string>
+    <string name="ui_buy_token_ok_button">Acepto</string>
+    <string name="ui_buy_token_cancel_button">Cancelar</string>
+    <string name="ui_buy_token_dialog_message">¿Estas seguro de Comprar un Token?</string>
+    <string name="ui_buy_token_message_error">La transferencia no ha sido completada. Intenta nuevamente</string>
+    <string name="ui_transfer_money_message_dialog">¿Estas seguro de Transferir Compensación?</string>
+    <string name="ui_change_pass_actualpass_message_dialog">¿Estas seguro de Cambiar la Clave?</string>
+    <string name="ui_transfer_money_message_dialog_to_another_user">¿Estas seguro de Transferir de Mi Billetera a otro Usuario?</string>
 
 
 </resources>

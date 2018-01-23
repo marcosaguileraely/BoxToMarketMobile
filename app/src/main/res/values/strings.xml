@@ -19,9 +19,9 @@
     <string name="info_fallas_comunicacion">COMMUNICATION FAIL TRY LATER</string>
     <string name="inf_dialog">"In process. Please wait..."</string>
 
-    <string name="tipo_tarjeta">Credit Card</string>
-    <string name="tipo_creditos">My Wallet:</string>
-    <string name="preferencias">preferencias</string><!-- -->
+    <string name="tipo_tarjeta">Card</string>
+    <string name="tipo_creditos">Credits</string>
+    <string name="preferencias">preferencias</string>
     <string name="tipo_compensacion">Transfer</string>
     <string name="password">Password</string>
     <string name="recarga">Add Money</string>
@@ -48,7 +48,7 @@
     <string name="seleccione_el_metodo">Select a payment method</string>
     <string name="monto">Value</string>
     <string name="error_token">Try later</string>
-    <string name="ingrese_valor">Enter the value in US Dollars</string>
+    <string name="ingrese_valor">Enter the value in Local Currency</string>
     <string name="ingrese_token">Enter the token number</string>
     <string name="confirmacion">Confirm</string>
     <string name="registrar_tarjeta_de_credito">add a Credit Card</string>
@@ -106,14 +106,23 @@
     <string name="go_to_home">Back to My Wallet</string>
     <string name="change_password">Change password</string>
     <string name="ui_change_pass_actualpass">Enter your current password</string>
+    <string name="ui_change_pass_actualpass_message_dialog">Are you sure to Change Password?</string>
     <string name="ui_change_pass_newpass">Enter 4 Digits New Password</string>
     <string name="ui_change_pass_re_newpass">Confirm 4 Digits New Password</string>
     <string name="ui_change_pass_button_name">Change</string>
     <string name="ui_change_pass_msg_sucess">Password changed successfully</string>
     <string name="ui_pass_change_msg_warning">Password not changed. Please try again</string>
+    <string name="ui_transfer_money_message_dialog_to_another_user">Are you sure to Transfer from My Wallet to another User?</string>
     <string name="ui_transfer_money_message_fields_empty">All fields are required. Try again</string>
+    <string name="ui_transfer_money_message_dialog">Are you sure to Transfer Compensation?</string>
     <string name="ui_transfer_money_message_zero_money">Please enter a correct value</string>
     <string name="ui_transfer_money_message_successful_transfer">Transfer has been successful</string>
     <string name="ui_transfer_money_message_warning_transfer">Transfer has not been completed. Try again</string>
+    <string name="ui_buy_token_empty_fields">All fields are required. Try again</string>
+    <string name="ui_buy_token_no_credit_cards">No credit cards found</string>
+    <string name="ui_buy_token_ok_button">I Agree</string>
+    <string name="ui_buy_token_cancel_button">Cancel</string>
+    <string name="ui_buy_token_dialog_message">Are you sure to Buy a Token?</string>
+    <string name="ui_buy_token_message_error">Transfer has not been completed. Try again</string>
 
 </resources>
