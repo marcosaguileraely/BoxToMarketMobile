@@ -19,9 +19,9 @@
     <string name="info_fallas_comunicacion">FALLA EN LA COMUNICACION INTENTE MAS TARDE</string>
     <string name="inf_dialog">"Procesando. Por favor espere..."</string>
 
-    <string name="tipo_tarjeta">Tarjeta</string>
-    <string name="tipo_creditos">Créditos</string>
-    <string name="preferencias">preferencias</string><!-- -->
+    <string name="tipo_tarjeta">Tarjeta de Crédito</string>
+    <string name="tipo_creditos">Mi Billetera</string>
+    <string name="preferencias">preferencias</string>
     <string name="tipo_compensacion">Transferencia</string>
     <string name="password">Clave</string>
     <string name="recarga">Recargar</string>
@@ -119,7 +119,7 @@
     <string name="ui_buy_token_no_credit_cards">No tiene tarjetas registradas</string>
     <string name="ui_buy_token_ok_button">Acepto</string>
     <string name="ui_buy_token_cancel_button">Cancelar</string>
-    <string name="ui_buy_token_dialog_message">¿Estas seguro de Comprar un Token?</string>
+    <string name="ui_buy_token_dialog_message">Estas seguro que deseas Comprar un Token</string>
     <string name="ui_buy_token_message_error">La transferencia no ha sido completada. Intenta nuevamente</string>
     <string name="ui_transfer_money_message_dialog">¿Estas seguro de Transferir Compensación?</string>
     <string name="ui_change_pass_actualpass_message_dialog">¿Estas seguro de Cambiar la Clave?</string>

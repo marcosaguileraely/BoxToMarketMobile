@@ -19,8 +19,8 @@
     <string name="info_fallas_comunicacion">COMMUNICATION FAIL TRY LATER</string>
     <string name="inf_dialog">"In process. Please wait..."</string>
 
-    <string name="tipo_tarjeta">Card</string>
-    <string name="tipo_creditos">Credits</string>
+    <string name="tipo_tarjeta">Credit Card</string>
+    <string name="tipo_creditos">My Wallet</string>
     <string name="preferencias">preferencias</string>
     <string name="tipo_compensacion">Transfer</string>
     <string name="password">Password</string>

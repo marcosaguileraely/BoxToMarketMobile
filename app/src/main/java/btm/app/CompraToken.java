@@ -86,7 +86,7 @@ public class CompraToken extends DataJp{
 
                 Log.d("Comprar token ", "--> "+ modo);
 
-                if(modo.equals("Tarjeta") || modo.equals("Card")){
+                if(modo.equals("Tarjeta de Crédito") || modo.equals("Credit Card")){
                     tC.setVisibility(View.VISIBLE);
                     try {
                         data = new NetActions(context).getCardList(datos);
@@ -134,8 +134,8 @@ public class CompraToken extends DataJp{
                 } else if(val==0){
                     Toast.makeText(getApplicationContext(), R.string.error_monto, Toast.LENGTH_LONG).show();
                     return;
-                } else{
 
+                } else{
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     // Add the buttons
                     builder.setMessage(R.string.ui_buy_token_dialog_message);
@@ -269,7 +269,7 @@ public class CompraToken extends DataJp{
     }
 
     public String paymentMethod(String method){
-        if(method.equals("Tarjeta") || method.equals("Card")){
+        if(method.equals("Tarjeta de Crédito") || method.equals("Credit Card")){
             return "tarjeta";
         }
         else{
