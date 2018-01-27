@@ -14,8 +14,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -31,6 +33,8 @@ import btm.app.DataHolder.DataHolder;
 public class Compensacion extends DataJp {
     public static final String TAG = "DEV -> Compensación ";
 
+    AlertDialog dialog_pass_ui;
+
     private Button clic;
     private EditText monto;
     private Spinner tipo;
@@ -38,6 +42,7 @@ public class Compensacion extends DataJp {
     private CuentaB cuenta;
     private int val;
 
+    String password_dialog;
     String data, username, password;
 
     Context context = this;
@@ -108,8 +113,7 @@ public class Compensacion extends DataJp {
                     builder.setMessage(R.string.ui_buy_compensation_dialog_message);
                     builder.setPositiveButton(R.string.ui_buy_token_ok_button, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            new AsyncGetHttpData().execute("");
-                            dialog.dismiss();
+                            passwordDialog();
                         }
                     });
                     builder.setNegativeButton(R.string.ui_buy_token_cancel_button, new DialogInterface.OnClickListener() {
@@ -122,15 +126,6 @@ public class Compensacion extends DataJp {
                     dialog.show();
 
                 }
-
-                //String info = "&token="+request.tk()+"&datos="+ Base64.encodeToString(info_compensa.getBytes(), Base64.DEFAULT);
-                //Log.d("DATOS_COMPENSACION", info);
-                /*request.http_get("solicitarcompensacion", info.replace("\n",""), new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        alert_info(response, getString(R.string.Info), android.R.drawable.ic_dialog_info);
-                    }
-                });*/
             }
         });
     }
@@ -150,21 +145,17 @@ public class Compensacion extends DataJp {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
+
                     //datos:username|password|monto|tipo|numero|banco|
-                    String info_compensa = username+"|"+password+"|"+monto.getText().toString()+"|"+tipo.getSelectedItem().toString()
-                            +"|"+cuenta.getNumero()+"|"+cuenta.getBanco()+"|";
+                    String info_compensa = username+"|"+password_dialog+"|"+monto.getText().toString()+"|"+
+                                           "Transferencia" +"|"+
+                                           cuenta.getNumero()+"|"+cuenta.getBanco()+"|";
 
                     try {
                         data = new btm.app.Network.NetActions(context).requestCompensation(info_compensa);
                         Log.d(TAG, " oKHttp response: " + data);
 
-                        //if(data.contains("El Token generado es")){
-                        //    customDialog();
-
-                        //}else{
-                        //    String warning_msg = getString(R.string.ui_buy_token_message_error);
-                        //    pushToast(CompraToken.this, warning_msg);
-                        //}
+                        customDialog(data);
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -184,6 +175,37 @@ public class Compensacion extends DataJp {
         protected void onProgressUpdate(Void... values) {}
     }
 
+    public void passwordDialog(){
+        AlertDialog.Builder builder_pass_dialog = new AlertDialog.Builder(context);
+        final LayoutInflater inflater = Compensacion.this.getLayoutInflater();
+
+        //final EditText input = (EditText) findViewById(R.id.password);
+        View viewInflated = LayoutInflater.from(context).inflate(R.layout.ui_aux_pass, (ViewGroup) findViewById(android.R.id.content), false);
+        final EditText input = (EditText) viewInflated.findViewById(R.id.password);
+
+        // Inflate and set the layout for the dialog
+        // Pass null as the parent view because its going in the dialog layout
+        builder_pass_dialog.setCancelable(false);
+        builder_pass_dialog.setView(viewInflated)
+                .setPositiveButton(R.string.ui_general_dialog_confirm, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        password_dialog = input.getText().toString();
+                        Log.d(TAG, " -> " + password_dialog);
+                        new AsyncGetHttpData().execute("");
+                        dialog_pass_ui.dismiss();
+                    }
+                })
+                .setNegativeButton(R.string.ui_general_dialog_cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog_pass_ui.dismiss();
+                    }
+                });
+
+        dialog_pass_ui = builder_pass_dialog.create();
+        dialog_pass_ui.show();
+    }
+
     public int convertMontoValue(String valur_str){
         if(valur_str.isEmpty()){
             return 0;
@@ -195,6 +217,23 @@ public class Compensacion extends DataJp {
     public void onBackPressed(){
         Intent gotoHome = new Intent(context, MainActivity.class);
         startActivity(gotoHome);
+    }
+
+    public void customDialog(String okhttpResponse){
+        AlertDialog.Builder builder = new AlertDialog.Builder(Compensacion.this);
+
+        builder.setMessage(okhttpResponse);
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     @Override

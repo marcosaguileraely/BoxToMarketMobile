@@ -22,7 +22,7 @@
     <string name="tipo_tarjeta">Credit Card</string>
     <string name="tipo_creditos">My Wallet</string>
     <string name="preferencias">preferencias</string>
-    <string name="tipo_compensacion">Bank Transfer</string>
+    <string name="tipo_compensacion">Transfer</string>
     <string name="password">Password</string>
     <string name="recarga">Add Money</string>
     <string name="title_recarga">Add Money to My Wallet</string>

@@ -22,7 +22,7 @@
     <string name="tipo_tarjeta">Tarjeta de Crédito</string>
     <string name="tipo_creditos">Mi Billetera</string>
     <string name="preferencias">preferencias</string>
-    <string name="tipo_compensacion">Transferencia Bancaria</string>
+    <string name="tipo_compensacion">Transferencia</string>
     <string name="password">Clave</string>
     <string name="recarga">Recargar</string>
     <string name="title_recarga">Recargar Mi Billetera</string>

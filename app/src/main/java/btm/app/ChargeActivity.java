@@ -129,29 +129,19 @@ public class ChargeActivity extends AppCompatActivity {
         addMoney.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Log.d(TAG,"1");
                 if(listTc.size() > 0){
-                    Log.d(TAG,"2");
                     if(value.getText().toString().isEmpty()){
                         Toast.makeText(context, R.string.ingrese_valor, Toast.LENGTH_LONG).show();
                         return;
                     }
-                    Log.d(TAG,"3");
                     int val = Integer.valueOf(value.getText().toString());
-                    Log.d(TAG,"4");
                     dataJp.jp_h(0x100, "165000", user, userp, token.getText().toString(), "tarjeta|"+((CC)creditCardList.getSelectedItem()).getId(), val, 12552);
-                    Log.d(TAG,"5");
                 } else {
-                    Log.d(TAG,"6");
                     if(token.getText().toString().isEmpty()){
-                        Log.d(TAG,"7");
                         Toast.makeText(context, R.string.ingrese_token, Toast.LENGTH_LONG).show();
-                        Log.d(TAG,"8");
                         return;
                     }
-                    Log.d(TAG,"9");
                     dataJp.jp_h(0x100, "165000", user, userp, token.getText().toString(), "token", 1, 12552);
-                    Log.d(TAG,"10");
                 }
             }
         });

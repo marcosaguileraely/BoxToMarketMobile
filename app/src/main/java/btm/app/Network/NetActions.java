@@ -230,9 +230,10 @@ public class NetActions {
      */
     public String requestCompensation(String datos) throws IOException, NullPointerException {
         Log.d(TAG, " Datos card list: " + datos);
+
         String url = "https://www.boxtomarket.com/index.php?r=app/solicitarcompensacion"
                 + "&token=" + this.tkTime()
-                + "&username=" + datos;
+                + "&datos=" + this.datoBase64(datos);
         Log.d("DEV -> NetActions ", url);
 
         okhttp3.Request requesthttp = new okhttp3.Request.Builder()
