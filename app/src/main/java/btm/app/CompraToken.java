@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -32,11 +33,12 @@ import java.util.ArrayList;
 import btm.app.DataHolder.DataHolder;
 import btm.app.Network.NetActions;
 
+import static btm.app.R.id.spinner;
+
 public class CompraToken extends DataJp{
     public static final String TAG = "DEV -> Buy token ";
 
     Context context = this;
-
     AlertDialog dialog_pass_ui;
 
     private Spinner tC, metodo;
@@ -190,12 +192,13 @@ public class CompraToken extends DataJp{
     }
 
     private class AsyncGetHttpData extends AsyncTask<String, Void, String> {
-        ProgressDialog progress = new ProgressDialog(context);
+        ProgressDialog dialog2 = new ProgressDialog(CompraToken.this);
+
 
         @Override
         protected void onPreExecute() {
-            progress.setMessage(getString(R.string.inf_dialog));
-            progress.show();
+            dialog2.setMessage(getString(R.string.inf_dialog));
+            dialog2.show();
         }
 
         @Override
@@ -220,8 +223,8 @@ public class CompraToken extends DataJp{
                             customDialog();
 
                         }else{
-                            String warning_msg = getString(R.string.ui_buy_token_message_error);
-                            pushToast(CompraToken.this, warning_msg);
+                            //String warning_msg = getString(R.string.ui_buy_token_message_error);
+                            pushToast(CompraToken.this, data);
                         }
 
                     } catch (IOException e) {
@@ -235,44 +238,11 @@ public class CompraToken extends DataJp{
 
         @Override
         protected void onPostExecute(String result) {
-            progress.dismiss();
+            dialog2.dismiss();
         }
 
         @Override
         protected void onProgressUpdate(Void... values) {}
-    }
-
-    public void customDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
-        builder.setMessage(data);
-        builder.setCancelable(false);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-                Intent intent = new Intent(context, MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
-    public void pushToast(Activity view, final String message){
-        view.runOnUiThread(new Runnable() {
-            public void run(){
-                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
-    public String getDataConcat(String user, String pass, String buy_method, int pay_value, String idcard, String mail){
-        if(buy_method.equals("tarjeta")){
-            return "h0m3data|g0ldfish1|" + user +"|"+ pass +"|"+ buy_method + "|" + pay_value +"|"+ idcard +"|"+ mail +"||";
-        } else{
-            return "h0m3data|g0ldfish1|" + user +"|"+ pass +"|"+ buy_method + "|" + pay_value +"||"+ mail +"||";
-        }
     }
 
     public void passwordDialog(){
@@ -304,6 +274,51 @@ public class CompraToken extends DataJp{
 
         dialog_pass_ui = builder_pass_dialog.create();
         dialog_pass_ui.show();
+    }
+
+    public void customDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setMessage(data);
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public void progressBar(String status){
+        ProgressDialog progress = new ProgressDialog(context);
+
+        if(status.equals("active")){
+            progress.setMessage(getString(R.string.inf_dialog));
+            progress.show();
+        }else {
+            progress.setMessage(getString(R.string.inf_dialog));
+            progress.dismiss();
+        }
+    }
+
+    public void pushToast(Activity view, final String message){
+        view.runOnUiThread(new Runnable() {
+            public void run(){
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public String getDataConcat(String user, String pass, String buy_method, int pay_value, String idcard, String mail){
+        if(buy_method.equals("tarjeta")){
+            return "h0m3data|g0ldfish1|" + user +"|"+ pass +"|"+ buy_method + "|" + pay_value +"|"+ idcard +"|"+ mail +"||";
+        } else{
+            return "h0m3data|g0ldfish1|" + user +"|"+ pass +"|"+ buy_method + "|" + pay_value +"||"+ mail +"||";
+        }
     }
 
     public String paymentMethod(String method){
