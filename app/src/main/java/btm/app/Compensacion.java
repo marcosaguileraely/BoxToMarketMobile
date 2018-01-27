@@ -1,8 +1,15 @@
 package btm.app;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -17,13 +24,21 @@ import android.widget.Toast;
 
 import com.android.volley.Response;
 
+import java.io.IOException;
+
+import btm.app.DataHolder.DataHolder;
+
 public class Compensacion extends DataJp {
+    public static final String TAG = "DEV -> Compensación ";
 
     private Button clic;
     private EditText monto;
     private Spinner tipo;
     private TextView tvcuenta;
     private CuentaB cuenta;
+    private int val;
+
+    String data, username, password;
 
     Context context = this;
 
@@ -31,6 +46,13 @@ public class Compensacion extends DataJp {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compensacion);
+
+        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+        if (SDK_INT > 8) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getString(R.string.compensacion));
@@ -43,6 +65,9 @@ public class Compensacion extends DataJp {
         monto        = (EditText) findViewById(R.id.editTextMonto);
         tipo         = (Spinner) findViewById(R.id.spinnerTipoCompensacion);
         tvcuenta     = (TextView) findViewById(R.id.textViewCuentaCompensacion);
+
+        username  = DataHolder.getUsername();
+        password  = DataHolder.getPass();
 
         final Request request = new Request(this);
         String datos = "&username=" + user+"&token="+request.tk();
@@ -67,23 +92,104 @@ public class Compensacion extends DataJp {
         clic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                val = convertMontoValue(monto.getText().toString());
+
                 if(monto.getText().toString().isEmpty()){
                     Toast.makeText(getApplicationContext(), R.string.ingrese_valor, Toast.LENGTH_LONG).show();
                     return;
+                } else if(val==0){
+                    Toast.makeText(getApplicationContext(), R.string.error_monto, Toast.LENGTH_LONG).show();
+                    return;
+
+                } else{
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    // Add the buttons
+                    builder.setMessage(R.string.ui_buy_compensation_dialog_message);
+                    builder.setPositiveButton(R.string.ui_buy_token_ok_button, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            new AsyncGetHttpData().execute("");
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.setNegativeButton(R.string.ui_buy_token_cancel_button, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+
                 }
-                //datos:username|password|monto|tipo|numero|banco|
-                String info_compensa = user+"|"+userp+"|"+monto.getText().toString()+"|"+tipo.getSelectedItem().toString()
-                        +"|"+cuenta.getNumero()+"|"+cuenta.getBanco()+"|";
-                String info = "&token="+request.tk()+"&datos="+ Base64.encodeToString(info_compensa.getBytes(), Base64.DEFAULT);
+
+                //String info = "&token="+request.tk()+"&datos="+ Base64.encodeToString(info_compensa.getBytes(), Base64.DEFAULT);
                 //Log.d("DATOS_COMPENSACION", info);
-                request.http_get("solicitarcompensacion", info.replace("\n",""), new Response.Listener<String>() {
+                /*request.http_get("solicitarcompensacion", info.replace("\n",""), new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         alert_info(response, getString(R.string.Info), android.R.drawable.ic_dialog_info);
                     }
-                });
+                });*/
             }
         });
+    }
+
+    private class AsyncGetHttpData extends AsyncTask<String, Void, String> {
+        ProgressDialog progress = new ProgressDialog(context);
+
+        @Override
+        protected void onPreExecute() {
+            progress.setMessage(getString(R.string.inf_dialog));
+            progress.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    //datos:username|password|monto|tipo|numero|banco|
+                    String info_compensa = username+"|"+password+"|"+monto.getText().toString()+"|"+tipo.getSelectedItem().toString()
+                            +"|"+cuenta.getNumero()+"|"+cuenta.getBanco()+"|";
+
+                    try {
+                        data = new btm.app.Network.NetActions(context).requestCompensation(info_compensa);
+                        Log.d(TAG, " oKHttp response: " + data);
+
+                        //if(data.contains("El Token generado es")){
+                        //    customDialog();
+
+                        //}else{
+                        //    String warning_msg = getString(R.string.ui_buy_token_message_error);
+                        //    pushToast(CompraToken.this, warning_msg);
+                        //}
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            return "Executed";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            progress.dismiss();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {}
+    }
+
+    public int convertMontoValue(String valur_str){
+        if(valur_str.isEmpty()){
+            return 0;
+        }else{
+            return Integer.valueOf(valur_str);
+        }
     }
 
     public void onBackPressed(){

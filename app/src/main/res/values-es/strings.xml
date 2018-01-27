@@ -22,7 +22,7 @@
     <string name="tipo_tarjeta">Tarjeta de Crédito</string>
     <string name="tipo_creditos">Mi Billetera</string>
     <string name="preferencias">preferencias</string>
-    <string name="tipo_compensacion">Transferencia</string>
+    <string name="tipo_compensacion">Transferencia Bancaria</string>
     <string name="password">Clave</string>
     <string name="recarga">Recargar</string>
     <string name="title_recarga">Recargar Mi Billetera</string>
@@ -47,7 +47,7 @@
     <string name="seleccione_el_metodo">Seleccione el método de Pago</string>
     <string name="monto">Valor</string>
     <string name="error_token">Intente mas tarde</string>
-    <string name="ingrese_valor">Ingrese el valor en moneda local</string>
+    <string name="ingrese_valor">Ingrese el valor en Dólares Americanos</string>
     <string name="ingrese_token">Ingrese el token</string>
     <string name="confirmacion">Confirmacion</string>
     <string name="registrar_tarjeta_de_credito">Registre su tarjeta de crédito</string>
@@ -65,7 +65,7 @@
     <string name="campos_vacios">Campos vacios</string>
     <string name="saldo">USD $%1$s</string>
     <string name="chat">chat</string>
-    <string name="action_ascender">Ascender a Cuenta Business</string>
+    <string name="action_profile_pic">Foto de Perfil</string>
     <string name="solicitar_compensacion">Solicitar compensación</string>
     <string name="id_del_destinatario"># identificación del destinatario</string>
     <string name="valor_a_transferir">Valor a transferir</string>
@@ -108,7 +108,7 @@
     <string name="ui_change_pass_actualpass">Ingrese su clave actual</string>
     <string name="ui_change_pass_newpass">Ingrese Nueva Clave de 4 Digitos</string>
     <string name="ui_change_pass_re_newpass">Confirme Nueva Clave de 4 Digitos</string>
-    <string name="ui_change_pass_button_name">Cambiar</string>
+    <string name="ui_change_pass_button_name">Cambiar Clave</string>
     <string name="ui_change_pass_msg_sucess">La contraseña se ha cambiado correctamente</string>
     <string name="ui_pass_change_msg_warning">Contraseña no cambiada. Intente nuevamente</string>
     <string name="ui_transfer_money_message_fields_empty">Todos los campos son requeridos. Intenta nuevamente</string>
@@ -119,12 +119,17 @@
     <string name="ui_buy_token_no_credit_cards">No tiene tarjetas registradas</string>
     <string name="ui_buy_token_ok_button">Acepto</string>
     <string name="ui_buy_token_cancel_button">Cancelar</string>
-    <string name="ui_buy_token_dialog_message">Estas seguro que deseas Comprar un Token</string>
+    <string name="ui_buy_token_dialog_message">¿Estas seguro que deseas Comprar un Token?</string>
     <string name="ui_buy_token_message_error">La transferencia no ha sido completada. Intenta nuevamente</string>
     <string name="ui_transfer_money_message_dialog">¿Estas seguro de Transferir Compensación?</string>
-    <string name="ui_change_pass_actualpass_message_dialog">¿Estas seguro de Cambiar la Clave?</string>
-    <string name="ui_transfer_money_message_dialog_to_another_user">¿Estas seguro de Transferir de Mi Billetera a otro Usuario?</string>
+    <string name="ui_change_pass_actualpass_message_dialog">¿Estas seguro que deseas Cambiar la Clave?</string>
+    <string name="ui_transfer_money_message_dialog_to_another_user">¿Estas seguro que deseas Transferir de Mi Billetera a otro Usuario?</string>
     <string name="ui_main_my_wallet_title">Mi Billetera:</string>
+    <string name="ui_buy_token_input_value_local">Ingresa el valor en Moneda Local</string>
+    <string name="ui_buy_compensation_dialog_message">¿Estas seguro que deseas Solicitar una Compensación?</string>
+    <string name="ui_general_dialog_password">Ingrese su clave</string>
+    <string name="ui_general_dialog_confirm">Confirmar</string>
+    <string name="ui_general_dialog_cancel">Cancelar</string>
 
 
 </resources>

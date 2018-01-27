@@ -89,7 +89,7 @@ public class BuySubscriptionConfirmActivity extends AppCompatActivity {
                 modo = parent.getItemAtPosition(position).toString();
                 Log.d(TAG, modo);
 
-                if( modo.equals("Tarjeta de Crédito") || modo.equals("Credit card")){
+                if( modo.equals("Tarjeta de Crédito") || modo.equals("Credit Card")){
                     Log.d(TAG, "metodo tarjeta");
                     credit_card.setVisibility(VISIBLE);
                     token.setVisibility(GONE);
@@ -123,7 +123,7 @@ public class BuySubscriptionConfirmActivity extends AppCompatActivity {
                     });
 
                 }
-                if( modo.contains("Créditos BtM") || modo.contains("BtM Credit")){
+                if( modo.contains("Mi Billetera") || modo.contains("My Wallet")){
                     Log.d(TAG, "metodo btm");
                     token.setVisibility(GONE);
                     credit_card.setVisibility(GONE);

@@ -13,8 +13,10 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -33,14 +35,19 @@ import btm.app.Network.NetActions;
 public class CompraToken extends DataJp{
     public static final String TAG = "DEV -> Buy token ";
 
-    AlertDialog dialog;
     Context context = this;
+
+    AlertDialog dialog_pass_ui;
+
     private Spinner tC, metodo;
     private EditText email, monto;
     private Button clic, addCreditCard;
     private ArrayList<CC> listTc;
-    private String username, password, userid, modo, email_user, datafull;
+    private String username, password, modo, email_user, datafull;
+
     private int val;
+
+    String password_dialog;
     String data;
     String card_info;
     String card_id;
@@ -68,7 +75,7 @@ public class CompraToken extends DataJp{
         clic          = (Button) findViewById(R.id.buttonCompraToken);
 
         username  = DataHolder.getUsername();
-        password  = DataHolder.getPass();
+        //password  = DataHolder.getPass();
 
         tC.setVisibility(View.GONE);
         addCreditCard.setVisibility(View.GONE);
@@ -131,7 +138,8 @@ public class CompraToken extends DataJp{
                 if(email.getText().toString().isEmpty() || monto.getText().toString().isEmpty()){
                     Toast.makeText(getApplicationContext(), R.string.ui_buy_token_empty_fields, Toast.LENGTH_LONG).show();
                     return;
-                } else if(val==0){
+
+                } else if(val == 0){
                     Toast.makeText(getApplicationContext(), R.string.error_monto, Toast.LENGTH_LONG).show();
                     return;
 
@@ -139,10 +147,10 @@ public class CompraToken extends DataJp{
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     // Add the buttons
                     builder.setMessage(R.string.ui_buy_token_dialog_message);
+                    builder.setCancelable(false);
                     builder.setPositiveButton(R.string.ui_buy_token_ok_button, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            new AsyncGetHttpData().execute("");
-                            dialog.dismiss();
+                            passwordDialog();
                         }
                     });
                     builder.setNegativeButton(R.string.ui_buy_token_cancel_button, new DialogInterface.OnClickListener() {
@@ -198,12 +206,11 @@ public class CompraToken extends DataJp{
                 public void run() {
                     String paymentMethod = paymentMethod(modo);
                     String card_number_id = card_id;
-                    Log.d(TAG, " --> Modo : " + paymentMethod + "--------------------"+card_number_id);
 
-                    datafull = getDataConcat(username, password, paymentMethod, val, card_number_id, email_user);
+                    datafull = getDataConcat(username, password_dialog, paymentMethod, val, card_number_id, email_user);
 
                     // datos = "h0m3data|g0ldfish1|username|clave|metodopago|monto|idTarjetas|email||"
-                    Log.d(TAG, " --> " + password + " Datos : " + datafull);
+                    Log.d(TAG, " --> " + password_dialog + " Datos : " + datafull);
 
                     try {
                         data = new btm.app.Network.NetActions(context).buyToken(datafull);
@@ -268,6 +275,37 @@ public class CompraToken extends DataJp{
         }
     }
 
+    public void passwordDialog(){
+        AlertDialog.Builder builder_pass_dialog = new AlertDialog.Builder(context);
+        final LayoutInflater inflater = CompraToken.this.getLayoutInflater();
+
+        //final EditText input = (EditText) findViewById(R.id.password);
+        View viewInflated = LayoutInflater.from(context).inflate(R.layout.ui_aux_pass, (ViewGroup) findViewById(android.R.id.content), false);
+        final EditText input = (EditText) viewInflated.findViewById(R.id.password);
+
+        // Inflate and set the layout for the dialog
+        // Pass null as the parent view because its going in the dialog layout
+        builder_pass_dialog.setCancelable(false);
+        builder_pass_dialog.setView(viewInflated)
+                .setPositiveButton(R.string.ui_general_dialog_confirm, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        password_dialog = input.getText().toString();
+                        Log.d(TAG, " -> " + password_dialog);
+                        new AsyncGetHttpData().execute("");
+                        dialog_pass_ui.dismiss();
+                    }
+                })
+                .setNegativeButton(R.string.ui_general_dialog_cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog_pass_ui.dismiss();
+                    }
+                });
+
+        dialog_pass_ui = builder_pass_dialog.create();
+        dialog_pass_ui.show();
+    }
+
     public String paymentMethod(String method){
         if(method.equals("Tarjeta de Crédito") || method.equals("Credit Card")){
             return "tarjeta";
@@ -302,7 +340,6 @@ public class CompraToken extends DataJp{
         //Log.d("DATAJPOS", string);
         alert_info(string, "Confirmacion", android.R.drawable.ic_dialog_info);
     }
-
 
     @Override
     public void infoFalla(String string, String pc) {

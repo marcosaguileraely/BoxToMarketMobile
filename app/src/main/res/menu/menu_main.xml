@@ -17,7 +17,7 @@
 
     <item
         android:id="@+id/action_bp"
-        android:title="@string/action_ascender"
+        android:title="@string/action_profile_pic"
         android:orderInCategory="98"
         app:showAsAction="never" />
 

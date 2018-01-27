@@ -46,8 +46,8 @@
     </string-array>
 
     <string-array name="pago_subs">
-        <item>Tarjeta de Crédito</item>
-        <item>Créditos BtM</item>
+        <item>Credit Card</item>
+        <item>My Wallet</item>
         <item>Token</item>
     </string-array>
 

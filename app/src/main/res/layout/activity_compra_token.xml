@@ -67,7 +67,7 @@
         android:ems="10"
         android:id="@+id/editTextMonto"
         android:layout_margin="10dp"
-        android:hint="@string/ingrese_valor" />
+        android:hint="@string/ui_buy_token_input_value_local" />
 
     <Button
         android:id="@+id/buttonCompraToken"

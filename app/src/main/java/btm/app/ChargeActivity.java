@@ -73,8 +73,6 @@ public class ChargeActivity extends AppCompatActivity {
                     addCreditCard.setVisibility(View.VISIBLE);
                     creditCardList.setVisibility(View.VISIBLE);
 
-                    Log.d(TAG, "2");
-                    Log.d(TAG, "22222222");
                     Request request = new Request(getApplicationContext());
                     String datos = "&username="+user;
 
