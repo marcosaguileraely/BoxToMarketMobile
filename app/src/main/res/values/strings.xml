@@ -131,5 +131,11 @@
     <string name="ui_general_dialog_confirm">Confirm</string>
     <string name="ui_general_dialog_cancel">Cancel</string>
     <string name="ui_charge_message_dialog">Are you sure want to Add Money to My Wallet?</string>
+    <string name="ui_subscriptions_payment_method_token">Token</string>
+    <string name="ui_subscriptions_payment_method_credit_card">Credit Card</string>
+    <string name="ui_subscriptions_payment_method_mywallet">My Wallet</string>
+    <string name="ui_subscriptions_message_dialog">Are sure want to Buy a Subscription?</string>
+    <string name="ui_subscriptions_token_hint">Enter Token number</string>
+    <string name="ui_compensation_button_text">Register Bank Account</string>
 
 </resources>
