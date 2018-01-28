@@ -303,36 +303,6 @@ public class ChargeActivity extends AppCompatActivity {
         protected void onProgressUpdate(Void... values) {}
     }
 
-    public void reloadCreditCardsList(){
-            Request request = new Request(getApplicationContext());
-            String datos    = "&username="+username_aux+"&token="+request.tk();
-
-            request.http_get("menutarjetas", datos, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    if (response.contains("Token")) {
-                        Toast.makeText(getApplicationContext(), response + getString(R.string.error_token), Toast.LENGTH_LONG).show();
-                        finish();
-                        return;
-                    }
-
-                    if (response.contains("No tiene")) {
-                        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
-                        return;
-                    }
-
-                    String[] inf = response.replace("|", ";").split(";");
-                    for (String cc : inf) {
-                        listTc.add(new CC(cc));
-                    }
-
-                    ArrayAdapter<CC> adapter = new ArrayAdapter<CC>(getApplicationContext(), R.layout.item_card, listTc);
-                    // Specify the layout to use when the list of choices appears
-                    creditCardList.setAdapter(adapter);
-                }
-            });
-    }
-
     public int convertMontoValue(String valur_str){
         if(valur_str.isEmpty()){
             return 0;
@@ -342,12 +312,13 @@ public class ChargeActivity extends AppCompatActivity {
     }
 
     public String getDataConcat(String user, String pass, String buy_method, int pay_value, String idcard, String token){
+        // datos = "h0m3data|g0ldfish1|username|clave|metodopago|token|monto|idTarjetas|"
         if(buy_method.equals("tarjeta")){
             //if the payment method is tarjeta, the token space goes empty
             return "h0m3data|g0ldfish1|" + user +"|"+ pass +"|"+ buy_method + "||" + pay_value + "|" + idcard +"|";
         } else{
             //if the payment method is token, the idcard space goes empty
-            return "h0m3data|g0ldfish1|" + user +"|"+ pass +"|"+ buy_method + "|" + token + "|" + pay_value +"||";
+            return "h0m3data|g0ldfish1|" + user +"|"+ DataHolder.getPass() +"|"+ buy_method + "|" + token + "|" + "||";
         }
     }
 
