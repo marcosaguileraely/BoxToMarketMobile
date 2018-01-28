@@ -11,8 +11,10 @@ import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -24,10 +26,12 @@ import btm.app.DataHolder.DataHolder;
 public class TransferCompensationActivity extends AppCompatActivity {
     public static final String TAG = "DEV -> Transfer ";
     Context context = this;
+    AlertDialog dialog_pass_ui;
 
     Button transfer;
     EditText value_transfer;
     String datos;
+    String password_dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +62,7 @@ public class TransferCompensationActivity extends AppCompatActivity {
                 builder.setMessage(R.string.ui_transfer_money_message_dialog);
                 builder.setPositiveButton(R.string.ui_buy_token_ok_button, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        new AsyncGetHttpData().execute("");
-                        dialog.dismiss();
+                        passwordDialog();
                     }
                 });
                 builder.setNegativeButton(R.string.ui_buy_token_cancel_button, new DialogInterface.OnClickListener() {
@@ -75,12 +78,12 @@ public class TransferCompensationActivity extends AppCompatActivity {
     }
 
     private class AsyncGetHttpData extends AsyncTask<String, Void, String> {
-        ProgressDialog progress = new ProgressDialog(context);
+        ProgressDialog dialog2 = new ProgressDialog(TransferCompensationActivity.this);
 
         @Override
         protected void onPreExecute() {
-            progress.setMessage(getString(R.string.inf_dialog));
-            progress.show();
+            dialog2.setMessage(getString(R.string.inf_dialog));
+            dialog2.show();
         }
 
         @Override
@@ -91,11 +94,59 @@ public class TransferCompensationActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            progress.dismiss();
+            dialog2.dismiss();
         }
 
         @Override
         protected void onProgressUpdate(Void... values) {}
+    }
+
+    public void passwordDialog(){
+        AlertDialog.Builder builder_pass_dialog = new AlertDialog.Builder(context);
+        final LayoutInflater inflater = TransferCompensationActivity.this.getLayoutInflater();
+
+        //final EditText input = (EditText) findViewById(R.id.password);
+        View viewInflated = LayoutInflater.from(context).inflate(R.layout.ui_aux_pass, (ViewGroup) findViewById(android.R.id.content), false);
+        final EditText input = (EditText) viewInflated.findViewById(R.id.password);
+
+        // Inflate and set the layout for the dialog
+        // Pass null as the parent view because its going in the dialog layout
+        builder_pass_dialog.setCancelable(false);
+        builder_pass_dialog.setView(viewInflated)
+                .setPositiveButton(R.string.ui_general_dialog_confirm, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        password_dialog = input.getText().toString();
+                        Log.d(TAG, " -> " + password_dialog);
+                        new AsyncGetHttpData().execute("");
+                        dialog_pass_ui.dismiss();
+                    }
+                })
+                .setNegativeButton(R.string.ui_general_dialog_cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog_pass_ui.dismiss();
+                    }
+                });
+
+        dialog_pass_ui = builder_pass_dialog.create();
+        dialog_pass_ui.show();
+    }
+
+    public void customDialog(String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setMessage(message);
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     public void executeHttpRequest(Activity view){
@@ -120,21 +171,15 @@ public class TransferCompensationActivity extends AppCompatActivity {
                     String data4   = pinDataR3[1];
                     Log.d(TAG, ""+ data3 + " - " + data4);
 
-                    String fulldata = data2 + "|" + data4 + "|" + value; // Forma de enviar datos: username|pin|montousd => e.j: cachi|0000|2
+                    String fulldata = data2 + "|" + dialog_pass_ui + "|" + value; // Forma de enviar datos: username|pin|montousd => e.j: cachi|0000|2
 
                     Log.d(TAG, "" + fulldata);
 
                     try {
                         final String data = new btm.app.Network.NetActions(context).transferCompensation(fulldata);
-                        Log.d(TAG, "xxx xxx xxx " + data);
+                        Log.d(TAG, " -> " + data);
 
-                        if(data.equals("La transferencia ha sido exitosa.")){
-                            Toast.makeText(context, data, Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(context, MainActivity.class);
-                            startActivity(intent);
-                        }else{
-                            Toast.makeText(context, data, Toast.LENGTH_LONG).show();
-                        }
+                        customDialog(data);
 
                     } catch (IOException e) {
                         e.printStackTrace();
