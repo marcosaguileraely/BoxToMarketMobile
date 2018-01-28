@@ -130,5 +130,6 @@
     <string name="ui_general_dialog_password">Enter your password</string>
     <string name="ui_general_dialog_confirm">Confirm</string>
     <string name="ui_general_dialog_cancel">Cancel</string>
+    <string name="ui_charge_message_dialog">Are you sure want to Add Money to My Wallet?</string>
 
 </resources>
