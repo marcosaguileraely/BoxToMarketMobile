@@ -163,7 +163,6 @@ public class CompraToken extends DataJp{
 
                     AlertDialog dialog = builder.create();
                     dialog.show();
-
                 }
             }
         });
@@ -193,7 +192,6 @@ public class CompraToken extends DataJp{
 
     private class AsyncGetHttpData extends AsyncTask<String, Void, String> {
         ProgressDialog dialog2 = new ProgressDialog(CompraToken.this);
-
 
         @Override
         protected void onPreExecute() {
