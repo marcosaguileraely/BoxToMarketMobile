@@ -70,10 +70,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Recargar"
-            android:label="@string/recarga"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".Compensacion"
             android:label="@string/compensacion"
             android:screenOrientation="portrait" />
