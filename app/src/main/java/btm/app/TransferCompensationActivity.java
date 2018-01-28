@@ -171,7 +171,7 @@ public class TransferCompensationActivity extends AppCompatActivity {
                     String data4   = pinDataR3[1];
                     Log.d(TAG, ""+ data3 + " - " + data4);
 
-                    String fulldata = data2 + "|" + dialog_pass_ui + "|" + value; // Forma de enviar datos: username|pin|montousd => e.j: cachi|0000|2
+                    String fulldata = data2 + "|" + password_dialog + "|" + value; // Forma de enviar datos: username|pin|montousd => e.j: cachi|0000|2
 
                     Log.d(TAG, "" + fulldata);
 
