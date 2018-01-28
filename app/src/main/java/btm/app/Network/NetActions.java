@@ -297,7 +297,7 @@ public class NetActions {
     public String chargeMoneyToMyWallet(String datos) throws IOException, NullPointerException {
         Log.d(TAG, " id: " + datos);
         String url = "https://www.boxtomarket.com/index.php?r=app/recargar"
-                + "&token=" + this.tkTime() + "&datos=" + this.datoBase64(datos);
+                   + "&token=" + this.tkTime() + "&datos=" + this.datoBase64(datos);
         Log.d("DEV -> NetActions ", url);
 
         okhttp3.Request requesthttp = new okhttp3.Request.Builder()
@@ -320,7 +320,7 @@ public class NetActions {
     public String transferMoneyToUser(String datos) throws IOException, NullPointerException {
         Log.d(TAG, " id: " + datos);
         String url = "https://www.boxtomarket.com/index.php?r=app/transferir"
-                + "&token=" + this.tkTime() + "&datos=" + this.datoBase64(datos);
+                   + "&token=" + this.tkTime() + "&datos=" + this.datoBase64(datos);
         Log.d("DEV -> NetActions ", url);
 
         okhttp3.Request requesthttp = new okhttp3.Request.Builder()
