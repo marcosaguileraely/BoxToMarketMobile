@@ -8,12 +8,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -28,8 +32,10 @@ public class TransferActivity extends DataJp {
     Context context = this;
     private Button transferir, transferComp;
     private EditText monto, idusert;
-    private String username, password, userid;
+    private String username, password, userid, password_dialog;
     private int val;
+
+    AlertDialog dialog_pass_ui;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +83,7 @@ public class TransferActivity extends DataJp {
                     builder.setMessage(R.string.ui_transfer_money_message_dialog_to_another_user);
                     builder.setPositiveButton(R.string.ui_buy_token_ok_button, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            new AsyncGetHttpData().execute("");
-                            dialog.dismiss();
+                            passwordDialog();
                         }
                     });
                     builder.setNegativeButton(R.string.ui_buy_token_cancel_button, new DialogInterface.OnClickListener() {
@@ -111,54 +116,92 @@ public class TransferActivity extends DataJp {
     }
 
     private class AsyncGetHttpData extends AsyncTask<String, Void, String> {
-        ProgressDialog progress = new ProgressDialog(context);
+        ProgressDialog dialog2 = new ProgressDialog(TransferActivity.this);
 
         @Override
         protected void onPreExecute() {
-            progress.setMessage(getString(R.string.inf_dialog));
-            progress.show();
+            dialog2.setMessage(getString(R.string.inf_dialog));
+            dialog2.show();
         }
 
         @Override
         protected String doInBackground(String... params) {
-            String datos = "h0m3data|g0ldfish1|" + username + "|" + password + "|" + userid + "|" + val + "|";
-            Log.d(TAG, " --> " + password + " Datos : " + datos);
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    String datos = "h0m3data|g0ldfish1|" + username + "|" + password_dialog + "|" + userid + "|" + val + "|";
+                    Log.d(TAG, " --> " + password + " Datos : " + datos);
 
-            try {
-                final String data = new btm.app.Network.NetActions(context).transferMoneyToUser(datos);
-                Log.d(TAG, " oKHttp response: " + data);
+                    try {
+                        final String data = new btm.app.Network.NetActions(context).transferMoneyToUser(datos);
+                        Log.d(TAG, " oKHttp response: " + data);
 
-                    if(data.equals("La transferencia ha sido exitosa.")){
-                        String success_msg = getString(R.string.ui_transfer_money_message_successful_transfer);
-                        pushToast(TransferActivity.this, success_msg);
-                        Intent intent = new Intent(context, MainActivity.class);
-                        startActivity(intent);
-                    }else{
-                        String warning_msg = getString(R.string.ui_transfer_money_message_warning_transfer);
-                        pushToast(TransferActivity.this, warning_msg);
+                        customDialog(data);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
+                }
+            });
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
             return "Executed";
         }
 
         @Override
         protected void onPostExecute(String result) {
-            progress.dismiss();
+            dialog2.dismiss();
         }
 
         @Override
         protected void onProgressUpdate(Void... values) {}
     }
 
-    public void pushToast(Activity view, final String message){
-        view.runOnUiThread(new Runnable() {
-            public void run(){
-                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+    public void passwordDialog(){
+        AlertDialog.Builder builder_pass_dialog = new AlertDialog.Builder(context);
+        final LayoutInflater inflater = TransferActivity.this.getLayoutInflater();
+
+        //final EditText input = (EditText) findViewById(R.id.password);
+        View viewInflated = LayoutInflater.from(context).inflate(R.layout.ui_aux_pass, (ViewGroup) findViewById(android.R.id.content), false);
+        final EditText input = (EditText) viewInflated.findViewById(R.id.password);
+
+        // Inflate and set the layout for the dialog
+        // Pass null as the parent view because its going in the dialog layout
+        builder_pass_dialog.setCancelable(false);
+        builder_pass_dialog.setView(viewInflated)
+                .setPositiveButton(R.string.ui_general_dialog_confirm, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        password_dialog = input.getText().toString();
+                        Log.d(TAG, " -> " + password_dialog);
+                        new AsyncGetHttpData().execute("");
+                        dialog_pass_ui.dismiss();
+                    }
+                })
+                .setNegativeButton(R.string.ui_general_dialog_cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog_pass_ui.dismiss();
+                    }
+                });
+
+        dialog_pass_ui = builder_pass_dialog.create();
+        dialog_pass_ui.show();
+    }
+
+    public void customDialog(String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setMessage(message);
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
             }
         });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     @Override
