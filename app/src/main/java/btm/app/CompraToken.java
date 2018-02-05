@@ -95,7 +95,7 @@ public class CompraToken extends DataJp{
 
                 Log.d("Comprar token ", "--> "+ modo);
 
-                if(modo.equals("Tarjeta de Crédito") || modo.equals("Credit Card")){
+                if(modo.equals("Tarjeta de Credito") || modo.equals("Credit Card")){
                     tC.setVisibility(View.VISIBLE);
                     try {
                         data = new NetActions(context).getCardList(datos);
@@ -289,18 +289,6 @@ public class CompraToken extends DataJp{
 
         AlertDialog dialog = builder.create();
         dialog.show();
-    }
-
-    public void progressBar(String status){
-        ProgressDialog progress = new ProgressDialog(context);
-
-        if(status.equals("active")){
-            progress.setMessage(getString(R.string.inf_dialog));
-            progress.show();
-        }else {
-            progress.setMessage(getString(R.string.inf_dialog));
-            progress.dismiss();
-        }
     }
 
     public void pushToast(Activity view, final String message){
