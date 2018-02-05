@@ -78,13 +78,13 @@ public class ChargeActivity extends AppCompatActivity {
         username  = DataHolder.getUsername();
 
         listTc = new ArrayList<CC>();
-        final DataJp dataJp = new DataJp();
+        //final DataJp dataJp = new DataJp();
 
-        SharedPreferences shPref = getSharedPreferences(getResources().getString(R.string.preferencias), Context.MODE_PRIVATE);
+        /*SharedPreferences shPref = getSharedPreferences(getResources().getString(R.string.preferencias), Context.MODE_PRIVATE);
         final String user = shPref.getString(LoginActivity.USERNAME,"--");
-        final String userp = shPref.getString(LoginActivity.PASSPIN,"0000");
+        final String userp = shPref.getString(LoginActivity.PASSPIN,"0000");*/
 
-        username_aux = user;
+        //username_aux = user;
 
         addMoneyMethod.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -92,17 +92,17 @@ public class ChargeActivity extends AppCompatActivity {
                 modo = parent.getItemAtPosition(position).toString();
                 Log.d(TAG, modo);
 
-                if(modo.equals("Tarjeta de Crédito") || modo.equals("Credit Card")) {
+                if(modo.equals("Tarjeta de Credito") || modo.equals("Credit Card")) {
                     token.setVisibility(View.GONE);
                     value.setVisibility(View.VISIBLE);
                     addCreditCard.setVisibility(View.VISIBLE);
                     creditCardList.setVisibility(View.VISIBLE);
 
                     Request request = new Request(getApplicationContext());
-                    String datos = "&username=" + user;
+                    //String datos = "&username=" + user;
 
                     try {
-                        data = new NetActions(context).getCardList(datos);
+                        data = new NetActions(context).getCardList(username);
                         Log.d(TAG, " oKHttp response: " + data);
 
                         if (data.contains("****")) {
