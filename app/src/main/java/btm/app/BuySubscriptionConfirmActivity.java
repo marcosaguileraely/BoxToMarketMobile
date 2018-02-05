@@ -182,7 +182,6 @@ public class BuySubscriptionConfirmActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
                 if(convertPaymentMode(modo).equals("Tarjeta")){
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -204,6 +203,7 @@ public class BuySubscriptionConfirmActivity extends AppCompatActivity {
                     dialog.show();
 
                 }else if(convertPaymentMode(modo).equals("Creditos")){
+
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     // Add the buttons
                     builder.setMessage(R.string.ui_subscriptions_message_dialog);
@@ -224,9 +224,10 @@ public class BuySubscriptionConfirmActivity extends AppCompatActivity {
 
                 }else{
 
+                    token_number = token.getText().toString();
                     if(token.getText().toString().isEmpty()){
                         Toast.makeText(getApplicationContext(), R.string.ui_buy_token_empty_fields, Toast.LENGTH_LONG).show();
-                        return;
+
                     }else{
                         AlertDialog.Builder builder = new AlertDialog.Builder(context);
                         // Add the buttons
@@ -248,7 +249,7 @@ public class BuySubscriptionConfirmActivity extends AppCompatActivity {
                     }
                 }
 
-                String Data = DataHolder.getData();
+                /*String Data = DataHolder.getData();
                 String[] separated = Data.split("&");
                 String r1 = separated[0]; // this will contain "& blank"
                 String r2 = separated[1]; // this will contain "username"
@@ -260,18 +261,16 @@ public class BuySubscriptionConfirmActivity extends AppCompatActivity {
                 String pin     = pinData[1];
                 Log.d(TAG, "passtxt: "+ passtxt + " pin: " + pin);
 
-                token_number = token.getText().toString();
+
 
                 datos = DataHolder.getUsername()
-                        + "|" + password_dialog /*pin*/
+                        + "|" + password_dialog
                         + "|" + convertPaymentMode(modo)
                         + "|" + card_id
                         + "|" + token_number
                         + "|" + DataHolderSubs.getId()
                         + "|";
-                Log.d(TAG, "datos -> "+ datos);
-
-
+                Log.d(TAG, "datos -> "+ datos);*/
             }
         });
     }
@@ -292,10 +291,16 @@ public class BuySubscriptionConfirmActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     // datos = "h0m3data|g0ldfish1|username|clave|metodopago|monto|idTarjetas|email||"
+                    datafull = getDataConcat(DataHolder.getUsername(),
+                                             password_dialog,
+                                             convertPaymentMode(modo),
+                                             card_id, token_number,
+                                             DataHolderSubs.getId());
+
                     Log.d(TAG, " --> " + password_dialog + " Datos : " + datafull);
 
                     try {
-                        data = new btm.app.Network.NetActions(context).buySubscription(datos);
+                        data = new btm.app.Network.NetActions(context).buySubscription(datafull);
                         Log.d(TAG, " oKHttp response: " + data);
                         customDialog(data);
 
@@ -346,6 +351,18 @@ public class BuySubscriptionConfirmActivity extends AppCompatActivity {
 
         dialog_pass_ui = builder_pass_dialog.create();
         dialog_pass_ui.show();
+    }
+
+    public String getDataConcat(String user, String pass, String payment_method, String idcard, String token, int idClub){
+        if(payment_method.equals("Tarjeta")){
+            return user +"|"+ pass +"|"+ payment_method + "|" + idcard +"|" + "|"+ idClub +"|";
+
+        } else if(payment_method.equals("Creditos")){
+            return user +"|"+ pass +"|"+ payment_method + "|" + "|"+  "|" + idClub + "|";
+
+        } else{
+            return user +"|"+ DataHolder.getPass() +"|"+ payment_method + "|" + "|"+ token + "|" + idClub + "|";
+        }
     }
 
     public void customDialog(String message){
