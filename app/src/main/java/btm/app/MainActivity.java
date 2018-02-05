@@ -77,7 +77,8 @@ public class MainActivity extends AppCompatActivity {
 
         //toolbar.setNavigationIcon(R.mipmap.ic_arrow_back_white_48dp);
         getSupportActionBar().setIcon(R.mipmap.ic_home_white_24dp);
-        getSupportActionBar().setTitle("  "+getString(R.string.mi_billetera));
+        //getSupportActionBar().setTitle("  "+getString(R.string.mi_billetera));
+        getSupportActionBar().setTitle("  "+getString(R.string.app_name_machines));
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
