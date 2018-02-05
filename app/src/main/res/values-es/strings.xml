@@ -19,10 +19,10 @@
     <string name="info_fallas_comunicacion">FALLA EN LA COMUNICACION INTENTE MAS TARDE</string>
     <string name="inf_dialog">"Procesando. Por favor espere..."</string>
 
-    <string name="tipo_tarjeta">Tarjeta de Crédito</string>
+    <string name="tipo_tarjeta">Tarjeta de Credito</string>
     <string name="tipo_creditos">Mi Billetera</string>
     <string name="preferencias">preferencias</string>
-    <string name="tipo_compensacion">Transferencia</string>
+    <string name="tipo_compensacion">Transferencia Bancaria</string>
     <string name="password">Clave</string>
     <string name="recarga">Recargar</string>
     <string name="title_recarga">Recargar Mi Billetera</string>
@@ -119,24 +119,25 @@
     <string name="ui_buy_token_no_credit_cards">No tiene tarjetas registradas</string>
     <string name="ui_buy_token_ok_button">Acepto</string>
     <string name="ui_buy_token_cancel_button">Cancelar</string>
-    <string name="ui_buy_token_dialog_message">¿Estas seguro que deseas Comprar un Token?</string>
+    <string name="ui_buy_token_dialog_message">¿Estás seguro que deseas Comprar un Token?</string>
     <string name="ui_buy_token_message_error">La transferencia no ha sido completada. Intenta nuevamente</string>
-    <string name="ui_transfer_money_message_dialog">¿Estas seguro de Transferir Compensación?</string>
-    <string name="ui_change_pass_actualpass_message_dialog">¿Estas seguro que deseas Cambiar la Clave?</string>
-    <string name="ui_transfer_money_message_dialog_to_another_user">¿Estas seguro que deseas Transferir de Mi Billetera a otro Usuario?</string>
+    <string name="ui_transfer_money_message_dialog">¿Estás seguro que deseas Transferir de Compensación a Mi Billetera? </string>
+    <string name="ui_change_pass_actualpass_message_dialog">¿Estás seguro que deseas Cambiar la Clave?</string>
+    <string name="ui_transfer_money_message_dialog_to_another_user">¿Estás seguro que deseas Transferir de Mi Billetera a otro Usuario?</string>
     <string name="ui_main_my_wallet_title">Mi Billetera:</string>
     <string name="ui_buy_token_input_value_local">Ingresa el valor en Moneda Local</string>
-    <string name="ui_buy_compensation_dialog_message">¿Estas seguro que deseas Solicitar una Compensación?</string>
+    <string name="ui_buy_compensation_dialog_message">¿Estás seguro que deseas Solicitar una Compensación?</string>
     <string name="ui_general_dialog_password">Ingrese su clave</string>
     <string name="ui_general_dialog_confirm">Confirmar</string>
     <string name="ui_general_dialog_cancel">Cancelar</string>
-    <string name="ui_charge_message_dialog">¿Estas seguro que deseas Agregar Dinero a Mi Billetera?</string>
+    <string name="ui_charge_message_dialog">¿Estás seguro que deseas Agregar Dinero a Mi Billetera?</string>
     <string name="ui_subscriptions_payment_method_token">Token</string>
-    <string name="ui_subscriptions_payment_method_credit_card">Tarjeta de Crédito</string>
+    <string name="ui_subscriptions_payment_method_credit_card">Tarjeta de Credito</string>
     <string name="ui_subscriptions_payment_method_mywallet">Mi Billetera</string>
-    <string name="ui_subscriptions_message_dialog">¿Estas seguro que deseas Comprar una Suscripción?</string>
+    <string name="ui_subscriptions_message_dialog">¿Estás seguro que deseas Comprar una Suscripción?</string>
     <string name="ui_subscriptions_token_hint">Ingresa el Token</string>
     <string name="ui_compensation_button_text">Registrar Cuenta Bancaría</string>
+    <string name="app_name_machines">La App de las Maquinas</string>
 
 
 </resources>
