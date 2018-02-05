@@ -268,8 +268,6 @@ public class NetActions {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
     }
 
-
-
     /**
      *
      * @throws IOException
@@ -377,8 +375,8 @@ public class NetActions {
     * Interfaz Inicial > Botón Subscripciones BTM Mini> Comprar Subcripciones > Seleccionar suscripciones > detalles > comprar
     * */
     public String buySubscription(String datos) throws IOException, NullPointerException {
-
-        String url = "https://www.boxtomarket.com/index.php?r=app/comprarsuscripcion&token=" + this.tkTime()
+        String url = "https://www.boxtomarket.com/index.php?r=app/comprarsuscripcion" +
+                     "&token=" + this.tkTime()
                    + "&datos=" + this.datoBase64(datos);
         Log.d("DEV -> NetActions ", url);
 
