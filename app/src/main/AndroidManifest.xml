@@ -93,6 +93,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ChargeActivity"
+            android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
             android:name=".BuyActivity"
