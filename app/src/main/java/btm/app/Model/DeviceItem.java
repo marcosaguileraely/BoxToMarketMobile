@@ -35,5 +35,4 @@ public class DeviceItem {
             this.connected = false;
         }
     }
-
 }

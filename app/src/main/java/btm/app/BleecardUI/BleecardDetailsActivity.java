@@ -32,16 +32,16 @@ import btm.app.R;
 import static java.security.AccessController.getContext;
 
 public class BleecardDetailsActivity extends AppCompatActivity {
-    public static final String TAG = "DEV -> Blee details ";
-    Context context = this;
 
+    public static final String TAG = "DEV -> Blee details ";
+    Context   context = this;
     Button    blee_pay;
     Spinner   blee_price_list;
     ImageView blee_img;
     TextView  blee_id;
-
-    String price_data;
-    String blee_id_data;
+    String    price_data;
+    String    blee_id_data;
+    BleeDetails bleeDetails = new BleeDetails();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +54,14 @@ public class BleecardDetailsActivity extends AppCompatActivity {
         blee_pay        = (Button) findViewById(R.id.blee_pay_btn);
         blee_price_list = (Spinner) findViewById(R.id.blee_prices);
 
-        Log.d(TAG, "id: " + BleeDetails.getId() + " img_uri: "+BleeDetails.getImg_uri());
+        Log.d( TAG, " id: " + bleeDetails.getId() + " img_uri: " + bleeDetails.getImg_uri() );
 
-        blee_id.setText("BtM: " + BleeDetails.getId());
+        blee_id.setText(bleeDetails.getId());
         Glide.with(context)
-                .load("https://www.bleecard.com/"+BleeDetails.getImg_uri())
+                .load("https://www.bleecard.com/api/images/69b267.jpg")
                 .into(blee_img);
 
-        List<String> array = textToArray(BleeDetails.getPrices());
+        List<String> array = textToArray(bleeDetails.getId());
 
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, array); //selected item will look like a spinner set from XML
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -80,7 +80,7 @@ public class BleecardDetailsActivity extends AppCompatActivity {
             }
         });
 
-        blee_id_data = BleeDetails.getId();
+        blee_id_data = bleeDetails.getId();
         blee_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

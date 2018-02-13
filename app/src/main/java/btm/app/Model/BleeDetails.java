@@ -7,31 +7,37 @@ import java.util.ArrayList;
  */
 
 public class BleeDetails {
-    private static String id;
-    private static String img_uri;
-    private static String prices;
+    private String id;
+    private String img_uri;
+    private String type;
 
-    public static String getId() {
+    public BleeDetails(String id, String img_uri, String type) {
+        this.id = id;
+        this.img_uri = img_uri;
+        this.type = type;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public static void setId(String id) {
-        BleeDetails.id = id;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public static String getImg_uri() {
+    public String getImg_uri() {
         return img_uri;
     }
 
-    public static void setImg_uri(String img_uri) {
-        BleeDetails.img_uri = img_uri;
+    public void setImg_uri(String img_uri) {
+        this.img_uri = img_uri;
     }
 
-    public static String getPrices() {
-        return prices;
+    public String getType() {
+        return type;
     }
 
-    public static void setPrices(String prices) {
-        BleeDetails.prices = prices;
+    public void setType(String type) {
+        this.type = type;
     }
 }

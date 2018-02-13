@@ -29,7 +29,9 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 
 import static com.android.volley.Request.Method.GET;
 
@@ -228,6 +230,116 @@ public class NetActions {
      * @throws IOException
      * @throws NullPointerException
      */
+    public String getBleDetails(String uuiddata) throws IOException, NullPointerException, JSONException{
+
+        /*
+         * Genera un Array de Array de objecto
+         * No debe convertirse en String ya que el webservice espera la el ssid así:
+         *            [[ { "mac": ""xx:xx:xx:xx:xx } ]]  <-- debe pasarse así
+         * en vez de "[[ { "mac": ""xx:xx:xx:xx:xx } ]]" <-- no debe pasarse así
+         * notese que al ser String es invalido y debe pasarse en forma de Arraglo y no String
+         */
+
+        JSONObject obmacAdd = new JSONObject();
+        JSONArray array     = new JSONArray();
+        JSONArray array2    = new JSONArray();
+
+        obmacAdd.put("uuid", uuiddata);
+        array.put(obmacAdd);
+        array2.put(array);
+
+        JSONObject jsonBody = new JSONObject();
+                   jsonBody.put("operation", "dataMachines");
+                   jsonBody.put("key", "pk_test_6pRNAHGGoqiwFHFKjkj4XMrh");
+                   jsonBody.put("token", "tk_test_ZQokik736473jklWgH4olfk2");
+                   jsonBody.put("ssids", array2);
+
+        Log.d(TAG, "*************> "+ jsonBody);
+
+        String url = "https://www.bleecard.com/api/getMachines.do";
+
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        RequestBody body = RequestBody.create(JSON, jsonBody.toString());
+        okhttp3.Request requesthttp = new okhttp3.Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+
+        okhttp3.Response response = client.newCall(requesthttp).execute();
+        return response.body().string();
+    }
+
+    /*
+    * Este metódo permite obtener los detalles de la blee card entregandole la mac address
+    * Interfaz Inicial > Botón Bleecard > Listado de dispositivos Bluethooth
+    * */
+    public void getBleeCardData(Response.Listener<String> response, final String ssidsdata, final ProgressDialog pd)throws JSONException {
+
+        String url = "https://www.bleecard.com/api/getMachines.do";
+
+        /*
+         * Genera un Array de Array de objecto
+         * No debe convertirse en String ya que el webservice espera la el ssid así:
+         *            [[ { "mac": ""xx:xx:xx:xx:xx } ]]  <-- debe pasarse así
+         * en vez de "[[ { "mac": ""xx:xx:xx:xx:xx } ]]" <-- no debe pasarse así
+         * notese que al ser String es invalido y debe pasarse en forma de Arreglo y no String
+         */
+        Log.d(TAG, "--> 1");
+        JSONObject obmacAdd = new JSONObject();
+        JSONArray array     = new JSONArray();
+        JSONArray array2    = new JSONArray();
+        Log.d(TAG, "--> 2");
+        obmacAdd.put("mac", ssidsdata);
+        array.put(obmacAdd);
+        array2.put(array);
+        Log.d(TAG, "--> 3");
+        Log.d(TAG, "-->" + array2);
+
+        JSONObject jsonBody = new JSONObject();
+                   jsonBody.put("operation", "dataMachines");
+                   jsonBody.put("key", "pk_test_6pRNAHGGoqiwFHFKjkj4XMrh");
+                   jsonBody.put("token", "tk_test_ZQokik736473jklWgH4olfk2");
+                   jsonBody.put("ssids", array2);
+
+        final String mRequestBody = jsonBody.toString();
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                response,
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d(TAG, "error => " + error.toString());
+                    }
+                }
+        ) {
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                try {
+                    return mRequestBody == null ? null : mRequestBody.getBytes("utf-8");
+                } catch (UnsupportedEncodingException uee) {
+                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", mRequestBody, "utf-8");
+                    return null;
+                }
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+        };
+
+        queue.add(postRequest.setRetryPolicy(new DefaultRetryPolicy(30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
+    }
+
+
+    /**
+     *
+     * @throws IOException
+     * @throws NullPointerException
+     */
     public String requestCompensation(String datos) throws IOException, NullPointerException {
         Log.d(TAG, " Datos card list: " + datos);
 
@@ -388,67 +500,6 @@ public class NetActions {
         return response.body().string();
     }
 
-    /*
-    * Este metódo permite obtener los detalles de la blee card entregandole la mac address
-    * Interfaz Inicial > Botón Bleecard > Listado de dispositivos Bluethooth
-    * */
-    public void getBleeCardData(Response.Listener<String> response, final String ssidsdata, final ProgressDialog pd)throws JSONException {
-
-        String url = "https://www.bleecard.com/api/getMachines.do";
-
-        /*
-         * Genera un Array de Array de objecto
-         * No debe convertirse en String ya que el webservice espera la el ssid así:
-         *            [[ { "mac": ""xx:xx:xx:xx:xx } ]]  <-- debe pasarse así
-         * en vez de "[[ { "mac": ""xx:xx:xx:xx:xx } ]]" <-- no debe pasarse así
-         * notese que al ser String es invalido y debe pasarse en forma de Arraglo y no String
-         */
-
-        JSONObject obmacAdd = new JSONObject();
-                   JSONArray array     = new JSONArray();
-                   JSONArray array2    = new JSONArray();
-                   obmacAdd.put("mac", ssidsdata);
-                   array.put(obmacAdd);
-                   array2.put(array);
-
-        JSONObject jsonBody = new JSONObject();
-                   jsonBody.put("operation", "dataMachines");
-                   jsonBody.put("key", "pk_test_6pRNAHGGoqiwFHFKjkj4XMrh");
-                   jsonBody.put("token", "tk_test_ZQokik736473jklWgH4olfk2");
-                   jsonBody.put("ssids", array2);
-
-        final String mRequestBody = jsonBody.toString();
-
-        RequestQueue queue = Volley.newRequestQueue(context);
-        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
-                response,
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d(TAG, "error => " + error.toString());
-                    }
-                }
-        ) {
-            @Override
-            public byte[] getBody() throws AuthFailureError {
-                try {
-                    return mRequestBody == null ? null : mRequestBody.getBytes("utf-8");
-                } catch (UnsupportedEncodingException uee) {
-                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", mRequestBody, "utf-8");
-                    return null;
-                }
-            }
-
-            @Override
-            public String getBodyContentType() {
-                return "application/json";
-            }
-        };
-
-        queue.add(postRequest.setRetryPolicy(new DefaultRetryPolicy(30000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
-    }
 
     /*
     * Este metódo permite obtener el código RSA enviando el id del Bleecard y el precio a pagar
