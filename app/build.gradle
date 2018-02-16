@@ -9,7 +9,8 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "btm.app"
-        minSdkVersion 16
+        //minSdkVersion 16
+        minSdkVersion 18
         targetSdkVersion 25
         versionCode 16
         versionName "1.0"

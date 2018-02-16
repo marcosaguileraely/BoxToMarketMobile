@@ -5,23 +5,19 @@ package btm.app.Model;
  */
 
 public class Bluethoot {
-    private String uuid;
-    private String mac;
-    private String address;
-
-    public Bluethoot(String uuid, String mac, String address) {
-        this.uuid = uuid;
+    public Bluethoot(String mac, String name, String id, String img, String type) {
         this.mac = mac;
-        this.address = address;
+        this.name = name;
+        this.id = id;
+        this.img = img;
+        this.type = type;
     }
 
-    public String getUuid() {
-        return uuid.toString();
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
+    private String mac;
+    private String name;
+    private String id;
+    private String img;
+    private String type;
 
     public String getMac() {
         return mac;
@@ -31,16 +27,37 @@ public class Bluethoot {
         this.mac = mac;
     }
 
-    public String getAddress() {
-        return address;
+    public String getName() {
+        return name;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setName(String name) {
+        this.name = name;
     }
 
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
 
 

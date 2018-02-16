@@ -11,12 +11,6 @@ public class BleeDetails {
     private String img_uri;
     private String type;
 
-    public BleeDetails(String id, String img_uri, String type) {
-        this.id = id;
-        this.img_uri = img_uri;
-        this.type = type;
-    }
-
     public String getId() {
         return id;
     }

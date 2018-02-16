@@ -8,7 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -40,10 +43,15 @@ public class BluethAdapter extends ArrayAdapter<Bluethoot> {
 
         TextView uuid = (TextView) rowView.findViewById(R.id.blue_uuid);
         TextView mac  = (TextView) rowView.findViewById(R.id.blue_mac_address);
+        ImageView img = (ImageView) rowView.findViewById(R.id.imageView2);
 
         Bluethoot bluethoot = (Bluethoot) bluethootArrayList.get(position);
-        uuid.setText(bluethoot.getUuid());
-        mac.setText(bluethoot.getAddress());
+        uuid.setText(String.valueOf(bluethoot.getName()) + " " + bluethoot.getId() + " " + bluethoot.getMac());
+        mac.setText(bluethoot.getType());
+
+        Glide.with(context)
+                .load("https://www.bleecard.com/" + bluethoot.getImg())
+                .into(img);
 
         return rowView;
     }
@@ -69,11 +77,19 @@ public class BluethAdapter extends ArrayAdapter<Bluethoot> {
         return super.getItemId(position);
     }
 
-    public String getMacAddr(int position) {
+    public String getId(int position) {
         if (bluethootArrayList != null) {
-            return bluethootArrayList.get(position).getAddress();
+            return bluethootArrayList.get(position).getId();
         }else{
-            return "no mac found";
+            return "no id found";
+        }
+    }
+
+    public String getType(int position) {
+        if (bluethootArrayList != null) {
+            return bluethootArrayList.get(position).getType();
+        }else{
+            return "no type found";
         }
     }
 }

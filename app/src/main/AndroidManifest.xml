@@ -113,8 +113,11 @@
         <activity
             android:name=".TransferCompensationActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ChangePassActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ChangePassActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".BleecardUI.BleVendingUI" />
+        <activity android:name=".BleecardUI.BleMiniUI"></activity>
     </application>
 
 </manifest>

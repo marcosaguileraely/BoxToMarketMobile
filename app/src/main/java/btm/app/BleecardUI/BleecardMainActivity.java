@@ -27,8 +27,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import com.android.volley.Response;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 
@@ -40,6 +38,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+
 import btm.app.Adapters.BluethAdapter;
 import btm.app.Model.BleeDetails;
 import btm.app.Model.Bluethoot;
@@ -51,13 +50,13 @@ public class BleecardMainActivity extends AppCompatActivity {
 
     AlertDialog.Builder builder;
     AlertDialog dialog;
-
+    BleeDetails details =  new BleeDetails();
     public Context context = this;
-    ArrayList<BleeDetails> items = new ArrayList<BleeDetails>();
+    ArrayList<Bluethoot> items = new ArrayList<Bluethoot>();
     BluethAdapter adapter;
     BluetoothAdapter mBluetoothAdapter;
 
-    String data, uuid0_unique, id, img_uri, type;
+    String data, uuid0_unique, dataRsa;
     ListView blueList;
     Button getDevices;
     public View v;
@@ -70,8 +69,7 @@ public class BleecardMainActivity extends AppCompatActivity {
 
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
         if (SDK_INT > 8) {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-                    .permitAll().build();
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
 
@@ -113,17 +111,121 @@ public class BleecardMainActivity extends AppCompatActivity {
         blueList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String macAddr = adapter.getMacAddr(position);
-                Toast.makeText(context, "Item clicked, "+" pos: " + position + " Id: " + macAddr, Toast.LENGTH_SHORT).show();
-                String object = getBleecardData(macAddr);
-                Log.d(TAG, "Json: " + object);
-                getBleeDetails(view, macAddr.toLowerCase());
+                String idBlee   = adapter.getId(position);
+                String typeBlee = adapter.getType(position);
+                Toast.makeText(context, "Item clicked, "+" pos: " + position + " Id: " + idBlee + " Type: " + typeBlee, Toast.LENGTH_SHORT).show();
+                getBleeDetails(view, idBlee, typeBlee);
+                Intent goToMini = new Intent(context, BleMiniUI.class);
+                startActivity(goToMini);
             }
         });
     }
 
-    public void bleeDetailsConverter(String data) {
+    public void getBleeDetails(View view, String id, String type){
+        try {
+            dataRsa = new btm.app.Network.NetActions(context).getBleRsa(id);
+            Log.d(TAG, "GetRsa endpoint: " + dataRsa);
 
+            if(type.equals("vending")){
+
+            }else if(type.equals("btm_mini")){
+
+            }else{
+                //nothing to do
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+     * Broadcast Receiver for listing devices that are not yet paired
+     * Executed by btnDiscover() method.
+     */
+    private BroadcastReceiver mBroadcastReceiver3 = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) throws NullPointerException {
+            final String action = intent.getAction();
+
+            if (action.equals(BluetoothDevice.ACTION_FOUND)){
+                BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+
+                BluetoothDevice device = intent.getParcelableExtra (BluetoothDevice.EXTRA_DEVICE);
+
+                try {
+                    Method getUuidsMethod = BluetoothAdapter.class.getDeclaredMethod("getUuids", null);
+                    ParcelUuid[] uuids = (ParcelUuid[]) getUuidsMethod.invoke(adapter, null);
+                    for (ParcelUuid uuid: uuids) {
+                        Log.d(TAG, "*********************************** UUID: " + uuid.getUuid().toString());
+                    }
+
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+
+                String deviceName = device.getName();
+                String deviceAddr = device.getAddress();
+
+                if(deviceName == null){
+                    Log.d(TAG, "onReceive: " + "Device with null name filtered");
+                }
+                else{
+                    //
+                    if (deviceName.contains("BL")){
+                        Log.d(TAG, "onReceive: " + device.getName() + " : " + device.getAddress());
+                        Log.d(TAG, "onReceive: " + "hay al menos un dispositivo blee" );
+                        try {
+                            //String uuid0 = getUuid(adapter);
+                            //Log.d(TAG, "XDXDXDXDXDXDXDXDXDXD=> " + uuid0);
+                            String uuid__ = "0000110a-0000-1000-8000-00805f9b34fb";
+
+                            data = new btm.app.Network.NetActions(context).getBleDetails(uuid__);
+                            Log.d(TAG, "=> " + data);
+                            bleeDetailsConverter(data);
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        items.add(new Bluethoot(deviceAddr, deviceName, details.getId(),details.getImg_uri(),details.getType()));
+
+                    }else {
+                        Log.d(TAG, "onReceive: " + "No BLECard device detected");
+                    }
+                }
+            }
+
+            adapter = new BluethAdapter(context, items);
+            blueList.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        }
+    };
+
+    public String getUuid(BluetoothAdapter adapter) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        //BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+        Method getUuidsMethod = BluetoothAdapter.class.getDeclaredMethod("getUuids", null);
+        ParcelUuid[] uuids = (ParcelUuid[]) getUuidsMethod.invoke(adapter, null);
+
+        String uuid0 = "";
+
+        for(int i = 0; i<uuids.length; i++){
+            uuid0 = uuids[0].getUuid().toString();
+            Log.d(TAG, "UUID: " + uuid0);
+        }
+
+        return uuid0;
+    }
+
+    public void bleeDetailsConverter(String data) {
         JSONArray jsonArray = null;
         try {
             jsonArray = new JSONArray(data);
@@ -131,10 +233,12 @@ public class BleecardMainActivity extends AppCompatActivity {
             for (int i=0; i < jsonArray.length(); i++){
                 JSONObject json_obj = jsonArray.getJSONObject(i);
                 Log.d(TAG, json_obj.toString());
-                id      = json_obj.getString("id");
-                img_uri = json_obj.getString("image");
-                type    = json_obj.getString("type");
-                //new BleeDetails(id, img_uri, prices);
+                String id      = json_obj.getString("id");
+                String img_uri = json_obj.getString("image");
+                String prices  = json_obj.getString("type");
+                details.setId(id);
+                details.setImg_uri(img_uri);
+                details.setType(prices);
             }
 
         } catch (JSONException e) {
@@ -158,24 +262,6 @@ public class BleecardMainActivity extends AppCompatActivity {
 
         Log.d(TAG, "-> "+jsonArray2.toString());
         return jsonArray2.toString();
-    }
-
-    public JSONObject getMacsJsonObject(String macaddr){
-        //JSONArray jsonArray   = new JSONArray();
-        //JSONArray jsonArray2  = new JSONArray();
-        JSONObject jsonObject = new JSONObject();
-
-        try {
-            jsonObject.put("mac", macaddr);
-            //jsonArray.put(jsonObject);
-            //jsonArray2.put(jsonArray);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        Log.d(TAG, "-> " + jsonObject.toString());
-        return jsonObject;
     }
 
     public void searchAgainManually(View view){
@@ -255,118 +341,12 @@ public class BleecardMainActivity extends AppCompatActivity {
 
                 String deviceName = device.getName();
                 String deviceHardwareAddress = device.getAddress(); // MAC address
-                String object = getBleecardData(deviceName);
-                Log.d(TAG, "Object " + object);
-                Log.d(TAG, "Data " + "Name: " + deviceName + " Mac: "+ deviceHardwareAddress);
+                //String object = getBleecardData(deviceName);
+                //Log.d(TAG, "Object " + object);
+                //Log.d(TAG, "Data " + "Name: " + deviceName + " Mac: "+ deviceHardwareAddress);
             }
         }
     };
-
-    /**
-     * Broadcast Receiver for listing devices that are not yet paired
-     * Executed by btnDiscover() method.
-     */
-    private BroadcastReceiver mBroadcastReceiver3 = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) throws NullPointerException {
-            JSONArray jsonArray2  = new JSONArray();
-            final String action = intent.getAction();
-            Log.d(TAG, "onReceive: ACTION FOUND.");
-
-            if (action.equals(BluetoothDevice.ACTION_FOUND)){
-                BluetoothDevice device = intent.getParcelableExtra (BluetoothDevice.EXTRA_DEVICE);
-                Log.d(TAG, "onReceive: " + device.getName() + " : " + device.getAddress() );
-
-                try {
-                    uuid0_unique = getUuid();
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-
-                try {
-                    data = new btm.app.Network.NetActions(context).getBleDetails(uuid0_unique);
-                    Log.d(TAG, "=> " + data);
-                    bleeDetailsConverter(data);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                items.add( new BleeDetails( id, img_uri, type ));
-
-                /*if(deviceName == null){
-                    Log.d(TAG, "onReceive: " + "Device with null name filtered");
-                }
-                else{
-                    if (deviceName.equals("BLECard")){
-                        Log.d(TAG, "onReceive: " + "hay al menos un dispositivo blee" );
-
-                        items.add(new Bluethoot(device.getName(), device.getAddress(), device.getAddress()));
-                        //items.add(new Bluethoot("BLECard1", "50:8C:B1:6A:68:0E", "50:8C:B1:6A:68:0E"));
-                        //items.add(new Bluethoot("BLECard2", "18:93:D7:54:F7:A4", "18:93:D7:54:F7:A4"));
-                        //items.add(new Bluethoot("BLECard3", "50:8C:B1:6A:68:0E", "50:8C:B1:6A:68:0E"));
-                        //items.add(new Bluethoot("BLECard4", "34:15:13:f4:59:f1", "34:15:13:d4:59:f1"));
-
-                    }else {
-                        Log.d(TAG, "onReceive: " + "No BLECard device detected");
-                    }
-                }*/
-            }
-
-            adapter = new BluethAdapter(context, items);
-            blueList.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
-        }
-    };
-
-    public void getBleeDetails(View view, String bleeaddr){
-        final ProgressDialog progress = new ProgressDialog(this);
-        progress.setMessage(getString(R.string.inf_dialog));
-        //progress.show();
-
-        Response.Listener<String> response = new Response.Listener<String>(){
-            @Override
-            public void onResponse(String response) {
-                Log.d(TAG, "1 "+ response);
-                progress.dismiss();
-
-                if(response.contains(".jpg")){
-                    Log.d(TAG, "Tiene al menos un resultado. " + response + " length: "+response.length());
-                    bleeDetailsConverter(response);
-                    navigateToDetails();
-
-                } else {
-                    Toast.makeText(context, response, Toast.LENGTH_LONG).show();
-                }
-            }
-        };
-
-        try {
-            new btm.app.Network.NetActions(this).getBleeCardData(response, bleeaddr, progress);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public String getUuid() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-        Method getUuidsMethod = BluetoothAdapter.class.getDeclaredMethod("getUuids", null);
-        ParcelUuid[] uuids = (ParcelUuid[]) getUuidsMethod.invoke(adapter, null);
-
-        String uuid0 = "";
-
-        for(int i = 0; i<uuids.length; i++){
-            uuid0 = uuids[0].getUuid().toString();
-            Log.d(TAG, "UUID: " + uuid0);
-        }
-
-        return uuid0;
-    }
 
     /**
      *
