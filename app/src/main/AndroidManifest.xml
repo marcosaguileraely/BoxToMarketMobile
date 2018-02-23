@@ -11,17 +11,16 @@
 
     <!-- Permission to use camera - required -->
     <uses-permission android:name="android.permission.CAMERA" />
-
-    <uses-feature android:name="android.hardware.bluetooth" />
-    <uses-feature
-        android:name="android.hardware.bluetooth_le"
-        android:required="true" />
-
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" />
+
+    <uses-feature android:name="android.hardware.bluetooth" />
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
 
     <!-- Camera features - recommended -->
     <uses-feature
@@ -117,7 +116,10 @@
             android:name=".ChangePassActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".BleecardUI.BleVendingUI" />
-        <activity android:name=".BleecardUI.BleMiniUI"></activity>
+        <activity android:name=".BleecardUI.BleMiniUI" />
+        <activity android:name=".BleecardUI.DeviceScanActivity"/>
+        <activity android:name=".BleecardUI.DeviceControlActivity"/>
+        <service android:name=".BleecardUI.BluetoothLeService" android:enabled="true"/>
     </application>
 
 </manifest>
