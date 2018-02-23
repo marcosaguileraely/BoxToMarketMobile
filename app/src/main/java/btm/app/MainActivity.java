@@ -36,6 +36,7 @@ import com.android.volley.Response;
 import java.util.ArrayList;
 
 import btm.app.BleecardUI.BleecardMainActivity;
+import btm.app.BleecardUI.DeviceScanActivity;
 import btm.app.DataHolder.DataHolder;
 
 public class MainActivity extends AppCompatActivity {
@@ -206,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
             Bleecard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent gotoBleecard = new Intent(getActivity(), BleecardMainActivity.class);
+                    Intent gotoBleecard = new Intent(getActivity(), DeviceScanActivity.class);
                     startActivity(gotoBleecard);
                 }
             });
