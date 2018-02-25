@@ -56,7 +56,7 @@ public class BleecardMainActivity extends AppCompatActivity {
     BluethAdapter adapter;
     BluetoothAdapter mBluetoothAdapter;
 
-    String data, uuid0_unique, dataRsa;
+    String data, dataRsa;
     ListView blueList;
     Button getDevices;
     public View v;
@@ -247,21 +247,21 @@ public class BleecardMainActivity extends AppCompatActivity {
     }
 
     public String getBleecardData(String macaddr){
-        JSONArray jsonArray   = new JSONArray();
-        JSONArray jsonArray2  = new JSONArray();
-        JSONObject jsonObject = new JSONObject();
+            JSONArray jsonArray   = new JSONArray();
+            JSONArray jsonArray2  = new JSONArray();
+            JSONObject jsonObject = new JSONObject();
 
-        try {
-            jsonObject.put("mac", macaddr);
-            jsonArray.put(jsonObject);
-            jsonArray2.put(jsonArray);
+            try {
+                jsonObject.put("mac", macaddr);
+                jsonArray.put(jsonObject);
+                jsonArray2.put(jsonArray);
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
-        Log.d(TAG, "-> "+jsonArray2.toString());
-        return jsonArray2.toString();
+            Log.d(TAG, "-> "+jsonArray2.toString());
+            return jsonArray2.toString();
     }
 
     public void searchAgainManually(View view){

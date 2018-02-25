@@ -46,7 +46,7 @@ public class BluethAdapter extends ArrayAdapter<Bluethoot> {
         ImageView img = (ImageView) rowView.findViewById(R.id.imageView2);
 
         Bluethoot bluethoot = (Bluethoot) bluethootArrayList.get(position);
-        uuid.setText(String.valueOf(""+bluethoot.getType().toUpperCase()));
+        uuid.setText(String.valueOf("" + bluethoot.getType().toUpperCase()));
         mac.setText(String.valueOf("#" + bluethoot.getId().toUpperCase() +  " " + bluethoot.getName()) + " " + bluethoot.getMac());
 
         Glide.with(context)

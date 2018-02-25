@@ -13,9 +13,9 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" />
 
     <uses-feature android:name="android.hardware.bluetooth" />
     <uses-feature
@@ -115,6 +115,7 @@
         <activity
             android:name=".ChangePassActivity"
             android:screenOrientation="portrait" />
+
         <activity android:name=".BleecardUI.BleVendingUI" />
         <activity android:name=".BleecardUI.BleMiniUI" />
         <activity android:name=".BleecardUI.DeviceScanActivity" />
@@ -124,7 +125,10 @@
             android:name=".BleecardUI.BluetoothLeService"
             android:enabled="true" />
 
-        <activity android:name=".BleecardUI.BleMiniUIDetails"></activity>
+        <activity android:name=".BleecardUI.BleMiniUIDetails" />
+        <activity
+            android:name=".BleecardUI.BleListActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
