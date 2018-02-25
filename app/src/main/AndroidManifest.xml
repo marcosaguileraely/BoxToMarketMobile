@@ -117,9 +117,14 @@
             android:screenOrientation="portrait" />
         <activity android:name=".BleecardUI.BleVendingUI" />
         <activity android:name=".BleecardUI.BleMiniUI" />
-        <activity android:name=".BleecardUI.DeviceScanActivity"/>
-        <activity android:name=".BleecardUI.DeviceControlActivity"/>
-        <service android:name=".BleecardUI.BluetoothLeService" android:enabled="true"/>
+        <activity android:name=".BleecardUI.DeviceScanActivity" />
+        <activity android:name=".BleecardUI.DeviceControlActivity" />
+
+        <service
+            android:name=".BleecardUI.BluetoothLeService"
+            android:enabled="true" />
+
+        <activity android:name=".BleecardUI.BleMiniUIDetails"></activity>
     </application>
 
 </manifest>

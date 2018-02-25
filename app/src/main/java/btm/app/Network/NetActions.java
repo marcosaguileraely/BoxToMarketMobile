@@ -231,7 +231,6 @@ public class NetActions {
      * @throws NullPointerException
      */
     public String getBleDetails(String uuiddata) throws IOException, NullPointerException, JSONException{
-
         /*
          * Genera un Array de Array de objecto
          * No debe convertirse en String ya que el webservice espera la el ssid así:
@@ -303,6 +302,27 @@ public class NetActions {
         String url = "https://www.boxtomarket.com/index.php?r=app/solicitarcompensacion"
                 + "&token=" + this.tkTime()
                 + "&datos=" + this.datoBase64(datos);
+        Log.d("DEV -> NetActions ", url);
+
+        okhttp3.Request requesthttp = new okhttp3.Request.Builder()
+                .url(url)
+                .build();
+
+        okhttp3.Response response = client.newCall(requesthttp).execute();
+        return response.body().string();
+    }
+
+    /**
+     *
+     * @throws IOException
+     * @throws NullPointerException
+     */
+    public String getBlePrice(String datos) throws IOException, NullPointerException {
+        Log.d(TAG, " Datos card list: " + datos);
+
+        String url = "https://www.boxtomarket.com/index.php?r=app/btmminiprecio"
+                + "&token=" + this.tkTime()
+                + "&datos=" + datos;
         Log.d("DEV -> NetActions ", url);
 
         okhttp3.Request requesthttp = new okhttp3.Request.Builder()

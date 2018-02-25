@@ -12,6 +12,7 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -22,6 +23,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -42,6 +44,7 @@ public class BleMiniUI extends AppCompatActivity {
     private TextView mConnectionState;
     private TextView mDataField;
     private TextView text1, text2, text3, text4, text5;
+    private TextView pr1, pr2, pr3, pr4, pr5;
     private SeekBar mRed,mGreen,mBlue;
     private String mDeviceName;
     private String mDeviceAddress;
@@ -115,6 +118,14 @@ public class BleMiniUI extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ble_mini_ui);
 
+
+        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+        if (SDK_INT > 8) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
         final Intent intent = getIntent();
         mDeviceName = intent.getStringExtra(EXTRAS_DEVICE_NAME);
         mDeviceAddress = intent.getStringExtra(EXTRAS_DEVICE_ADDRESS);
@@ -130,6 +141,12 @@ public class BleMiniUI extends AppCompatActivity {
         text3       = (TextView) findViewById(R.id.textView3);
         text4       = (TextView) findViewById(R.id.textView4);
         text5       = (TextView) findViewById(R.id.textView5);
+
+        pr1         = (TextView) findViewById(R.id.price1);
+        pr2         = (TextView) findViewById(R.id.price2);
+        pr3         = (TextView) findViewById(R.id.price3);
+        pr4         = (TextView) findViewById(R.id.price4);
+        pr5         = (TextView) findViewById(R.id.price5);
 
         b1 = (Button) findViewById(R.id.button1);
         b2 = (Button) findViewById(R.id.button2);
@@ -299,6 +316,21 @@ public class BleMiniUI extends AppCompatActivity {
         text3.setText("Disponible: " + String.valueOf(value3));
         text4.setText("Disponible: " + String.valueOf(value4));
         text5.setText("Disponible: " + String.valueOf(value5));
+
+        try {
+            data = new btm.app.Network.NetActions(context).getBlePrice("5001");
+            Log.d(TAG, " oKHttp response: " + data);
+
+            pr1.setText(data);
+            pr2.setText(data);
+            pr3.setText(data);
+            pr4.setText(data);
+            pr5.setText(data);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     // Demonstrates how to iterate through the supported GATT Services/Characteristics.
