@@ -16,8 +16,11 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import btm.app.DataHolder.MachinesDataHolder;
 
 /**
  * Created by maguilera on 2/22/18.
@@ -104,19 +107,18 @@ public class BluetoothLeService extends Service {
 
     private void broadcastUpdate(final String action,final BluetoothGattCharacteristic characteristic) {
         final Intent intent = new Intent(action);
-
         // For all other profiles, writes the data formatted in HEX.
         final byte[] data = characteristic.getValue();
-        Log.i(TAG, "data"+characteristic.getValue());
+        Log.i(TAG, " -> data: "+ characteristic.getValue());
 
         if (data != null && data.length > 0) {
             final StringBuilder stringBuilder = new StringBuilder(data.length);
+
             for(byte byteChar : data)
                 stringBuilder.append(String.format("%02X ", byteChar));
-            Log.d(TAG, String.format("%s", new String(data)));
-            // getting cut off when longer, need to push on new line, 0A
-            intent.putExtra(EXTRA_DATA,String.format("%s", new String(data)));
-
+                Log.d(TAG, String.format("%s", new String(data)));
+                // getting cut off when longer, need to push on new line, 0A
+                intent.putExtra(EXTRA_DATA, String.format("%s", new String(data)));
         }
         sendBroadcast(intent);
     }

@@ -18,6 +18,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -269,9 +270,13 @@ public class DeviceControlActivity extends Activity {
     }
     // on change of bars write char
     private void makeChange() {
-        String str = RGBFrame[0] + "," + RGBFrame[1] + "," + RGBFrame[2] + "\n";
-        Log.d(TAG, "Sending result=" + str);
-        final byte[] tx = str.getBytes();
+        //String str = RGBFrame[0] + "," + RGBFrame[1] + "," + RGBFrame[2] + "\n";
+        String str = "0b64a3cd3e6099b8ba9c59183906ee37";
+        Log.d(TAG, "Sending result = " + str);
+        //final byte[] tx = str.getBytes();
+        final byte[] tx = hexStringToByteArray(str);
+        Log.d(TAG, "Sending byte[] = " + Arrays.toString(tx));
+
         if(mConnected) {
             characteristicTX.setValue(tx);
             mBluetoothLeService.writeCharacteristic(characteristicTX);
@@ -279,5 +284,17 @@ public class DeviceControlActivity extends Activity {
         }
     }
 
-
+    public static byte[] hexStringToByteArray(String s) {
+        int len = s.length();
+        byte[] data = new byte[len / 2];
+        try {
+            for (int i = 0; i < len; i += 2) {
+                data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
+                        + Character.digit(s.charAt(i + 1), 16));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
 }
