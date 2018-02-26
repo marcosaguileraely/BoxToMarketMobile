@@ -49,7 +49,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:gravity="bottom|center_vertical"
+                        android:gravity="center_vertical"
                         android:text="TextView"
                         android:textColor="@color/colorOrange"
                         android:textSize="20sp"
@@ -61,10 +61,10 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:gravity="top|center_vertical"
-                        android:text="TextView"
                         android:textAllCaps="false"
                         android:textColor="@color/TextColor"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:visibility="gone" />
                 </LinearLayout>
 
             </LinearLayout>

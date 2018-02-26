@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import btm.app.DataHolder.DataHolderBleData;
 import btm.app.R;
 
 public class BleMiniUI extends AppCompatActivity {
@@ -43,9 +44,9 @@ public class BleMiniUI extends AppCompatActivity {
     private TextView isSerial;
     private TextView mConnectionState;
     private TextView mDataField;
-    private TextView text1, text2, text3, text4, text5;
+    private TextView text1, text2, text3, text4, text5, ble_id;
     private TextView pr1, pr2, pr3, pr4, pr5;
-    private SeekBar mRed,mGreen,mBlue;
+    private SeekBar mRed, mGreen, mBlue;
     private String mDeviceName;
     private String mDeviceAddress;
     String action = "list";
@@ -75,7 +76,9 @@ public class BleMiniUI extends AppCompatActivity {
                 finish();
             }
             // Automatically connects to the device upon successful start-up initialization.
-            mBluetoothLeService.connect(mDeviceAddress);
+            String mac_address_dataholder = DataHolderBleData.getMac();
+            Log.d(TAG, " -> Mac DatHolder: " + mac_address_dataholder);
+            mBluetoothLeService.connect(mac_address_dataholder);
         }
 
         @Override
@@ -141,6 +144,8 @@ public class BleMiniUI extends AppCompatActivity {
         text3       = (TextView) findViewById(R.id.textView3);
         text4       = (TextView) findViewById(R.id.textView4);
         text5       = (TextView) findViewById(R.id.textView5);
+        ble_id      = (TextView) findViewById(R.id.ble_id);
+
 
         pr1         = (TextView) findViewById(R.id.price1);
         pr2         = (TextView) findViewById(R.id.price2);
@@ -291,13 +296,15 @@ public class BleMiniUI extends AppCompatActivity {
         // the data is ordered in couples, in e.x.
         // For a response like: 1201232010 means 12 - 01 - 23 - 20 - 10
         // it means that for line 1 there are 12 products, line 2 there is 01 (1) product and so on...
-        //
-        //
-        String subString1 = data.substring(0, 2);
-        String subString2 = data.substring(2, 4);
-        String subString3 = data.substring(4, 6);
-        String subString4 = data.substring(6, 8);
-        String subString5 = data.substring(8, 10);
+
+        String subStringDataSure = beSureDataString(data);
+        Log.d(TAG, "-> Sub Full String: " + "full string " + subStringDataSure);
+
+        String subString1 = subStringDataSure.substring(0, 2);
+        String subString2 = subStringDataSure.substring(2, 4);
+        String subString3 = subStringDataSure.substring(4, 6);
+        String subString4 = subStringDataSure.substring(6, 8);
+        String subString5 = subStringDataSure.substring(8, 10);
 
         int value1 = Integer.valueOf(subString1);
         int value2 = Integer.valueOf(subString2);
@@ -331,6 +338,15 @@ public class BleMiniUI extends AppCompatActivity {
             e.printStackTrace();
         }
 
+    }
+
+    private String beSureDataString(String data) {
+         if(data.contains("/")){
+             String sub = data.substring(0, 9);
+             return sub + "0";
+         }else {
+             return data;
+         }
     }
 
     // Demonstrates how to iterate through the supported GATT Services/Characteristics.

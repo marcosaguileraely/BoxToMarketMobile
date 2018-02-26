@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -35,6 +36,7 @@ import java.util.ArrayList;
 
 import btm.app.Adapters.BluethAdapter;
 import btm.app.CompraToken;
+import btm.app.DataHolder.DataHolderBleData;
 import btm.app.Model.BleeDetails;
 import btm.app.Model.Bluethoot;
 import btm.app.R;
@@ -55,7 +57,7 @@ public class BleListActivity extends AppCompatActivity {
     private Handler mHandler;
     Context context = this;
 
-    String deviceName, deviceMac, deviceNameAux;
+    String deviceName, deviceMac, deviceNameAux, deviceMacAux="empty";
     String data, dataRsa;
 
     ListView blueList;
@@ -63,7 +65,7 @@ public class BleListActivity extends AppCompatActivity {
 
     // Stops scanning after 10 seconds.
     private static final int REQUEST_ENABLE_BT = 1;
-    private static final long SCAN_PERIOD = 9000;
+    private static final long SCAN_PERIOD = 10000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +82,7 @@ public class BleListActivity extends AppCompatActivity {
         //getActionBar().setTitle(R.string.title_devices);
         mHandler = new Handler();
 
-        blueList    = (ListView) findViewById(R.id.blue_listview);
+        blueList    = (ListView) findViewById(R.id.blue_listview1);
         getDevices  = (Button) findViewById(R.id.search_devices_button);
 
         // Use this check to determine whether BLE is supported on the device.  Then you can
@@ -101,8 +103,29 @@ public class BleListActivity extends AppCompatActivity {
             finish();
             return;
         }else {
-            scanLeDevice(true);
+            scanLeDevice();
         }
+
+        blueList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String typeBlee = adapter.getType(position);
+                String imgBlee  = adapter.getImage(position);
+                String nameBlee = adapter.getName(position);
+                String adrBlee  = adapter.getAddress(position);
+                String idBlee  = adapter.getId(position);
+                Toast.makeText(context, "Item clicked, "+" pos: " + position + " Id: " + idBlee + " Type: " + typeBlee + " Mac: " + adrBlee, Toast.LENGTH_SHORT).show();
+
+                DataHolderBleData.setId(idBlee);
+                DataHolderBleData.setImg(imgBlee);
+                DataHolderBleData.setMac(adrBlee);
+                DataHolderBleData.setName(nameBlee);
+                DataHolderBleData.setType(typeBlee);
+
+                Intent goToMiniUi = new Intent(BleListActivity.this, BleMiniUI.class);
+                startActivity(goToMiniUi);
+            }
+        });
     }
 
     /*Activity Actions*/
@@ -125,10 +148,13 @@ public class BleListActivity extends AppCompatActivity {
             }
         }
 
-        // Initializes list view adapter.
-        //mLeDeviceListAdapter = new DeviceScanActivity.LeDeviceListAdapter();
-        //setListAdapter(mLeDeviceListAdapter);
-        //scanLeDevice(true);
+        mBluetoothAdapter.startLeScan(mLeScanCallback);
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mBluetoothAdapter.stopLeScan(mLeScanCallback);
+            }
+        }, SCAN_PERIOD);
     }
 
     @Override
@@ -143,24 +169,14 @@ public class BleListActivity extends AppCompatActivity {
 
 
     /*Ble actions*/
-    private void scanLeDevice(final boolean enable) {
-        if (enable) {
-            // Stops scanning after a pre-defined scan period.
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mScanning = false;
-                    mBluetoothAdapter.stopLeScan(mLeScanCallback);
-                }
-            }, SCAN_PERIOD);
-
-            mScanning = true;
-            mBluetoothAdapter.startLeScan(mLeScanCallback);
-
-        } else {
-            mScanning = false;
-            mBluetoothAdapter.stopLeScan(mLeScanCallback);
-        }
+    private void scanLeDevice() {
+        mBluetoothAdapter.startLeScan(mLeScanCallback);
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mBluetoothAdapter.stopLeScan(mLeScanCallback);
+            }
+        }, SCAN_PERIOD);
     }
 
     // Device scan callback.
@@ -170,12 +186,17 @@ public class BleListActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    deviceName    = nullNameConverter(device.getName());
-                    deviceMac     = nullNameConverter(device.getAddress());
+                    deviceName = nullNameConverter(device.getName());
+                    deviceMac  = nullNameConverter(device.getAddress());
                     Log.d(TAG, " -> Device name: " + deviceName + " Device Mac Address: " + deviceMac);
 
-                    if(deviceName.contains("Ble")){
-                        new AsyncGetHttpData().execute("");
+                    if(deviceName.startsWith("Bl")){
+                        if(!deviceMac.equals(deviceMacAux)){  //it's not working good, as expected!
+                            wsgetMachines(deviceMac);
+                        }else{
+                            //nothing to-do
+                        }
+                        deviceMacAux = deviceMac;
                     }else {
                         Log.d(TAG, "-> Not BLE device");
                     }
@@ -183,41 +204,6 @@ public class BleListActivity extends AppCompatActivity {
             });
         }
     };
-
-    private class AsyncGetHttpData extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected void onPreExecute() {
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
-                @Override
-                public void run() {
-                    wsgetMachines(deviceMac);
-                }
-            });
-            return "Executed";
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            mBluetoothAdapter.stopLeScan(mLeScanCallback);
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {}
-    }
-
-    public String nullNameConverter(String name){
-        if(name == null){
-            return "NoName";
-        }else{
-            return name;
-        }
-    }
 
     public void wsgetMachines(String mac_addr){
         try {
@@ -252,7 +238,7 @@ public class BleListActivity extends AppCompatActivity {
                     items.add(new Bluethoot(deviceMac, deviceName, details.getId(),details.getImg_uri(),details.getType()));
                     adapter = new BluethAdapter(context, items);
                     blueList.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
+                    //adapter.notifyDataSetChanged();
                 }
 
             } catch (JSONException e) {
@@ -275,13 +261,18 @@ public class BleListActivity extends AppCompatActivity {
 
         builder.setView(view);
         dialog = builder.create();
-
         if(action.equals("show")){
             dialog.show();
         }else{
-            dialog.hide();
+            dialog.dismiss();
         }
     }
 
-
+    public String nullNameConverter(String name){
+        if(name == null){
+            return "NoName";
+        }else{
+            return name;
+        }
+    }
 }

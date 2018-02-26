@@ -46,8 +46,8 @@ public class BluethAdapter extends ArrayAdapter<Bluethoot> {
         ImageView img = (ImageView) rowView.findViewById(R.id.imageView2);
 
         Bluethoot bluethoot = (Bluethoot) bluethootArrayList.get(position);
-        uuid.setText(String.valueOf("" + bluethoot.getType().toUpperCase()));
-        mac.setText(String.valueOf("#" + bluethoot.getId().toUpperCase() +  " " + bluethoot.getName()) + " " + bluethoot.getMac());
+        uuid.setText(String.valueOf("" + bluethoot.getType().toUpperCase()) + " # "+  bluethoot.getId().toUpperCase()   );
+        //mac.setText(String.valueOf("#" +  +  " " + bluethoot.getName()) + " " + bluethoot.getMac());
 
         Glide.with(context)
                 .load("https://www.bleecard.com/" + bluethoot.getImg())
@@ -92,4 +92,29 @@ public class BluethAdapter extends ArrayAdapter<Bluethoot> {
             return "no type found";
         }
     }
+
+    public String getAddress(int position) {
+        if (bluethootArrayList != null) {
+            return bluethootArrayList.get(position).getMac();
+        }else{
+            return "no type found";
+        }
+    }
+
+    public String getImage(int position) {
+        if (bluethootArrayList != null) {
+            return bluethootArrayList.get(position).getImg();
+        }else{
+            return "no type found";
+        }
+    }
+
+    public String getName(int position) {
+        if (bluethootArrayList != null) {
+            return bluethootArrayList.get(position).getName();
+        }else{
+            return "no type found";
+        }
+    }
+
 }
