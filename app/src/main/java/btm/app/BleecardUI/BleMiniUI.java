@@ -124,6 +124,8 @@ public class BleMiniUI extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ble_mini_ui);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getString(R.string.ui_ble_mini_machines));
 
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
         if (SDK_INT > 8) {
@@ -178,6 +180,9 @@ public class BleMiniUI extends AppCompatActivity {
             public void onClick(View v) {
                 buyProductByLine("1");
                 DataHolderBleBuy.setLiSelected("1");
+
+                Intent goToBuy =  new Intent(BleMiniUI.this, BleMiniUiBuyActivity.class);
+                startActivity(goToBuy);
             }
         });
 
@@ -186,6 +191,9 @@ public class BleMiniUI extends AppCompatActivity {
             public void onClick(View v) {
                 buyProductByLine("2");
                 DataHolderBleBuy.setLiSelected("2");
+
+                Intent goToBuy =  new Intent(BleMiniUI.this, BleMiniUiBuyActivity.class);
+                startActivity(goToBuy);
             }
         });
 
@@ -194,6 +202,9 @@ public class BleMiniUI extends AppCompatActivity {
             public void onClick(View v) {
                 buyProductByLine("3");
                 DataHolderBleBuy.setLiSelected("3");
+
+                Intent goToBuy =  new Intent(BleMiniUI.this, BleMiniUiBuyActivity.class);
+                startActivity(goToBuy);
             }
         });
 
@@ -202,6 +213,9 @@ public class BleMiniUI extends AppCompatActivity {
             public void onClick(View v) {
                 buyProductByLine("4");
                 DataHolderBleBuy.setLiSelected("4");
+
+                Intent goToBuy =  new Intent(BleMiniUI.this, BleMiniUiBuyActivity.class);
+                startActivity(goToBuy);
             }
         });
 
@@ -210,6 +224,9 @@ public class BleMiniUI extends AppCompatActivity {
             public void onClick(View v) {
                 buyProductByLine("5");
                 DataHolderBleBuy.setLiSelected("5");
+
+                Intent goToBuy =  new Intent(BleMiniUI.this, BleMiniUiBuyActivity.class);
+                startActivity(goToBuy);
             }
         });
     }
