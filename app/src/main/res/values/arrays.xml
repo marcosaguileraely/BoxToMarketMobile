@@ -51,6 +51,12 @@
         <item>@string/ui_subscriptions_payment_method_token</item>
     </string-array>
 
+    <string-array name="pago_blee_mini">
+        <item>@string/ui_ble_mini_payment_method_credit_card</item>
+        <item>@string/ui_ble_mini_payment_method_mywallet</item>
+        <item>@string/ui_ble_mini_payment_method_subscriptions</item>
+    </string-array>
+
     <string-array name="tipo_compra">
         <item>@string/tipo_creditos</item>
         <item>@string/tipo_tarjeta</item>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondoimg"
+    tools:context="btm.app.BleecardUI.BleMiniUiBuyActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="40dp">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="@string/select_payment_method"
+            android:textAppearance="@android:style/TextAppearance.Material.Medium"
+            android:textColor="@color/TextColor"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/payment_method"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:entries="@array/pago_blee_mini" />
+
+        <Button
+            android:id="@+id/buy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:background="@drawable/background_button"
+            android:text="Comprar"
+            android:textColor="@color/colorWhite" />
+    </LinearLayout>
+
+</LinearLayout>

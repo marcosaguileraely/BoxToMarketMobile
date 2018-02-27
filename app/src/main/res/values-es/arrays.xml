@@ -50,6 +50,12 @@
         <item>@string/tipo_tarjeta</item>
     </string-array>
 
+    <string-array name="pago_blee_mini">
+        <item>@string/ui_ble_mini_payment_method_credit_card</item>
+        <item>@string/ui_ble_mini_payment_method_mywallet</item>
+        <item>@string/ui_ble_mini_payment_method_subscriptions</item>
+    </string-array>
+
     <string-array name="pago_subs">
         <item>Tarjeta de Crédito</item>
         <item>Mi Billetera</item>

@@ -138,6 +138,9 @@
     <string name="ui_subscriptions_message_dialog">Are sure want to Buy a Subscription?</string>
     <string name="ui_subscriptions_token_hint">Enter Token number</string>
     <string name="ui_compensation_button_text">Register Bank Account</string>
+    <string name="ui_ble_mini_payment_method_subscriptions">Subscriptions</string>
+    <string name="ui_ble_mini_payment_method_credit_card">Credit Card</string>
+    <string name="ui_ble_mini_payment_method_mywallet">My Wallet</string>
 
     <!-- upss -->
     <string name="ble_not_supported">BLE is not supported</string>
