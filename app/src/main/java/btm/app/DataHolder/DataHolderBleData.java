@@ -20,7 +20,7 @@ public class DataHolderBleData {
     }
 
     public static String getId() {
-        return id;
+        return "#" + id;
     }
 
     public static void setId(String id) {

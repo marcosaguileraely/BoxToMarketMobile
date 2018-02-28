@@ -49,7 +49,6 @@ public class BleMiniUI extends AppCompatActivity {
             TextView ble_id;
     private TextView pr1, pr2, pr3, pr4, pr5;
 
-    private SeekBar mRed, mGreen, mBlue;
     private String mDeviceName;
     private String mDeviceAddress;
     String action = "list";
@@ -178,8 +177,8 @@ public class BleMiniUI extends AppCompatActivity {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buyProductByLine("1");
                 DataHolderBleBuy.setLiSelected("1");
+                mBluetoothLeService.disconnect();
 
                 Intent goToBuy =  new Intent(BleMiniUI.this, BleMiniUiBuyActivity.class);
                 startActivity(goToBuy);
@@ -189,8 +188,8 @@ public class BleMiniUI extends AppCompatActivity {
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buyProductByLine("2");
                 DataHolderBleBuy.setLiSelected("2");
+                mBluetoothLeService.disconnect();
 
                 Intent goToBuy =  new Intent(BleMiniUI.this, BleMiniUiBuyActivity.class);
                 startActivity(goToBuy);
@@ -200,8 +199,8 @@ public class BleMiniUI extends AppCompatActivity {
         b3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buyProductByLine("3");
                 DataHolderBleBuy.setLiSelected("3");
+                mBluetoothLeService.disconnect();
 
                 Intent goToBuy =  new Intent(BleMiniUI.this, BleMiniUiBuyActivity.class);
                 startActivity(goToBuy);
@@ -211,8 +210,8 @@ public class BleMiniUI extends AppCompatActivity {
         b4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buyProductByLine("4");
                 DataHolderBleBuy.setLiSelected("4");
+                mBluetoothLeService.disconnect();
 
                 Intent goToBuy =  new Intent(BleMiniUI.this, BleMiniUiBuyActivity.class);
                 startActivity(goToBuy);
@@ -222,8 +221,8 @@ public class BleMiniUI extends AppCompatActivity {
         b5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buyProductByLine("5");
                 DataHolderBleBuy.setLiSelected("5");
+                mBluetoothLeService.disconnect();
 
                 Intent goToBuy =  new Intent(BleMiniUI.this, BleMiniUiBuyActivity.class);
                 startActivity(goToBuy);
@@ -256,6 +255,17 @@ public class BleMiniUI extends AppCompatActivity {
         super.onDestroy();
         unbindService(mServiceConnection);
         mBluetoothLeService = null;
+    }
+
+    private void displayData(String data) {
+        if (data != null) {
+            mDataField.setText(data);
+            if(data.length() > 1) {
+                settingValuesTolines(data);
+            }else {
+                Log.d(TAG, "It's returning the 9 number");
+            }
+        }
     }
 
     @Override
@@ -304,17 +314,6 @@ public class BleMiniUI extends AppCompatActivity {
                 listProduct();
             }
         });
-    }
-
-    private void displayData(String data) {
-        if (data != null) {
-            mDataField.setText(data);
-            if(data.length() > 1) {
-                settingValuesTolines(data);
-            }else {
-                Log.d(TAG, "It's returning the 9 number");
-            }
-        }
     }
 
     private void settingValuesTolines(String data) {
@@ -367,7 +366,7 @@ public class BleMiniUI extends AppCompatActivity {
     }
 
     private String beSureDataString(String data) {
-         if(data.contains("/")){
+         if(data.contains("/") || data.contains(".")){
              String sub = data.substring(0, 9);
              return sub + "0";
          }else {
@@ -429,43 +428,6 @@ public class BleMiniUI extends AppCompatActivity {
             mBluetoothLeService.writeCharacteristic(characteristicTX);
             mBluetoothLeService.setCharacteristicNotification(characteristicRX,true);
         }
-    }
-
-    private void buyProductByLine(final String lineNumber) {
-        String str = "0a6455df41b578fdcf0115d61b0043c9";
-        Log.d(TAG, "Sending result = " + str);
-        final byte[] tx = hexStringToByteArray(str);
-        Log.d(TAG, "Sending byte[] = " + Arrays.toString(tx));
-
-        if(mConnected) {
-            characteristicTX.setValue(tx);
-            mBluetoothLeService.writeCharacteristic(characteristicTX);
-            mBluetoothLeService.setCharacteristicNotification(characteristicRX,true);
-        }
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                passingLineNumber(lineNumber);
-            }
-        }, 2000); //Timer is in ms here.
-    }
-
-    private void passingLineNumber(String lineNumber) {
-        //String str = "5";
-        Log.d(TAG, "Sending result = " + lineNumber);
-        if(mConnected) {
-            characteristicTX.setValue(lineNumber);
-            mBluetoothLeService.writeCharacteristic(characteristicTX);
-            mBluetoothLeService.setCharacteristicNotification(characteristicRX,true);
-        }
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                listProduct();
-            }
-        }, 3000); //Timer is in ms here.
     }
 
     public static byte[] hexStringToByteArray(String s) {
