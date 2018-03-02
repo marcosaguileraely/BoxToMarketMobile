@@ -36,7 +36,7 @@ import btm.app.R;
 
 public class BleMiniUI extends AppCompatActivity {
 
-    private final static String TAG = DeviceControlActivity.class.getSimpleName();
+    private final static String TAG = "DEV -> Ble UI";
     Context context = this;
     public static final String EXTRAS_DEVICE_NAME = "DEVICE_NAME";
     public static final String EXTRAS_DEVICE_ADDRESS = "DEVICE_ADDRESS";
@@ -133,6 +133,8 @@ public class BleMiniUI extends AppCompatActivity {
             StrictMode.setThreadPolicy(policy);
         }
 
+        //mBluetoothLeService.disconnect();
+
         final Intent intent = getIntent();
         mDeviceName = intent.getStringExtra(EXTRAS_DEVICE_NAME);
         mDeviceAddress = intent.getStringExtra(EXTRAS_DEVICE_ADDRESS);
@@ -140,6 +142,7 @@ public class BleMiniUI extends AppCompatActivity {
         // Sets up UI references.
         ((TextView) findViewById(R.id.device_address)).setText(mDeviceAddress);
         mConnectionState = (TextView) findViewById(R.id.connection_state);
+
         // is serial present?
         isSerial    = (TextView) findViewById(R.id.isSerial);
         mDataField  = (TextView) findViewById(R.id.data_value);
@@ -241,6 +244,12 @@ public class BleMiniUI extends AppCompatActivity {
         if (mBluetoothLeService != null) {
             final boolean result = mBluetoothLeService.connect(mDeviceAddress);
             Log.d(TAG, "Connect request result=" + result);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    initBleDataSearch();
+                }
+            }, 3000); //Timer is in ms here.
         }
     }
 
@@ -349,10 +358,11 @@ public class BleMiniUI extends AppCompatActivity {
         text4.setText("Disponible: " + String.valueOf(value4));
         text5.setText("Disponible: " + String.valueOf(value5));
 
-        try {
-            data = new btm.app.Network.NetActions(context).getBlePrice("5001");
-            Log.d(TAG, " oKHttp response: " + data);
+        String idSubstring = DataHolderBleData.getId().substring(1, 5);
 
+        try {
+            data = new btm.app.Network.NetActions(context).getBlePrice(idSubstring);
+            Log.d(TAG, " oKHttp response: " + data);
             pr1.setText(data);
             pr2.setText(data);
             pr3.setText(data);
@@ -363,6 +373,27 @@ public class BleMiniUI extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        if(value1==0){
+            b1.setEnabled(false);
+            text1.setText("No Disponible");
+            pr1.setText("$0");
+        }if(value2==0){
+            b2.setEnabled(false);
+            text2.setText("No Disponible");
+            pr2.setText("$0");
+        }if(value3==0){
+            b3.setEnabled(false);
+            text3.setText("No Disponible");
+            pr3.setText("$0");
+        }if(value4==0){
+            b4.setEnabled(false);
+            text4.setText("No Disponible");
+            pr4.setText("$0");
+        }if(value5==0){
+            b5.setEnabled(false);
+            text5.setText("No Disponible");
+            pr5.setText("$0");
+        }
     }
 
     private String beSureDataString(String data) {
@@ -422,6 +453,8 @@ public class BleMiniUI extends AppCompatActivity {
         Log.d(TAG, "Sending result = " + str);
         final byte[] tx = hexStringToByteArray(str);
         Log.d(TAG, "Sending byte[] = " + Arrays.toString(tx));
+
+        Log.d(TAG, "Is Connected? = " + mConnected);
 
         if(mConnected) {
             characteristicTX.setValue(tx);
