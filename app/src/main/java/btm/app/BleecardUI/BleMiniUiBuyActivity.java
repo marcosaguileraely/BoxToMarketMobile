@@ -22,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,15 +46,21 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
 
     private final static String TAG = DeviceControlActivity.class.getSimpleName();
     Context context = this;
+    private ArrayList<CC> listTc;
 
     private TextView isSerial;
     private TextView mConnectionState;
     private TextView mDataField;
     private TextView line_num;
+    Button buy;
 
     private String mDeviceName;
     private String mDeviceAddress;
+    private String modo, data;
+    String card_info;
+    String card_id;
     String action = "list";
+    Spinner tC, metodo;
 
     private BluetoothLeService mBluetoothLeService;
     private boolean mConnected = false;
@@ -137,7 +144,10 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
         isSerial    = (TextView) findViewById(R.id.isSerial);
         mDataField  = (TextView) findViewById(R.id.data_value);
         line_num    = (TextView) findViewById(R.id.ble_id);
+        metodo      = (Spinner) findViewById(R.id.payment_method);
+        tC          = (Spinner) findViewById(R.id.spinnerTipoTC);
 
+        listTc = new ArrayList<CC>();
         line_num.setText(getString(R.string.ui_ble_mini_line_selected) + " #" + DataHolderBleBuy.getLiSelected());
 
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
@@ -146,7 +156,7 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                initBleDataSearch();
+               // initBleDataSearch();
             }
         }, 3000); //Timer is in ms here.
 
@@ -157,14 +167,12 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
                 progress.setMessage(getString(R.string.inf_dialog));
 
                 modo = parent.getItemAtPosition(position).toString();
-                String datos = username;
+                Log.d(TAG, "--> "+ modo);
 
-                Log.d("Comprar token ", "--> "+ modo);
-
-                if(modo.equals("Tarjeta de Credito") || modo.equals("Credit Card")){
+                if(modo.equals("Tarjeta de Crédito") || modo.equals("Credit Card")){
                     tC.setVisibility(View.VISIBLE);
                     try {
-                        data = new NetActions(context).getCardList(datos);
+                        data = new NetActions(context).getCardList(DataHolder.getUsername());
                         Log.d(TAG, " oKHttp response: " + data);
 
                         if(data.contains("****")){
@@ -177,14 +185,14 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
                             tC.setAdapter(adapter);
                         }else{
                             Toast.makeText(getApplicationContext(), getString(R.string.ui_buy_token_no_credit_cards), Toast.LENGTH_LONG).show();
-                            addCreditCard.setVisibility(View.VISIBLE);
+                            //addCreditCard.setVisibility(View.VISIBLE);
                         }
 
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 } else {
-                    addCreditCard.setVisibility(View.GONE);
+                    //addCreditCard.setVisibility(View.GONE);
                     listTc = new ArrayList<CC>();
                     tC.setVisibility(View.GONE);
                     tC.setAdapter(null);
@@ -197,7 +205,65 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
             }
         });
 
+        buy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(modo.equals("Tarjeta de Crédito") || modo.equals("Credit Card")){
+                    String datos = DataHolder.getUsername()
+                            + "|" + DataHolder.getPass()
+                            + "|" + DataHolderBleData.getId();
+                            + "||" + card_id
+                            + "|" + 
+                    payWithCreditCard(datos);
 
+                }if(modo.equals("My Wallet") || modo.equals("Mi Billetera")){
+                    String datos = "";
+                    payWithWallet(datos);
+
+                }if(modo.equals("Subscriptions") || modo.equals("Suscripciones")){
+                    String datos = "";
+                    payWithSubscriptions(datos);
+
+                }
+            }
+        });
+
+        tC.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                card_info = parent.getItemAtPosition(position).toString();
+                card_id   = listTc.get(position).getId();
+                Log.d(TAG, "card number: "+card_info + "-->"+ card_id);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+    }
+
+
+    public void payWithCreditCard(String inDatum){
+
+    }
+
+    public void payWithWallet(String inDatum){
+
+    }
+
+    public void payWithSubscriptions(String inDatum){
+
+    }
+
+    public String paymentMethod(String method){
+        if(method.equals("Tarjeta de Crédito") || method.equals("Credit Card")){
+            return "tarjeta";
+        }
+        else{
+            return "creditos";
+        }
     }
 
     private void clearUI() {
