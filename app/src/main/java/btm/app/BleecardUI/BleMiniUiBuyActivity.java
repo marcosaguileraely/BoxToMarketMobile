@@ -70,6 +70,7 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
     String password_dialog;
     String card_info;
     String card_id, webResponse, dataResponse;
+    String creditCardData, walletData, subscriptionData;
     String action = "list";
     Spinner tC, metodo;
 
@@ -225,7 +226,7 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(modo.equals("Tarjeta de Crédito") || modo.equals("Credit Card")){
-                    String datos = DataHolder.getUsername()
+                    creditCardData = DataHolder.getUsername()
                             + "|" + DataHolder.getPass()
                             + "|" + DataHolderBleData.getId()
                             + "|" + getIdSubscription()
@@ -234,11 +235,11 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
                             + "|" + DataHolderBleBuy.getLiSelected()
                             + "|" ;
 
-                    Log.d(TAG, "--> Datos: " + datos);
-                    payWithCreditCard(datos);
+                    Log.d(TAG, "--> Datos: " + creditCardData);
+                    passwordDialog("cc_payment");
 
                 }if(modo.equals("My Wallet") || modo.equals("Mi Billetera")){
-                    String datos = DataHolder.getUsername()
+                    walletData = DataHolder.getUsername()
                             + "|" + DataHolder.getPass()
                             + "|" + DataHolderBleData.getId()
                             + "|" + getIdSubscription()
@@ -247,14 +248,14 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
                             + "|" + DataHolderBleBuy.getLiSelected()
                             + "|" ;
 
-                    Log.d(TAG, "--> Datos: " + datos);
-                    payWithWallet(datos);
+                    Log.d(TAG, "--> Datos: " + walletData);
+                    passwordDialog("wallet_payment");
 
                 }if(modo.equals("Subscription") || modo.equals("Suscripción")){
                     String activeSubscription = getIdSubscription();
 
                     if(!activeSubscription.equals("NO")){
-                        String datos = DataHolder.getUsername()
+                        subscriptionData = DataHolder.getUsername()
                                 + "|" + DataHolder.getPass()
                                 + "|" + DataHolderBleData.getId()
                                 + "|" + getIdSubscription()
@@ -262,7 +263,10 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
                                 + "|" + paymentMethod(modo)
                                 + "|" + DataHolderBleBuy.getLiSelected()
                                 + "|" ;
-                        payWithSubscriptions(datos);
+
+                        Log.d(TAG, "--> Datos: " + walletData);
+                        passwordDialog("subs_payment");
+
                     }else {
                         customDialogNoMove("Actualmente no tienes una Suscripción Abierta para este producto. Por favor compra una Suscripción.");
                     }
@@ -284,24 +288,42 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
         });
     }
 
-    public void payWithCreditCard(String inDatum){
+    public void payWithCreditCard(){
         try {
-            webResponse = new btm.app.Network.NetActions(context).btmMiniPayment(inDatum);
+            webResponse = new btm.app.Network.NetActions(context).btmMiniPayment(creditCardData);
             Log.d(TAG, " oKHttp response: " + webResponse);
 
-            passwordDialog();
+            if(webResponse.equals("Consumo exitoso")){
+                initBleDataSearch();
+                dialog_pass_ui.dismiss();
+                dialog2.setCanceledOnTouchOutside(false);
+                dialog2.setMessage(getString(R.string.inf_dialog));
+                dialog2.show();
+            }else{
+                dialog_pass_ui.dismiss();
+                customDialog(webResponse);
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void payWithWallet(String inDatum){
+    public void payWithWallet(){
         try {
-            webResponse = new btm.app.Network.NetActions(context).btmMiniPayment(inDatum);
+            webResponse = new btm.app.Network.NetActions(context).btmMiniPayment(walletData);
             Log.d(TAG, " oKHttp response: " + webResponse);
 
-            passwordDialog();
+            if(webResponse.equals("Consumo exitoso")){
+                initBleDataSearch();
+                dialog_pass_ui.dismiss();
+                dialog2.setCanceledOnTouchOutside(false);
+                dialog2.setMessage(getString(R.string.inf_dialog));
+                dialog2.show();
+            }else{
+                dialog_pass_ui.dismiss();
+                customDialog(webResponse);
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -309,12 +331,21 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
     }
 
 
-    public void payWithSubscriptions(String inDatum){
+    public void payWithSubscriptions(){
         try {
-            webResponse = new btm.app.Network.NetActions(context).btmMiniPayment(inDatum);
+            webResponse = new btm.app.Network.NetActions(context).btmMiniPayment(subscriptionData);
             Log.d(TAG, " oKHttp response: " + webResponse);
 
-            passwordDialog();
+            if(webResponse.equals("Consumo exitoso")){
+                initBleDataSearch();
+                dialog_pass_ui.dismiss();
+                dialog2.setCanceledOnTouchOutside(false);
+                dialog2.setMessage(getString(R.string.inf_dialog));
+                dialog2.show();
+            }else{
+                dialog_pass_ui.dismiss();
+                customDialog(webResponse);
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -371,7 +402,7 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    public void passwordDialog(){
+    public void passwordDialog(final String inDatum){
         AlertDialog.Builder builder_pass_dialog = new AlertDialog.Builder(context);
         final LayoutInflater inflater = BleMiniUiBuyActivity.this.getLayoutInflater();
 
@@ -388,15 +419,13 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
                         password_dialog = input.getText().toString();
                         if(password_dialog.equals(DataHolder.getPass())){
-                            if(webResponse.equals("Consumo exitoso")){
-                                initBleDataSearch();
-                                dialog_pass_ui.dismiss();
-                                dialog2.setCanceledOnTouchOutside(false);
-                                dialog2.setMessage(getString(R.string.inf_dialog));
-                                dialog2.show();
-                            }else{
-                                dialog_pass_ui.dismiss();
-                                customDialog(webResponse);
+
+                            if(inDatum.equals("cc_payment")){
+                                payWithCreditCard();
+                            }if(inDatum.equals("wallet_payment")){
+                                payWithWallet();
+                            }if(inDatum.equals("subs_payment")){
+                                payWithSubscriptions();
                             }
                         }else {
                             dialog_pass_ui.dismiss();

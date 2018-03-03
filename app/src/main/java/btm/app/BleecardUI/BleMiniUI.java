@@ -1,6 +1,7 @@
 package btm.app.BleecardUI;
 
 
+import android.app.ProgressDialog;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
 import android.content.BroadcastReceiver;
@@ -36,12 +37,13 @@ import btm.app.R;
 
 public class BleMiniUI extends AppCompatActivity {
 
-    private final static String TAG = "DEV -> Ble UI";
     Context context = this;
+    private final static String TAG = "DEV -> Ble UI";
     public static final String EXTRAS_DEVICE_NAME = "DEVICE_NAME";
     public static final String EXTRAS_DEVICE_ADDRESS = "DEVICE_ADDRESS";
     private int[] RGBFrame = {0,0,0};
 
+    ProgressDialog dialog2;
     private TextView isSerial;
     private TextView mConnectionState;
     private TextView mDataField;
@@ -59,7 +61,6 @@ public class BleMiniUI extends AppCompatActivity {
     private boolean mConnected = false;
     private BluetoothGattCharacteristic characteristicTX;
     private BluetoothGattCharacteristic characteristicRX;
-
 
     public final static UUID HM_RX_TX =
             UUID.fromString(SampleGattAttributes.HM_RX_TX);
@@ -133,8 +134,6 @@ public class BleMiniUI extends AppCompatActivity {
             StrictMode.setThreadPolicy(policy);
         }
 
-        //mBluetoothLeService.disconnect();
-
         final Intent intent = getIntent();
         mDeviceName = intent.getStringExtra(EXTRAS_DEVICE_NAME);
         mDeviceAddress = intent.getStringExtra(EXTRAS_DEVICE_ADDRESS);
@@ -165,7 +164,7 @@ public class BleMiniUI extends AppCompatActivity {
         b4 = (Button) findViewById(R.id.button4);
         b5 = (Button) findViewById(R.id.button5);
 
-        ble_id.setText(DataHolderBleData.getId().toUpperCase());
+        ble_id.setText("# " + DataHolderBleData.getId().toUpperCase());
 
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
         bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
@@ -319,8 +318,8 @@ public class BleMiniUI extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(context, "The ble status is: " + mConnected, Toast.LENGTH_LONG).show();
                 listProduct();
+                //Toast.makeText(context, "The ble status is: " + mConnected, Toast.LENGTH_LONG).show();
             }
         });
     }

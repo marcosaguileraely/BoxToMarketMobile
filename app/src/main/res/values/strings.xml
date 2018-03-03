@@ -142,7 +142,7 @@
     <string name="ui_ble_mini_payment_method_credit_card">Credit Card</string>
     <string name="ui_ble_mini_payment_method_mywallet">My Wallet</string>
     <string name="ui_ble_mini_machines">Machines</string>
-    <string name="ui_ble_mini_buy">Buy</string>
+    <string name="ui_ble_mini_buy">Pay</string>
     <string name="ui_ble_mini_line_selected">Line selected: </string>
 
     <!-- upss -->

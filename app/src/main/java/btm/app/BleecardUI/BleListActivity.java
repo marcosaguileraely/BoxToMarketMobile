@@ -114,7 +114,7 @@ public class BleListActivity extends AppCompatActivity {
                 String nameBlee = adapter.getName(position);
                 String adrBlee  = adapter.getAddress(position);
                 String idBlee  = adapter.getId(position);
-                Toast.makeText(context, "Item clicked, "+" pos: " + position + " Id: " + idBlee + " Type: " + typeBlee + " Mac: " + adrBlee, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "Item clicked, "+" pos: " + position + " Id: " + idBlee + " Type: " + typeBlee + " Mac: " + adrBlee, Toast.LENGTH_SHORT).show();
 
                 DataHolderBleData.setId(idBlee);
                 DataHolderBleData.setImg(imgBlee);
