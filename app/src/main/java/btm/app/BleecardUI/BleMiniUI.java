@@ -358,10 +358,8 @@ public class BleMiniUI extends AppCompatActivity {
         text4.setText("Disponible: " + String.valueOf(value4));
         text5.setText("Disponible: " + String.valueOf(value5));
 
-        String idSubstring = DataHolderBleData.getId().substring(1, 5);
-
         try {
-            data = new btm.app.Network.NetActions(context).getBlePrice(idSubstring);
+            data = new btm.app.Network.NetActions(context).getBlePrice(DataHolderBleData.getId());
             Log.d(TAG, " oKHttp response: " + data);
             pr1.setText(data);
             pr2.setText(data);
@@ -397,10 +395,14 @@ public class BleMiniUI extends AppCompatActivity {
     }
 
     private String beSureDataString(String data) {
-         if(data.contains("/") || data.contains(".")){
-             String sub = data.substring(0, 9);
-             return sub + "0";
-         }else {
+         if(data.contains("/")){
+             String newString = data.replace("/", "0");
+             return newString;
+         } else if(data.contains(".")){
+             String newString2 = data.replace("/", "0");
+             return newString2;
+         }
+         else {
              return data;
          }
     }
