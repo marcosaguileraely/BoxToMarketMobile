@@ -1,11 +1,13 @@
 package btm.app.BleecardUI;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
@@ -15,12 +17,15 @@ import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -36,18 +41,22 @@ import java.util.List;
 import java.util.UUID;
 
 import btm.app.CC;
+import btm.app.CompraToken;
 import btm.app.DataHolder.DataHolder;
 import btm.app.DataHolder.DataHolderBleBuy;
 import btm.app.DataHolder.DataHolderBleData;
+import btm.app.MainActivity;
 import btm.app.Network.NetActions;
 import btm.app.R;
 
 public class BleMiniUiBuyActivity extends AppCompatActivity {
 
-    private final static String TAG = DeviceControlActivity.class.getSimpleName();
+    private final static String TAG = "Dev -> Btm Details";
     Context context = this;
     private ArrayList<CC> listTc;
 
+    ProgressDialog dialog2;
+    AlertDialog dialog_pass_ui;
     private TextView isSerial;
     private TextView mConnectionState;
     private TextView mDataField;
@@ -57,8 +66,10 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
     private String mDeviceName;
     private String mDeviceAddress;
     private String modo, data;
+    String bleeResponse;
+    String password_dialog;
     String card_info;
-    String card_id;
+    String card_id, webResponse, dataResponse;
     String action = "list";
     Spinner tC, metodo;
 
@@ -117,6 +128,8 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
                 // Show all the supported services and characteristics on the user interface.
                 displayGattServices(mBluetoothLeService.getSupportedGattServices());
             } else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
+                bleeResponse = intent.getStringExtra(mBluetoothLeService.EXTRA_DATA);
+                Log.d(TAG, "---------->" + bleeResponse);
                 displayData(intent.getStringExtra(mBluetoothLeService.EXTRA_DATA));
             }
         }
@@ -129,6 +142,8 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getString(R.string.ui_ble_mini_buy));
+
+        dialog2 = new ProgressDialog(BleMiniUiBuyActivity.this);
 
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
         if (SDK_INT > 8) {
@@ -146,6 +161,7 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
         line_num    = (TextView) findViewById(R.id.ble_id);
         metodo      = (Spinner) findViewById(R.id.payment_method);
         tC          = (Spinner) findViewById(R.id.spinnerTipoTC);
+        buy         = (Button) findViewById(R.id.buy);
 
         listTc = new ArrayList<CC>();
         line_num.setText(getString(R.string.ui_ble_mini_line_selected) + " #" + DataHolderBleBuy.getLiSelected());
@@ -211,23 +227,48 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
                 if(modo.equals("Tarjeta de Crédito") || modo.equals("Credit Card")){
                     String datos = DataHolder.getUsername()
                             + "|" + DataHolder.getPass()
-                            + "|" + DataHolderBleData.getId();
-                            + "||" + card_id
-                            + "|" + 
+                            + "|" + DataHolderBleData.getId()
+                            + "|" + getIdSubscription()
+                            + "|" + card_id
+                            + "|" + paymentMethod(modo)
+                            + "|" + DataHolderBleBuy.getLiSelected()
+                            + "|" ;
+
+                    Log.d(TAG, "--> Datos: " + datos);
                     payWithCreditCard(datos);
 
                 }if(modo.equals("My Wallet") || modo.equals("Mi Billetera")){
-                    String datos = "";
+                    String datos = DataHolder.getUsername()
+                            + "|" + DataHolder.getPass()
+                            + "|" + DataHolderBleData.getId()
+                            + "|" + getIdSubscription()
+                            + "|"
+                            + "|" + paymentMethod(modo)
+                            + "|" + DataHolderBleBuy.getLiSelected()
+                            + "|" ;
+
+                    Log.d(TAG, "--> Datos: " + datos);
                     payWithWallet(datos);
 
-                }if(modo.equals("Subscriptions") || modo.equals("Suscripciones")){
-                    String datos = "";
-                    payWithSubscriptions(datos);
+                }if(modo.equals("Subscription") || modo.equals("Suscripción")){
+                    String activeSubscription = getIdSubscription();
 
+                    if(!activeSubscription.equals("NO")){
+                        String datos = DataHolder.getUsername()
+                                + "|" + DataHolder.getPass()
+                                + "|" + DataHolderBleData.getId()
+                                + "|" + getIdSubscription()
+                                + "|"
+                                + "|" + paymentMethod(modo)
+                                + "|" + DataHolderBleBuy.getLiSelected()
+                                + "|" ;
+                        payWithSubscriptions(datos);
+                    }else {
+                        customDialogNoMove("Actualmente no tienes una Suscripción Abierta para este producto. Por favor compra una Suscripción.");
+                    }
                 }
             }
         });
-
         tC.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -241,28 +282,190 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
-
     public void payWithCreditCard(String inDatum){
+        try {
+            webResponse = new btm.app.Network.NetActions(context).btmMiniPayment(inDatum);
+            Log.d(TAG, " oKHttp response: " + webResponse);
 
+            passwordDialog();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void payWithWallet(String inDatum){
+        try {
+            webResponse = new btm.app.Network.NetActions(context).btmMiniPayment(inDatum);
+            Log.d(TAG, " oKHttp response: " + webResponse);
 
+            passwordDialog();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void payWithSubscriptions(String inDatum){
 
+    public void payWithSubscriptions(String inDatum){
+        try {
+            webResponse = new btm.app.Network.NetActions(context).btmMiniPayment(inDatum);
+            Log.d(TAG, " oKHttp response: " + webResponse);
+
+            passwordDialog();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void customDialog(String inDatum){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setMessage(inDatum);
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+                mBluetoothLeService.disconnect();
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public void customDialogNoMove(String inDatum){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(inDatum);
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public void customDialogOkPayment(String inDatum){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setMessage(inDatum);
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+                mBluetoothLeService.disconnect();
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public void passwordDialog(){
+        AlertDialog.Builder builder_pass_dialog = new AlertDialog.Builder(context);
+        final LayoutInflater inflater = BleMiniUiBuyActivity.this.getLayoutInflater();
+
+        //final EditText input = (EditText) findViewById(R.id.password);
+        View viewInflated = LayoutInflater.from(context).inflate(R.layout.ui_aux_pass, (ViewGroup) findViewById(android.R.id.content), false);
+        final EditText input = (EditText) viewInflated.findViewById(R.id.password);
+
+        // Inflate and set the layout for the dialog
+        // Pass null as the parent view because its going in the dialog layout
+        builder_pass_dialog.setCancelable(false);
+        builder_pass_dialog.setView(viewInflated)
+                .setPositiveButton(R.string.ui_general_dialog_confirm, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        password_dialog = input.getText().toString();
+                        if(password_dialog.equals(DataHolder.getPass())){
+                            if(webResponse.equals("Consumo exitoso")){
+                                initBleDataSearch();
+                                dialog_pass_ui.dismiss();
+                                dialog2.setCanceledOnTouchOutside(false);
+                                dialog2.setMessage(getString(R.string.inf_dialog));
+                                dialog2.show();
+                            }else{
+                                dialog_pass_ui.dismiss();
+                                customDialog(webResponse);
+                            }
+                        }else {
+                            dialog_pass_ui.dismiss();
+                            customDialog("Clave invalida. Intenta nuevamente.");
+                        }
+                    }
+                })
+                .setNegativeButton(R.string.ui_general_dialog_cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog_pass_ui.dismiss();
+                    }
+                });
+
+        dialog_pass_ui = builder_pass_dialog.create();
+        dialog_pass_ui.show();
     }
 
     public String paymentMethod(String method){
         if(method.equals("Tarjeta de Crédito") || method.equals("Credit Card")){
             return "tarjeta";
         }
-        else{
+        else if(method.equals("My Wallet") || method.equals("Mi Billetera")){
             return "creditos";
+        }
+        else{
+            return "suscripcion";
+        }
+    }
+
+    public String getIdSubscription(){
+        String datos = DataHolder.getUsername() + "|" + DataHolderBleData.getId() + "|";
+        try {
+            dataResponse = new btm.app.Network.NetActions(context).btmMiniActiveSubscription(datos);
+            Log.d(TAG, " oKHttp response: " + data);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return dataResponse;
+    }
+
+    private void displayData(String data) {
+        if (data != null) {
+            mDataField.setText(data);
+            if(data.equals("1") ) {
+                Log.d(TAG, "It's returning 1 number");
+                customDialogOkPayment("La máquina ha procesado exitosamente tu pedido.");
+            }else if (data.equals("0")){
+                Log.d(TAG, "It's returning 0 number");
+                String datos_ws = DataHolder.getUsername();
+                try {
+                    datos_ws = new btm.app.Network.NetActions(context).btmMiniChargeBack(datos_ws);
+                    Log.d(TAG, " ***///*** oKHttp response: " + datos_ws);
+
+                    if( datos_ws.equals("Pago Chargeback exitoso")){
+                        customDialog(datos_ws);
+                    }else {
+                        customDialog(datos_ws);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                mBluetoothLeService.disconnect();
+                Intent gotoHome = new Intent(context, MainActivity.class);
+                startActivity(gotoHome);
+            }
+            else {
+                Log.d(TAG, "It's returning the 9 number");
+            }
         }
     }
 
@@ -291,17 +494,6 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
         super.onDestroy();
         unbindService(mServiceConnection);
         mBluetoothLeService = null;
-    }
-
-    private void displayData(String data) {
-        if (data != null) {
-            mDataField.setText(data);
-            if(data.length() > 1) {
-                //settingValuesTolines(data);
-            }else {
-                Log.d(TAG, "It's returning the 9 number");
-            }
-        }
     }
 
     @Override
@@ -348,7 +540,6 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
             public void run() {
                 Toast.makeText(context, "The ble status is: " + mConnected, Toast.LENGTH_LONG).show();
                 buyProductByLine(DataHolderBleBuy.getLiSelected());
-                //listProduct();
             }
         });
     }
@@ -451,5 +642,6 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
         }
         return data;
     }
+
 
 }
