@@ -7,6 +7,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
@@ -17,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -51,13 +53,14 @@ public class BleListActivity extends AppCompatActivity {
 
     AlertDialog.Builder builder;
     AlertDialog dialog;
+    AlertDialog dialogBle;
 
     private BluetoothAdapter mBluetoothAdapter;
     private boolean mScanning;
     private Handler mHandler;
     Context context = this;
 
-    String deviceName, deviceMac, deviceNameAux, deviceMacAux="empty";
+    String deviceName, deviceMac, deviceMacAux = "empty";
     String data, dataRsa;
 
     ListView blueList;
@@ -71,6 +74,9 @@ public class BleListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ble_list);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getString(R.string.ui_ble_mini_blee_list_title));
 
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
         if (SDK_INT > 8) {
@@ -126,6 +132,16 @@ public class BleListActivity extends AppCompatActivity {
                 startActivity(goToMiniUi);
             }
         });
+
+        getDevices.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bleeDialog();
+                scanLeDevice();
+            }
+        });
+
+        bleeDialog();
     }
 
     /*Activity Actions*/
@@ -166,7 +182,6 @@ public class BleListActivity extends AppCompatActivity {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
-
 
     /*Ble actions*/
     private void scanLeDevice() {
@@ -247,7 +262,15 @@ public class BleListActivity extends AppCompatActivity {
         }
     }
 
-    public void bleeDialog(String action){
+    public String nullNameConverter(String name){
+        if(name == null){
+            return "NoName";
+        }else{
+            return name;
+        }
+    }
+
+    public void bleeDialog(){
         builder = new AlertDialog.Builder(BleListActivity.this);
 
         LayoutInflater factory = LayoutInflater.from(BleListActivity.this);
@@ -260,19 +283,56 @@ public class BleListActivity extends AppCompatActivity {
                 .into(imageViewTarget);
 
         builder.setView(view);
-        dialog = builder.create();
-        if(action.equals("show")){
-            dialog.show();
-        }else{
-            dialog.dismiss();
+        dialogBle = builder.create();
+        dialogBle.show();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dialogBle.dismiss();
+                totalListItems();
+            }
+        }, 7000); //Timer is in ms here.
+    }
+
+    public void totalListItems(){
+        try{
+            int totalFound = blueList.getChildCount();
+            Log.d(TAG, "-> total ble found: " + totalFound);
+
+            if(totalFound >= 1){
+                //nothing to do
+            }else{
+                customDialogNoMove(getString(R.string.ui_ble_mini_message_found));
+            }
+
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
     }
 
-    public String nullNameConverter(String name){
-        if(name == null){
-            return "NoName";
-        }else{
-            return name;
+    public void customDialogNoMove(String inDatum){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(inDatum);
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }
