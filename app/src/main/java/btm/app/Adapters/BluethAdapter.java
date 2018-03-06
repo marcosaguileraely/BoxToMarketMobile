@@ -46,7 +46,7 @@ public class BluethAdapter extends ArrayAdapter<Bluethoot> {
         ImageView img = (ImageView) rowView.findViewById(R.id.imageView2);
 
         Bluethoot bluethoot = (Bluethoot) bluethootArrayList.get(position);
-        uuid.setText(String.valueOf("" + bluethoot.getType().toUpperCase()) + " # "+  bluethoot.getId().toUpperCase()   );
+        uuid.setText(String.valueOf("" + fixingTypeName(bluethoot.getType())) + " # "+  bluethoot.getId().toUpperCase()   );
         //mac.setText(String.valueOf("#" +  +  " " + bluethoot.getName()) + " " + bluethoot.getMac());
 
         Glide.with(context)
@@ -54,6 +54,18 @@ public class BluethAdapter extends ArrayAdapter<Bluethoot> {
                 .into(img);
 
         return rowView;
+    }
+
+    private String fixingTypeName(String inDatum){
+        String type_fixed = "";
+
+        if(inDatum.equals("btm_mini")){
+            type_fixed = "BtM Mini";
+        }else if(inDatum.equals("vending")){
+            type_fixed = "Vending";
+        }
+
+        return type_fixed;
     }
 
     @Override
