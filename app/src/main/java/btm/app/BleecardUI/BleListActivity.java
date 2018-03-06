@@ -246,6 +246,7 @@ public class BleListActivity extends AppCompatActivity {
                     String id      = json_obj.getString("id");
                     String img_uri = json_obj.getString("image");
                     String prices  = json_obj.getString("type");
+
                     details.setId(id);
                     details.setImg_uri(img_uri);
                     details.setType(prices);
