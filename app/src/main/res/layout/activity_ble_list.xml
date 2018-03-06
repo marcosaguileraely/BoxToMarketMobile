@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.02"
         android:background="@color/colorOrange"
-        android:text="@string/search_bluethoot"
+        android:text="@string/ui_ble_mini_blee_list_button_scan"
         android:textColor="@color/colorWhite" />
 
 
