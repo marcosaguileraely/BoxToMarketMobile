@@ -177,6 +177,7 @@
     <string name="green_slide">Green</string>
     <string name="ui_ble_mini_message_found">Machines not found. Please try scanning again.</string>
     <string name="ui_ble_mini_blee_list_title">Machines</string>
+    <string name="ui_ble_mini_blee_list_button_scan">Scan again</string>
 
 
 </resources>

@@ -147,6 +147,7 @@
     <string name="app_name_machines">La App de las Máquinas</string>
     <string name="ui_ble_mini_message_found">No se encontraron máquinas. Por favor intenta escanear nuevamente.</string>
     <string name="ui_ble_mini_blee_list_title">Máquinas</string>
+    <string name="ui_ble_mini_blee_list_button_scan">Volver a escanear</string>
 
 
 </resources>
