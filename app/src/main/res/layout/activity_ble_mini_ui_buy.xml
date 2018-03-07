@@ -24,7 +24,7 @@
             android:gravity="center_vertical"
             android:text="#"
             android:textAlignment="center"
-            android:textColor="@color/colorOrange"
+            android:textColor="@color/TextColor"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -35,7 +35,7 @@
             android:layout_marginBottom="10dp"
             android:text="@string/select_payment_method"
             android:textAppearance="@android:style/TextAppearance.Material.Medium"
-            android:textColor="@color/TextColor"
+            android:textColor="@color/colorOrange"
             android:textSize="16sp"
             android:textStyle="bold" />
 
