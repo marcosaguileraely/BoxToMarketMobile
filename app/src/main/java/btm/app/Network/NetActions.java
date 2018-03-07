@@ -349,6 +349,28 @@ public class NetActions {
         return response.body().string();
     }
 
+    public String getBleBuyRsa(String bleeId) throws IOException, NullPointerException, JSONException{
+        JSONObject jsonBody = new JSONObject();
+        jsonBody.put("operation", "dataBuy");
+        jsonBody.put("key", "pk_test_6pRNAHGGoqiwFHFKjkj4XMrh");
+        jsonBody.put("token", "tk_test_ZQokik736473jklWgH4olfk2");
+        jsonBody.put("id", bleeId);
+
+        Log.d(TAG, "*************> "+ jsonBody);
+
+        String url = "https://www.bleecard.com/api/getBuy.do";
+
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        RequestBody body = RequestBody.create(JSON, jsonBody.toString());
+        okhttp3.Request requesthttp = new okhttp3.Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+
+        okhttp3.Response response = client.newCall(requesthttp).execute();
+        return response.body().string();
+    }
+
     /**
      *
      * @throws IOException
