@@ -1,6 +1,7 @@
 package btm.app.BleecardUI;
 
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
@@ -16,13 +17,22 @@ import android.os.IBinder;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,6 +41,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import btm.app.DataHolder.DataHolder;
 import btm.app.DataHolder.DataHolderBleBuy;
 import btm.app.DataHolder.DataHolderBleData;
 import btm.app.R;
@@ -43,17 +54,23 @@ public class BleMiniUI extends AppCompatActivity {
     public static final String EXTRAS_DEVICE_ADDRESS = "DEVICE_ADDRESS";
     private int[] RGBFrame = {0,0,0};
 
+    AlertDialog.Builder builder;
     ProgressDialog dialog2;
+    AlertDialog dialogBle;
+
     private TextView isSerial;
     private TextView mConnectionState;
     private TextView mDataField;
     private TextView text1, text2, text3, text4, text5;
-            TextView ble_id;
-    private TextView pr1, pr2, pr3, pr4, pr5;
+    TextView ble_id;
 
+    private TextView pr1, pr2, pr3, pr4, pr5;
     private String mDeviceName;
     private String mDeviceAddress;
     String action = "list";
+    String dataResponse;
+
+    String rsa;
 
     Button b1, b2, b3, b4, b5;
 
@@ -169,6 +186,7 @@ public class BleMiniUI extends AppCompatActivity {
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
         bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
 
+        bleeDialog(); //Starts the Blee loader
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -239,6 +257,7 @@ public class BleMiniUI extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        //bleeDialog();
         registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
         if (mBluetoothLeService != null) {
             final boolean result = mBluetoothLeService.connect(mDeviceAddress);
@@ -450,9 +469,9 @@ public class BleMiniUI extends AppCompatActivity {
 
     // on change of bars write char
     private void listProduct() {
-        String str = "0b64a3cd3e6099b8ba9c59183906ee37";
-        Log.d(TAG, "Sending result = " + str);
-        final byte[] tx = hexStringToByteArray(str);
+        String rsaValue = getStringJson(getRsaBle());
+        Log.d(TAG, "Sending result = " + rsaValue);
+        final byte[] tx = hexStringToByteArray(rsaValue);
         Log.d(TAG, "Sending byte[] = " + Arrays.toString(tx));
 
         Log.d(TAG, "Is Connected? = " + mConnected);
@@ -476,5 +495,55 @@ public class BleMiniUI extends AppCompatActivity {
             e.printStackTrace();
         }
         return data;
+    }
+
+    public String getRsaBle(){
+        try {
+            dataResponse = new btm.app.Network.NetActions(context).getBleRsa(DataHolderBleData.getId());
+            Log.d(TAG, " oKHttp response: " + dataResponse);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }  catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return dataResponse;
+    }
+
+    public String getStringJson(String inDatum){
+        try {
+            JSONObject obj = new JSONObject(inDatum);
+            rsa = obj.getString("rsaToken");
+            Log.d(TAG, "Rsa = " + rsa);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return rsa;
+    }
+
+    public void bleeDialog(){
+        builder = new AlertDialog.Builder(BleMiniUI.this);
+
+        LayoutInflater factory = LayoutInflater.from(BleMiniUI.this);
+        View view              = factory.inflate(R.layout.ui_aux_ble_loader, null);
+        ImageView gifImageView = (ImageView) view.findViewById(R.id.gif_loader);
+
+        GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(gifImageView);
+        Glide.with(BleMiniUI.this)
+                .load(R.drawable.bleecard_load)
+                .into(imageViewTarget);
+
+        builder.setView(view);
+        builder.setCancelable(false);
+        dialogBle = builder.create();
+        dialogBle.show();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dialogBle.dismiss();
+            }
+        }, 7000); //Timer is in ms here.
     }
 }

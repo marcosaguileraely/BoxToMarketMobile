@@ -26,11 +26,17 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.IOException;
@@ -51,21 +57,24 @@ import btm.app.R;
 
 public class BleMiniUiBuyActivity extends AppCompatActivity {
 
-    private final static String TAG = "Dev -> Btm Details";
-    Context context = this;
+    private final static String TAG = "Dev -> Btm Details ";
     private ArrayList<CC> listTc;
+    Context context = this;
 
+    AlertDialog.Builder builder;
     ProgressDialog dialog2;
+    AlertDialog dialogBle;
     AlertDialog dialog_pass_ui;
+
     private TextView isSerial;
     private TextView mConnectionState;
     private TextView mDataField;
     private TextView line_num;
-    Button buy;
 
     private String mDeviceName;
     private String mDeviceAddress;
     private String modo, data;
+    String rsa;
     String bleeResponse;
     String password_dialog;
     String card_info;
@@ -73,6 +82,7 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
     String creditCardData, walletData, subscriptionData;
     String action = "list";
     Spinner tC, metodo;
+    Button buy;
 
     private BluetoothLeService mBluetoothLeService;
     private boolean mConnected = false;
@@ -269,6 +279,7 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
 
                     }else {
                         customDialogNoMove("Actualmente no tienes una Suscripción Abierta para este producto. Por favor compra una Suscripción.");
+
                     }
                 }
             }
@@ -354,7 +365,6 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
 
     public void customDialog(String inDatum){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
         builder.setMessage(inDatum);
         builder.setCancelable(false);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -370,6 +380,24 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    public void customPasswordDialog(String inDatum){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setMessage(inDatum);
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+                //mBluetoothLeService.disconnect();
+                //Intent intent = new Intent(context, MainActivity.class);
+                //startActivity(intent);
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
     public void customDialogNoMove(String inDatum){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(inDatum);
@@ -377,6 +405,9 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.dismiss();
+                mBluetoothLeService.disconnect();
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -429,7 +460,7 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
                             }
                         }else {
                             dialog_pass_ui.dismiss();
-                            customDialog("Clave invalida. Intenta nuevamente.");
+                            customPasswordDialog("Clave invalida. Intenta nuevamente.");
                         }
                     }
                 })
@@ -481,16 +512,16 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
                     Log.d(TAG, " ***///*** oKHttp response: " + datos_ws);
 
                     if( datos_ws.equals("Pago Chargeback exitoso")){
-                        customDialog(datos_ws);
+                        customDialog("La máquina no procesó tu pedido. Si usaste como método de pago Tarjeta de Crédito ó Mi Billetera el valor pagado se reintegrará a Mi Billetera, sino la cantidad debitada se reintegrará a tu suscripcion.");
                     }else {
-                        customDialog(datos_ws);
+                        customDialog("La máquina no procesó tu pedido. Si usaste como método de pago Tarjeta de Crédito ó Mi Billetera el valor pagado se reintegrará a Mi Billetera, sino la cantidad debitada se reintegrará a tu suscripcion.");
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                mBluetoothLeService.disconnect();
-                Intent gotoHome = new Intent(context, MainActivity.class);
-                startActivity(gotoHome);
+                //mBluetoothLeService.disconnect();
+                //Intent gotoHome = new Intent(context, MainActivity.class);
+                //startActivity(gotoHome);
             }
             else {
                 Log.d(TAG, "It's returning the 9 number");
@@ -630,9 +661,11 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
     }
 
     private void buyProductByLine(final String lineNumber) {
-        String str = "0a6455df41b578fdcf0115d61b0043c9";
-        Log.d(TAG, "Sending result = " + str);
-        final byte[] tx = hexStringToByteArray(str);
+        String rsaValue = getStringJson(getRsaBuyBle());
+        Log.d(TAG, "Sending result = " + rsaValue);
+        //String str = "0a6455df41b578fdcf0115d61b0043c9";
+        //Log.d(TAG, "Sending result = " + str);
+        final byte[] tx = hexStringToByteArray(rsaValue);
         Log.d(TAG, "Sending byte[] = " + Arrays.toString(tx));
 
         if(mConnected) {
@@ -670,6 +703,31 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return data;
+    }
+
+    public String getRsaBuyBle(){
+        try {
+            dataResponse = new btm.app.Network.NetActions(context).getBleBuyRsa(DataHolderBleData.getId());
+            Log.d(TAG, " oKHttp response: " + dataResponse);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }  catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return dataResponse;
+    }
+
+    public String getStringJson(String inDatum){
+        try {
+            JSONObject obj = new JSONObject(inDatum);
+            rsa = obj.getString("rsaToken");
+            Log.d(TAG, "Rsa = " + rsa);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return rsa;
     }
 
 
