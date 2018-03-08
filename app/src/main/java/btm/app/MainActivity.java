@@ -1,26 +1,33 @@
 package btm.app;
 
+import android.Manifest;
+import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.LocationManager;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.app.AlertDialog;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,12 +39,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
-
-import java.util.ArrayList;
-
 import btm.app.BleecardUI.BleListActivity;
-import btm.app.BleecardUI.BleecardMainActivity;
-import btm.app.BleecardUI.DeviceScanActivity;
 import btm.app.DataHolder.DataHolder;
 
 public class MainActivity extends AppCompatActivity {
@@ -59,28 +61,47 @@ public class MainActivity extends AppCompatActivity {
     private static String pais;
     private static String data;
     private static String username_global;
+    String provider;
 
     public static final String USER_GLOBAL = "USERNAME";
     public static final String TAG = "DEV -> Main";
 
+    private static final int REQUEST_ENABLE_BT = 1;
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
+    private BluetoothAdapter mBluetoothAdapter;
+    LocationManager locationManager;
+
     public Context context = this;
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //getActionBar().setIcon(R.drawable.);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //getSupportActionBar().setIcon(R.mipmap.ic_toolbar);
-
-        //toolbar.setNavigationIcon(R.mipmap.ic_arrow_back_white_48dp);
         getSupportActionBar().setIcon(R.mipmap.ic_home_white_24dp);
         //getSupportActionBar().setTitle("  "+getString(R.string.mi_billetera));
         getSupportActionBar().setTitle("  "+getString(R.string.app_name_machines));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Ensures Bluetooth is enabled on the device.  If Bluetooth is not currently enabled,
+            // fire an intent to display a dialog asking the user to grant permission to enable it.
+            // REQUEST ACCESS_FINE_LOCATION for +M versions
+            checkLocationPermission();
+        } else {
+            Log.d(TAG, "Your android version is -M. Bluethoot ya activado");
+        }
+
+        final BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+        mBluetoothAdapter = bluetoothManager.getAdapter();
+        // Use this check to determine whether BLE is supported on the device.  Then you can
+        // selectively disable BLE-related features.
+        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
+            Toast.makeText(this, "Device not supported", Toast.LENGTH_SHORT).show();
+            finish();
+        }
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -98,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         String username = DataHolder.getUsername();
                data     = DataHolder.getData();
 
-        Log.d(TAG, "-> pais:" + pais + "-> user:"+ username + "-> data:" + data);
+        //Log.d(TAG, "-> pais:" + pais + "-> user:"+ username + "-> data:" + data);
         data            = getIntent().getStringExtra(LoginActivity.DATOS);
         username_global = getIntent().getStringExtra(LoginActivity.USERNAME);
     }
@@ -146,7 +167,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -182,7 +202,6 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
-
             View rootView               = inflater.inflate(R.layout.fragment_main, container, false);
             textViewTrm                 = (TextView) rootView.findViewById(R.id.textViewTrm);
             textViewSaldoCompensacion   = (TextView) rootView.findViewById(R.id.textViewSaldoCompensacion);
@@ -426,13 +445,71 @@ public class MainActivity extends AppCompatActivity {
 
     public void onResume(){
         super.onResume();
-
-        pais = DataHolder.getId_country();
+        pais            = DataHolder.getId_country();
         username_global = DataHolder.getUsername();
     }
 
     public void onBackPressed(){
         Toast.makeText(context, getString(R.string.log_out), Toast.LENGTH_LONG).show();
     }
+
+    public boolean checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+                new AlertDialog.Builder(this)
+                        .setTitle("BleeCards needs location access for ble feautures")
+                        .setCancelable(false)
+                        .setMessage("Please grant location access so this app can detect beacons/ble")
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //Prompt the user once explanation has been shown
+                                ActivityCompat.requestPermissions(MainActivity.this,
+                                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
+                            }
+                        })
+                        .create()
+                        .show();
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
+            }
+            return false;
+
+        } else {
+            return true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_COARSE_LOCATION: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d(TAG, "coarse location permission granted");
+                } else {
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("Functionality limited");
+                    builder.setMessage("Since location access has not been granted, this app will not be able to discover beacons when in the background.");
+                    builder.setPositiveButton("Accept", null);
+                    builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                        }
+                    });
+                    builder.show();
+                }
+                return;
+            }
+        }
+    }
+
 
 }
