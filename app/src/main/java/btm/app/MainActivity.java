@@ -465,7 +465,7 @@ public class MainActivity extends AppCompatActivity {
                 new AlertDialog.Builder(this)
                         .setTitle("BleeCards needs location access for ble feautures")
                         .setCancelable(false)
-                        .setMessage("Please grant location access so this app can detect beacons/ble")
+                        .setMessage("Please grant location access so this app can detects Ble Devices.")
                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -510,6 +510,4 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
-
 }

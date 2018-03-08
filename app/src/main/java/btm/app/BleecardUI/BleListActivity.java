@@ -1,6 +1,5 @@
 package btm.app.BleecardUI;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
@@ -10,12 +9,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Handler;
 import android.os.StrictMode;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,53 +23,41 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
-
 import btm.app.Adapters.BluethAdapter;
-import btm.app.CompraToken;
 import btm.app.DataHolder.DataHolderBleData;
 import btm.app.Model.BleeDetails;
 import btm.app.Model.Bluethoot;
 import btm.app.R;
 
 public class BleListActivity extends AppCompatActivity {
-
     public static final String TAG = "DEV -> Scan ble *** ";
-
-    BleeDetails details =  new BleeDetails();
-    ArrayList<Bluethoot> items = new ArrayList<Bluethoot>();
-    BluethAdapter adapter;
-
-    AlertDialog.Builder builder;
-    AlertDialog dialog;
-    AlertDialog dialogBle;
-
-    private BluetoothAdapter mBluetoothAdapter;
-    private boolean mScanning;
-    private Handler mHandler;
     Context context = this;
 
-    String deviceName, deviceMac, deviceMacAux = "empty";
-    String data, dataRsa;
+    private Handler mHandler;
+    private BluetoothAdapter mBluetoothAdapter;
+    BluethAdapter adapter;
+    BleeDetails details =  new BleeDetails();
 
+    ArrayList<Bluethoot> items = new ArrayList<Bluethoot>();
     ListView blueList;
+
     Button getDevices;
+    AlertDialog.Builder builder;
+    AlertDialog dialogBle;
+    private boolean mScanning;
+    String deviceName, deviceMac, deviceMacAux = "empty";
+    String data;
 
     // Stops scanning after 10 seconds.
     private static final int REQUEST_ENABLE_BT = 1;
     private static final long SCAN_PERIOD = 10000;
-    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    LocationManager locationManager;
-    String provider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,8 +72,6 @@ public class BleListActivity extends AppCompatActivity {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-
-
 
         //setContentView(R.layout.activity_device_scan);
         //getActionBar().setTitle(R.string.title_devices);
@@ -155,20 +137,16 @@ public class BleListActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        //scanLeDevice(false);
-        //mLeDeviceListAdapter.clear();
     }
     @Override
     protected void onResume() {
         super.onResume();
-        //bleeDialog();
         // Ensures Bluetooth is enabled on the device.  If Bluetooth is not currently enabled,
         // fire an intent to display a dialog asking the user to grant permission to enable it.
         if (!mBluetoothAdapter.isEnabled()) {
             if (!mBluetoothAdapter.isEnabled()) {
                 Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-                //checkLocationPermission();
             }
         }
 
@@ -183,7 +161,7 @@ public class BleListActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // User chose not to enable Bluetooth.
+        // User choose not to enable Bluetooth.
         if (requestCode == REQUEST_ENABLE_BT && resultCode == Activity.RESULT_CANCELED) {
             finish();
             return;
@@ -191,43 +169,11 @@ public class BleListActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    /*Ble actions*/
-    private void scanLeDevice() {
-        mBluetoothAdapter.startLeScan(mLeScanCallback);
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mBluetoothAdapter.stopLeScan(mLeScanCallback);
-            }
-        }, SCAN_PERIOD);
-    }
-
-    // Device scan callback.
-    private BluetoothAdapter.LeScanCallback mLeScanCallback = new BluetoothAdapter.LeScanCallback() {
-        @Override
-        public void onLeScan(final BluetoothDevice device, int rssi, byte[] scanRecord) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    deviceName = nullNameConverter(device.getName());
-                    deviceMac  = nullNameConverter(device.getAddress());
-                    Log.d(TAG, " -> Device name: " + deviceName + " Device Mac Address: " + deviceMac);
-
-                    //if(deviceName.startsWith("Bl")){
-                    if(deviceName.contains("HM")){
-                        if(!deviceMac.equals(deviceMacAux)){  //it's not working good, as expected!
-                            wsgetMachines(deviceMac);
-                        }else{
-                            //nothing to-do
-                        }
-                        deviceMacAux = deviceMac;
-                    }else {
-                        Log.d(TAG, "-> Not BLE device");
-                    }
-                }
-            });
-        }
-    };
+    /*
+    * ======================================
+    * All WebServices or HTTP call actions *
+    * ======================================
+    * */
 
     public void wsgetMachines(String mac_addr){
         try {
@@ -280,6 +226,28 @@ public class BleListActivity extends AppCompatActivity {
         }
     }
 
+    public void totalListItems(){
+        try{
+            int totalFound = blueList.getChildCount();
+            Log.d(TAG, "-> total ble found: " + totalFound);
+
+            if(totalFound >= 1){
+                //nothing to do
+            }else{
+                customDialogNoMove(getString(R.string.ui_ble_mini_message_found));
+            }
+
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+    * =========================================
+    * All Dialogs, Alerts Messages or Loaders *
+    * =========================================
+    * */
+
     public void bleeDialog(){
         builder = new AlertDialog.Builder(BleListActivity.this);
 
@@ -306,22 +274,6 @@ public class BleListActivity extends AppCompatActivity {
         }, 5000); //Timer is in ms here.
     }
 
-    public void totalListItems(){
-        try{
-            int totalFound = blueList.getChildCount();
-            Log.d(TAG, "-> total ble found: " + totalFound);
-
-            if(totalFound >= 1){
-                //nothing to do
-            }else{
-                customDialogNoMove(getString(R.string.ui_ble_mini_message_found));
-            }
-
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void customDialogNoMove(String inDatum){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(inDatum);
@@ -335,6 +287,50 @@ public class BleListActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
+    /*
+    * =======================
+    * All bluethoot actions *
+    * =======================
+    * */
+
+    // Start scanning Ble
+    private void scanLeDevice() {
+        mBluetoothAdapter.startLeScan(mLeScanCallback);
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mBluetoothAdapter.stopLeScan(mLeScanCallback);
+            }
+        }, SCAN_PERIOD);
+    }
+
+    // Device scan callback.
+    private BluetoothAdapter.LeScanCallback mLeScanCallback = new BluetoothAdapter.LeScanCallback() {
+        @Override
+        public void onLeScan(final BluetoothDevice device, int rssi, byte[] scanRecord) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    deviceName = nullNameConverter(device.getName());
+                    deviceMac  = nullNameConverter(device.getAddress());
+                    Log.d(TAG, " -> Device name: " + deviceName + " Device Mac Address: " + deviceMac);
+
+                    //if(deviceName.startsWith("Bl")){ //<-- You need to change it
+                    if(deviceName.contains("HM")){
+                        if(!deviceMac.equals(deviceMacAux)){  //it's not working good, as expected!
+                            wsgetMachines(deviceMac);
+                        }else{
+                            //nothing to-do
+                        }
+                        deviceMacAux = deviceMac;
+                    }else {
+                        Log.d(TAG, "-> Not BLE device");
+                    }
+                }
+            });
+        }
+    };
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
