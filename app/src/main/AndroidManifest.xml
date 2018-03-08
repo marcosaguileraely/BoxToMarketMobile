@@ -115,10 +115,15 @@
         <activity
             android:name=".ChangePassActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".BleecardUI.BleVendingUI" />
-        <activity android:name=".BleecardUI.BleMiniUI" />
-        <activity android:name=".BleecardUI.DeviceScanActivity" />
-        <activity android:name=".BleecardUI.DeviceControlActivity" />
+
+        <activity android:name=".BleecardUI.BleVendingUI"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".BleecardUI.BleMiniUI"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".BleecardUI.DeviceScanActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".BleecardUI.DeviceControlActivity"
+            android:screenOrientation="portrait"/>
 
         <service
             android:name=".BleecardUI.BluetoothLeService"
