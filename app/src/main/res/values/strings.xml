@@ -154,6 +154,7 @@
     <string name="disconnected">Disconnected</string>
     <string name="title_devices">BLE Device Scan</string>
     <string name="error_bluetooth_not_supported">Bluetooth not supported for your Device. You can continue using another BoxToMarket feautures.</string>
+    <string name="error_bluetooth_ble_not_supported">Your device support Bluethoot, but not support BleeCard technology.</string>
 
     <string name="unknown_device">Unknown device</string>
     <string name="unknown_characteristic">Unknown characteristic</string>

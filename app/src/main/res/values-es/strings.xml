@@ -154,6 +154,7 @@
     <string name="connected">Connected</string>
     <string name="disconnected">Disconnected</string>
     <string name="error_bluetooth_not_supported">Tu dispositivo no soporta la tecnología Bluethoot. Puedes continuar usando otras funcionalidades de BoxToMarket.</string>
+    <string name="error_bluetooth_ble_not_supported">Tu dispositivo soporte Bluethoot, pero NO soporta la tecnología BleeCard.</string>
     <string name="is_serial">Serial Present:</string>
     <string name="label_data">Serial Present:</string>
     <string name="label_device_address">Device address:</string>

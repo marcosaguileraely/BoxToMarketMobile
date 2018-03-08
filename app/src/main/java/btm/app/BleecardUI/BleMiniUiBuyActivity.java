@@ -341,7 +341,6 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
         }
     }
 
-
     public void payWithSubscriptions(){
         try {
             webResponse = new btm.app.Network.NetActions(context).btmMiniPayment(subscriptionData);
@@ -450,7 +449,6 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
                         password_dialog = input.getText().toString();
                         if(password_dialog.equals(DataHolder.getPass())){
-
                             if(inDatum.equals("cc_payment")){
                                 payWithCreditCard();
                             }if(inDatum.equals("wallet_payment")){
@@ -729,6 +727,4 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
         }
         return rsa;
     }
-
-
 }

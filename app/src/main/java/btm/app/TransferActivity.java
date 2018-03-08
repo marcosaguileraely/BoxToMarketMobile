@@ -172,9 +172,13 @@ public class TransferActivity extends DataJp {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         password_dialog = input.getText().toString();
-                        Log.d(TAG, " -> " + password_dialog);
-                        new AsyncGetHttpData().execute("");
-                        dialog_pass_ui.dismiss();
+                        if(password_dialog.equals(DataHolder.getPass())){
+                            dialog_pass_ui.dismiss();
+                            new AsyncGetHttpData().execute("");
+                        }else{
+                            dialog_pass_ui.dismiss();
+                            customPasswordDialog("Clave invalida. Intenta nuevamente.");
+                        }
                     }
                 })
                 .setNegativeButton(R.string.ui_general_dialog_cancel, new DialogInterface.OnClickListener() {
@@ -227,5 +231,23 @@ public class TransferActivity extends DataJp {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void customPasswordDialog(String inDatum){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setMessage(inDatum);
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+                //mBluetoothLeService.disconnect();
+                //Intent intent = new Intent(context, MainActivity.class);
+                //startActivity(intent);
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

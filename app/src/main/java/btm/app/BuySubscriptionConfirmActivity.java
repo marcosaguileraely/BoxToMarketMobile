@@ -248,29 +248,6 @@ public class BuySubscriptionConfirmActivity extends AppCompatActivity {
                         dialog.show();
                     }
                 }
-
-                /*String Data = DataHolder.getData();
-                String[] separated = Data.split("&");
-                String r1 = separated[0]; // this will contain "& blank"
-                String r2 = separated[1]; // this will contain "username"
-                String r3 = separated[2]; // this will contain "password"
-                Log.d(TAG, "r1: "+ r1 + " r2: " + r2 + " r3: " + r3);
-
-                String[] pinData = r3.split("=");
-                String passtxt = pinData[0];
-                String pin     = pinData[1];
-                Log.d(TAG, "passtxt: "+ passtxt + " pin: " + pin);
-
-
-
-                datos = DataHolder.getUsername()
-                        + "|" + password_dialog
-                        + "|" + convertPaymentMode(modo)
-                        + "|" + card_id
-                        + "|" + token_number
-                        + "|" + DataHolderSubs.getId()
-                        + "|";
-                Log.d(TAG, "datos -> "+ datos);*/
             }
         });
     }
@@ -338,9 +315,13 @@ public class BuySubscriptionConfirmActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         password_dialog = input.getText().toString();
-                        Log.d(TAG, " -> " + password_dialog);
-                        new AsyncGetHttpData().execute("");
-                        dialog_pass_ui.dismiss();
+                        if(password_dialog.equals(DataHolder.getPass())){
+                            dialog_pass_ui.dismiss();
+                            new AsyncGetHttpData().execute("");
+                        }else{
+                            dialog_pass_ui.dismiss();
+                            customPasswordDialog("Clave invalida. Intenta nuevamente.");
+                        }
                     }
                 })
                 .setNegativeButton(R.string.ui_general_dialog_cancel, new DialogInterface.OnClickListener() {
@@ -408,4 +389,23 @@ public class BuySubscriptionConfirmActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    public void customPasswordDialog(String inDatum){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setMessage(inDatum);
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+                //mBluetoothLeService.disconnect();
+                //Intent intent = new Intent(context, MainActivity.class);
+                //startActivity(intent);
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
 }

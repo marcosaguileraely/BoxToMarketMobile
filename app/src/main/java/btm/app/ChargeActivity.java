@@ -129,44 +129,6 @@ public class ChargeActivity extends AppCompatActivity {
                     token.setVisibility(View.VISIBLE);
                     creditCardList.setAdapter(null);
                 }
-
-
-
-
-                    /*netActions.http_get_data("menutarjetas", datos, new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            if (response.contains("Token")) {
-                                Toast.makeText(getApplicationContext(), response + getString(R.string.error_token), Toast.LENGTH_LONG).show();
-                                finish();
-                                return;
-                            }
-
-                            if (response.contains("No tiene")) {
-                                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
-
-                                return;
-                            }
-
-                            String[] inf = response.replace("|", ";").split(";");
-                            for (String cc : inf) {
-                                listTc.add(new CC(cc));
-                            }
-
-                            ArrayAdapter<CC> adapter = new ArrayAdapter<CC>(getApplicationContext(), R.layout.item_card, listTc);
-                            // Specify the layout to use when the list of choices appears
-                            creditCardList.setAdapter(adapter);
-
-                        }
-                    });
-                } else {
-                    listTc = new ArrayList<CC>();
-                    addCreditCard.setVisibility(View.GONE);
-                    creditCardList.setVisibility(View.GONE);
-                    value.setVisibility(View.GONE);
-                    token.setVisibility(View.VISIBLE);
-                    creditCardList.setAdapter(null);
-                }*/
             }
 
             @Override
@@ -203,7 +165,7 @@ public class ChargeActivity extends AppCompatActivity {
                 val       = convertMontoValue(value.getText().toString());
                 token_val = token.getText().toString();
 
-                if(modo.equals("Tarjeta de Crédito") || modo.equals("Credit Card")){
+                if(modo.equals("Tarjeta de Credito") || modo.equals("Credit Card")){
                     if(value.getText().toString().isEmpty()){
                         Toast.makeText(context, R.string.ingrese_valor, Toast.LENGTH_LONG).show();
 
@@ -364,9 +326,13 @@ public class ChargeActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         password_dialog = input.getText().toString();
-                        Log.d(TAG, " -> " + password_dialog);
-                        new AsyncGetHttpData().execute("");
-                        dialog_pass_ui.dismiss();
+                        if(password_dialog.equals(DataHolder.getPass())){
+                            dialog_pass_ui.dismiss();
+                            new AsyncGetHttpData().execute("");
+                        }else{
+                            dialog_pass_ui.dismiss();
+                            customPasswordDialog("Clave invalida. Intenta nuevamente.");
+                        }
                     }
                 })
                 .setNegativeButton(R.string.ui_general_dialog_cancel, new DialogInterface.OnClickListener() {
@@ -377,6 +343,24 @@ public class ChargeActivity extends AppCompatActivity {
 
         dialog_pass_ui = builder_pass_dialog.create();
         dialog_pass_ui.show();
+    }
+
+    public void customPasswordDialog(String inDatum){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setMessage(inDatum);
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+                //mBluetoothLeService.disconnect();
+                //Intent intent = new Intent(context, MainActivity.class);
+                //startActivity(intent);
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     public void onBackPressed(){

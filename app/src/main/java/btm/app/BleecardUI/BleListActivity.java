@@ -83,8 +83,7 @@ public class BleListActivity extends AppCompatActivity {
         // Use this check to determine whether BLE is supported on the device.  Then you can
         // selectively disable BLE-related features.
         if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
-            Toast.makeText(this, "Device not supported", Toast.LENGTH_SHORT).show();
-            finish();
+            customDialogYesMove(getString(R.string.error_bluetooth_ble_not_supported));
         }
 
         // Initializes a Bluetooth adapter.  For API level 18 and above, get a reference to
@@ -368,7 +367,7 @@ public class BleListActivity extends AppCompatActivity {
 
         if (mBluetoothAdapter == null) {
             // If the adapter is null it means that the device does not support Bluetooth
-            Toast.makeText(context, "Parece que tu dispositivo no soporta Bluethoot.", Toast.LENGTH_LONG).show();
+            customDialogYesMove(getString(R.string.error_bluetooth_not_supported));
         }else{
             //If the adapter isn't null, it means that the device support Bluethoot
             if (!mBluetoothAdapter.isEnabled()){
@@ -376,8 +375,8 @@ public class BleListActivity extends AppCompatActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        bleeDialog();
                         scanLeDevice();
+                        bleeDialog();
                     }
                 }, 1000); //Timer is in ms here.
             }
