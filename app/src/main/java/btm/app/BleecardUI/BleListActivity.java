@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.LocationManager;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +31,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import btm.app.Adapters.BluethAdapter;
 import btm.app.DataHolder.DataHolderBleData;
+import btm.app.MainActivity;
 import btm.app.Model.BleeDetails;
 import btm.app.Model.Bluethoot;
 import btm.app.R;
@@ -40,20 +40,20 @@ public class BleListActivity extends AppCompatActivity {
     public static final String TAG = "DEV -> Scan ble *** ";
     Context context = this;
 
-    private Handler mHandler;
+    private Handler          mHandler;
     private BluetoothAdapter mBluetoothAdapter;
-    BluethAdapter adapter;
-    BleeDetails details =  new BleeDetails();
+    BluethAdapter            adapter;
+    BleeDetails              details =  new BleeDetails();
+    View                     v;
 
-    ArrayList<Bluethoot> items = new ArrayList<Bluethoot>();
-    ListView blueList;
+    ArrayList<Bluethoot>     items = new ArrayList<Bluethoot>();
+    ListView                 blueList;
 
-    Button getDevices;
-    AlertDialog.Builder builder;
-    AlertDialog dialogBle;
-    private boolean mScanning;
-    String deviceName, deviceMac, deviceMacAux = "empty";
-    String data;
+    Button                   getDevices;
+    AlertDialog.Builder      builder;
+    AlertDialog              dialogBle;
+    String                   deviceName, deviceMac, deviceMacAux = "empty";
+    String                   data;
 
     // Stops scanning after 10 seconds.
     private static final int REQUEST_ENABLE_BT = 1;
@@ -93,12 +93,22 @@ public class BleListActivity extends AppCompatActivity {
         mBluetoothAdapter = bluetoothManager.getAdapter();
 
         // Checks if Bluetooth is supported on the device.
+        // if mBluetoothAdapter == null the device not support Bluethoot
+        // else, we need to check if the bluethoot is enabled or not
         if (mBluetoothAdapter == null) {
-            Toast.makeText(this, R.string.error_bluetooth_not_supported, Toast.LENGTH_SHORT).show();
-            finish();
-            return;
+            customDialogYesMove(getString(R.string.error_bluetooth_not_supported));
         }else {
-            scanLeDevice();
+            //
+            if (!isBluetoothEnabled()) {
+                // Bluetooth is not enable :)
+                Log.d(TAG, " ========> BLUETHOOT TURNED OFF");
+                enableBTFull(v);
+            }else {
+                // Bluetooth is not enable :)
+                Log.d(TAG, " ========> BLUETHOOT TURNED ON XDXDXDXD ");
+                bleeDialog();
+                scanLeDevice();
+            }
         }
 
         blueList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -108,7 +118,7 @@ public class BleListActivity extends AppCompatActivity {
                 String imgBlee  = adapter.getImage(position);
                 String nameBlee = adapter.getName(position);
                 String adrBlee  = adapter.getAddress(position);
-                String idBlee  = adapter.getId(position);
+                String idBlee   = adapter.getId(position);
                 //Toast.makeText(context, "Item clicked, "+" pos: " + position + " Id: " + idBlee + " Type: " + typeBlee + " Mac: " + adrBlee, Toast.LENGTH_SHORT).show();
 
                 DataHolderBleData.setId(idBlee);
@@ -129,8 +139,6 @@ public class BleListActivity extends AppCompatActivity {
                 scanLeDevice();
             }
         });
-
-        bleeDialog();
     }
 
     /*Activity Actions*/
@@ -143,12 +151,13 @@ public class BleListActivity extends AppCompatActivity {
         super.onResume();
         // Ensures Bluetooth is enabled on the device.  If Bluetooth is not currently enabled,
         // fire an intent to display a dialog asking the user to grant permission to enable it.
+        /*Log.d(TAG, " ========> BLUETHOOT TURNED SHITTTTTTT");
         if (!mBluetoothAdapter.isEnabled()) {
             if (!mBluetoothAdapter.isEnabled()) {
                 Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
             }
-        }
+        }*/
 
         mBluetoothAdapter.startLeScan(mLeScanCallback);
         mHandler.postDelayed(new Runnable() {
@@ -159,7 +168,7 @@ public class BleListActivity extends AppCompatActivity {
         }, SCAN_PERIOD);
     }
 
-    @Override
+    /*@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // User choose not to enable Bluetooth.
         if (requestCode == REQUEST_ENABLE_BT && resultCode == Activity.RESULT_CANCELED) {
@@ -167,7 +176,7 @@ public class BleListActivity extends AppCompatActivity {
             return;
         }
         super.onActivityResult(requestCode, resultCode, data);
-    }
+    }*/
 
     /*
     * ======================================
@@ -288,6 +297,22 @@ public class BleListActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    public void customDialogYesMove(String inDatum){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(inDatum);
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+                Intent gotoHome =  new Intent(context, MainActivity.class);
+                startActivity(gotoHome);
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
     /*
     * =======================
     * All bluethoot actions *
@@ -331,6 +356,39 @@ public class BleListActivity extends AppCompatActivity {
             });
         }
     };
+
+    public boolean isBluetoothEnabled(){
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        return mBluetoothAdapter.isEnabled();
+    }
+
+    //This options don't needs the user permission
+    public void enableBTFull(View view){
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        if (mBluetoothAdapter == null) {
+            // If the adapter is null it means that the device does not support Bluetooth
+            Toast.makeText(context, "Parece que tu dispositivo no soporta Bluethoot.", Toast.LENGTH_LONG).show();
+        }else{
+            //If the adapter isn't null, it means that the device support Bluethoot
+            if (!mBluetoothAdapter.isEnabled()){
+                mBluetoothAdapter.enable();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        bleeDialog();
+                        scanLeDevice();
+                    }
+                }, 1000); //Timer is in ms here.
+            }
+        }
+    }
+
+    /*
+    * =======================
+    * Another methods       *
+    * =======================
+    * */
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
