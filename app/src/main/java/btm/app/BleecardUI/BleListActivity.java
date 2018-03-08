@@ -1,8 +1,8 @@
 package btm.app.BleecardUI;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
@@ -10,10 +10,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.AsyncTask;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.StrictMode;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -69,6 +71,9 @@ public class BleListActivity extends AppCompatActivity {
     // Stops scanning after 10 seconds.
     private static final int REQUEST_ENABLE_BT = 1;
     private static final long SCAN_PERIOD = 10000;
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    LocationManager locationManager;
+    String provider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +88,8 @@ public class BleListActivity extends AppCompatActivity {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
+
+
 
         //setContentView(R.layout.activity_device_scan);
         //getActionBar().setTitle(R.string.title_devices);
@@ -154,13 +161,14 @@ public class BleListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        //bleeDialog();
         // Ensures Bluetooth is enabled on the device.  If Bluetooth is not currently enabled,
         // fire an intent to display a dialog asking the user to grant permission to enable it.
         if (!mBluetoothAdapter.isEnabled()) {
             if (!mBluetoothAdapter.isEnabled()) {
                 Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+                //checkLocationPermission();
             }
         }
 
@@ -205,7 +213,8 @@ public class BleListActivity extends AppCompatActivity {
                     deviceMac  = nullNameConverter(device.getAddress());
                     Log.d(TAG, " -> Device name: " + deviceName + " Device Mac Address: " + deviceMac);
 
-                    if(deviceName.startsWith("Bl")){
+                    //if(deviceName.startsWith("Bl")){
+                    if(deviceName.contains("HM")){
                         if(!deviceMac.equals(deviceMacAux)){  //it's not working good, as expected!
                             wsgetMachines(deviceMac);
                         }else{
@@ -284,6 +293,7 @@ public class BleListActivity extends AppCompatActivity {
                 .into(imageViewTarget);
 
         builder.setView(view);
+        builder.setCancelable(false);
         dialogBle = builder.create();
         dialogBle.show();
 
@@ -293,7 +303,7 @@ public class BleListActivity extends AppCompatActivity {
                 dialogBle.dismiss();
                 totalListItems();
             }
-        }, 7000); //Timer is in ms here.
+        }, 5000); //Timer is in ms here.
     }
 
     public void totalListItems(){
