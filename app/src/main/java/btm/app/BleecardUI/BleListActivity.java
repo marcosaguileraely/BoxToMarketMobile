@@ -340,8 +340,8 @@ public class BleListActivity extends AppCompatActivity {
                     deviceMac  = nullNameConverter(device.getAddress());
                     Log.d(TAG, " -> Device name: " + deviceName + " Device Mac Address: " + deviceMac);
 
-                    //if(deviceName.startsWith("Bl")){ //<-- You need to change it
-                    if(deviceName.contains("HM")){
+                    if(deviceName.startsWith("Bl")){ //<-- You need to change it
+                    //if(deviceName.contains("HM")){
                         if(!deviceMac.equals(deviceMacAux)){  //it's not working good, as expected!
                             wsgetMachines(deviceMac);
                         }else{

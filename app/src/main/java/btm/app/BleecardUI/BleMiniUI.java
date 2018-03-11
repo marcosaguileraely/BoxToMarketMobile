@@ -44,6 +44,7 @@ import java.util.UUID;
 import btm.app.DataHolder.DataHolder;
 import btm.app.DataHolder.DataHolderBleBuy;
 import btm.app.DataHolder.DataHolderBleData;
+import btm.app.Model.Subscriptions;
 import btm.app.R;
 
 public class BleMiniUI extends AppCompatActivity {
@@ -64,6 +65,8 @@ public class BleMiniUI extends AppCompatActivity {
     private TextView text1, text2, text3, text4, text5;
     TextView ble_id;
 
+
+    private TextView namepr1, namepr2, namepr3, namepr4, namepr5;
     private TextView pr1, pr2, pr3, pr4, pr5;
     private String mDeviceName;
     private String mDeviceAddress;
@@ -71,6 +74,9 @@ public class BleMiniUI extends AppCompatActivity {
     String dataResponse;
 
     String rsa;
+    String price1, price2, price3, price4, price5;
+    String prod1, prod2, prod3, prod4, prod5;
+
 
     Button b1, b2, b3, b4, b5;
 
@@ -146,8 +152,7 @@ public class BleMiniUI extends AppCompatActivity {
 
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
         if (SDK_INT > 8) {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-                    .permitAll().build();
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
 
@@ -174,6 +179,12 @@ public class BleMiniUI extends AppCompatActivity {
         pr3         = (TextView) findViewById(R.id.price3);
         pr4         = (TextView) findViewById(R.id.price4);
         pr5         = (TextView) findViewById(R.id.price5);
+
+        namepr1     = (TextView) findViewById(R.id.product_name1);
+        namepr2     = (TextView) findViewById(R.id.product_name2);
+        namepr3     = (TextView) findViewById(R.id.product_name3);
+        namepr4     = (TextView) findViewById(R.id.product_name4);
+        namepr5     = (TextView) findViewById(R.id.product_name5);
 
         b1 = (Button) findViewById(R.id.button1);
         b2 = (Button) findViewById(R.id.button2);
@@ -377,13 +388,21 @@ public class BleMiniUI extends AppCompatActivity {
         text5.setText("Disponible: " + String.valueOf(value5));
 
         try {
-            data = new btm.app.Network.NetActions(context).getBlePrice(DataHolderBleData.getId());
-            Log.d(TAG, " oKHttp response: " + data);
-            pr1.setText(data);
-            pr2.setText(data);
-            pr3.setText(data);
-            pr4.setText(data);
-            pr5.setText(data);
+            //data = new btm.app.Network.NetActions(context).getBlePrice(DataHolderBleData.getId());
+            data = new btm.app.Network.NetActions(context).getBlePriceAndNames(DataHolderBleData.getId());
+            getMachinesPriceList(data);
+
+            pr1.setText(price1);
+            pr2.setText(price2);
+            pr3.setText(price3);
+            pr4.setText(price4);
+            pr5.setText(price5);
+
+            namepr1.setText(prod1);
+            namepr2.setText(prod2);
+            namepr3.setText(prod3);
+            namepr4.setText(prod4);
+            namepr5.setText(prod5);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -545,5 +564,45 @@ public class BleMiniUI extends AppCompatActivity {
                 dialogBle.dismiss();
             }
         }, 7000); //Timer is in ms here.
+    }
+
+    public void getMachinesPriceList(String response){
+        String[] mainToken = response.split("\\|");
+        Log.d(TAG, "---->" + response);
+
+        String values1 = mainToken[0];
+        String values2 = mainToken[1];
+        String values3 = mainToken[2];
+        String values4 = mainToken[3];
+        String values5 = mainToken[4];
+
+        Log.d(TAG, "---->" + values1);
+        Log.d(TAG, "---->" + values2);
+        Log.d(TAG, "---->" + values3);
+        Log.d(TAG, "---->" + values4);
+        Log.d(TAG, "---->" + values5);
+
+        String subValues1[] = values1.split(",");
+        String subValues2[] = values2.split(",");
+        String subValues3[] = values3.split(",");
+        String subValues4[] = values4.split(",");
+        String subValues5[] = values5.split(",");
+
+        price1 = subValues1[0];
+        prod1  = subValues1[1];
+
+        price2 = subValues2[0];
+        prod2  = subValues2[1];
+
+        price3 = subValues3[0];
+        prod3  = subValues3[1];
+
+        price4 = subValues4[0];
+        prod4  = subValues4[1];
+
+        price5 = subValues5[0];
+        prod5  = subValues5[1];
+
+        Log.d(TAG, "-> " + price1 + " " + price2 + " " + price3 + " " + price4 + " " + price5);
     }
 }
