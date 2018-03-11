@@ -122,7 +122,6 @@ public class SubscriptionsActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-
         Log.d(TAG, "-> "+jsonArray.toString());
         return items;
     }
