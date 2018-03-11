@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -124,5 +125,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
         new btm.app.Request(this).http_get("login", datos, response, progress);
+    }
+
+    public void onBackPressed(){
+        DataHolder dataHolder = new DataHolder();
+        dataHolder.setUsername("");
+        dataHolder.setPass("");
+        finish(); // finish activity
+        //System.exit(0);
     }
 }

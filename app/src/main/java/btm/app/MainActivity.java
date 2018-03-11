@@ -462,9 +462,9 @@ public class MainActivity extends AppCompatActivity {
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
                 new AlertDialog.Builder(this)
-                        .setTitle("BleeCard needs location access")
+                        .setTitle(getString(R.string.ui_ble_mini_blee_list_auth_title))
                         .setCancelable(false)
-                        .setMessage("Please grant location access so this app can detects Ble Devices.")
+                        .setMessage(getString(R.string.ui_ble_mini_blee_list_auth_body_text))
                         .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
