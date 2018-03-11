@@ -127,7 +127,7 @@
     <string name="ui_main_my_wallet_title">Mi Billetera:</string>
     <string name="ui_buy_token_input_value_local">Ingresa el valor en Moneda Local</string>
     <string name="ui_buy_compensation_dialog_message">¿Estás seguro que deseas Solicitar una Compensación?</string>
-    <string name="ui_general_dialog_password">Ingrese su clave</string>
+    <string name="ui_general_dialog_password">Confirma clave de 4 dígitos</string>
     <string name="ui_general_dialog_confirm">Confirmar</string>
     <string name="ui_general_dialog_cancel">Cancelar</string>
     <string name="ui_charge_message_dialog">¿Estás seguro que deseas Agregar Dinero a Mi Billetera?</string>
@@ -145,7 +145,7 @@
     <string name="ui_ble_mini_line_selected">Linea seleccionada:</string>
 
     <string name="app_name_machines">La App de las Máquinas</string>
-    <string name="ui_ble_mini_message_found">No se encontraron máquinas. Por favor intenta escanear nuevamente.</string>
+    <string name="ui_ble_mini_message_found">No se encontraron Máquinas compatibles con Bleecard disponibles para conexión. Por favor intenta escanear nuevamente.</string>
     <string name="ui_ble_mini_blee_list_title">Máquinas</string>
     <string name="ui_ble_mini_blee_list_button_scan">Volver a escanear</string>
     <string name="ble_not_supported">BLE is not supported</string>
@@ -171,6 +171,8 @@
     <string name="green_slide">Green</string>
     <string name="title_devices">Ble Device Scan</string>
     <string name="ui_ble_mini_blee_list_message_recommend">Has declinado los permisos. Recomendamos activar esta caracteristica para usar la tecnología BleeCard.</string>
+    <string name="ui_ble_mini_blee_list_auth_title">Para pagos por Bluetooth mediante Bleecard, la App necesita permisos</string>
+    <string name="ui_ble_mini_blee_list_auth_body_text">Por favor autorice los permisos de acceso para que la App pueda detectar dispositivos Bluetooth.</string>
 
 
 </resources>

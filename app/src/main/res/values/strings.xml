@@ -128,7 +128,7 @@
     <string name="ui_buy_token_message_error">Transfer has not been completed. Try again</string>
     <string name="ui_main_my_wallet_title">My Wallet:</string>
     <string name="ui_buy_compensation_dialog_message">Are you sure to Request a Compensation?</string>
-    <string name="ui_general_dialog_password">Enter your password</string>
+    <string name="ui_general_dialog_password">Confirm 4 digits password</string>
     <string name="ui_general_dialog_confirm">Confirm</string>
     <string name="ui_general_dialog_cancel">Cancel</string>
     <string name="ui_charge_message_dialog">Are you sure want to Add Money to My Wallet?</string>
@@ -171,11 +171,13 @@
     <string name="red_slide">Red</string>
     <string name="blue_slide">Blue</string>
     <string name="green_slide">Green</string>
-    <string name="ui_ble_mini_message_found">Machines not found. Please try scanning again.</string>
+    <string name="ui_ble_mini_message_found">Bleecard compatible machines available for connection were not found. Please try to scan again.</string>
     <string name="ui_ble_mini_blee_list_title">Machines</string>
     <string name="ui_ble_mini_blee_list_button_scan">Scan again</string>
     <string name="ui_ble_mini_buy">Pay</string>
     <string name="ui_ble_mini_blee_list_message_recommend">You\'ve denied the permission. We highly recommend to activate this feature to use BleeCard technology.</string>
+    <string name="ui_ble_mini_blee_list_auth_title">For Bluetooth payments by Bleecard, the app needs access permission</string>
+    <string name="ui_ble_mini_blee_list_auth_body_text">Please grant location access so this App can detects Bluetooth devices</string>
 
 
 </resources>
