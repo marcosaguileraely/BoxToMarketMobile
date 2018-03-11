@@ -413,6 +413,22 @@ public class NetActions {
         return response.body().string();
     }
 
+    public String getBlePriceAndNames(String datos) throws IOException, NullPointerException {
+        Log.d(TAG, " Datos card list: " + datos);
+
+        String url = "https://www.boxtomarket.com/index.php?r=app/btmminiprecioynombres"
+                + "&token=" + this.tkTime()
+                + "&datos=" + datos;
+        Log.d("DEV -> NetActions ", url);
+
+        okhttp3.Request requesthttp = new okhttp3.Request.Builder()
+                .url(url)
+                .build();
+
+        okhttp3.Response response = client.newCall(requesthttp).execute();
+        return response.body().string();
+    }
+
     public void http_get_data(String metodo, String datos, Response.Listener<String> response) {
 
         String url = "https://www.boxtomarket.com/index.php?r=app/"
