@@ -34,6 +34,7 @@ public class TransferActivity extends DataJp {
     private EditText monto, idusert;
     private String username, password, userid, password_dialog;
     private int val;
+    ProgressDialog progress;
 
     AlertDialog dialog_pass_ui;
 
@@ -60,6 +61,10 @@ public class TransferActivity extends DataJp {
         transferComp = (Button) findViewById(R.id.transferCompButton);
         monto        = (EditText) findViewById(R.id.editTextMontoTransfer);
         idusert      = (EditText) findViewById(R.id.editTextIdTransfer);
+
+        progress = new ProgressDialog(this);
+        progress.setMessage(getString(R.string.inf_dialog));
+        progress.setCancelable(false);
 
         transferir.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,12 +121,9 @@ public class TransferActivity extends DataJp {
     }
 
     private class AsyncGetHttpData extends AsyncTask<String, Void, String> {
-        ProgressDialog dialog2 = new ProgressDialog(TransferActivity.this);
-
         @Override
         protected void onPreExecute() {
-            dialog2.setMessage(getString(R.string.inf_dialog));
-            dialog2.show();
+            progress.show();
         }
 
         @Override
@@ -149,7 +151,7 @@ public class TransferActivity extends DataJp {
 
         @Override
         protected void onPostExecute(String result) {
-            dialog2.dismiss();
+            progress.dismiss();
         }
 
         @Override

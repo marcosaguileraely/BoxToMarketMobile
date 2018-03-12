@@ -5,6 +5,18 @@ package btm.app.DataHolder;
  */
 
 public class DataHolderBleBuy {
+    private static String liSelected;
+    private static String liNameSeleted;
+
+    public static String getLiNameSeleted() {
+        return liNameSeleted;
+    }
+
+    public static void setLiNameSeleted(String liNameSeleted) {
+        DataHolderBleBuy.liNameSeleted = liNameSeleted;
+    }
+
+
     public static String getLiSelected() {
         return liSelected;
     }
@@ -13,6 +25,5 @@ public class DataHolderBleBuy {
         DataHolderBleBuy.liSelected = liSelected;
     }
 
-    private static String liSelected;
 
 }

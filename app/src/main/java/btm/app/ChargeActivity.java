@@ -38,6 +38,7 @@ public class ChargeActivity extends AppCompatActivity {
     private Context context = this;
 
     AlertDialog dialog_pass_ui;
+    ProgressDialog progress;
 
     private Button addMoney, addCreditCard;
     private EditText value, token;
@@ -67,6 +68,10 @@ public class ChargeActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getString(R.string.title_recarga));
         final NetActions netActions = new NetActions(context);
+
+        progress = new ProgressDialog(this);
+        progress.setMessage(getString(R.string.inf_dialog));
+        progress.setCancelable(false);
 
         creditCardList    = (Spinner) findViewById(R.id.spinnerCreditCards);
         addMoneyMethod    = (Spinner) findViewById(R.id.spinnerTipoRecarga);
@@ -164,8 +169,10 @@ public class ChargeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 val       = convertMontoValue(value.getText().toString());
                 token_val = token.getText().toString();
+                progress.show();
 
                 if(modo.equals("Tarjeta de Credito") || modo.equals("Credit Card")){
+                    progress.dismiss();
                     if(value.getText().toString().isEmpty()){
                         Toast.makeText(context, R.string.ingrese_valor, Toast.LENGTH_LONG).show();
 
@@ -194,6 +201,7 @@ public class ChargeActivity extends AppCompatActivity {
                 } else{
                     if(token.getText().toString().isEmpty()){
                         Toast.makeText(context, R.string.ingrese_token, Toast.LENGTH_LONG).show();
+                        progress.dismiss();
 
                     }else{
                         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -202,6 +210,7 @@ public class ChargeActivity extends AppCompatActivity {
                         builder.setCancelable(false);
                         builder.setPositiveButton(R.string.ui_buy_token_ok_button, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
+                                progress.show();
                                 new AsyncGetHttpData().execute("");
                             }
                         });
@@ -220,12 +229,10 @@ public class ChargeActivity extends AppCompatActivity {
     }
 
     private class AsyncGetHttpData extends AsyncTask<String, Void, String> {
-        ProgressDialog dialog2 = new ProgressDialog(ChargeActivity.this);
 
         @Override
         protected void onPreExecute() {
-            dialog2.setMessage(getString(R.string.inf_dialog));
-            dialog2.show();
+
         }
 
         @Override
@@ -244,7 +251,7 @@ public class ChargeActivity extends AppCompatActivity {
                     try {
                         data = new btm.app.Network.NetActions(context).chargeMoneyToMyWallet(datafull);
                         Log.d(TAG, " oKHttp response: " + data);
-
+                        progress.dismiss();
                         customDialog(data);
 
                     } catch (IOException e) {
@@ -258,7 +265,7 @@ public class ChargeActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            dialog2.dismiss();
+            progress.dismiss();
         }
 
         @Override

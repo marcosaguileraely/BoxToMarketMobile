@@ -209,6 +209,7 @@ public class BleMiniUI extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DataHolderBleBuy.setLiSelected("1");
+                DataHolderBleBuy.setLiNameSeleted(prod1);
                 mBluetoothLeService.disconnect();
 
                 Intent goToBuy =  new Intent(BleMiniUI.this, BleMiniUiBuyActivity.class);
@@ -220,6 +221,7 @@ public class BleMiniUI extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DataHolderBleBuy.setLiSelected("2");
+                DataHolderBleBuy.setLiNameSeleted(prod2);
                 mBluetoothLeService.disconnect();
 
                 Intent goToBuy =  new Intent(BleMiniUI.this, BleMiniUiBuyActivity.class);
@@ -231,6 +233,7 @@ public class BleMiniUI extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DataHolderBleBuy.setLiSelected("3");
+                DataHolderBleBuy.setLiNameSeleted(prod3);
                 mBluetoothLeService.disconnect();
 
                 Intent goToBuy =  new Intent(BleMiniUI.this, BleMiniUiBuyActivity.class);
@@ -242,6 +245,7 @@ public class BleMiniUI extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DataHolderBleBuy.setLiSelected("4");
+                DataHolderBleBuy.setLiNameSeleted(prod4);
                 mBluetoothLeService.disconnect();
 
                 Intent goToBuy =  new Intent(BleMiniUI.this, BleMiniUiBuyActivity.class);
@@ -253,6 +257,7 @@ public class BleMiniUI extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DataHolderBleBuy.setLiSelected("5");
+                DataHolderBleBuy.setLiNameSeleted(prod5);
                 mBluetoothLeService.disconnect();
 
                 Intent goToBuy =  new Intent(BleMiniUI.this, BleMiniUiBuyActivity.class);

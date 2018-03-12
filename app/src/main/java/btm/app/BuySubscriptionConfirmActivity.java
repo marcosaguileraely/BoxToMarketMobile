@@ -45,6 +45,7 @@ public class BuySubscriptionConfirmActivity extends AppCompatActivity {
     public static final String TAG = "DEV -> Pagar subs";
     public Context context = this;
     AlertDialog dialog_pass_ui;
+    ProgressDialog progress;
 
     public Button pay;
     public Spinner payment_method, credit_card;
@@ -76,6 +77,9 @@ public class BuySubscriptionConfirmActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getString(R.string.detail_buy_subscription_confirm));
 
+        progress = new ProgressDialog(this);
+        progress.setMessage(getString(R.string.inf_dialog));
+        progress.setCancelable(false);
 
         final NetActions netActions =  new NetActions(context);
 
@@ -253,12 +257,10 @@ public class BuySubscriptionConfirmActivity extends AppCompatActivity {
     }
 
     private class AsyncGetHttpData extends AsyncTask<String, Void, String> {
-        ProgressDialog dialog2 = new ProgressDialog(BuySubscriptionConfirmActivity.this);
 
         @Override
         protected void onPreExecute() {
-            dialog2.setMessage(getString(R.string.inf_dialog));
-            dialog2.show();
+            progress.show();
         }
 
         @Override
@@ -292,7 +294,7 @@ public class BuySubscriptionConfirmActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            dialog2.dismiss();
+            progress.dismiss();
         }
 
         @Override
@@ -408,4 +410,7 @@ public class BuySubscriptionConfirmActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    public void customDialogLoader(){
+
+    }
 }

@@ -70,6 +70,7 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
     private TextView mConnectionState;
     private TextView mDataField;
     private TextView line_num;
+    private TextView productName;
 
     private String mDeviceName;
     private String mDeviceAddress;
@@ -170,12 +171,15 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
         isSerial    = (TextView) findViewById(R.id.isSerial);
         mDataField  = (TextView) findViewById(R.id.data_value);
         line_num    = (TextView) findViewById(R.id.ble_id);
+        productName = (TextView) findViewById(R.id.product_name);
         metodo      = (Spinner) findViewById(R.id.payment_method);
         tC          = (Spinner) findViewById(R.id.spinnerTipoTC);
         buy         = (Button) findViewById(R.id.buy);
 
         listTc = new ArrayList<CC>();
-        line_num.setText(getString(R.string.ui_ble_mini_line_selected) + " #" + DataHolderBleBuy.getLiSelected());
+        line_num.setText(getString(R.string.ui_ble_mini_line_selected) + "\n #"
+                 + DataHolderBleBuy.getLiSelected());
+        productName.setText(DataHolderBleBuy.getLiNameSeleted());
 
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
         bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
