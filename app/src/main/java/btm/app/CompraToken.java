@@ -40,6 +40,7 @@ public class CompraToken extends DataJp{
 
     Context context = this;
     AlertDialog dialog_pass_ui;
+    ProgressDialog progress;
 
     private Spinner tC, metodo;
     private EditText email, monto;
@@ -75,6 +76,10 @@ public class CompraToken extends DataJp{
         monto         = (EditText) findViewById(R.id.editTextMonto);
         addCreditCard = (Button) findViewById(R.id.addCreditCardButton);
         clic          = (Button) findViewById(R.id.buttonCompraToken);
+
+        progress = new ProgressDialog(context);
+        progress.setMessage(getString(R.string.inf_dialog));
+        progress.setCancelable(false);
 
         username  = DataHolder.getUsername();
         //password  = DataHolder.getPass();
@@ -191,12 +196,9 @@ public class CompraToken extends DataJp{
     }
 
     private class AsyncGetHttpData extends AsyncTask<String, Void, String> {
-        ProgressDialog dialog2 = new ProgressDialog(CompraToken.this);
-
         @Override
         protected void onPreExecute() {
-            dialog2.setMessage(getString(R.string.inf_dialog));
-            dialog2.show();
+            progress.show();
         }
 
         @Override
@@ -218,6 +220,7 @@ public class CompraToken extends DataJp{
                         Log.d(TAG, " oKHttp response: " + data);
 
                         if(data.contains("El Token generado es")){
+                            progress.dismiss();
                             customDialog();
 
                         }else{
@@ -236,7 +239,7 @@ public class CompraToken extends DataJp{
 
         @Override
         protected void onPostExecute(String result) {
-            dialog2.dismiss();
+            progress.dismiss();
         }
 
         @Override
