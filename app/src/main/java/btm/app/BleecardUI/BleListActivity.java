@@ -46,6 +46,17 @@ import btm.app.Model.BleeDetails;
 import btm.app.Model.Bluethoot;
 import btm.app.R;
 
+/**
+ * Developer: Marcos Aguilera Ely
+ * Email: marcosaguileraely@gmail.com
+ * BleeCard.com
+ *
+ * I found some solutions for issues here:
+ * https://github.com/bluzDK/android-app/blob/master/app/src/main/java/com/banc/BLEManagement/BLEScanner.java
+ * android-app/app/src/main/java/com/banc/BLEManagement/BLEScanner.java
+ * Thanks a lot to: https://github.com/bluzDK
+ */
+
 @TargetApi(Build.VERSION_CODES.LOLLIPOP) // This is needed so that we can use Marshmallow API calls
 public class BleListActivity extends AppCompatActivity {
     public static final String TAG = "DEV -> Scan ble *** ";
@@ -65,12 +76,12 @@ public class BleListActivity extends AppCompatActivity {
     List<BluetoothDevice> mBluetoothDevice;
 
     ListView                 blueList;
-
     Button                   getDevices;
     AlertDialog.Builder      builder;
     AlertDialog              dialogBle;
     String                   deviceName, deviceMac, deviceMacAux = "empty";
     String                   data;
+    final ArrayList<String>  macAddress = new ArrayList<String>();
 
     // Stops scanning after 10 seconds.
     private static final int REQUEST_ENABLE_BT = 1;
@@ -142,7 +153,6 @@ public class BleListActivity extends AppCompatActivity {
                 String nameBlee = adapter.getName(position);
                 String adrBlee  = adapter.getAddress(position);
                 String idBlee   = adapter.getId(position);
-                //Toast.makeText(context, "Item clicked, "+" pos: " + position + " Id: " + idBlee + " Type: " + typeBlee + " Mac: " + adrBlee, Toast.LENGTH_SHORT).show();
 
                 DataHolderBleData.setId(idBlee);
                 DataHolderBleData.setImg(imgBlee);
@@ -173,23 +183,6 @@ public class BleListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // Ensures Bluetooth is enabled on the device.  If Bluetooth is not currently enabled,
-        // fire an intent to display a dialog asking the user to grant permission to enable it.
-        /*Log.d(TAG, " ========> BLUETHOOT TURNED SHITTTTTTT");
-        if (!mBluetoothAdapter.isEnabled()) {
-            if (!mBluetoothAdapter.isEnabled()) {
-                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-            }
-        }*/
-
-        /*mBluetoothAdapter.startLeScan(mLeScanCallback);
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mBluetoothAdapter.stopLeScan(mLeScanCallback);
-            }
-        }, SCAN_PERIOD);*/
     }
 
     @Override
@@ -355,6 +348,7 @@ public class BleListActivity extends AppCompatActivity {
                         //noinspection deprecation
                         mBluetoothAdapter.stopLeScan(mLeScanCallback);
                         Log.d(TAG, " -> -> -> -> stoping LESCAN < LOLLIPOP");
+                        listValuesMacAddr();
                     } else {
                         //mLEScanner.stopScan(mScanCallback);
                         //bluetoothLeScanner.stopScan(mScanCallback);
@@ -415,31 +409,6 @@ public class BleListActivity extends AppCompatActivity {
             Log.d(TAG, " -> -> -> -> RUN METHOD");
 
         }
-
-
-        /*if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            Log.d(TAG, " -> -> -> -> STARTING LESCAN < LOLLIPOP");
-            //noinspection deprecation
-            mBluetoothAdapter.startLeScan(mLeScanCallback);
-
-        } else { // New BLE scanning introduced in LOLLIPOP
-            Log.d(TAG, " -> -> -> -> STARTING LESCAN > LOLLIPOP");
-            ScanSettings settings;
-            List<ScanFilter> filters;
-
-            mLEScanner = mBluetoothAdapter.getBluetoothLeScanner();
-
-            settings = new ScanSettings.Builder()
-                       .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
-                       .build();
-            filters = new ArrayList<>();
-
-            // We will scan just for the CAR's UUID
-            ScanFilter filter = new ScanFilter.Builder().setDeviceName("Bleemini").build();
-
-            filters.add(filter);
-            mLEScanner.startScan(filters, settings, mScanCallback);
-        }*/
     }
 
     /**
@@ -474,7 +443,7 @@ public class BleListActivity extends AppCompatActivity {
                     String device_name    = device.getName();
                     Log.d(TAG, "/////////////// " + device_macaddr + " /////////// " + device_name);
 
-
+                    macAddress.add(device_macaddr);
                     /*if(!mBluetoothDevice.contains(device)) { // only add new devices
                         deviceMac  = nullNameConverter(device.getAddress());
                         Log.d(TAG, "/////////////// < LOLLIPOP");
@@ -558,6 +527,9 @@ public class BleListActivity extends AppCompatActivity {
 
     @SuppressWarnings("deprecation")
     public void run() {
+
+        //final ArrayList<String> macAddress = new ArrayList<String>();
+
         Log.d(TAG, " %%%%%%%%%%%%%%%%%%%%%%%%% BLEScanner" + "Running Scan!");
         final BluetoothManager bluetoothManager = (BluetoothManager) context.getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = bluetoothManager.getAdapter();
@@ -573,21 +545,21 @@ public class BleListActivity extends AppCompatActivity {
                 public void onScanResult(int callbackType, ScanResult result) {
                     super.onScanResult(callbackType, result);
                     BluetoothDevice device = result.getDevice();
-                    Log.d(TAG, " xxxxxxxx Devices " + device.toString());
+                    Log.d(TAG, " %%%%%%%%%%%%%%% Devices " + device.toString() + " %%%%%%%%%%%%% " + device.getName());
 
-                    //onLeScan(device, result.getRssi(), null);
+                    macAddress.add(device.toString());
                 }
 
                 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
                 @Override
                 public void onBatchScanResults(List<ScanResult> results) {
                     super.onBatchScanResults(results);
-                    for (ScanResult result : results) {
-                        BluetoothDevice device = result.getDevice();
-                        Log.d(TAG, " oooooooooooooo Devices " + device.toString());
+                    //for (ScanResult result : results) {
+                        //BluetoothDevice device = result.getDevice();
+                        //Log.d(TAG, " oooooooooooooo Devices " + device.toString());
 
                         //onLeScan(device, result.getRssi(), null);
-                    }
+                    //}
                 }
 
                 @Override
@@ -612,6 +584,7 @@ public class BleListActivity extends AppCompatActivity {
             @Override
             public void run() {
                 stop();
+                listValuesMacAddr();
             }
         }, SCAN_PERIOD);
     }
@@ -629,7 +602,12 @@ public class BleListActivity extends AppCompatActivity {
         }
     }
 
+    public void listValuesMacAddr(){
+        Log.d(TAG, " XXXXXXXXX SIZE: " + macAddress.size());
+        for(int i=0; i<macAddress.size(); i++){
+            String mac = macAddress.get(i);
+            Log.d(TAG, " XXXXXXXXX : " + mac);
 
-
-
+        }
+    }
 }
