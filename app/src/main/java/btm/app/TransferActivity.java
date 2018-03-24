@@ -137,7 +137,7 @@ public class TransferActivity extends DataJp {
                     try {
                         final String data = new btm.app.Network.NetActions(context).transferMoneyToUser(datos);
                         Log.d(TAG, " oKHttp response: " + data);
-
+                        progress.dismiss();
                         customDialog(data);
 
                     } catch (IOException e) {
