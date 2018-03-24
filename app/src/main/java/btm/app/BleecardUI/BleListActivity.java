@@ -81,7 +81,9 @@ public class BleListActivity extends AppCompatActivity {
     AlertDialog              dialogBle;
     String                   deviceName, deviceMac, deviceMacAux = "empty";
     String                   data;
-    final ArrayList<String>  macAddress = new ArrayList<String>();
+    //final ArrayList<String>  macAddress = new ArrayList<String>();
+    final List<String>  macAddress = new ArrayList<String>();
+    final List<String>  filteredMacAddress = new ArrayList<String>();
 
     // Stops scanning after 10 seconds.
     private static final int REQUEST_ENABLE_BT = 1;
@@ -528,8 +530,6 @@ public class BleListActivity extends AppCompatActivity {
     @SuppressWarnings("deprecation")
     public void run() {
 
-        //final ArrayList<String> macAddress = new ArrayList<String>();
-
         Log.d(TAG, " %%%%%%%%%%%%%%%%%%%%%%%%% BLEScanner" + "Running Scan!");
         final BluetoothManager bluetoothManager = (BluetoothManager) context.getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = bluetoothManager.getAdapter();
@@ -545,9 +545,13 @@ public class BleListActivity extends AppCompatActivity {
                 public void onScanResult(int callbackType, ScanResult result) {
                     super.onScanResult(callbackType, result);
                     BluetoothDevice device = result.getDevice();
-                    Log.d(TAG, " %%%%%%%%%%%%%%% Devices " + device.toString() + " %%%%%%%%%%%%% " + device.getName());
+                    //Log.d(TAG, " %%%%%%%%%%%%%%% Devices " + device.toString() + " %%%%%%%%%%%%% " + device.getName());
 
-                    macAddress.add(device.toString());
+                    deviceName = nullNameConverter(device.getName());
+                    if(deviceName.contains("Blee")){ // Only add to ArrayList<String> the Bleemini devices
+                        Log.d(TAG, " %%%%%%%%%%%%%%% BLEEMINI FOUND " + device.toString() + " %%%%%%%%%%%%% " + device.getName());
+                        macAddress.add(device.toString());
+                    }
                 }
 
                 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -608,6 +612,31 @@ public class BleListActivity extends AppCompatActivity {
             String mac = macAddress.get(i);
             Log.d(TAG, " XXXXXXXXX : " + mac);
 
+            if(!findItemInTheList(mac)){
+                filteredMacAddress.add(mac);
+                Log.d(TAG, "Item " + mac + " was not found in the list, it's added");
+            }else {
+                Log.d(TAG, "Item " + mac + " was found in the list, it's ignored.");
+            }
+        }
+        finalListValuesMacAddrFiltered();
+    }
+
+    public void finalListValuesMacAddrFiltered(){
+        Log.d(TAG, " XXXXXXXXX SIZE: " + filteredMacAddress.size());
+        for(int i=0; i<filteredMacAddress.size(); i++){
+            String mac = filteredMacAddress.get(i);
+            Log.d(TAG, " XXXXXXXXX FILTERED : " + mac);
+        }
+    }
+
+    private boolean findItemInTheList(String itemToFind) {
+        if (filteredMacAddress.contains(itemToFind)) {
+            Log.d(TAG, "Item " + itemToFind + " was found in the list");
+            return true;
+        } else {
+            Log.d(TAG, "Item to find" + itemToFind + " was not found in the list");
+            return false;
         }
     }
 }
