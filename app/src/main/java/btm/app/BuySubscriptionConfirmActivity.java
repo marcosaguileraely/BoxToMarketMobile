@@ -281,6 +281,7 @@ public class BuySubscriptionConfirmActivity extends AppCompatActivity {
                     try {
                         data = new btm.app.Network.NetActions(context).buySubscription(datafull);
                         Log.d(TAG, " oKHttp response: " + data);
+                        progress.dismiss();
                         customDialog(data);
 
                     } catch (IOException e) {
