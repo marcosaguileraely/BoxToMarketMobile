@@ -27,6 +27,7 @@ public class TransferCompensationActivity extends AppCompatActivity {
     public static final String TAG = "DEV -> Transfer ";
     Context context = this;
     AlertDialog dialog_pass_ui;
+    ProgressDialog progress;
 
     Button transfer;
     EditText value_transfer;
@@ -53,6 +54,10 @@ public class TransferCompensationActivity extends AppCompatActivity {
 
         datos  =  DataHolder.getData();
 
+        progress = new ProgressDialog(this);
+        progress.setMessage(getString(R.string.inf_dialog));
+        progress.setCancelable(false);
+
         transfer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,12 +83,10 @@ public class TransferCompensationActivity extends AppCompatActivity {
     }
 
     private class AsyncGetHttpData extends AsyncTask<String, Void, String> {
-        ProgressDialog dialog2 = new ProgressDialog(TransferCompensationActivity.this);
 
         @Override
         protected void onPreExecute() {
-            dialog2.setMessage(getString(R.string.inf_dialog));
-            dialog2.show();
+            progress.show();
         }
 
         @Override
@@ -94,7 +97,7 @@ public class TransferCompensationActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            dialog2.dismiss();
+            progress.dismiss();
         }
 
         @Override
@@ -182,7 +185,7 @@ public class TransferCompensationActivity extends AppCompatActivity {
                     try {
                         final String data = new btm.app.Network.NetActions(context).transferCompensation(fulldata);
                         Log.d(TAG, " -> " + data);
-
+                        progress.dismiss();
                         customDialog(data);
 
                     } catch (IOException e) {
