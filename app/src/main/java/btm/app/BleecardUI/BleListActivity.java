@@ -79,7 +79,7 @@ public class BleListActivity extends AppCompatActivity {
     Button                   getDevices;
     AlertDialog.Builder      builder;
     AlertDialog              dialogBle;
-    String                   deviceName, deviceMac, deviceMacAux = "empty";
+    String                   deviceName, deviceMac;
     String                   data;
     //final ArrayList<String>  macAddress = new ArrayList<String>();
     final List<String>  macAddress = new ArrayList<String>();
@@ -162,6 +162,8 @@ public class BleListActivity extends AppCompatActivity {
                 DataHolderBleData.setName(nameBlee);
                 DataHolderBleData.setType(typeBlee);
 
+                Log.d(TAG, " Set mac addr: " + adrBlee);
+
                 Intent goToMiniUi = new Intent(BleListActivity.this, BleMiniUI.class);
                 startActivity(goToMiniUi);
             }
@@ -234,7 +236,7 @@ public class BleListActivity extends AppCompatActivity {
                     details.setImg_uri(img_uri);
                     details.setType(prices);
 
-                    items.add(new Bluethoot(deviceMac, deviceName, details.getId(),details.getImg_uri(),details.getType()));
+                    items.add(new Bluethoot( deviceMac, deviceName, details.getId(), details.getImg_uri(), details.getType()) );
                     adapter = new BluethAdapter(context, items);
                     blueList.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
@@ -292,14 +294,6 @@ public class BleListActivity extends AppCompatActivity {
         builder.setCancelable(false);
         dialogBle = builder.create();
         dialogBle.show();
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                dialogBle.dismiss();
-                totalListItems();
-            }
-        }, 3000); //Timer is in ms here.
     }
 
     public void customDialogNoMove(String inDatum){
@@ -362,54 +356,13 @@ public class BleListActivity extends AppCompatActivity {
         BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         BluetoothAdapter bluetoothAdapter = bluetoothManager.getAdapter();
 
-
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             Log.d(TAG, " -> -> -> -> starting LESCAN < LOLLIPOP");
             mBluetoothAdapter.startLeScan(mLeScanCallback);
 
         } else {
-            //bluetoothLeScanner.startScan(mScanCallback);
-            /*bluetoothLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
-
-            Log.d(TAG, " -> -> -> -> starting LESCAN > LOLLIPOP");
-
-            ScanSettings scanSettings = new ScanSettings.Builder()
-                    //.setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
-                    //.setReportDelay(1)
-                    .build();
-
-            //ScanFilter filter = new ScanFilter.Builder().setDeviceName("Bleemini").build();
-            ScanFilter scanFilter = new ScanFilter.Builder()
-                          //.setDeviceName("Bleemini")
-                          .setDeviceName("Bleemini")
-                          .build();
-
-            List<ScanFilter> scanFilters = new ArrayList<ScanFilter>();
-            scanFilters.add(scanFilter);
-
-            bluetoothLeScanner.startScan(scanFilters, scanSettings, new ScanCallback() {
-                @Override
-                public void onScanResult(int callbackType, ScanResult result) {
-                    Log.d(TAG, "/////////////// > LOLLIPOP");
-                    String device_macaddr = result.getDevice().toString();
-                    String device_name    = result.getDevice().getName();
-                    //boolean exists        = result.
-                    Log.d(TAG, " %%%%%%%%%%%%%%%%% " + device_macaddr + " %%%%%%%%%% " + device_name);
-
-                }
-
-                @Override
-                public void onBatchScanResults(List<ScanResult> results) {
-                }
-
-                @Override
-                public void onScanFailed(int errorCode) {
-                    super.onScanFailed(errorCode);
-                }
-            });*/
-            run();
             Log.d(TAG, " -> -> -> -> RUN METHOD");
-
+            run();
         }
     }
 
@@ -424,63 +377,22 @@ public class BleListActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    /*deviceName = nullNameConverter(device.getName());
-                    deviceMac  = nullNameConverter(device.getAddress());
-                    Log.d(TAG, "/////////////// < LOLLIPOP");
-                    Log.d(TAG, " -> Device name: " + deviceName + " Device Mac Address: " + deviceMac);
 
-                    if(deviceName.startsWith("Bl")){ //<-- You need to change it
-                    //if(deviceName.contains("HM")){
-                        //if(!deviceMac.equals(deviceMacAux)){  //it's not working good, as expected!
-                            wsgetMachines(deviceMac);
-                        //}else{
-                            //nothing to-do
-                        //}
-                        //deviceMacAux = deviceMac;
-                    }else {
-                        Log.d(TAG, "-> Not BLE device");
-                    }*/
                     Log.d(TAG, "/////////////// < LOLLIPOP");
                     String device_macaddr = device.toString();
                     String device_name    = device.getName();
-                    Log.d(TAG, "/////////////// " + device_macaddr + " /////////// " + device_name);
 
-                    macAddress.add(device_macaddr);
-                    /*if(!mBluetoothDevice.contains(device)) { // only add new devices
-                        deviceMac  = nullNameConverter(device.getAddress());
-                        Log.d(TAG, "/////////////// < LOLLIPOP");
-                        Log.d(TAG, " -> Device name: " + deviceName + " Device Mac Address: " + deviceMac);
+                    deviceName = nullNameConverter(device_name);
+                    Log.d(TAG, "/////////////// " + device_macaddr + " /////////// " + deviceName);
 
-                        //mBluetoothDevice.add(device);
-                        //mBleName.add(device.getName());
-                        //mBleArrayAdapter.notifyDataSetChanged(); // Update the list on the screen
-                    }*/
+                    if(deviceName.contains("Blee")){ // Only add to ArrayList<String> the Bleemini devices
+                        Log.d(TAG, " %%%%%%%%%%%%%%% BLEEMINI FOUND " + device.toString() + " %%%%%%%%%%%%% " + device.getName());
+                        macAddress.add(device_macaddr);
+                    }
                 }
             });
         }
     };
-
-    /**
-     * This is the callback for BLE scanning for LOLLIPOP and later
-     * It is called each time a devive is found so we need to add it to the list
-     */
-    //@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    /*private final ScanCallback mScanCallback = new ScanCallback() {
-        @Override
-        public void onScanResult(int callbackType, ScanResult result) {
-            Log.d(TAG, "/////////////// > LOLLIPOP");
-            String device = result.getDevice().toString();
-            Log.d(TAG, "/////////////// " + device);
-
-
-            //if(!mBluetoothDevice.contains(result.getDevice())) { // only add new devices
-            //    mBluetoothDevice.add(result.getDevice());
-
-                //mBleName.add(result.getDevice().getName());
-                //mBleArrayAdapter.notifyDataSetChanged();         // Update the list on the screen
-            //}
-        }
-    };*/
 
     public boolean isBluetoothEnabled(){
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -505,7 +417,7 @@ public class BleListActivity extends AppCompatActivity {
                     public void run() {
                         scanLeDevice();
                     }
-                }, 3000); //Timer is in ms here.
+                }, 2500); //Timer is in ms here.
             }
         }
     }
@@ -527,6 +439,10 @@ public class BleListActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This is the callback for BLE scanning for LOLLIPOP and later
+     * It is called each time a devive is found so we need to add it to the list
+     */
     @SuppressWarnings("deprecation")
     public void run() {
 
@@ -549,7 +465,7 @@ public class BleListActivity extends AppCompatActivity {
 
                     deviceName = nullNameConverter(device.getName());
                     if(deviceName.contains("Blee")){ // Only add to ArrayList<String> the Bleemini devices
-                        Log.d(TAG, " %%%%%%%%%%%%%%% BLEEMINI FOUND " + device.toString() + " %%%%%%%%%%%%% " + device.getName());
+                        //Log.d(TAG, " %%%%%%%%%%%%%%% BLEEMINI FOUND " + device.toString() + " %%%%%%%%%%%%% " + device.getName());
                         macAddress.add(device.toString());
                     }
                 }
@@ -625,9 +541,22 @@ public class BleListActivity extends AppCompatActivity {
     public void finalListValuesMacAddrFiltered(){
         Log.d(TAG, " XXXXXXXXX SIZE: " + filteredMacAddress.size());
         for(int i=0; i<filteredMacAddress.size(); i++){
-            String mac = filteredMacAddress.get(i);
-            Log.d(TAG, " XXXXXXXXX FILTERED : " + mac);
+            deviceMac = filteredMacAddress.get(i);
+            Log.d(TAG, " XXXXXXXXX FILTERED : " + deviceMac);
+            wsgetMachines(deviceMac);
         }
+        /*
+         * After Rendering list ends, we gonna take
+         * 1.5 seconds to dismiss the loader message, and check how much
+         * Devices were taken
+         */
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dialogBle.dismiss();
+                totalListItems();
+            }
+        }, 1500); //Timer is in ms here.
     }
 
     private boolean findItemInTheList(String itemToFind) {
