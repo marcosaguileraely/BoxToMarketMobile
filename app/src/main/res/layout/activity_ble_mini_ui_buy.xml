@@ -4,165 +4,175 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondoimg"
-    tools:context="btm.app.BleecardUI.BleMiniUiBuyActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context="btm.app.BleecardUI.BleMiniUiBuyActivity">
 
-
-    <LinearLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="40dp"
-        android:layout_weight="1">
-
-        <TextView
-            android:id="@+id/ble_id"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:gravity="center_vertical"
-            android:text="#"
-            android:textAlignment="center"
-            android:textColor="@color/colorWhite"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/product_name"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginBottom="10dp"
-            android:gravity="center_vertical"
-            android:text="#"
-            android:textAlignment="center"
-            android:textColor="@color/colorWhite"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="@string/select_payment_method"
-            android:textAppearance="@android:style/TextAppearance.Material.Medium"
-            android:textColor="@color/colorOrange"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <Spinner
-            android:id="@+id/payment_method"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:entries="@array/pago_blee_mini" />
-
-        <Spinner
-            android:id="@+id/spinnerTipoTC"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:spinnerMode="dialog" />
-
-        <Button
-            android:id="@+id/buy"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="70dp"
-            android:background="@drawable/background_button"
-            android:text="@string/ui_ble_mini_buy"
-            android:textColor="@color/colorWhite" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:layout_marginTop="20dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:orientation="horizontal"
-            android:visibility="invisible">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="30dp">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/label_device_address"
-                android:textSize="18sp" />
-
-            <Space
-                android:layout_width="5dp"
-                android:layout_height="wrap_content" />
+                android:id="@+id/ble_id"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center_vertical"
+                android:text="#"
+                android:textAlignment="center"
+                android:textColor="@color/TextColor"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/device_address"
+                android:id="@+id/product_name"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center_vertical"
+                android:text="#"
+                android:textAlignment="center"
+                android:textColor="@color/colorOrange"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp" />
+                android:layout_marginBottom="10dp"
+                android:text="@string/select_payment_method"
+                android:textAlignment="center"
+                android:textAppearance="@android:style/TextAppearance.Material.Medium"
+                android:textColor="@color/TextColor"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/payment_method"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:entries="@array/pago_blee_mini" />
+
+            <Spinner
+                android:id="@+id/spinnerTipoTC"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:spinnerMode="dialog" />
+
+            <Button
+                android:id="@+id/buy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="70dp"
+                android:background="@drawable/background_button"
+                android:text="@string/ui_ble_mini_buy"
+                android:textColor="@color/colorWhite" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:orientation="horizontal"
-            android:visibility="invisible">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/label_state"
-                android:textSize="18sp" />
-
-            <Space
-                android:layout_width="5dp"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/connection_state"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/disconnected"
-                android:textSize="18sp" />
-        </LinearLayout>
+                android:layout_margin="10dp"
+                android:orientation="horizontal"
+                android:visibility="invisible">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:orientation="horizontal"
-            android:visibility="invisible">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_device_address"
+                    android:textSize="18sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/label_data"
-                android:textSize="18sp" />
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="wrap_content" />
 
-            <Space
-                android:layout_width="5dp"
-                android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/device_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/data_value"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/no_data"
-                android:textSize="18sp" />
+                android:layout_margin="10dp"
+                android:orientation="horizontal"
+                android:visibility="invisible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_state"
+                    android:textSize="18sp" />
+
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/connection_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/disconnected"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal"
+                android:visibility="invisible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_data"
+                    android:textSize="18sp" />
+
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/data_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no_data"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/isSerial"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/is_serial"
+                android:textSize="18sp"
+                android:visibility="invisible" />
 
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/isSerial"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/is_serial"
-            android:textSize="18sp"
-            android:visibility="invisible" />
-
-    </LinearLayout>
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>
