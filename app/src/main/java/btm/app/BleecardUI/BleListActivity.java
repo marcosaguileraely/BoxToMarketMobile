@@ -172,6 +172,7 @@ public class BleListActivity extends AppCompatActivity {
         getDevices.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                adapter.clear();
                 bleeDialog();
                 scanLeDevice();
             }
