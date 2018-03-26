@@ -87,7 +87,7 @@ public class BleListActivity extends AppCompatActivity {
 
     // Stops scanning after 10 seconds.
     private static final int REQUEST_ENABLE_BT = 1;
-    private static final long SCAN_PERIOD = 4000;
+    private static final long SCAN_PERIOD = 5000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -361,6 +361,7 @@ public class BleListActivity extends AppCompatActivity {
             mBluetoothAdapter.startLeScan(mLeScanCallback);
 
         } else {
+            Log.d(TAG, " -> -> -> -> starting LESCAN > LOLLIPOP");
             Log.d(TAG, " -> -> -> -> RUN METHOD");
             run();
         }
@@ -417,12 +418,12 @@ public class BleListActivity extends AppCompatActivity {
                     public void run() {
                         scanLeDevice();
                     }
-                }, 2500); //Timer is in ms here.
+                }, 3000); //Timer is in ms here.
             }
         }
     }
 
-    /*-
+    /*
     * =======================
     * Another methods *******
     * =======================
@@ -446,33 +447,39 @@ public class BleListActivity extends AppCompatActivity {
     @SuppressWarnings("deprecation")
     public void run() {
 
-        Log.d(TAG, " %%%%%%%%%%%%%%%%%%%%%%%%% BLEScanner" + "Running Scan!");
+        Log.d(TAG, " %%%%%%%%%%%%%%%%%%%%%%%%% BLEScanner " + " Running Scan!");
         final BluetoothManager bluetoothManager = (BluetoothManager) context.getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = bluetoothManager.getAdapter();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Log.d(TAG, "BLE Scan Started");
+        Log.d(TAG, "1");
 
-            BluetoothLeScanner scanner = mBluetoothAdapter.getBluetoothLeScanner();
+        BluetoothLeScanner scanner = mBluetoothAdapter.getBluetoothLeScanner();
+        Log.d(TAG, "2");
 
             mScanCallback = new ScanCallback() {
-                @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+                //@TargetApi(Build.VERSION_CODES.LOLLIPOP)
                 @Override
                 public void onScanResult(int callbackType, ScanResult result) {
                     super.onScanResult(callbackType, result);
+                    Log.d(TAG, "3");
                     BluetoothDevice device = result.getDevice();
-                    //Log.d(TAG, " %%%%%%%%%%%%%%% Devices " + device.toString() + " %%%%%%%%%%%%% " + device.getName());
+                    Log.d(TAG, " %%%%%%%%%%%%%%% Devices " + device.toString() + " %%%%%%%%%%%%% " + device.getName());
 
                     deviceName = nullNameConverter(device.getName());
+
                     if(deviceName.contains("Blee")){ // Only add to ArrayList<String> the Bleemini devices
-                        //Log.d(TAG, " %%%%%%%%%%%%%%% BLEEMINI FOUND " + device.toString() + " %%%%%%%%%%%%% " + device.getName());
+                        Log.d(TAG, " %%%%%%%%%%%%%%% BLEEMINI FOUND " + device.toString() + " %%%%%%%%%%%%% " + device.getName());
                         macAddress.add(device.toString());
+                        Log.d(TAG, "4");
                     }
                 }
 
-                @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+                //@TargetApi(Build.VERSION_CODES.LOLLIPOP)
                 @Override
                 public void onBatchScanResults(List<ScanResult> results) {
+                    Log.d(TAG, "5x");
                     super.onBatchScanResults(results);
                     //for (ScanResult result : results) {
                         //BluetoothDevice device = result.getDevice();
@@ -488,18 +495,21 @@ public class BleListActivity extends AppCompatActivity {
                 }
             };
 
+        Log.d(TAG, "6");
+
             ScanSettings settings = new ScanSettings.Builder()
                     .setScanMode(ScanSettings.SCAN_MODE_LOW_POWER).build();
             List<ScanFilter> filters = new ArrayList<>();
-
+        Log.d(TAG, "7");
             if (scanner != null) {
                 scanner.startScan(filters, settings, mScanCallback);
+                Log.d(TAG, "8x");
             }
-        } else {
+        //} else {
             //boolean result = mBluetoothAdapter.startLeScan(this);
             //Log.d("DEBUG", "BLE Scan Started " + result);
-        }
-
+        //}
+        Log.d(TAG, "9");
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -507,6 +517,8 @@ public class BleListActivity extends AppCompatActivity {
                 listValuesMacAddr();
             }
         }, SCAN_PERIOD);
+
+        Log.d(TAG, "10");
     }
 
     @SuppressWarnings("deprecation")
