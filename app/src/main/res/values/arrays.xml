@@ -3,7 +3,7 @@
     <string-array name="pais_select">
         <item>@string/pais</item>
         <item>+54 - Argentina</item>
-        <item>+43 - Australia</item>
+        <item>+61 - Australia</item>
         <item>+591 - Bolivia</item>
         <item>+55 - Brazil</item>
         <item>+1 - Canada</item>
