@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 
@@ -51,6 +52,9 @@ public class BluethAdapter extends ArrayAdapter<Bluethoot> {
 
         Glide.with(context)
                 .load("https://www.bleecard.com/" + bluethoot.getImg())
+                .thumbnail(0.5f)
+                .crossFade()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(img);
 
         return rowView;
