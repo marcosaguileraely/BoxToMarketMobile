@@ -7,16 +7,17 @@
     android:background="@drawable/fondoimg"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-    android:paddingTop="50dp"
+    android:paddingTop="60dp"
     tools:context="btm.app.RegisterActivity">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
@@ -27,7 +28,8 @@
                 android:orientation="vertical"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
-                android:paddingTop="0dp">
+                android:paddingTop="0dp"
+                tools:ignore="UselessParent">
 
                 <EditText
                     android:id="@+id/editText3"
@@ -39,7 +41,8 @@
                     android:elevation="24dp"
                     android:hint="@string/usuario"
                     android:inputType="textPersonName"
-                    android:padding="6dp" />
+                    android:padding="6dp"
+                    tools:ignore="UnusedAttribute" />
 
                 <EditText
                     android:id="@+id/editText4"
