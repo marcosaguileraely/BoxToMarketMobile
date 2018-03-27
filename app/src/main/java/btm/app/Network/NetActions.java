@@ -573,7 +573,6 @@ public class NetActions {
         return response.body().string();
     }
 
-
     /*
     * Este metódo permite obtener el código RSA enviando el id del Bleecard y el precio a pagar
     * Interfaz Inicial > Botón Bleecard > Listado de dispositivos Bluethooth > detalles del
@@ -623,4 +622,33 @@ public class NetActions {
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
     }
+
+    public String getCountries() throws IOException, NullPointerException {
+
+        String url = "https://www.boxtomarket.com/index.php?r=app/paises"
+                   + "&token=" + this.tkTime();
+        Log.d("DEV -> NetActions ", url);
+
+        okhttp3.Request requesthttp = new okhttp3.Request.Builder()
+                .url(url)
+                .build();
+
+        okhttp3.Response response = client.newCall(requesthttp).execute();
+        return response.body().string();
+    }
+
+    public String register(String inDatum) throws IOException, NullPointerException {
+
+        String url = "https://www.boxtomarket.com/index.php?r=app/registrar"
+                   + inDatum;
+        Log.d("DEV -> NetActions ", url);
+
+        okhttp3.Request requesthttp = new okhttp3.Request.Builder()
+                .url(url)
+                .build();
+
+        okhttp3.Response response = client.newCall(requesthttp).execute();
+        return response.body().string();
+    }
+
 }
