@@ -56,7 +56,6 @@ public class BleMiniUI extends AppCompatActivity {
     private int[] RGBFrame = {0,0,0};
 
     AlertDialog.Builder builder;
-    ProgressDialog dialog2;
     AlertDialog dialogBle;
 
     private TextView isSerial;
@@ -498,12 +497,17 @@ public class BleMiniUI extends AppCompatActivity {
         final byte[] tx = hexStringToByteArray(rsaValue);
         Log.d(TAG, "Sending byte[] = " + Arrays.toString(tx));
 
-        Log.d(TAG, "Is Connected? = " + mConnected);
+        Log.d(TAG, "//////////Is Connected? = " + mConnected);
 
         if(mConnected) {
             characteristicTX.setValue(tx);
             mBluetoothLeService.writeCharacteristic(characteristicTX);
             mBluetoothLeService.setCharacteristicNotification(characteristicRX,true);
+        }else {
+            mBluetoothLeService.disconnect();
+            mBluetoothLeService.close();
+            Intent goToList = new Intent(BleMiniUI.this, BleListActivity.class);
+            startActivity(goToList);
         }
     }
 
@@ -609,5 +613,12 @@ public class BleMiniUI extends AppCompatActivity {
         prod5  = subValues5[1];
 
         Log.d(TAG, "-> " + price1 + " " + price2 + " " + price3 + " " + price4 + " " + price5);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        mBluetoothLeService.disconnect();
+        mBluetoothLeService.close();
     }
 }
