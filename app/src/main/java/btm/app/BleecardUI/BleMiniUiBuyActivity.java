@@ -61,9 +61,7 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
     private ArrayList<CC> listTc;
     Context context = this;
 
-    AlertDialog.Builder builder;
     ProgressDialog dialog2;
-    AlertDialog dialogBle;
     AlertDialog dialog_pass_ui;
 
     private TextView isSerial;
@@ -93,59 +91,6 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
     public final static UUID HM_RX_TX = UUID.fromString(SampleGattAttributes.HM_RX_TX);
     private final String LIST_NAME = "NAME";
     private final String LIST_UUID = "UUID";
-
-    // Code to manage Service lifecycle.
-    private final ServiceConnection mServiceConnection = new ServiceConnection() {
-
-        @Override
-        public void onServiceConnected(ComponentName componentName, IBinder service) {
-            mBluetoothLeService = ((BluetoothLeService.LocalBinder) service).getService();
-            if (!mBluetoothLeService.initialize()) {
-                Log.e(TAG, "Unable to initialize Bluetooth");
-                finish();
-            }
-            // Automatically connects to the device upon successful start-up initialization.
-            String mac_address_dataholder = DataHolderBleData.getMac();
-            Log.d(TAG, " -> Mac DatHolder: " + mac_address_dataholder);
-            mBluetoothLeService.connect(mac_address_dataholder);
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName componentName) {
-            mBluetoothLeService = null;
-        }
-    };
-
-    // Handles various events fired by the Service.
-    // ACTION_GATT_CONNECTED: connected to a GATT server.
-    // ACTION_GATT_DISCONNECTED: disconnected from a GATT server.
-    // ACTION_GATT_SERVICES_DISCOVERED: discovered GATT services.
-    // ACTION_DATA_AVAILABLE: received data from the device.  This can be a result of read
-    //                        or notification operations.
-    private final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            final String action = intent.getAction();
-
-            if (BluetoothLeService.ACTION_GATT_CONNECTED.equals(action)) {
-                mConnected = true;
-                updateConnectionState(R.string.connected);
-                //invalidateOptionsMenu();
-            } else if (BluetoothLeService.ACTION_GATT_DISCONNECTED.equals(action)) {
-                mConnected = false;
-                updateConnectionState(R.string.disconnected);
-                //invalidateOptionsMenu();
-                clearUI();
-            } else if (BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {
-                // Show all the supported services and characteristics on the user interface.
-                displayGattServices(mBluetoothLeService.getSupportedGattServices());
-            } else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
-                bleeResponse = intent.getStringExtra(mBluetoothLeService.EXTRA_DATA);
-                Log.d(TAG, "---------->" + bleeResponse);
-                displayData(intent.getStringExtra(mBluetoothLeService.EXTRA_DATA));
-            }
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,8 +122,7 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
         buy         = (Button) findViewById(R.id.buy);
 
         listTc = new ArrayList<CC>();
-        line_num.setText(getString(R.string.ui_ble_mini_line_selected) + "\n #"
-                 + DataHolderBleBuy.getLiSelected());
+        line_num.setText(getString(R.string.ui_ble_mini_line_selected) + "\n #" + DataHolderBleBuy.getLiSelected());
         productName.setText(DataHolderBleBuy.getLiNameSeleted());
 
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
@@ -288,6 +232,7 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
                 }
             }
         });
+
         tC.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -302,6 +247,10 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
             }
         });
     }
+
+    /***********
+     * DIALOGS *
+     ***********/
 
     public void payWithCreditCard(){
         try {
@@ -476,6 +425,10 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
         dialog_pass_ui.show();
     }
 
+    /*******************
+     * PAYMENT METHODS *
+     *******************/
+
     public String paymentMethod(String method){
         if(method.equals("Tarjeta de Crédito") || method.equals("Credit Card")){
             return "tarjeta";
@@ -501,8 +454,9 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
     }
 
     private void displayData(String data) {
+        Log.d(TAG, "Data incoming from Device: " + data);
         if (data != null) {
-            mDataField.setText(data);
+            //mDataField.setText(data);
             if(data.equals("1") ) {
                 Log.d(TAG, "It's returning 1 number");
                 customDialogOkPayment("La máquina ha procesado exitosamente tu pedido.");
@@ -521,13 +475,12 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                //mBluetoothLeService.disconnect();
-                //Intent gotoHome = new Intent(context, MainActivity.class);
-                //startActivity(gotoHome);
             }
             else {
                 Log.d(TAG, "It's returning the 9 number");
             }
+        }else{
+            customDialog("La comunicación ha sido terminada inesperadamente. Intenta nuevamente.");
         }
     }
 
@@ -648,20 +601,6 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
         return intentFilter;
     }
 
-    // on change of bars write char
-    private void listProduct() {
-        String str = "0b64a3cd3e6099b8ba9c59183906ee37";
-        Log.d(TAG, "Sending result = " + str);
-        final byte[] tx = hexStringToByteArray(str);
-        Log.d(TAG, "Sending byte[] = " + Arrays.toString(tx));
-
-        if(mConnected) {
-            characteristicTX.setValue(tx);
-            mBluetoothLeService.writeCharacteristic(characteristicTX);
-            mBluetoothLeService.setCharacteristicNotification(characteristicRX,true);
-        }
-    }
-
     private void buyProductByLine(final String lineNumber) {
         String rsaValue = getStringJson(getRsaBuyBle());
         Log.d(TAG, "Sending result = " + rsaValue);
@@ -685,7 +624,7 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
     }
 
     private void passingLineNumber(String lineNumber) {
-        Log.d(TAG, "Sending result = " + lineNumber);
+        Log.d(TAG, "Sending line number = " + lineNumber);
         if(mConnected) {
             characteristicTX.setValue(lineNumber);
             mBluetoothLeService.writeCharacteristic(characteristicTX);
@@ -731,4 +670,71 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
         }
         return rsa;
     }
+
+    /****************
+     * GATT ACTIONS *
+     ****************/
+
+    // Code to manage Service lifecycle.
+    private final ServiceConnection mServiceConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder service) {
+            mBluetoothLeService = ((BluetoothLeService.LocalBinder) service).getService();
+            if (!mBluetoothLeService.initialize()) {
+                Log.e(TAG, "Unable to initialize Bluetooth");
+                //finish();
+            }
+            // Automatically connects to the device upon successful start-up initialization.
+            String mac_address_dataholder = DataHolderBleData.getMac();
+            Log.d(TAG, " -> Mac DatHolder: " + mac_address_dataholder);
+            mBluetoothLeService.connect(mac_address_dataholder);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            mBluetoothLeService = null;
+        }
+    };
+
+    // Handles various events fired by the Service.
+    // ACTION_GATT_CONNECTED: connected to a GATT server.
+    // ACTION_GATT_DISCONNECTED: disconnected from a GATT server.
+    // ACTION_GATT_SERVICES_DISCOVERED: discovered GATT services.
+    // ACTION_DATA_AVAILABLE: received data from the device.  This can be a result of read
+    //                        or notification operations.
+    private final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final String action = intent.getAction();
+
+            if (BluetoothLeService.ACTION_GATT_CONNECTED.equals(action)) {
+                mConnected = true;
+                updateConnectionState(R.string.connected);
+                //invalidateOptionsMenu();
+            } else if (BluetoothLeService.ACTION_GATT_DISCONNECTED.equals(action)) {
+                mConnected = false;
+                updateConnectionState(R.string.disconnected);
+                //invalidateOptionsMenu();
+                clearUI();
+            } else if (BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {
+                // Show all the supported services and characteristics on the user interface.
+                displayGattServices(mBluetoothLeService.getSupportedGattServices());
+            } else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
+                bleeResponse = intent.getStringExtra(mBluetoothLeService.EXTRA_DATA);
+                Log.d(TAG, "---------->" + bleeResponse);
+                displayData(intent.getStringExtra(mBluetoothLeService.EXTRA_DATA));
+            }
+        }
+    };
+
+
+
+
+
+
+
+
+
+
 }
