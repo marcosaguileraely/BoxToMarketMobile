@@ -128,13 +128,6 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
         bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-               // initBleDataSearch();
-            }
-        }, 3000); //Timer is in ms here.
-
         metodo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, final View view, int position, long id) {
@@ -728,13 +721,18 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
         }
     };
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent goToHome = new Intent(context, MainActivity.class);
 
-
-
-
-
-
-
-
-
+        boolean isConnected = mBluetoothLeService.connect(DataHolderBleData.getMac());
+        Log.d(TAG, "Is connected?: " + isConnected);
+        if(isConnected){
+            mBluetoothLeService.close();
+            startActivity(goToHome);
+        }else {
+            startActivity(goToHome);
+        }
+    }
 }
