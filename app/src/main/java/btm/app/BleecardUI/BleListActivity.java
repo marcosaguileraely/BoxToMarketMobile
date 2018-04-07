@@ -122,7 +122,8 @@ public class BleListActivity extends AppCompatActivity {
             customDialogYesMove(getString(R.string.error_bluetooth_ble_not_supported));
         }
 
-        // Initializes a Bluetooth adapter.  For API level 18 and above, get a reference to
+        // Initializes a Bluetooth adapter.
+        // For API level 18 and above, get a reference to
         // BluetoothAdapter through BluetoothManager.
         BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = bluetoothManager.getAdapter(); // This BluethootAdapter works for versions < LOLLIPOP (21)
@@ -172,9 +173,17 @@ public class BleListActivity extends AppCompatActivity {
         getDevices.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adapter.clear();
-                bleeDialog();
-                scanLeDevice();
+                int totalFound = blueList.getChildCount();
+                Log.d(TAG, "-> total ble found: " + totalFound);
+
+                if(totalFound >= 1){
+                    adapter.clear();
+                    bleeDialog();
+                    scanLeDevice();
+                }else{
+                    bleeDialog();
+                    scanLeDevice();
+                }
             }
         });
     }
