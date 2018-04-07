@@ -729,6 +729,7 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
         boolean isConnected = mBluetoothLeService.connect(DataHolderBleData.getMac());
         Log.d(TAG, "Is connected?: " + isConnected);
         if(isConnected){
+            //mBluetoothLeService.disconnect();
             mBluetoothLeService.close();
             startActivity(goToHome);
         }else {

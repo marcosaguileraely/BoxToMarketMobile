@@ -22,7 +22,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="140dp"
+                android:layout_height="60dp"
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:visibility="visible">
@@ -37,13 +37,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_device_address"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/device_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -56,13 +58,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_state"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/connection_state"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/disconnected"
+                        android:textColor="@color/colorWhite"
                         android:textSize="18sp" />
                 </LinearLayout>
 
@@ -76,14 +80,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_data"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/data_value"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/no_data"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:visibility="gone" />
 
                 </LinearLayout>
 

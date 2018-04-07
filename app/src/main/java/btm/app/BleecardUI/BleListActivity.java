@@ -196,6 +196,7 @@ public class BleListActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        Log.d(TAG, "////////////// Hey, I'm comming from resume.");
         super.onResume();
     }
 
@@ -385,23 +386,23 @@ public class BleListActivity extends AppCompatActivity {
     private BluetoothAdapter.LeScanCallback mLeScanCallback = new BluetoothAdapter.LeScanCallback() {
         @Override
         public void onLeScan(final BluetoothDevice device, int rssi, byte[] scanRecord) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
 
-                    Log.d(TAG, "/////////////// < LOLLIPOP");
-                    String device_macaddr = device.toString();
-                    String device_name    = device.getName();
+                Log.d(TAG, "/////////////// < LOLLIPOP");
+                String device_macaddr = device.toString();
+                String device_name    = device.getName();
 
-                    deviceName = nullNameConverter(device_name);
-                    Log.d(TAG, "/////////////// " + device_macaddr + " /////////// " + deviceName);
+                deviceName = nullNameConverter(device_name);
+                Log.d(TAG, "/////////////// " + device_macaddr + " /////////// " + deviceName);
 
-                    if(deviceName.contains("Blee")){ // Only add to ArrayList<String> the Bleemini devices
-                        Log.d(TAG, " %%%%%%%%%%%%%%% BLEEMINI FOUND " + device.toString() + " %%%%%%%%%%%%% " + device.getName());
-                        macAddress.add(device_macaddr);
-                    }
+                if(deviceName.contains("Blee")){ // Only add to ArrayList<String> the Bleemini devices
+                    Log.d(TAG, " %%%%%%%%%%%%%%% BLEEMINI FOUND " + device.toString() + " %%%%%%%%%%%%% " + device.getName());
+                    macAddress.add(device_macaddr);
                 }
-            });
+            }
+        });
         }
     };
 
