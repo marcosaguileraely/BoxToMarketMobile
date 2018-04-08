@@ -196,7 +196,7 @@ public class BleListActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        Log.d(TAG, "////////////// Hey, I'm comming from resume.");
+        //Log.d(TAG, "////////////// Hey, I'm comming from resume.");
         super.onResume();
     }
 

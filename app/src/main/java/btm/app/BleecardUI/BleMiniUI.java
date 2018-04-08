@@ -44,6 +44,7 @@ import java.util.UUID;
 import btm.app.DataHolder.DataHolder;
 import btm.app.DataHolder.DataHolderBleBuy;
 import btm.app.DataHolder.DataHolderBleData;
+import btm.app.MainActivity;
 import btm.app.Model.Subscriptions;
 import btm.app.R;
 
@@ -618,7 +619,16 @@ public class BleMiniUI extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        mBluetoothLeService.disconnect();
-        mBluetoothLeService.close();
+        Intent goToSearch = new Intent(context, MainActivity.class);
+
+        boolean isConnected = mBluetoothLeService.connect(DataHolderBleData.getMac());
+        Log.d(TAG, "Is connected?: " + isConnected);
+        if(isConnected){
+            mBluetoothLeService.close();
+            //mBluetoothLeService.disconnect();
+            startActivity(goToSearch);
+        }else {
+            startActivity(goToSearch);
+        }
     }
 }
