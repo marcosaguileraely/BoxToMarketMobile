@@ -92,23 +92,25 @@ public class BleMiniUI extends AppCompatActivity {
     private final String LIST_UUID = "UUID";
 
     // Code to manage Service lifecycle.
+    // Here is where the Device is conected vía Mac Address
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder service) {
             mBluetoothLeService = ((BluetoothLeService.LocalBinder) service).getService();
             if (!mBluetoothLeService.initialize()) {
-                Log.e(TAG, "Unable to initialize Bluetooth");
+                Log.e(TAG, ":( Unable to initialize Bluetooth");
                 finish();
             }
             // Automatically connects to the device upon successful start-up initialization.
             String mac_address_dataholder = DataHolderBleData.getMac();
-            Log.d(TAG, " -> Mac DatHolder: " + mac_address_dataholder);
+            Log.d(TAG, ":) *************** Mac DatHolder: " + mac_address_dataholder);
             mBluetoothLeService.connect(mac_address_dataholder);
         }
 
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
+            Log.d(TAG, ":( *************** Service disconnected:");
             mBluetoothLeService = null;
         }
     };
@@ -196,6 +198,7 @@ public class BleMiniUI extends AppCompatActivity {
 
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
         bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
+        registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
 
         bleeDialog(); //Starts the Blee loader
         new Handler().postDelayed(new Runnable() {
@@ -203,14 +206,14 @@ public class BleMiniUI extends AppCompatActivity {
             public void run() {
                 initBleDataSearch();
             }
-        }, 3000); //Timer is in ms here.
+        }, 1500); //Timer is in ms here.
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DataHolderBleBuy.setLiSelected("1");
                 DataHolderBleBuy.setLiNameSeleted(prod1);
-                mBluetoothLeService.disconnect();
+                //mBluetoothLeService.disconnect();
 
                 Intent goToBuy =  new Intent(BleMiniUI.this, BleMiniUiBuyActivity.class);
                 startActivity(goToBuy);
@@ -264,27 +267,36 @@ public class BleMiniUI extends AppCompatActivity {
                 startActivity(goToBuy);
             }
         });
+        Log.d(TAG, "*********** Acceso a la Actividad iniciado");
     }
 
     private void clearUI() {
         mDataField.setText(R.string.no_data);
+        Log.d(TAG, "*********** NO DATA");
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         //bleeDialog();
+        /*Log.d(TAG, ":) *********** Acceso a la Actividad iniciado");
         registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
+        Log.d(TAG, ":) *********** mBluetoothLeService: " + mBluetoothLeService);
         if (mBluetoothLeService != null) {
+            Log.d(TAG, ":) *********** mBluetoothLeService verificado");
             final boolean result = mBluetoothLeService.connect(mDeviceAddress);
+            Log.d(TAG, ":) *********** mBluetoothLeService conectado");
             Log.d(TAG, "Connect request result=" + result);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     initBleDataSearch();
                 }
-            }, 3000); //Timer is in ms here.
-        }
+            }, 1500); //Timer is in ms here. it was 3000 ms
+        }else{
+            Log.d(TAG, ":( *********** mBluetoothLeService es null");
+        }*/
     }
 
     @Override
@@ -301,6 +313,7 @@ public class BleMiniUI extends AppCompatActivity {
     }
 
     private void displayData(String data) {
+        Log.d(TAG, "*********** Data incoming: " + data);
         if (data != null) {
             mDataField.setText(data);
             if(data.length() > 1) {
@@ -328,10 +341,10 @@ public class BleMiniUI extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.menu_connect:
-                mBluetoothLeService.connect(mDeviceAddress);
+                //mBluetoothLeService.connect(mDeviceAddress);
                 return true;
             case R.id.menu_disconnect:
-                mBluetoothLeService.disconnect();
+                //mBluetoothLeService.disconnect();
                 return true;
             case android.R.id.home:
                 onBackPressed();
@@ -463,15 +476,14 @@ public class BleMiniUI extends AppCompatActivity {
         for (BluetoothGattService gattService : gattServices) {
             HashMap<String, String> currentServiceData = new HashMap<String, String>();
             uuid = gattService.getUuid().toString();
-            currentServiceData.put(
-                    LIST_NAME, SampleGattAttributes.lookup(uuid, unknownServiceString));
+            currentServiceData.put(LIST_NAME, SampleGattAttributes.lookup(uuid, unknownServiceString));
 
             // If the service exists for HM 10 Serial, say so.
             if(SampleGattAttributes.lookup(uuid, unknownServiceString) == "HM 10 Serial") {
                 isSerial.setText("Yes, serial :-)");
             }
-            else {  isSerial.setText("No, serial :-(");
-
+            else {
+                isSerial.setText("No, serial :-(");
             }
             currentServiceData.put(LIST_UUID, uuid);
             gattServiceData.add(currentServiceData);
@@ -503,7 +515,7 @@ public class BleMiniUI extends AppCompatActivity {
         if(mConnected) {
             characteristicTX.setValue(tx);
             mBluetoothLeService.writeCharacteristic(characteristicTX);
-            mBluetoothLeService.setCharacteristicNotification(characteristicRX,true);
+            mBluetoothLeService.setCharacteristicNotification(characteristicRX, true);
         }else {
             mBluetoothLeService.disconnect();
             mBluetoothLeService.close();

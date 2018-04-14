@@ -253,7 +253,7 @@ public class BleListActivity extends AppCompatActivity {
                     items.add(new Bluethoot( deviceMac, deviceName, details.getId(), details.getImg_uri(), details.getType()) );
                     adapter = new BluethAdapter(context, items);
                     blueList.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
+                    //adapter.notifyDataSetChanged();
                 }
 
             } catch (JSONException e) {

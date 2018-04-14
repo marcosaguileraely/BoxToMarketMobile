@@ -406,13 +406,13 @@ public class MainActivity extends AppCompatActivity {
                     return PlaceholderFragment.newInstance(Integer.valueOf(pais), data);
                     //break;
 
-                case 1:
+                /*case 1:
                     return PlaceholderFragment_sell.newInstance(1);
                     //break;
 
                 case 2:
                     return PlaceholderFragment_buy.newInstance(1);
-                    //break;
+                    //break;*/
             }
 
             return PlaceholderFragment.newInstance(position + 1,"");

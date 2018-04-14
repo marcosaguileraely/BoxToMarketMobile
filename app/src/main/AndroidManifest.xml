@@ -11,15 +11,16 @@
 
     <!-- Permission to use camera - required -->
 
-
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-    <uses-feature android:name="android.hardware.bluetooth" android:required="false"/>
+    <uses-feature
+        android:name="android.hardware.bluetooth"
+        android:required="false" />
     <uses-feature
         android:name="android.hardware.bluetooth_le"
         android:required="true" />
@@ -38,9 +39,9 @@
     <application
         android:allowBackup="true"
         android:hardwareAccelerated="false"
-        android:largeHeap="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
@@ -119,15 +120,18 @@
         <activity
             android:name=".ChangePassActivity"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".BleecardUI.BleVendingUI"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".BleecardUI.BleMiniUI"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".BleecardUI.DeviceScanActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".BleecardUI.DeviceControlActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".BleecardUI.BleVendingUI"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".BleecardUI.BleMiniUI"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".BleecardUI.DeviceScanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".BleecardUI.DeviceControlActivity"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".BleecardUI.BluetoothLeService"
@@ -135,16 +139,14 @@
 
         <activity
             android:name=".BleecardUI.BleMiniUIDetails"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".BleecardUI.BleListActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".BleecardUI.BleMiniUiBuyActivity"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait" />
+        <activity android:name=".BleecardUI.BleecardPayActivity"></activity>
     </application>
 
 </manifest>
