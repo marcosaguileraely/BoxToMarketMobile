@@ -2,6 +2,7 @@ package btm.app.BleecardUI;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
 import android.content.BroadcastReceiver;
@@ -11,8 +12,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -63,6 +66,8 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
 
     ProgressDialog dialog2;
     AlertDialog dialog_pass_ui;
+    Handler mHandler;
+    boolean isTheDeviceConnected = false;
 
     private TextView isSerial;
     private TextView mConnectionState;
@@ -217,10 +222,8 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
 
                         Log.d(TAG, "--> Datos: " + walletData);
                         passwordDialog("subs_payment");
-
                     }else {
                         customDialogNoMove("Actualmente no tienes una Suscripción Abierta para este producto. Por favor compra una Suscripción.");
-
                     }
                 }
             }
@@ -241,144 +244,13 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
         });
     }
 
+
     /***********
      * DIALOGS *
      ***********/
 
-    public void payWithCreditCard(){
-        try {
-            webResponse = new btm.app.Network.NetActions(context).btmMiniPayment(creditCardData);
-            Log.d(TAG, " oKHttp response: " + webResponse);
-
-            if(webResponse.equals("Consumo exitoso")){
-                initBleDataSearch();
-                dialog_pass_ui.dismiss();
-                dialog2.setCanceledOnTouchOutside(false);
-                dialog2.setMessage(getString(R.string.inf_dialog));
-                dialog2.show();
-            }else{
-                dialog_pass_ui.dismiss();
-                customDialog(webResponse);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void payWithWallet(){
-        try {
-            webResponse = new btm.app.Network.NetActions(context).btmMiniPayment(walletData);
-            Log.d(TAG, " oKHttp response: " + webResponse);
-
-            if(webResponse.equals("Consumo exitoso")){
-                initBleDataSearch();
-                dialog_pass_ui.dismiss();
-                dialog2.setCanceledOnTouchOutside(false);
-                dialog2.setMessage(getString(R.string.inf_dialog));
-                dialog2.show();
-            }else{
-                dialog_pass_ui.dismiss();
-                customDialog(webResponse);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void payWithSubscriptions(){
-        try {
-            webResponse = new btm.app.Network.NetActions(context).btmMiniPayment(subscriptionData);
-            Log.d(TAG, " oKHttp response: " + webResponse);
-
-            if(webResponse.equals("Consumo exitoso")){
-                initBleDataSearch();
-                dialog_pass_ui.dismiss();
-                dialog2.setCanceledOnTouchOutside(false);
-                dialog2.setMessage(getString(R.string.inf_dialog));
-                dialog2.show();
-            }else{
-                dialog_pass_ui.dismiss();
-                customDialog(webResponse);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void customDialog(String inDatum){
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage(inDatum);
-        builder.setCancelable(false);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-                mBluetoothLeService.disconnect();
-                Intent intent = new Intent(context, MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
-    public void customPasswordDialog(String inDatum){
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
-        builder.setMessage(inDatum);
-        builder.setCancelable(false);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-                //mBluetoothLeService.disconnect();
-                //Intent intent = new Intent(context, MainActivity.class);
-                //startActivity(intent);
-            }
-        });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
-    public void customDialogNoMove(String inDatum){
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage(inDatum);
-        builder.setCancelable(false);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-                mBluetoothLeService.disconnect();
-                Intent intent = new Intent(context, MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
-    public void customDialogOkPayment(String inDatum){
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
-        builder.setMessage(inDatum);
-        builder.setCancelable(false);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-                mBluetoothLeService.disconnect();
-                Intent intent = new Intent(context, MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
     public void passwordDialog(final String inDatum){
+
         AlertDialog.Builder builder_pass_dialog = new AlertDialog.Builder(context);
         final LayoutInflater inflater = BleMiniUiBuyActivity.this.getLayoutInflater();
 
@@ -418,6 +290,192 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
         dialog_pass_ui.show();
     }
 
+    public void payWithCreditCard(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Log.d(TAG, " ///// Device conection status: " + mConnected);
+                if(mConnected){
+                    try {
+                        webResponse = new btm.app.Network.NetActions(context).btmMiniPayment(creditCardData);
+                        Log.d(TAG, " oKHttp response: " + webResponse);
+
+                        if(webResponse.equals("Consumo exitoso")){
+                            dialog_pass_ui.dismiss();
+                            dialog2.setCanceledOnTouchOutside(false);
+                            dialog2.setMessage(getString(R.string.inf_dialog));
+                            dialog2.show();
+
+                            buyProductByLine(DataHolderBleBuy.getLiSelected()); //this execute the Ble trigger
+
+                        }else{
+                            dialog_pass_ui.dismiss();
+                            customDialog(webResponse);
+                        }
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }else{
+                    BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+                    if (mBluetoothAdapter.isEnabled()) {
+                        mBluetoothAdapter.disable();
+                    }
+                    customDialogOkPayment("# BU # \n\nTu dispositivo móvil ha presentado un problema de comunicación con la máquina. La transacción ha finalizado. \n\n Por favor intenta nuevamente.");
+                }
+            }
+        });
+    }
+
+    public void payWithWallet(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Log.d(TAG, " ///// Device conection status: " + mConnected);
+                if(mConnected){
+                    try {
+                        webResponse = new btm.app.Network.NetActions(context).btmMiniPayment(walletData);
+                        Log.d(TAG, " oKHttp response: " + webResponse);
+
+                        if(webResponse.equals("Consumo exitoso")){
+                            dialog_pass_ui.dismiss();
+                            dialog2.setCanceledOnTouchOutside(false);
+                            dialog2.setMessage(getString(R.string.inf_dialog));
+                            dialog2.show();
+
+                            buyProductByLine(DataHolderBleBuy.getLiSelected()); //this execute the Ble trigger
+
+                        }else{
+                            dialog_pass_ui.dismiss();
+                            customDialog(webResponse);
+                        }
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }else {
+                    BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+                    if (mBluetoothAdapter.isEnabled()) {
+                        mBluetoothAdapter.disable();
+                    }
+                    customDialogOkPayment("# BU # \n\nTu dispositivo móvil ha presentado un problema de comunicación con la máquina. La transacción ha finalizado. \n\n Por favor intenta nuevamente.");
+                }
+            }
+        });
+    }
+
+    public void payWithSubscriptions(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Log.d(TAG, " ///// Device conection status: " + mConnected);
+                if(mConnected){
+                    try {
+                        webResponse = new btm.app.Network.NetActions(context).btmMiniPayment(subscriptionData);
+                        Log.d(TAG, " oKHttp response: " + webResponse);
+
+                        if(webResponse.equals("Consumo exitoso")){
+                            dialog_pass_ui.dismiss();
+                            dialog2.setCanceledOnTouchOutside(false);
+                            dialog2.setMessage(getString(R.string.inf_dialog));
+                            dialog2.show();
+
+                            buyProductByLine(DataHolderBleBuy.getLiSelected()); //this execute the Ble trigger
+
+                        }else{
+                            dialog_pass_ui.dismiss();
+                            customDialog(webResponse);
+                        }
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }else {
+                    BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+                    if (mBluetoothAdapter.isEnabled()) {
+                        mBluetoothAdapter.disable();
+                    }
+                    customDialogOkPayment("# BU # \n\nTu dispositivo móvil ha presentado un problema de comunicación con la máquina. La transacción ha finalizado. \n\n Por favor intenta nuevamente.");
+                }
+            }
+        });
+    }
+
+    public void customDialog(String inDatum){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(inDatum);
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+                //mBluetoothLeService.disconnect();
+                mBluetoothLeService.close(); //I thing i could fix some stuff
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public void customPasswordDialog(String inDatum){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setMessage(inDatum);
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+                //mBluetoothLeService.disconnect();
+                //Intent intent = new Intent(context, MainActivity.class);
+                //startActivity(intent);
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public void customDialogNoMove(String inDatum){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(inDatum);
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+                //mBluetoothLeService.disconnect();
+                mBluetoothLeService.close(); //I thing i could fix some stuff
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public void customDialogOkPayment(String inDatum){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setMessage(inDatum);
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+                //mBluetoothLeService.disconnect();
+                mBluetoothLeService.close(); //I thing i could fix some stuff
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
     /*******************
      * PAYMENT METHODS *
      *******************/
@@ -452,8 +510,8 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
             //mDataField.setText(data);
             if(data.equals("1") ) {
                 Log.d(TAG, "It's returning 1 number");
-                customDialogOkPayment("La máquina ha procesado exitosamente tu pedido.");
-            }else if (data.equals("0")){
+                customDialogOkPayment("# B1 #\n\n La máquina ha procesado exitosamente tu pedido.");
+            }if (data.equals("0")){
                 Log.d(TAG, "It's returning 0 number");
                 String datos_ws = DataHolder.getUsername();
                 try {
@@ -461,16 +519,22 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
                     Log.d(TAG, " ***///*** oKHttp response: " + datos_ws);
 
                     if( datos_ws.equals("Pago Chargeback exitoso")){
-                        customDialog("La máquina no procesó tu pedido. Si usaste como método de pago Tarjeta de Crédito ó Mi Billetera el valor pagado se reintegrará a Mi Billetera, sino la cantidad debitada se reintegrará a tu suscripcion.");
+                        customDialog("# B0 # \n\nLa máquina no procesó tu pedido. Si usaste como método de pago Tarjeta de Crédito ó Mi Billetera el valor pagado se reintegrará a Mi Billetera, sino la cantidad debitada se reintegrará a tu suscripcion.");
                     }else {
-                        customDialog("La máquina no procesó tu pedido. Si usaste como método de pago Tarjeta de Crédito ó Mi Billetera el valor pagado se reintegrará a Mi Billetera, sino la cantidad debitada se reintegrará a tu suscripcion.");
+                        customDialog("# B0 #\n\n La máquina no procesó tu pedido. Si usaste como método de pago Tarjeta de Crédito ó Mi Billetera el valor pagado se reintegrará a Mi Billetera, sino la cantidad debitada se reintegrará a tu suscripcion.");
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }
-            else {
-                Log.d(TAG, "It's returning the 9 number");
+            } if (data.equals("8")){
+                Log.d(TAG, "It's returning the 8 number");
+                mBluetoothLeService.close();
+                customDialogOkPayment("# B8 #\n\n Se ha presentado un problema de comunicación con la máquina. Por favor verifique su saldo e intente nuevamente.");
+                //Disable bluetooth
+                BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+                if (mBluetoothAdapter.isEnabled()) {
+                    mBluetoothAdapter.disable();
+                }
             }
         }else{
             customDialog("La comunicación ha sido terminada inesperadamente. Intenta nuevamente.");
@@ -542,12 +606,22 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
         });
     }
 
+    //not in use
     private void initBleDataSearch(){
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Toast.makeText(context, "The ble status is: " + mConnected, Toast.LENGTH_LONG).show();
-                buyProductByLine(DataHolderBleBuy.getLiSelected());
+                if(mConnected){
+                    isTheDeviceConnected = true;
+                }else {
+                    isTheDeviceConnected = false;
+                    BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+                    if (mBluetoothAdapter.isEnabled()) {
+                        mBluetoothAdapter.disable();
+                    }
+                    customDialogOkPayment("# UX000 # \n\n Tu dispositivo móvil ha presentado un problema de comunicación con la máquina. La transacción ha finalizado. \n\n Por favor intenta nuevamente.");
+                }
             }
         });
     }
@@ -595,25 +669,40 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
     }
 
     private void buyProductByLine(final String lineNumber) {
+        Log.d(TAG, "///// Getting RSA WebServices /////");
+
+        new AsyncGetHttpData().execute("");
+
         String rsaValue = getStringJson(getRsaBuyBle());
         Log.d(TAG, "Sending result = " + rsaValue);
-        //String str = "0a6455df41b578fdcf0115d61b0043c9";
-        //Log.d(TAG, "Sending result = " + str);
         final byte[] tx = hexStringToByteArray(rsaValue);
         Log.d(TAG, "Sending byte[] = " + Arrays.toString(tx));
 
         if(mConnected) {
+
             characteristicTX.setValue(tx);
             mBluetoothLeService.writeCharacteristic(characteristicTX);
             mBluetoothLeService.setCharacteristicNotification(characteristicRX,true);
-        }
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                passingLineNumber(lineNumber);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    passingLineNumber(lineNumber);
+                }
+            }, 1000); //Timer is in ms here.
+
+        }else {
+
+            dialog2.dismiss();
+            BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+            if (mBluetoothAdapter.isEnabled()) {
+                mBluetoothAdapter.disable();
             }
-        }, 2000); //Timer is in ms here.
+            customDialogOkPayment("# UX000 #\n\nTu dispositivo móvil ha presentado un problema de comunicación con la máquina." +
+                                  "La transacción ha finalizado.\n\n" +
+                                  "Por favor intenta nuevamente.");
+
+        }
     }
 
     private void passingLineNumber(String lineNumber) {
@@ -622,6 +711,13 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
             characteristicTX.setValue(lineNumber);
             mBluetoothLeService.writeCharacteristic(characteristicTX);
             mBluetoothLeService.setCharacteristicNotification(characteristicRX,true);
+        }else {
+            dialog2.dismiss();
+            BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+            if (mBluetoothAdapter.isEnabled()) {
+                mBluetoothAdapter.disable();
+            }
+            customDialogOkPayment("# UX000 # \n\n Tu dispositivo móvil ha presentado un problema de comunicación con la máquina. La transacción ha finalizado. \n\n Por favor intenta nuevamente.");
         }
     }
 
@@ -640,6 +736,7 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
     }
 
     public String getRsaBuyBle(){
+        Log.d(TAG, " //// http request //// ");
         try {
             dataResponse = new btm.app.Network.NetActions(context).getBleBuyRsa(DataHolderBleData.getId());
             Log.d(TAG, " oKHttp response: " + dataResponse);
@@ -649,7 +746,6 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
         }  catch (JSONException e) {
             e.printStackTrace();
         }
-
         return dataResponse;
     }
 
@@ -699,25 +795,45 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
     private final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            final String action = intent.getAction();
+        final String action = intent.getAction();
 
-            if (BluetoothLeService.ACTION_GATT_CONNECTED.equals(action)) {
-                mConnected = true;
-                updateConnectionState(R.string.connected);
-                //invalidateOptionsMenu();
-            } else if (BluetoothLeService.ACTION_GATT_DISCONNECTED.equals(action)) {
-                mConnected = false;
-                updateConnectionState(R.string.disconnected);
-                //invalidateOptionsMenu();
-                clearUI();
-            } else if (BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {
-                // Show all the supported services and characteristics on the user interface.
-                displayGattServices(mBluetoothLeService.getSupportedGattServices());
-            } else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
-                bleeResponse = intent.getStringExtra(mBluetoothLeService.EXTRA_DATA);
-                Log.d(TAG, "---------->" + bleeResponse);
+        if (BluetoothLeService.ACTION_GATT_CONNECTED.equals(action)) {
+            mConnected = true;
+            updateConnectionState(R.string.connected);
+            //invalidateOptionsMenu();
+        } else if (BluetoothLeService.ACTION_GATT_DISCONNECTED.equals(action)) {
+            mConnected = false;
+            updateConnectionState(R.string.disconnected);
+            //invalidateOptionsMenu();
+            clearUI();
+        } else if (BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {
+            // Show all the supported services and characteristics on the user interface.
+            displayGattServices(mBluetoothLeService.getSupportedGattServices());
+        } else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
+            bleeResponse = intent.getStringExtra(mBluetoothLeService.EXTRA_DATA);
+            Log.d(TAG, "---------->" + bleeResponse);
+
+            if( bleeResponse.equals("9") ||
+                bleeResponse.equals("1") ||
+                bleeResponse.equals("0") ||
+                bleeResponse.equals("8")){
+
                 displayData(intent.getStringExtra(mBluetoothLeService.EXTRA_DATA));
+            }else {
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //mBluetoothLeService.close();
+                        //Disable bluetooth
+                        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+                        if (mBluetoothAdapter.isEnabled()) {
+                            mBluetoothAdapter.disable();
+                        }
+                        customDialogOkPayment("# Undefined # La transacción ha finalizado.");
+                    }
+                }, 10000);
             }
+        }
         }
     };
 
@@ -736,4 +852,36 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
             startActivity(goToHome);
         }
     }
+
+    /*******************
+     * THREADS ACTIONS *
+     *******************/
+
+    private class AsyncGetHttpData extends AsyncTask<String, Void, String> {
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    getRsaBuyBle();
+                }
+            });
+            return "Executed";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {}
+    }
+
 }
