@@ -13,7 +13,9 @@ import android.bluetooth.le.ScanResult;
 import android.bluetooth.le.ScanSettings;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Looper;
 import android.view.MenuItem;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -87,7 +89,7 @@ public class BleListActivity extends AppCompatActivity {
 
     // Stops scanning after 10 seconds.
     private static final int REQUEST_ENABLE_BT = 1;
-    private static final long SCAN_PERIOD = 5000;
+    private static final long SCAN_PERIOD = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -186,6 +188,7 @@ public class BleListActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     /*Activity Actions*/
@@ -429,7 +432,7 @@ public class BleListActivity extends AppCompatActivity {
                     public void run() {
                         scanLeDevice();
                     }
-                }, 3000); //Timer is in ms here.
+                }, 2000); //Timer is in ms here.
             }
         }
     }
@@ -463,11 +466,11 @@ public class BleListActivity extends AppCompatActivity {
         mBluetoothAdapter = bluetoothManager.getAdapter();
 
         //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Log.d(TAG, "BLE Scan Started");
-        Log.d(TAG, "1");
+        Log.d(TAG, "BLE Scan Started");
+        //Log.d(TAG, "1");
 
         BluetoothLeScanner scanner = mBluetoothAdapter.getBluetoothLeScanner();
-        Log.d(TAG, "2");
+        //Log.d(TAG, "2");
 
             mScanCallback = new ScanCallback() {
                 //@TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -506,21 +509,21 @@ public class BleListActivity extends AppCompatActivity {
                 }
             };
 
-        Log.d(TAG, "6");
+        //Log.d(TAG, "6");
 
             ScanSettings settings = new ScanSettings.Builder()
                     .setScanMode(ScanSettings.SCAN_MODE_LOW_POWER).build();
             List<ScanFilter> filters = new ArrayList<>();
-        Log.d(TAG, "7");
+        //Log.d(TAG, "7");
             if (scanner != null) {
                 scanner.startScan(filters, settings, mScanCallback);
-                Log.d(TAG, "8x");
+                //Log.d(TAG, "8x");
             }
         //} else {
             //boolean result = mBluetoothAdapter.startLeScan(this);
             //Log.d("DEBUG", "BLE Scan Started " + result);
         //}
-        Log.d(TAG, "9");
+        //Log.d(TAG, "9");
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -529,7 +532,7 @@ public class BleListActivity extends AppCompatActivity {
             }
         }, SCAN_PERIOD);
 
-        Log.d(TAG, "10");
+        //Log.d(TAG, "10");
     }
 
     @SuppressWarnings("deprecation")
@@ -579,7 +582,7 @@ public class BleListActivity extends AppCompatActivity {
                 dialogBle.dismiss();
                 totalListItems();
             }
-        }, 1500); //Timer is in ms here.
+        }, 1200); //Timer is in ms here.
     }
 
     private boolean findItemInTheList(String itemToFind) {
@@ -591,4 +594,36 @@ public class BleListActivity extends AppCompatActivity {
             return false;
         }
     }
+
+    /*******************
+     * THREADS ACTIONS *
+     *******************/
+
+    private class AsyncGetHttpData extends AsyncTask<String, Void, String> {
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                   // getRsaBuyBle();
+                }
+            });
+            return "Executed";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {}
+    }
+
 }
