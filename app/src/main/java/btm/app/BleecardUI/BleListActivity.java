@@ -175,6 +175,7 @@ public class BleListActivity extends AppCompatActivity {
         getDevices.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //restartBluetooth();
                 int totalFound = blueList.getChildCount();
                 Log.d(TAG, "-> total ble found: " + totalFound);
 
@@ -624,6 +625,24 @@ public class BleListActivity extends AppCompatActivity {
 
         @Override
         protected void onProgressUpdate(Void... values) {}
+    }
+
+    public void restartBluetooth(){
+        if (mBluetoothAdapter == null) {
+            customDialogYesMove(getString(R.string.error_bluetooth_not_supported));
+        }else {
+            //
+            if (!isBluetoothEnabled()) {
+                // Bluetooth is not enable :)
+                Log.d(TAG, " ========> BLUETHOOT TURNED OFF");
+                enableBTAutomatically(v);
+            }else {
+                // Bluetooth is not enable :)
+                Log.d(TAG, " ========> BLUETHOOT TURNED ON XDXDXDXD ");
+                bleeDialog();
+                scanLeDevice();
+            }
+        }
     }
 
 }
