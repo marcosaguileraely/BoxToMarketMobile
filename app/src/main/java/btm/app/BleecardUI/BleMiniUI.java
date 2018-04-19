@@ -85,8 +85,7 @@ public class BleMiniUI extends AppCompatActivity {
     private BluetoothGattCharacteristic characteristicTX;
     private BluetoothGattCharacteristic characteristicRX;
 
-    public final static UUID HM_RX_TX =
-            UUID.fromString(SampleGattAttributes.HM_RX_TX);
+    public final static UUID HM_RX_TX = UUID.fromString(SampleGattAttributes.HM_RX_TX);
 
     private final String LIST_NAME = "NAME";
     private final String LIST_UUID = "UUID";
@@ -131,8 +130,8 @@ public class BleMiniUI extends AppCompatActivity {
                 updateConnectionState(R.string.connected);
                 //invalidateOptionsMenu();
             } else if (BluetoothLeService.ACTION_GATT_DISCONNECTED.equals(action)) {
-                mConnected = false;
-                updateConnectionState(R.string.disconnected);
+                //mConnected = false;
+                //updateConnectionState(R.string.disconnected);
                 //invalidateOptionsMenu();
                 clearUI();
             } else if (BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {
@@ -213,7 +212,7 @@ public class BleMiniUI extends AppCompatActivity {
             public void onClick(View v) {
                 DataHolderBleBuy.setLiSelected("1");
                 DataHolderBleBuy.setLiNameSeleted(prod1);
-                //mBluetoothLeService.disconnect();
+                mBluetoothLeService.disconnect();
 
                 Intent goToBuy =  new Intent(BleMiniUI.this, BleMiniUiBuyActivity.class);
                 startActivity(goToBuy);
@@ -225,7 +224,7 @@ public class BleMiniUI extends AppCompatActivity {
             public void onClick(View v) {
                 DataHolderBleBuy.setLiSelected("2");
                 DataHolderBleBuy.setLiNameSeleted(prod2);
-                mBluetoothLeService.disconnect();
+                //mBluetoothLeService.disconnect();
 
                 Intent goToBuy =  new Intent(BleMiniUI.this, BleMiniUiBuyActivity.class);
                 startActivity(goToBuy);
@@ -237,7 +236,7 @@ public class BleMiniUI extends AppCompatActivity {
             public void onClick(View v) {
                 DataHolderBleBuy.setLiSelected("3");
                 DataHolderBleBuy.setLiNameSeleted(prod3);
-                mBluetoothLeService.disconnect();
+                //mBluetoothLeService.disconnect();
 
                 Intent goToBuy =  new Intent(BleMiniUI.this, BleMiniUiBuyActivity.class);
                 startActivity(goToBuy);
@@ -249,7 +248,7 @@ public class BleMiniUI extends AppCompatActivity {
             public void onClick(View v) {
                 DataHolderBleBuy.setLiSelected("4");
                 DataHolderBleBuy.setLiNameSeleted(prod4);
-                mBluetoothLeService.disconnect();
+                //mBluetoothLeService.disconnect();
 
                 Intent goToBuy =  new Intent(BleMiniUI.this, BleMiniUiBuyActivity.class);
                 startActivity(goToBuy);
@@ -261,7 +260,7 @@ public class BleMiniUI extends AppCompatActivity {
             public void onClick(View v) {
                 DataHolderBleBuy.setLiSelected("5");
                 DataHolderBleBuy.setLiNameSeleted(prod5);
-                mBluetoothLeService.disconnect();
+                //mBluetoothLeService.disconnect();
 
                 Intent goToBuy =  new Intent(BleMiniUI.this, BleMiniUiBuyActivity.class);
                 startActivity(goToBuy);
@@ -271,17 +270,27 @@ public class BleMiniUI extends AppCompatActivity {
     }
 
     private void clearUI() {
-        mDataField.setText(R.string.no_data);
+        //mDataField.setText(R.string.no_data);
         Log.d(TAG, "*********** NO DATA");
+        Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
+        bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
+        registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
 
+        bleeDialog(); //Starts the Blee loader
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                initBleDataSearch();
+            }
+        }, 1500); //Timer is in ms here.
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
         //bleeDialog();
         /*Log.d(TAG, ":) *********** Acceso a la Actividad iniciado");
-        registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
         Log.d(TAG, ":) *********** mBluetoothLeService: " + mBluetoothLeService);
         if (mBluetoothLeService != null) {
             Log.d(TAG, ":) *********** mBluetoothLeService verificado");
@@ -406,7 +415,6 @@ public class BleMiniUI extends AppCompatActivity {
         text5.setText("Disponible: " + String.valueOf(value5));
 
         try {
-            //data = new btm.app.Network.NetActions(context).getBlePrice(DataHolderBleData.getId());
             data = new btm.app.Network.NetActions(context).getBlePriceAndNames(DataHolderBleData.getId());
             getMachinesPriceList(data);
 
@@ -511,16 +519,29 @@ public class BleMiniUI extends AppCompatActivity {
         Log.d(TAG, "Sending byte[] = " + Arrays.toString(tx));
 
         Log.d(TAG, "//////////Is Connected? = " + mConnected);
+        Log.d(TAG, "//////////characteristicTX = " + characteristicRX);
 
         if(mConnected) {
-            characteristicTX.setValue(tx);
-            mBluetoothLeService.writeCharacteristic(characteristicTX);
-            mBluetoothLeService.setCharacteristicNotification(characteristicRX, true);
+            try {
+                characteristicTX.setValue(tx);
+                mBluetoothLeService.writeCharacteristic(characteristicTX);
+                mBluetoothLeService.setCharacteristicNotification(characteristicRX, true);
+            } catch (NullPointerException e) {
+                Log.e(TAG, " error " + e);
+            }
         }else {
+            Log.d(TAG, "*********** Upss! I'm trying again ");
             mBluetoothLeService.disconnect();
             mBluetoothLeService.close();
             Intent goToList = new Intent(BleMiniUI.this, BleListActivity.class);
             startActivity(goToList);
+            //bleeDialog(); //Starts the Blee loader
+            //new Handler().postDelayed(new Runnable() {
+            //    @Override
+            //    public void run() {
+            //        initBleDataSearch();
+            //    }
+            //}, 1500); //Timer is in ms here.
         }
     }
 
@@ -585,7 +606,7 @@ public class BleMiniUI extends AppCompatActivity {
             public void run() {
                 dialogBle.dismiss();
             }
-        }, 7000); //Timer is in ms here.
+        }, 6000); //Timer is in ms here.
     }
 
     public void getMachinesPriceList(String response){

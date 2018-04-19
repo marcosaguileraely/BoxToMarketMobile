@@ -679,7 +679,6 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
         Log.d(TAG, "Sending byte[] = " + Arrays.toString(tx));
 
         if(mConnected) {
-
             characteristicTX.setValue(tx);
             mBluetoothLeService.writeCharacteristic(characteristicTX);
             mBluetoothLeService.setCharacteristicNotification(characteristicRX,true);
@@ -689,10 +688,9 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
                 public void run() {
                     passingLineNumber(lineNumber);
                 }
-            }, 1000); //Timer is in ms here.
+            }, 2000); //Timer is in ms here.
 
         }else {
-
             dialog2.dismiss();
             BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
             if (mBluetoothAdapter.isEnabled()) {
@@ -763,7 +761,6 @@ public class BleMiniUiBuyActivity extends AppCompatActivity {
     /****************
      * GATT ACTIONS *
      ****************/
-
     // Code to manage Service lifecycle.
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
 
