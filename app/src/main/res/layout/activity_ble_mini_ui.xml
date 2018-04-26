@@ -623,14 +623,11 @@
                                             android:textColor="@color/colorWhite"
                                             android:textSize="14sp" />
                                     </LinearLayout>
-
                                 </LinearLayout>
                             </LinearLayout>
-
                         </LinearLayout>
                     </LinearLayout>
                 </ScrollView>
-
             </LinearLayout>
         </LinearLayout>
  <!--   </ScrollView>-->
