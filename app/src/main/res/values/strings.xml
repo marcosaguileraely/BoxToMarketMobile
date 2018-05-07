@@ -144,8 +144,9 @@
     <string name="ui_ble_mini_machines">Machines</string>
     <string name="ui_ble_mini_line_selected">Line selected: </string>
 
-    <!-- upss -->
+    <!-- Library text -->
     <string name="ble_not_supported">BLE is not supported</string>
+    <string name="error_bluetooth_ble_not_supported">BLE is not supported</string>
     <string name="label_data">Data:</string>
     <string name="label_device_address">Device address:</string>
     <string name="label_state">State:</string>
@@ -153,8 +154,7 @@
     <string name="connected">Connected</string>
     <string name="disconnected">Disconnected</string>
     <string name="title_devices">BLE Device Scan</string>
-    <string name="error_bluetooth_not_supported">Bluetooth not supported for your Device. You can continue using another BoxToMarket feautures.</string>
-    <string name="error_bluetooth_ble_not_supported">Your device support Bluethoot, but not support BleeCard technology.</string>
+    <string name="error_bluetooth_not_supported">Bluetooth not supported.</string>
 
     <string name="unknown_device">Unknown device</string>
     <string name="unknown_characteristic">Unknown characteristic</string>
@@ -166,11 +166,18 @@
     <string name="menu_scan">Scan</string>
     <string name="menu_stop">Stop</string>
     <string name="is_serial">Serial Present:</string>
-
+    <string-array name="roygbiv">
+        <item>Red</item>
+        <item>Green</item>
+        <item>Blue</item>
+    </string-array>
     <string name="button">Send</string>
     <string name="red_slide">Red</string>
     <string name="blue_slide">Blue</string>
     <string name="green_slide">Green</string>
+
+    <!-- Ends library text-->
+
     <string name="ui_ble_mini_message_found">Bleecard compatible machines available for connection were not found. Please try to scan again.</string>
     <string name="ui_ble_mini_blee_list_title">Machines</string>
     <string name="ui_ble_mini_blee_list_button_scan">Scan again</string>
