@@ -157,6 +157,7 @@ public class MiniUIActivity extends AppCompatActivity {
         mDeviceAddress      = intent.getStringExtra(EXTRAS_DEVICE_ADDRESS);
 
         macAddress = DataHolderBleData.getMac();
+        //macAddress = "50:8C:B1:69:B2:67";
         deviceName = DataHolderBleData.getName();
         machineId  = AuxDataHolder.getMachine_id();
 
@@ -212,7 +213,7 @@ public class MiniUIActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                //makeChange(machineId);
+                makeChange(machineId);
             }
         }, 2000); //Timer 1500/2000 (1,5 secs / 2 secs) is a optimal time.
 
@@ -220,12 +221,14 @@ public class MiniUIActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mBluetoothLeService.disconnect();
+                Log.w(TAG, "Gatt disconnected");
                 DataHolderBleecardPay.setLineSelected("1");
                 DataHolderBleecardPay.setLineNameSeleted(prod1);
                 DataHolderBleecardPay.setRsaLineSelected(utils.getStringJson(utils.getRsaBle(machineId)));
+                Log.w(TAG, "//// Machine Id: " + machineId);
 
-                //Intent goToBuy =  new Intent(context, MiniUIPaymentActivity.class);
-                //startActivity(goToBuy);
+                Intent goToBuy =  new Intent(context, MiniUIPayActivity.class);
+                startActivity(goToBuy);
             }
         });
 
@@ -237,8 +240,8 @@ public class MiniUIActivity extends AppCompatActivity {
                 DataHolderBleecardPay.setLineNameSeleted(prod2);
                 DataHolderBleecardPay.setRsaLineSelected(utils.getStringJson(utils.getRsaBle(machineId)));
 
-                //Intent goToBuy =  new Intent(context, MiniUIPaymentActivity.class);
-                //startActivity(goToBuy);
+                Intent goToBuy =  new Intent(context, MiniUIPayActivity.class);
+                startActivity(goToBuy);
             }
         });
 
@@ -250,8 +253,8 @@ public class MiniUIActivity extends AppCompatActivity {
                 DataHolderBleecardPay.setLineNameSeleted(prod3);
                 DataHolderBleecardPay.setRsaLineSelected(utils.getStringJson(utils.getRsaBle(machineId)));
 
-                //Intent goToBuy =  new Intent(context, MiniUIPaymentActivity.class);
-                //startActivity(goToBuy);
+                Intent goToBuy =  new Intent(context, MiniUIPayActivity.class);
+                startActivity(goToBuy);
             }
         });
 
@@ -263,8 +266,8 @@ public class MiniUIActivity extends AppCompatActivity {
                 DataHolderBleecardPay.setLineNameSeleted(prod4);
                 DataHolderBleecardPay.setRsaLineSelected(utils.getStringJson(utils.getRsaBle(machineId)));
 
-                //Intent goToBuy =  new Intent(context, MiniUIPaymentActivity.class);
-                //startActivity(goToBuy);
+                Intent goToBuy =  new Intent(context, MiniUIPayActivity.class);
+                startActivity(goToBuy);
             }
         });
 
@@ -276,8 +279,8 @@ public class MiniUIActivity extends AppCompatActivity {
                 DataHolderBleecardPay.setLineNameSeleted(prod5);
                 DataHolderBleecardPay.setRsaLineSelected(utils.getStringJson(utils.getRsaBle(machineId)));
 
-                //Intent goToBuy =  new Intent(context, MiniUIPaymentActivity.class);
-                //startActivity(goToBuy);
+                Intent goToBuy =  new Intent(context, MiniUIPayActivity.class);
+                startActivity(goToBuy);
             }
         });
     }

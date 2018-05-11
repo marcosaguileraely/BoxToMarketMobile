@@ -162,6 +162,8 @@ public class BleListActivity extends AppCompatActivity {
                 String adrBlee  = adapter.getAddress(position);
                 String idBlee   = adapter.getId(position);
 
+                Log.w(TAG, "Position: "+ position +" Set mac addr: " + adrBlee + " - Machine Id: " + idBlee);
+
                 DataHolderBleData.setId(idBlee);
                 DataHolderBleData.setImg(imgBlee);
                 DataHolderBleData.setMac(adrBlee);
@@ -169,7 +171,7 @@ public class BleListActivity extends AppCompatActivity {
                 DataHolderBleData.setType(typeBlee);
 
                 utils.wsgetMachines(deviceMac);
-                Log.w(TAG, " Set mac addr: " + adrBlee);
+
 
                 Intent goToMiniUi = new Intent(BleListActivity.this, MiniUIActivity.class);
                 startActivity(goToMiniUi);

@@ -311,7 +311,7 @@ public class NetActions {
                    jsonBody.put("token", "tk_test_ZQokik736473jklWgH4olfk2");
                    jsonBody.put("ssids", array2);
 
-        Log.d(TAG, "*************> "+ jsonBody);
+        Log.w(TAG, "*************> "+ jsonBody);
 
         String url = "https://www.bleecard.com/api/getMachines.do";
 
