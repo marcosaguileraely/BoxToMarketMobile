@@ -42,11 +42,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import btm.app.Adapters.BluethAdapter;
+import btm.app.BleecardUI.Mini.MiniUIActivity;
 import btm.app.DataHolder.DataHolderBleData;
 import btm.app.MainActivity;
 import btm.app.Model.BleeDetails;
 import btm.app.Model.Bluethoot;
 import btm.app.R;
+import btm.app.Utils.Utils;
 
 /**
  * Developer: Marcos Aguilera Ely
@@ -90,6 +92,7 @@ public class BleListActivity extends AppCompatActivity {
     // Stops scanning after 10 seconds.
     private static final int REQUEST_ENABLE_BT = 1;
     private static final long SCAN_PERIOD = 3000;
+    Utils utils = new Utils();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,15 +162,18 @@ public class BleListActivity extends AppCompatActivity {
                 String adrBlee  = adapter.getAddress(position);
                 String idBlee   = adapter.getId(position);
 
+                Log.w(TAG, "Position: "+ position +" Set mac addr: " + adrBlee + " - Machine Id: " + idBlee);
+
                 DataHolderBleData.setId(idBlee);
                 DataHolderBleData.setImg(imgBlee);
                 DataHolderBleData.setMac(adrBlee);
                 DataHolderBleData.setName(nameBlee);
                 DataHolderBleData.setType(typeBlee);
 
-                Log.d(TAG, " Set mac addr: " + adrBlee);
+                utils.wsgetMachines(deviceMac);
 
-                Intent goToMiniUi = new Intent(BleListActivity.this, BleMiniUI.class);
+
+                Intent goToMiniUi = new Intent(BleListActivity.this, MiniUIActivity.class);
                 startActivity(goToMiniUi);
             }
         });

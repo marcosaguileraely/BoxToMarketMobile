@@ -146,7 +146,9 @@
         <activity
             android:name=".BleecardUI.BleMiniUiBuyActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".BleecardUI.BleecardPayActivity"></activity>
+        <activity android:name=".BleecardUI.BleecardPayActivity" />
+        <activity android:name=".BleecardUI.Mini.MiniUIActivity" />
+        <activity android:name=".BleecardUI.Mini.MiniUIPayActivity"></activity>
     </application>
 
 </manifest>

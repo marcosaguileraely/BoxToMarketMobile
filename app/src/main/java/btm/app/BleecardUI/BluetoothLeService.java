@@ -27,7 +27,8 @@ import btm.app.DataHolder.MachinesDataHolder;
  */
 
 public class BluetoothLeService extends Service {
-    private final static String TAG = BluetoothLeService.class.getSimpleName();
+    private final static String TAG = "DEV -> BLE SERVICE";
+    //private final static String TAG = BluetoothLeService.class.getSimpleName();
 
     private BluetoothManager mBluetoothManager;
     private BluetoothAdapter mBluetoothAdapter;
@@ -38,18 +39,17 @@ public class BluetoothLeService extends Service {
     private static final int STATE_CONNECTING = 1;
     private static final int STATE_CONNECTED = 2;
 
-    public final static String ACTION_GATT_CONNECTED =
-            "com.example.bluetooth.le.ACTION_GATT_CONNECTED";
-    public final static String ACTION_GATT_DISCONNECTED =
-            "com.example.bluetooth.le.ACTION_GATT_DISCONNECTED";
-    public final static String ACTION_GATT_SERVICES_DISCOVERED =
-            "com.example.bluetooth.le.ACTION_GATT_SERVICES_DISCOVERED";
-    public final static String ACTION_DATA_AVAILABLE =
-            "com.example.bluetooth.le.ACTION_DATA_AVAILABLE";
-    public final static String EXTRA_DATA =
-            "com.example.bluetooth.le.EXTRA_DATA";
+    //public final static String ACTION_GATT_CONNECTED = "com.example.bluetooth.le.ACTION_GATT_CONNECTED";
+    public final static String ACTION_GATT_CONNECTED = "btm.app.BleecardUI.ACTION_GATT_CONNECTED";
+    //public final static String ACTION_GATT_DISCONNECTED = "com.example.bluetooth.le.ACTION_GATT_DISCONNECTED";
+    public final static String ACTION_GATT_DISCONNECTED = "btm.app.BleecardUI.ACTION_GATT_DISCONNECTED";
+    //public final static String ACTION_GATT_SERVICES_DISCOVERED = "com.example.bluetooth.le.ACTION_GATT_SERVICES_DISCOVERED";
+    public final static String ACTION_GATT_SERVICES_DISCOVERED = "btm.app.BleecardUI.ACTION_GATT_SERVICES_DISCOVERED";
+    //public final static String ACTION_DATA_AVAILABLE = "com.example.bluetooth.le.ACTION_DATA_AVAILABLE";
+    public final static String ACTION_DATA_AVAILABLE = "btm.app.BleecardUI.ACTION_DATA_AVAILABLE";
+    //public final static String EXTRA_DATA = "com.example.bluetooth.le.EXTRA_DATA";
+    public final static String EXTRA_DATA = "btm.app.BleecardUI.EXTRA_DATA";
     public final static UUID UUID_HM_RX_TX = UUID.fromString(SampleGattAttributes.HM_RX_TX);
-
 
     // Implements callback methods for GATT events that the app cares about.  For example,
     // connection change and services discovered.
@@ -106,24 +106,25 @@ public class BluetoothLeService extends Service {
 
     private void broadcastUpdate(final String action,final BluetoothGattCharacteristic characteristic) {
         final Intent intent = new Intent(action);
+
         // For all other profiles, writes the data formatted in HEX.
         final byte[] data = characteristic.getValue();
-        Log.i(TAG, " -> data: "+ characteristic.getValue());
+        Log.i(TAG, "data"+characteristic.getValue());
 
         if (data != null && data.length > 0) {
             final StringBuilder stringBuilder = new StringBuilder(data.length);
-
             for(byte byteChar : data)
                 stringBuilder.append(String.format("%02X ", byteChar));
-                Log.d(TAG, String.format("%s", new String(data)));
-                // getting cut off when longer, need to push on new line, 0A
-                intent.putExtra(EXTRA_DATA, String.format("%s", new String(data)));
+            Log.d(TAG, String.format("%s", new String(data)));
+            // getting cut off when longer, need to push on new line, 0A
+            intent.putExtra(EXTRA_DATA,String.format("%s", new String(data)));
+
         }
         sendBroadcast(intent);
     }
 
     public class LocalBinder extends Binder {
-        BluetoothLeService getService() {
+        public BluetoothLeService getService() { // BluetoothLeService getService() {
             return BluetoothLeService.this;
         }
     }
@@ -186,13 +187,14 @@ public class BluetoothLeService extends Service {
         }
 
         // Previously connected device.  Try to reconnect.
-        if (mBluetoothDeviceAddress != null && address.equals(mBluetoothDeviceAddress)
-                && mBluetoothGatt != null) {
+        if (mBluetoothDeviceAddress != null && address.equals(mBluetoothDeviceAddress) && mBluetoothGatt != null) {
             Log.d(TAG, "Trying to use an existing mBluetoothGatt for connection.");
             if (mBluetoothGatt.connect()) {
+                Log.w(TAG, "//////// It goes to true");
                 mConnectionState = STATE_CONNECTING;
                 return true;
             } else {
+                Log.w(TAG, " /////// It goes to false");
                 final BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
                 mBluetoothGatt = device.connectGatt(this, false, mGattCallback);
                 mBluetoothDeviceAddress = address;
@@ -205,7 +207,6 @@ public class BluetoothLeService extends Service {
             Log.w(TAG, "Device not found.  Unable to connect.");
             return false;
         }
-
         // We want to directly connect to the device, so we are setting the autoConnect
         // parameter to false.
         mBluetoothGatt = device.connectGatt(this, false, mGattCallback);
@@ -275,7 +276,8 @@ public class BluetoothLeService extends Service {
      * @param characteristic Characteristic to act on.
      * @param enabled If true, enable notification.  False otherwise.
      */
-    public void setCharacteristicNotification(BluetoothGattCharacteristic characteristic, boolean enabled) {
+    public void setCharacteristicNotification(BluetoothGattCharacteristic characteristic,
+                                              boolean enabled) {
         if (mBluetoothAdapter == null || mBluetoothGatt == null) {
             Log.w(TAG, "BluetoothAdapter not initialized");
             return;
