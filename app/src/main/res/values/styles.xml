@@ -83,4 +83,14 @@
         <item name="cardUseCompatPadding">true</item>
     </style>
 
+    <style name="ProductsCardView" parent="Theme.AppCompat.Light">
+        <item name="cardCornerRadius">3dp</item>
+        <item name="contentPaddingBottom">5dp</item>
+        <item name="contentPaddingTop">1dp</item>
+        <item name="contentPaddingLeft">5dp</item>
+        <item name="contentPaddingRight">5dp</item>
+        <item name="cardElevation">3dp</item>
+        <item name="cardUseCompatPadding">true</item>
+    </style>
+
 </resources>

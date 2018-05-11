@@ -2,6 +2,7 @@ package btm.app.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,7 @@ public class SubsPublicAdapter extends BaseAdapter{
 
         title.setText(subscriptionsPublic.getTitle());
         value.setText(subscriptionsPublic.getValue());
+        Log.w("THE URI", "-->" + subscriptionsPublic.getImg_uri());
         Glide.with(context).load(subscriptionsPublic.getImg_uri()).into(img_uri);
 
         buy_btn.setOnClickListener(new View.OnClickListener() {

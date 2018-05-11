@@ -24,6 +24,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -34,6 +35,9 @@ import java.util.UUID;
 
 import android.widget.SeekBar;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import btm.app.DataHolder.AuxDataHolder;
 import btm.app.DataHolder.DataHolderBleecardPay;
@@ -78,11 +82,14 @@ public class MiniUIActivity extends AppCompatActivity {
     String deviceName, macAddress, machineId, machineImg, machineType;
     String price1, price2, price3, price4, price5;
     String prod1, prod2, prod3, prod4, prod5;
+    String image_url1, image_url2, image_url3, image_url4, image_url5;
     String Lines, GlobalData;
 
     TextView namepr1, namepr2, namepr3, namepr4, namepr5;
     TextView pr1, pr2, pr3, pr4, pr5, ble_id;
     TextView text1, text2, text3, text4, text5;
+
+    ImageView img1, img2, img3, img4, img5;
 
     Button b1, b2, b3, b4, b5;
 
@@ -180,6 +187,12 @@ public class MiniUIActivity extends AppCompatActivity {
         text4       = (TextView) findViewById(R.id.textView4);
         text5       = (TextView) findViewById(R.id.textView5);
         //ble_id    = (TextView) findViewById(R.id.ble_id);
+
+        img1        = (ImageView) findViewById(R.id.imageView1);
+        img2        = (ImageView) findViewById(R.id.imageView2);
+        img3        = (ImageView) findViewById(R.id.imageView3);
+        img4        = (ImageView) findViewById(R.id.imageView4);
+        img5        = (ImageView) findViewById(R.id.imageView5);
 
         pr1         = (TextView) findViewById(R.id.price1);
         pr2         = (TextView) findViewById(R.id.price2);
@@ -536,26 +549,31 @@ public class MiniUIActivity extends AppCompatActivity {
         String subValues4[] = values4.split(",");
         String subValues5[] = values5.split(",");
 
-        price1 = subValues1[0];
-        prod1  = subValues1[1];
+        price1     = subValues1[0];
+        prod1      = subValues1[1];
+        image_url1 = subValues1[2];
 
-        price2 = subValues2[0];
-        prod2  = subValues2[1];
+        price2     = subValues2[0];
+        prod2      = subValues2[1];
+        image_url2 = subValues2[2];
 
-        price3 = subValues3[0];
-        prod3  = subValues3[1];
+        price3     = subValues3[0];
+        prod3      = subValues3[1];
+        image_url3 = subValues3[2];
 
-        price4 = subValues4[0];
-        prod4  = subValues4[1];
+        price4     = subValues4[0];
+        prod4      = subValues4[1];
+        image_url4 = subValues4[2];
 
-        price5 = subValues5[0];
-        prod5  = subValues5[1];
+        price5     = subValues5[0];
+        prod5      = subValues5[1];
+        image_url5 = subValues5[2];
 
-        Log.d(TAG, "-> Line #1 - Name: " + prod1 + " Price: " + price1);
-        Log.d(TAG, "-> Line #2 - Name: " + prod2 + " Price: " + price2);
-        Log.d(TAG, "-> Line #3 - Name: " + prod3 + " Price: " + price3);
-        Log.d(TAG, "-> Line #4 - Name: " + prod4 + " Price: " + price4);
-        Log.d(TAG, "-> Line #5 - Name: " + prod5 + " Price: " + price5);
+        Log.d(TAG, "-> Line #1 - Name: " + prod1 + " Price: " + price1 + " Image Url: " + image_url1);
+        Log.d(TAG, "-> Line #2 - Name: " + prod2 + " Price: " + price2 + " Image Url: " + image_url2);
+        Log.d(TAG, "-> Line #3 - Name: " + prod3 + " Price: " + price3 + " Image Url: " + image_url3);
+        Log.d(TAG, "-> Line #4 - Name: " + prod4 + " Price: " + price4 + " Image Url: " + image_url4);
+        Log.d(TAG, "-> Line #5 - Name: " + prod5 + " Price: " + price5 + " Image Url: " + image_url5);
 
         pr1.setText(price1);
         pr2.setText(price2);
@@ -568,6 +586,43 @@ public class MiniUIActivity extends AppCompatActivity {
         namepr3.setText(prod3);
         namepr4.setText(prod4);
         namepr5.setText(prod5);
+
+        Glide.with(context)
+                .load("https://www.boxtomarket.com/img/" + image_url1)
+                .thumbnail(0.5f)
+                .crossFade()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(img1);
+
+        Glide.with(context)
+                .load("https://www.boxtomarket.com/img/" + image_url2)
+                .thumbnail(0.5f)
+                .crossFade()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(img2);
+
+        Glide.with(context)
+                .load("https://www.boxtomarket.com/img/" + image_url3)
+                .thumbnail(0.5f)
+                .crossFade()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(img3);
+
+        Glide.with(context)
+                .load("https://www.boxtomarket.com/img/" + image_url4)
+                .thumbnail(0.5f)
+                .crossFade()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(img4);
+
+        Glide.with(context)
+                .load("https://www.boxtomarket.com/img/" + image_url5)
+                .thumbnail(0.5f)
+                .crossFade()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(img5);
+
+
     }
 
     private String beSureDataString(String data) {
