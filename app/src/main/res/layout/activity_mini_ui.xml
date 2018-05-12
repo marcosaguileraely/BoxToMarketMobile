@@ -185,6 +185,7 @@
                                 <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
+                                    android:layout_marginLeft="30dp"
                                     android:layout_weight="1"
                                     android:baselineAligned="false"
                                     android:orientation="vertical">
@@ -193,7 +194,7 @@
                                         android:id="@+id/product_name1"
                                         android:layout_width="match_parent"
                                         android:layout_height="35dp"
-                                        android:gravity="left|center_vertical|start"
+                                        android:gravity="bottom|left|start"
                                         android:textAlignment="textStart"
                                         android:textColor="@color/colorOrange"
                                         android:textSize="22sp"
@@ -282,6 +283,7 @@
                                 <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
+                                    android:layout_marginLeft="30dp"
                                     android:layout_weight="1"
                                     android:orientation="vertical">
 
@@ -289,7 +291,7 @@
                                         android:id="@+id/product_name2"
                                         android:layout_width="match_parent"
                                         android:layout_height="35dp"
-                                        android:gravity="left|center_vertical|start"
+                                        android:gravity="bottom|left|start"
                                         android:textAlignment="textStart"
                                         android:textColor="@color/colorOrange"
                                         android:textSize="22sp"
@@ -379,6 +381,7 @@
                                 <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
+                                    android:layout_marginLeft="30dp"
                                     android:layout_weight="1"
                                     android:orientation="vertical">
 
@@ -386,7 +389,7 @@
                                         android:id="@+id/product_name3"
                                         android:layout_width="match_parent"
                                         android:layout_height="35dp"
-                                        android:gravity="left|center_vertical|start"
+                                        android:gravity="bottom|left|start"
                                         android:textAlignment="textStart"
                                         android:textColor="@color/colorOrange"
                                         android:textSize="22sp"
@@ -475,6 +478,7 @@
                                 <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
+                                    android:layout_marginLeft="30dp"
                                     android:layout_weight="1"
                                     android:orientation="vertical">
 
@@ -482,7 +486,7 @@
                                         android:id="@+id/product_name4"
                                         android:layout_width="match_parent"
                                         android:layout_height="35dp"
-                                        android:gravity="left|center_vertical|start"
+                                        android:gravity="bottom|left|start"
                                         android:textAlignment="textStart"
                                         android:textColor="@color/colorOrange"
                                         android:textSize="22sp"
@@ -571,6 +575,7 @@
                                 <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
+                                    android:layout_marginLeft="30dp"
                                     android:layout_weight="1"
                                     android:orientation="vertical">
 
@@ -578,7 +583,7 @@
                                         android:id="@+id/product_name5"
                                         android:layout_width="match_parent"
                                         android:layout_height="35dp"
-                                        android:gravity="left|center_vertical|start"
+                                        android:gravity="bottom|left|start"
                                         android:textAlignment="textStart"
                                         android:textColor="@color/colorOrange"
                                         android:textSize="22sp"

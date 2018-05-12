@@ -233,8 +233,8 @@ public class MiniUIActivity extends AppCompatActivity {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mBluetoothLeService.disconnect();
-                Log.w(TAG, "Gatt disconnected");
+                //mBluetoothLeService.disconnect();
+                //Log.w(TAG, "Gatt disconnected");
                 DataHolderBleecardPay.setLineSelected("1");
                 DataHolderBleecardPay.setLineNameSeleted(prod1);
                 DataHolderBleecardPay.setRsaLineSelected(utils.getStringJson(utils.getRsaBle(machineId)));
@@ -248,7 +248,7 @@ public class MiniUIActivity extends AppCompatActivity {
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mBluetoothLeService.disconnect();
+                //mBluetoothLeService.disconnect();
                 DataHolderBleecardPay.setLineSelected("2");
                 DataHolderBleecardPay.setLineNameSeleted(prod2);
                 DataHolderBleecardPay.setRsaLineSelected(utils.getStringJson(utils.getRsaBle(machineId)));
@@ -261,7 +261,7 @@ public class MiniUIActivity extends AppCompatActivity {
         b3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mBluetoothLeService.disconnect();
+                //mBluetoothLeService.disconnect();
                 DataHolderBleecardPay.setLineSelected("3");
                 DataHolderBleecardPay.setLineNameSeleted(prod3);
                 DataHolderBleecardPay.setRsaLineSelected(utils.getStringJson(utils.getRsaBle(machineId)));
@@ -274,7 +274,7 @@ public class MiniUIActivity extends AppCompatActivity {
         b4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mBluetoothLeService.disconnect();
+                //mBluetoothLeService.disconnect();
                 DataHolderBleecardPay.setLineSelected("4");
                 DataHolderBleecardPay.setLineNameSeleted(prod4);
                 DataHolderBleecardPay.setRsaLineSelected(utils.getStringJson(utils.getRsaBle(machineId)));
@@ -287,7 +287,7 @@ public class MiniUIActivity extends AppCompatActivity {
         b5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mBluetoothLeService.disconnect();
+                //mBluetoothLeService.disconnect();
                 DataHolderBleecardPay.setLineSelected("5");
                 DataHolderBleecardPay.setLineNameSeleted(prod5);
                 DataHolderBleecardPay.setRsaLineSelected(utils.getStringJson(utils.getRsaBle(machineId)));
@@ -588,35 +588,35 @@ public class MiniUIActivity extends AppCompatActivity {
         namepr5.setText(prod5);
 
         Glide.with(context)
-                .load("https://www.boxtomarket.com/img/" + image_url1)
+                .load("https://www.boxtomarket.com/img/beneficios/" + image_url1)
                 .thumbnail(0.5f)
                 .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(img1);
 
         Glide.with(context)
-                .load("https://www.boxtomarket.com/img/" + image_url2)
+                .load("https://www.boxtomarket.com/img/beneficios/" + image_url2)
                 .thumbnail(0.5f)
                 .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(img2);
 
         Glide.with(context)
-                .load("https://www.boxtomarket.com/img/" + image_url3)
+                .load("https://www.boxtomarket.com/img/beneficios/" + image_url3)
                 .thumbnail(0.5f)
                 .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(img3);
 
         Glide.with(context)
-                .load("https://www.boxtomarket.com/img/" + image_url4)
+                .load("https://www.boxtomarket.com/img/beneficios/" + image_url4)
                 .thumbnail(0.5f)
                 .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(img4);
 
         Glide.with(context)
-                .load("https://www.boxtomarket.com/img/" + image_url5)
+                .load("https://www.boxtomarket.com/img/beneficios/" + image_url5)
                 .thumbnail(0.5f)
                 .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)

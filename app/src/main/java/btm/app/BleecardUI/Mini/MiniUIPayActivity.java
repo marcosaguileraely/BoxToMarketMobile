@@ -245,16 +245,19 @@ public class MiniUIPayActivity extends AppCompatActivity {
             if(data.equals("9")){
                 Log.w(TAG, "It's returning the 9 number");
                 Toast.makeText(context, "It's returning the 9 number", Toast.LENGTH_SHORT).show();
+
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         passingLineNumber(lineNumber);
                     }
                 }, 2000); //Timer is in ms here.
+
             }if(data.equals("1")){
                 Log.w(TAG, "It's returning the 1 number");
                 customDialogPaymentResult("La máquina ha procesado exitosamente tu pedido.");
                 Toast.makeText(context, "It's returning the 1 number because the machine have sensed correctly the product.", Toast.LENGTH_LONG).show();
+
             }if(data.equals("0")){
                 Log.w(TAG, "It's returning the 0 number");
                 Toast.makeText(context, "It's returning the 0 number because the machine doesn't sense the product.", Toast.LENGTH_LONG).show();
@@ -401,7 +404,8 @@ public class MiniUIPayActivity extends AppCompatActivity {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.dismiss();
-                mBluetoothLeService.disconnect(); //After (1=product delivered) or (0=product not delivered), We disconnect the gatt server for other users can use it
+                mBluetoothLeService.close(); //After recieve (1=product delivered) or (0=product not delivered), We disconnect the gatt server for other users can use it
+                //mBluetoothLeService.disconnect(); //After (1=product delivered) or (0=product not delivered), We disconnect the gatt server for other users can use it
                 Intent intent = new Intent(context, MainActivity.class);
                 startActivity(intent);
             }
