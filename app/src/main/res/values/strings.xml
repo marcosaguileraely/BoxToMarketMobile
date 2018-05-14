@@ -142,7 +142,10 @@
     <string name="ui_ble_mini_payment_method_credit_card">Credit Card</string>
     <string name="ui_ble_mini_payment_method_mywallet">My Wallet</string>
     <string name="ui_ble_mini_machines">Machines</string>
+    <string name="ui_ble_mini_select">Select</string>
     <string name="ui_ble_mini_line_selected">Line selected: </string>
+    <string name="ui_aux_payment_title">Payment</string>
+
 
     <!-- Library text -->
     <string name="ble_not_supported">BLE is not supported</string>

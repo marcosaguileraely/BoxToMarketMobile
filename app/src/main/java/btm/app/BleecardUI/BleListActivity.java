@@ -156,6 +156,7 @@ public class BleListActivity extends AppCompatActivity {
         blueList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 String typeBlee = adapter.getType(position);
                 String imgBlee  = adapter.getImage(position);
                 String nameBlee = adapter.getName(position);
@@ -229,7 +230,9 @@ public class BleListActivity extends AppCompatActivity {
     public void wsgetMachines(String mac_addr){
         try {
             data = new btm.app.Network.NetActions(context).getBleDetails(mac_addr);
-            Log.d(TAG, " => " + data);
+
+            Log.w(TAG, " => " + data);
+
             bleeDetailsConverter(data);
         } catch (IOException e) {
             e.printStackTrace();
@@ -245,22 +248,24 @@ public class BleListActivity extends AppCompatActivity {
             //nothing to do
         }else {
             try {
+
                 jsonArray = new JSONArray(data);
+
                 for (int i = 0; i < jsonArray.length(); i++){
                     JSONObject json_obj = jsonArray.getJSONObject(i);
                     Log.d(TAG, json_obj.toString());
                     String id      = json_obj.getString("id");
                     String img_uri = json_obj.getString("image");
-                    String prices  = json_obj.getString("type");
+                    String type  = json_obj.getString("type");
 
                     details.setId(id);
                     details.setImg_uri(img_uri);
-                    details.setType(prices);
+                    details.setType(type);
 
                     items.add(new Bluethoot( deviceMac, deviceName, details.getId(), details.getImg_uri(), details.getType()) );
-                    adapter = new BluethAdapter(context, items);
+                    adapter = new BluethAdapter( context, items );
                     blueList.setAdapter(adapter);
-                    //adapter.notifyDataSetChanged();
+                    adapter.notifyDataSetChanged();
                 }
 
             } catch (JSONException e) {
@@ -484,23 +489,19 @@ public class BleListActivity extends AppCompatActivity {
                 @Override
                 public void onScanResult(int callbackType, ScanResult result) {
                     super.onScanResult(callbackType, result);
-                    Log.d(TAG, "3");
                     BluetoothDevice device = result.getDevice();
-                    Log.d(TAG, " %%%%%%%%%%%%%%% Devices " + device.toString() + " %%%%%%%%%%%%% " + device.getName());
 
                     deviceName = nullNameConverter(device.getName());
 
                     if(deviceName.contains("Blee")){ // Only add to ArrayList<String> the Bleemini devices
-                        Log.d(TAG, " %%%%%%%%%%%%%%% BLEEMINI FOUND " + device.toString() + " %%%%%%%%%%%%% " + device.getName());
+                        Log.w(TAG, " %%%%%%%%%%%%%%% BLEEMINI FOUND " + device.toString() + " %%%%%%%%%%%%% " + device.getName());
                         macAddress.add(device.toString());
-                        Log.d(TAG, "4");
                     }
                 }
 
                 //@TargetApi(Build.VERSION_CODES.LOLLIPOP)
                 @Override
                 public void onBatchScanResults(List<ScanResult> results) {
-                    Log.d(TAG, "5x");
                     super.onBatchScanResults(results);
                     //for (ScanResult result : results) {
                         //BluetoothDevice device = result.getDevice();
@@ -516,21 +517,13 @@ public class BleListActivity extends AppCompatActivity {
                 }
             };
 
-        //Log.d(TAG, "6");
-
             ScanSettings settings = new ScanSettings.Builder()
                     .setScanMode(ScanSettings.SCAN_MODE_LOW_POWER).build();
             List<ScanFilter> filters = new ArrayList<>();
-        //Log.d(TAG, "7");
             if (scanner != null) {
                 scanner.startScan(filters, settings, mScanCallback);
-                //Log.d(TAG, "8x");
             }
-        //} else {
-            //boolean result = mBluetoothAdapter.startLeScan(this);
-            //Log.d("DEBUG", "BLE Scan Started " + result);
-        //}
-        //Log.d(TAG, "9");
+
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -557,7 +550,7 @@ public class BleListActivity extends AppCompatActivity {
 
     public void listValuesMacAddr(){
         Log.d(TAG, " XXXXXXXXX SIZE: " + macAddress.size());
-        for(int i=0; i<macAddress.size(); i++){
+        for(int i=0; i < macAddress.size(); i++){
             String mac = macAddress.get(i);
             Log.d(TAG, " XXXXXXXXX : " + mac);
 
@@ -572,10 +565,15 @@ public class BleListActivity extends AppCompatActivity {
     }
 
     public void finalListValuesMacAddrFiltered(){
-        Log.d(TAG, " XXXXXXXXX SIZE: " + filteredMacAddress.size());
+
+        Log.w(TAG, "  SIZE: " + filteredMacAddress.size());
+
         for(int i=0; i<filteredMacAddress.size(); i++){
+
             deviceMac = filteredMacAddress.get(i);
-            Log.d(TAG, " XXXXXXXXX FILTERED : " + deviceMac);
+
+            Log.w(TAG, " FILTERED : " + deviceMac);
+
             wsgetMachines(deviceMac);
         }
         /*
@@ -606,33 +604,6 @@ public class BleListActivity extends AppCompatActivity {
      * THREADS ACTIONS *
      *******************/
 
-    private class AsyncGetHttpData extends AsyncTask<String, Void, String> {
-        @Override
-        protected void onPreExecute() {
-
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
-                @Override
-                public void run() {
-                   // getRsaBuyBle();
-                }
-            });
-            return "Executed";
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {}
-    }
-
     public void restartBluetooth(){
         if (mBluetoothAdapter == null) {
             customDialogYesMove(getString(R.string.error_bluetooth_not_supported));
@@ -650,5 +621,4 @@ public class BleListActivity extends AppCompatActivity {
             }
         }
     }
-
 }
