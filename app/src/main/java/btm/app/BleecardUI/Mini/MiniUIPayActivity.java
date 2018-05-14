@@ -80,6 +80,7 @@ public class MiniUIPayActivity extends AppCompatActivity {
                 finish();
             }
             // Automatically connects to the device upon successful start-up initialization.
+            Log.w(TAG, " Device Addr to connect: " + macAddress);
             mBluetoothLeService.connect(macAddress);
         }
 
@@ -165,6 +166,7 @@ public class MiniUIPayActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle(deviceName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
         bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
 
@@ -243,15 +245,7 @@ public class MiniUIPayActivity extends AppCompatActivity {
             mDataField.setText(data);
 
             if(data.equals("9")){
-                Log.w(TAG, "It's returning the 9 number");
-                Toast.makeText(context, "It's returning the 9 number", Toast.LENGTH_SHORT).show();
 
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        passingLineNumber(lineNumber);
-                    }
-                }, 2000); //Timer is in ms here.
 
             }if(data.equals("1")){
                 Log.w(TAG, "It's returning the 1 number");
@@ -343,6 +337,7 @@ public class MiniUIPayActivity extends AppCompatActivity {
             Log.w(TAG, " writeCharacteristic : ok");
             mBluetoothLeService.setCharacteristicNotification(characteristicRX, true);
             Log.w(TAG, " setCharacteristicNotification : ok");
+            mBluetoothLeService.readCharacteristic(characteristicRX);
         }
     }
 
@@ -352,9 +347,9 @@ public class MiniUIPayActivity extends AppCompatActivity {
             characteristicTX.setValue(lineNumber);
             mBluetoothLeService.writeCharacteristic(characteristicTX);
             mBluetoothLeService.setCharacteristicNotification(characteristicRX,true);
+            mBluetoothLeService.readCharacteristic(characteristicRX);
         }
     }
-
 
     //////////////////////////
     /// Dialog windows ///////

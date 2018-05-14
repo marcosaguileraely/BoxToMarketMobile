@@ -1,11 +1,14 @@
 package btm.app.BleecardUI.Mini;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import btm.app.BleecardUI.BluetoothLeService;
 import btm.app.BleecardUI.SampleGattAttributes;
 import btm.app.DataHolder.DataHolderBleData;
+import btm.app.MainActivity;
 import btm.app.R;
 
 import android.bluetooth.BluetoothGattCharacteristic;
@@ -83,7 +86,7 @@ public class MiniUIActivity extends AppCompatActivity {
     String price1, price2, price3, price4, price5;
     String prod1, prod2, prod3, prod4, prod5;
     String image_url1, image_url2, image_url3, image_url4, image_url5;
-    String Lines, GlobalData;
+    String Line, GlobalDataLine = "";
 
     TextView namepr1, namepr2, namepr3, namepr4, namepr5;
     TextView pr1, pr2, pr3, pr4, pr5, ble_id;
@@ -139,7 +142,6 @@ public class MiniUIActivity extends AppCompatActivity {
                 displayGattServices(mBluetoothLeService.getSupportedGattServices());
             } else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
                 displayData(intent.getStringExtra(mBluetoothLeService.EXTRA_DATA));
-                GlobalData = intent.getStringExtra(mBluetoothLeService.EXTRA_DATA);
             }
         }
     };
@@ -163,10 +165,10 @@ public class MiniUIActivity extends AppCompatActivity {
         mDeviceName         = intent.getStringExtra(EXTRAS_DEVICE_NAME);
         mDeviceAddress      = intent.getStringExtra(EXTRAS_DEVICE_ADDRESS);
 
-        macAddress = DataHolderBleData.getMac();
-        //macAddress = "50:8C:B1:69:B2:67";
-        deviceName = DataHolderBleData.getName();
-        machineId  = AuxDataHolder.getMachine_id();
+        macAddress     = DataHolderBleData.getMac();
+        deviceName     = DataHolderBleData.getName();
+        machineId      = AuxDataHolder.getMachine_id();
+        GlobalDataLine = "";
 
         Log.w(TAG, "////// Machine Id: " + machineId + " Name: " + deviceName + " Mac Addr: " + macAddress);
 
@@ -233,67 +235,50 @@ public class MiniUIActivity extends AppCompatActivity {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //mBluetoothLeService.disconnect();
-                //Log.w(TAG, "Gatt disconnected");
-                DataHolderBleecardPay.setLineSelected("1");
-                DataHolderBleecardPay.setLineNameSeleted(prod1);
-                DataHolderBleecardPay.setRsaLineSelected(utils.getStringJson(utils.getRsaBle(machineId)));
-                Log.w(TAG, "//// Machine Id: " + machineId);
-
-                Intent goToBuy =  new Intent(context, MiniUIPayActivity.class);
-                startActivity(goToBuy);
+                String rsaBuyLine = utils.getStringJson(utils.getRsaBle(machineId));
+                Log.w(TAG, "//// Machine Id: " + machineId + " RSA Number: " + rsaBuyLine);
+                Line = "1";
+                passRsaToBuyChange(rsaBuyLine);
             }
         });
 
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //mBluetoothLeService.disconnect();
-                DataHolderBleecardPay.setLineSelected("2");
-                DataHolderBleecardPay.setLineNameSeleted(prod2);
-                DataHolderBleecardPay.setRsaLineSelected(utils.getStringJson(utils.getRsaBle(machineId)));
-
-                Intent goToBuy =  new Intent(context, MiniUIPayActivity.class);
-                startActivity(goToBuy);
+                String rsaBuyLine = utils.getStringJson(utils.getRsaBle(machineId));
+                Log.w(TAG, "//// Machine Id: " + machineId + " RSA Number: " + rsaBuyLine);
+                Line = "2";
+                passRsaToBuyChange(rsaBuyLine);
             }
         });
 
         b3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //mBluetoothLeService.disconnect();
-                DataHolderBleecardPay.setLineSelected("3");
-                DataHolderBleecardPay.setLineNameSeleted(prod3);
-                DataHolderBleecardPay.setRsaLineSelected(utils.getStringJson(utils.getRsaBle(machineId)));
-
-                Intent goToBuy =  new Intent(context, MiniUIPayActivity.class);
-                startActivity(goToBuy);
+                String rsaBuyLine = utils.getStringJson(utils.getRsaBle(machineId));
+                Log.w(TAG, "//// Machine Id: " + machineId + " RSA Number: " + rsaBuyLine);
+                Line = "3";
+                passRsaToBuyChange(rsaBuyLine);
             }
         });
 
         b4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //mBluetoothLeService.disconnect();
-                DataHolderBleecardPay.setLineSelected("4");
-                DataHolderBleecardPay.setLineNameSeleted(prod4);
-                DataHolderBleecardPay.setRsaLineSelected(utils.getStringJson(utils.getRsaBle(machineId)));
-
-                Intent goToBuy =  new Intent(context, MiniUIPayActivity.class);
-                startActivity(goToBuy);
+                String rsaBuyLine = utils.getStringJson(utils.getRsaBle(machineId));
+                Log.w(TAG, "//// Machine Id: " + machineId + " RSA Number: " + rsaBuyLine);
+                Line = "4";
+                passRsaToBuyChange(rsaBuyLine);
             }
         });
 
         b5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //mBluetoothLeService.disconnect();
-                DataHolderBleecardPay.setLineSelected("5");
-                DataHolderBleecardPay.setLineNameSeleted(prod5);
-                DataHolderBleecardPay.setRsaLineSelected(utils.getStringJson(utils.getRsaBle(machineId)));
-
-                Intent goToBuy =  new Intent(context, MiniUIPayActivity.class);
-                startActivity(goToBuy);
+                String rsaBuyLine = utils.getStringJson(utils.getRsaBle(machineId));
+                Log.w(TAG, "//// Machine Id: " + machineId + " RSA Number: " + rsaBuyLine);
+                Line = "5";
+                passRsaToBuyChange(rsaBuyLine);
             }
         });
     }
@@ -375,11 +360,25 @@ public class MiniUIActivity extends AppCompatActivity {
                 settingValuesToLines(data);                             // It triggers the settingValuesToLines() method and set the stock in the UI
                 getMachinesPriceList(utils.getLinesData(machineId));    // It triggers the getMachinesPriceList() method which get product and price via WS
                 Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
-            }else if(data.equals("9")) {
+            } else if(data.equals("9")) {
                 Log.d(TAG, "It's returning the 9 number");
                 Toast.makeText(context, "It's returning the 9 number", Toast.LENGTH_SHORT).show();
 
-            }else if(data.equals("8")) {
+                if(GlobalDataLine.equals("LineReady")) { //
+                    Log.w(TAG, "It's returning the 9 number for Line Ready");
+                    Toast.makeText(context, "It's returning the 9 number for Line Ready", Toast.LENGTH_SHORT).show();
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.w(TAG, " Line Number : " + Line);
+                            passingLineNumber(Line);
+                        }
+                    }, 2000); //Timer is in ms here.
+                }else{
+                    // nothing happens here
+                }
+            } else if(data.equals("8")) {
                 Log.d(TAG, "It's returning the 8 number");
                 Toast.makeText(context, "It's returning the 8 number", Toast.LENGTH_SHORT).show();
             }
@@ -463,9 +462,38 @@ public class MiniUIActivity extends AppCompatActivity {
         final byte[] tx = hexStringToByteArray(Data);
         Log.d(TAG, "Sending byte[] = " + Arrays.toString(tx));
 
-        //final byte[] tx = str.getBytes();
         if(mConnected) {
             characteristicTX.setValue(tx);
+            Log.w(TAG, " Setting characteristicTX value ");
+            mBluetoothLeService.writeCharacteristic(characteristicTX);
+            Log.w(TAG, " writeCharacteristic ");
+            mBluetoothLeService.setCharacteristicNotification(characteristicRX,true);
+            Log.w(TAG, " setCharacteristicNotification ");
+        }
+    }
+
+    private void passRsaToBuyChange(String rsa) {
+        //String rsa = utils.getStringJson(utils.buyRsaBle(machineId));
+        Log.d(TAG, "////// RSA Passed = " + rsa);
+
+        final byte[] tx = hexStringToByteArray(rsa);
+        Log.d(TAG, "Sending byte[] = " + Arrays.toString(tx));
+
+        if(mConnected) {
+            Log.w(TAG, " It's entering : ok ");
+            characteristicTX.setValue(tx);
+            Log.w(TAG, " characteristicTX : ok ");
+            mBluetoothLeService.writeCharacteristic(characteristicTX);
+            Log.w(TAG, " writeCharacteristic : ok");
+            mBluetoothLeService.setCharacteristicNotification(characteristicRX, true);
+            GlobalDataLine = "LineReady";
+        }
+    }
+
+    private void passingLineNumber(String lineNumber) {
+        Log.w(TAG, "Sending line number = " + lineNumber);
+        if(mConnected) {
+            characteristicTX.setValue(lineNumber);
             mBluetoothLeService.writeCharacteristic(characteristicTX);
             mBluetoothLeService.setCharacteristicNotification(characteristicRX,true);
         }
@@ -656,5 +684,63 @@ public class MiniUIActivity extends AppCompatActivity {
         namepr3.setText("");
         namepr4.setText("");
         namepr5.setText("");
+    }
+
+    //////////////////////////
+    /// Dialog windows ///////
+    //////////////////////////
+
+    public void customDialog(String inDatum){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(inDatum);
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+                //mBluetoothLeService.disconnect();
+                mBluetoothLeService.close(); //I thing i could fix some stuff
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public void customPasswordDialog(String inDatum){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setMessage(inDatum);
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+                //mBluetoothLeService.disconnect();
+                //Intent intent = new Intent(context, MainActivity.class);
+                //startActivity(intent);
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public void customDialogPaymentResult(String inDatum){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setMessage(inDatum);
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+                mBluetoothLeService.close(); //After recieve (1=product delivered) or (0=product not delivered), We disconnect the gatt server for other users can use it
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
