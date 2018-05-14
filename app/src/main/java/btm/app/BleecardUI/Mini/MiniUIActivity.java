@@ -245,6 +245,10 @@ public class MiniUIActivity extends AppCompatActivity {
 
         Log.d(TAG, "Main Thread Id: " + Thread.currentThread().getId());
 
+        dialog2.setCanceledOnTouchOutside(false);
+        dialog2.setMessage(getString(R.string.inf_dialog));
+        dialog2.show();
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getString(R.string.ui_ble_mini_select));
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
@@ -417,11 +421,12 @@ public class MiniUIActivity extends AppCompatActivity {
                     if(data.length() > 1) {                                     // If 'data' variable changes and detects a 'data'.length up to 1 (eg. 1234567890 -> length = 5) it means that 'data' has a stock
                         settingValuesToLines(data);                             // It triggers the settingValuesToLines() method and set the stock in the UI
                         getMachinesPriceList(utils.getLinesData(machineId));    // It triggers the getMachinesPriceList() method which get product and price via WS
-                        Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
+
 
                     }else if(data.equals("9")){
                         Log.d(TAG, "It's returning the 9 number");
-                        Toast.makeText(context, "It's returning the 9 number, from ReadStock", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, "It's returning the 9 number, from ReadStock", Toast.LENGTH_SHORT).show();
                     }
 
                     break;
@@ -429,7 +434,7 @@ public class MiniUIActivity extends AppCompatActivity {
                 case "ReadBuy":
                     // Action executed when "ReadyToBuy" var ready
                     Log.w(TAG, " ///// ACTION: " + "ReadBuy");
-                    Toast.makeText(context, "It's returning the 9 number, from ReadBuy", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, "It's returning the 9 number, from ReadBuy", Toast.LENGTH_SHORT).show();
 
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -726,7 +731,7 @@ public class MiniUIActivity extends AppCompatActivity {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(img5);
 
-
+        dialog2.dismiss();
     }
 
     private String beSureDataString(String data) {
