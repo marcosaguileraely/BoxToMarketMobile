@@ -1,135 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="btm.app.BleecardUI.Mini.MiniUIActivity">
+    android:background="@color/colorWhite"
+    tools:context="btm.app.BleecardUI.Mini.MiniUIActivity"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1.40"
+            android:gravity="top|center_horizontal"
+            android:orientation="horizontal"
+            android:paddingLeft="70dp">
+
+            <ImageView
+                android:id="@+id/btm_logo"
+                android:layout_width="110dp"
+                android:layout_height="60dp"
+                app:srcCompat="@drawable/btmmini" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/machine_id_text"
+                android:layout_width="135dp"
                 android:layout_height="wrap_content"
-                android:text="@string/label_device_address"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/device_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="18sp" />
+                android:layout_marginLeft="10dp"
+                android:text="Machine#"
+                android:textAlignment="viewStart"
+                android:textColor="@color/TextColor"
+                android:textSize="30sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/label_state"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/connection_state"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/disconnected"
-                android:textSize="18sp" />
-        </LinearLayout>
+                android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_device_address"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="3sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/label_data"
-                android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/device_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="3sp" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/data_value"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/no_data"
-                android:textSize="18sp" />
+                android:orientation="horizontal">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_state"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="3sp" />
+
+                <TextView
+                    android:id="@+id/connection_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/disconnected"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="3sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_data"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="3sp" />
+
+                <TextView
+                    android:id="@+id/data_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no_data"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="3sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/isSerial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/is_serial"
+                android:textColor="@color/colorWhite"
+                android:textSize="3sp" />
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/isSerial"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="10dp"
-            android:text="@string/is_serial"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/r1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:text="@string/red_slide"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:visibility="gone" />
-
-        <SeekBar
-            android:id="@+id/seekRed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:max="255"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/g1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:text="@string/green_slide"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:visibility="gone" />
-
-        <SeekBar
-            android:id="@+id/seekBlue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:max="255"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/b1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:text="@string/blue_slide"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:visibility="gone" />
-
-        <SeekBar
-            android:id="@+id/seekGreen"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:max="255"
-            android:visibility="gone" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/text_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/ui_ble_mini_stock_title"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -145,6 +145,8 @@
     <string name="ui_ble_mini_select">Select</string>
     <string name="ui_ble_mini_line_selected">Line selected: </string>
     <string name="ui_aux_payment_title">Payment</string>
+    <string name="ui_ble_mini_stock_title">Select a product line: </string>
+
 
 
     <!-- Library text -->

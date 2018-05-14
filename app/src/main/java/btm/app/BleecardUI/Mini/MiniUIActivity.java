@@ -109,12 +109,14 @@ public class MiniUIActivity extends AppCompatActivity {
     String Line, GlobalDataLine = "", rsaBuyLine;
 
     String modo, data, password_dialog_value;
-    String card_id, webResponse, dataResponse;
+    String webResponse, dataResponse;
     String creditCardData, walletData, subscriptionData;
     String action;
 
+    String card_info, card_id;
     String globalProduct, globalPrice;
 
+    TextView MachineIdTitle;
     TextView namepr1, namepr2, namepr3, namepr4, namepr5;
     TextView pr1, pr2, pr3, pr4, pr5, ble_id;
     TextView text1, text2, text3, text4, text5;
@@ -193,12 +195,12 @@ public class MiniUIActivity extends AppCompatActivity {
         mDeviceName         = intent.getStringExtra(EXTRAS_DEVICE_NAME);
         mDeviceAddress      = intent.getStringExtra(EXTRAS_DEVICE_ADDRESS);
 
-        macAddress     = DataHolderBleData.getMac();
-        deviceName     = DataHolderBleData.getName();
-        machineId      = DataHolderBleData.getId();
+        macAddress          = DataHolderBleData.getMac();
+        deviceName          = DataHolderBleData.getName();
+        machineId           = DataHolderBleData.getId();
 
-        GlobalDataLine = "";
-        action         = "ReadStock";
+        GlobalDataLine      = "";
+        action              = "ReadStock";
 
         Log.w(TAG, "////// Machine Id: " + machineId + " Name: " + deviceName + " Mac Addr: " + macAddress);
 
@@ -208,41 +210,38 @@ public class MiniUIActivity extends AppCompatActivity {
         // is serial present?
         isSerial = (TextView) findViewById(R.id.isSerial);
 
-        mRed        = (SeekBar) findViewById(R.id.seekRed);
-        mGreen      = (SeekBar) findViewById(R.id.seekGreen);
-        mBlue       = (SeekBar) findViewById(R.id.seekBlue);
+        mDataField     = (TextView) findViewById(R.id.data_value);
+        MachineIdTitle = (TextView) findViewById(R.id.machine_id_text);
+        text1          = (TextView) findViewById(R.id.textView1);
+        text2          = (TextView) findViewById(R.id.textView2);
+        text3          = (TextView) findViewById(R.id.textView3);
+        text4          = (TextView) findViewById(R.id.textView4);
+        text5          = (TextView) findViewById(R.id.textView5);
+        //ble_id       = (TextView) findViewById(R.id.ble_id);
 
-        mDataField  = (TextView) findViewById(R.id.data_value);
-        text1       = (TextView) findViewById(R.id.textView1);
-        text2       = (TextView) findViewById(R.id.textView2);
-        text3       = (TextView) findViewById(R.id.textView3);
-        text4       = (TextView) findViewById(R.id.textView4);
-        text5       = (TextView) findViewById(R.id.textView5);
-        //ble_id    = (TextView) findViewById(R.id.ble_id);
+        img1           = (ImageView) findViewById(R.id.imageView1);
+        img2           = (ImageView) findViewById(R.id.imageView2);
+        img3           = (ImageView) findViewById(R.id.imageView3);
+        img4           = (ImageView) findViewById(R.id.imageView4);
+        img5           = (ImageView) findViewById(R.id.imageView5);
 
-        img1        = (ImageView) findViewById(R.id.imageView1);
-        img2        = (ImageView) findViewById(R.id.imageView2);
-        img3        = (ImageView) findViewById(R.id.imageView3);
-        img4        = (ImageView) findViewById(R.id.imageView4);
-        img5        = (ImageView) findViewById(R.id.imageView5);
+        pr1            = (TextView) findViewById(R.id.price1);
+        pr2            = (TextView) findViewById(R.id.price2);
+        pr3            = (TextView) findViewById(R.id.price3);
+        pr4            = (TextView) findViewById(R.id.price4);
+        pr5            = (TextView) findViewById(R.id.price5);
 
-        pr1         = (TextView) findViewById(R.id.price1);
-        pr2         = (TextView) findViewById(R.id.price2);
-        pr3         = (TextView) findViewById(R.id.price3);
-        pr4         = (TextView) findViewById(R.id.price4);
-        pr5         = (TextView) findViewById(R.id.price5);
+        namepr1        = (TextView) findViewById(R.id.product_name1);
+        namepr2        = (TextView) findViewById(R.id.product_name2);
+        namepr3        = (TextView) findViewById(R.id.product_name3);
+        namepr4        = (TextView) findViewById(R.id.product_name4);
+        namepr5        = (TextView) findViewById(R.id.product_name5);
 
-        namepr1     = (TextView) findViewById(R.id.product_name1);
-        namepr2     = (TextView) findViewById(R.id.product_name2);
-        namepr3     = (TextView) findViewById(R.id.product_name3);
-        namepr4     = (TextView) findViewById(R.id.product_name4);
-        namepr5     = (TextView) findViewById(R.id.product_name5);
-
-        b1          = (Button) findViewById(R.id.button1);
-        b2          = (Button) findViewById(R.id.button2);
-        b3          = (Button) findViewById(R.id.button3);
-        b4          = (Button) findViewById(R.id.button4);
-        b5          = (Button) findViewById(R.id.button5);
+        b1             = (Button) findViewById(R.id.button1);
+        b2             = (Button) findViewById(R.id.button2);
+        b3             = (Button) findViewById(R.id.button3);
+        b4             = (Button) findViewById(R.id.button4);
+        b5             = (Button) findViewById(R.id.button5);
 
         Log.d(TAG, "Main Thread Id: " + Thread.currentThread().getId());
 
@@ -250,6 +249,8 @@ public class MiniUIActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(getString(R.string.ui_ble_mini_select));
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
         bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
+
+        MachineIdTitle.setText("#" + machineId);
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -882,6 +883,20 @@ public class MiniUIActivity extends AppCompatActivity {
                         customDialogNoMove("Actualmente no tienes una Suscripción Abierta para este producto. Por favor compra una Suscripción.");
                     }
                 }
+            }
+        });
+
+        tC.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                card_info = parent.getItemAtPosition(position).toString();
+                card_id   = listTc.get(position).getId();
+                Log.d(TAG, "card number: "+card_info + "-->"+ card_id);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 

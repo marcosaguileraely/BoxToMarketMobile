@@ -66,7 +66,7 @@ public class BluethAdapter extends ArrayAdapter<Bluethoot> {
         if(inDatum.equals("btm_mini")){
             type_fixed = "BtM Mini";
         }else if(inDatum.equals("vending")){
-            type_fixed = "BtM Vending";
+            type_fixed = "Vending  Machine";
         }else if(inDatum.equals("btm_power")){
             type_fixed = "BtM Power";
         }
