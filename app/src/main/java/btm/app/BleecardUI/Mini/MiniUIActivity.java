@@ -245,9 +245,7 @@ public class MiniUIActivity extends AppCompatActivity {
 
         Log.d(TAG, "Main Thread Id: " + Thread.currentThread().getId());
 
-        dialog2.setCanceledOnTouchOutside(false);
-        dialog2.setMessage(getString(R.string.inf_dialog));
-        dialog2.show();
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getString(R.string.ui_ble_mini_select));
@@ -262,6 +260,10 @@ public class MiniUIActivity extends AppCompatActivity {
                 makeChange(machineId);
             }
         }, 2000); //Timer 1500/2000 (1,5 secs / 2 secs) is a optimal time.
+
+        dialog2.setCanceledOnTouchOutside(false);
+        dialog2.setMessage(getString(R.string.inf_dialog));
+        dialog2.show();
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -422,7 +424,6 @@ public class MiniUIActivity extends AppCompatActivity {
                         settingValuesToLines(data);                             // It triggers the settingValuesToLines() method and set the stock in the UI
                         getMachinesPriceList(utils.getLinesData(machineId));    // It triggers the getMachinesPriceList() method which get product and price via WS
                         //Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
-
 
                     }else if(data.equals("9")){
                         Log.d(TAG, "It's returning the 9 number");
