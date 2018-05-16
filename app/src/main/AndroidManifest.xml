@@ -128,9 +128,14 @@
         <activity
             android:name=".BleecardUI.BleListActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".BleecardUI.Mini.MiniUIActivity" />
 
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".BleecardUI.Mini.MiniUIActivity" />
 
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".BleecardUI.Vending.VendingUIActivity" />
 
     </application>
 
