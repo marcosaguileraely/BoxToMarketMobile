@@ -109,19 +109,10 @@
             android:name=".BuySubscriptionConfirmActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".BleecardUI.BleecardMainActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".BleecardUI.BleecardDetailsActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".TransferCompensationActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ChangePassActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".BleecardUI.BleVendingUI"
             android:screenOrientation="portrait" />
         <activity
             android:name=".BleecardUI.BleMiniUI"
@@ -138,17 +129,9 @@
             android:enabled="true" />
 
         <activity
-            android:name=".BleecardUI.BleMiniUIDetails"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".BleecardUI.BleListActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".BleecardUI.BleMiniUiBuyActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".BleecardUI.BleecardPayActivity" />
         <activity android:name=".BleecardUI.Mini.MiniUIActivity" />
-        <activity android:name=".BleecardUI.Mini.MiniUIPayActivity"></activity>
     </application>
 
 </manifest>

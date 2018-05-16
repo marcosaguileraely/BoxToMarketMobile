@@ -2,18 +2,15 @@ package btm.app.BleecardUI.Mini;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import btm.app.BleecardUI.BleListActivity;
-import btm.app.BleecardUI.BleMiniUiBuyActivity;
 import btm.app.BleecardUI.BluetoothLeService;
 import btm.app.BleecardUI.SampleGattAttributes;
 import btm.app.CC;
 import btm.app.DataHolder.DataHolder;
-import btm.app.DataHolder.DataHolderBleBuy;
 import btm.app.DataHolder.DataHolderBleData;
 import btm.app.MainActivity;
 import btm.app.Network.NetActions;
@@ -57,8 +54,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
-import btm.app.DataHolder.AuxDataHolder;
-import btm.app.DataHolder.DataHolderBleecardPay;
 import btm.app.Utils.Utils;
 
 import static btm.app.Utils.Utils.hexStringToByteArray;
@@ -244,8 +239,6 @@ public class MiniUIActivity extends AppCompatActivity {
         b5             = (Button) findViewById(R.id.button5);
 
         Log.d(TAG, "Main Thread Id: " + Thread.currentThread().getId());
-
-
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getString(R.string.ui_ble_mini_select));

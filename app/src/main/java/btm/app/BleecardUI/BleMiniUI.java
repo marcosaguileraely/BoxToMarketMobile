@@ -212,8 +212,8 @@ public class BleMiniUI extends AppCompatActivity {
                 DataHolderBleBuy.setLiNameSeleted(prod1);
                 mBluetoothLeService.disconnect();
 
-                Intent goToBuy =  new Intent(BleMiniUI.this, BleMiniUiBuyActivity.class);
-                startActivity(goToBuy);
+                //Intent goToBuy =  new Intent(BleMiniUI.this, BleMiniUiBuyActivity.class);
+                //startActivity(goToBuy);
             }
         });
 
@@ -224,8 +224,8 @@ public class BleMiniUI extends AppCompatActivity {
                 DataHolderBleBuy.setLiNameSeleted(prod2);
                 mBluetoothLeService.disconnect();
 
-                Intent goToBuy =  new Intent(BleMiniUI.this, BleMiniUiBuyActivity.class);
-                startActivity(goToBuy);
+                //Intent goToBuy =  new Intent(BleMiniUI.this, BleMiniUiBuyActivity.class);
+                //startActivity(goToBuy);
             }
         });
 
@@ -236,8 +236,8 @@ public class BleMiniUI extends AppCompatActivity {
                 DataHolderBleBuy.setLiNameSeleted(prod3);
                 mBluetoothLeService.disconnect();
 
-                Intent goToBuy =  new Intent(BleMiniUI.this, BleMiniUiBuyActivity.class);
-                startActivity(goToBuy);
+                //Intent goToBuy =  new Intent(BleMiniUI.this, BleMiniUiBuyActivity.class);
+                //startActivity(goToBuy);
             }
         });
 
@@ -248,8 +248,8 @@ public class BleMiniUI extends AppCompatActivity {
                 DataHolderBleBuy.setLiNameSeleted(prod4);
                 mBluetoothLeService.disconnect();
 
-                Intent goToBuy =  new Intent(BleMiniUI.this, BleMiniUiBuyActivity.class);
-                startActivity(goToBuy);
+                //Intent goToBuy =  new Intent(BleMiniUI.this, BleMiniUiBuyActivity.class);
+                //startActivity(goToBuy);
             }
         });
 
@@ -260,8 +260,8 @@ public class BleMiniUI extends AppCompatActivity {
                 DataHolderBleBuy.setLiNameSeleted(prod5);
                 mBluetoothLeService.disconnect();
 
-                Intent goToBuy =  new Intent(BleMiniUI.this, BleMiniUiBuyActivity.class);
-                startActivity(goToBuy);
+                //Intent goToBuy =  new Intent(BleMiniUI.this, BleMiniUiBuyActivity.class);
+                //startActivity(goToBuy);
             }
         });
         Log.d(TAG, "*********** Acceso a la Actividad iniciado");
