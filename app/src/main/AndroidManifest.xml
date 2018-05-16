@@ -115,9 +115,6 @@
             android:name=".ChangePassActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".BleecardUI.BleMiniUI"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".BleecardUI.DeviceScanActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -132,6 +129,9 @@
             android:name=".BleecardUI.BleListActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".BleecardUI.Mini.MiniUIActivity" />
+
+
+
     </application>
 
 </manifest>

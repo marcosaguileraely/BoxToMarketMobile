@@ -140,14 +140,14 @@ public class DeviceScanActivity extends ListActivity {
         if (device == null) return;
 
         //final Intent intent = new Intent(this, DeviceControlActivity.class);
-        final Intent intent = new Intent(this, BleMiniUI.class);
-        intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_NAME, device.getName());
-        intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_ADDRESS, device.getAddress());
+        //final Intent intent = new Intent(this, BleMiniUI.class);
+        //intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_NAME, device.getName());
+        //intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_ADDRESS, device.getAddress());
         if (mScanning) {
             mBluetoothAdapter.stopLeScan(mLeScanCallback);
             mScanning = false;
         }
-        startActivity(intent);
+        //startActivity(intent);
     }
 
     private void scanLeDevice(final boolean enable) {
