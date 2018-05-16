@@ -164,6 +164,7 @@ public class BleListActivity extends AppCompatActivity {
                 String idBlee   = adapter.getId(position);
 
                 Log.w(TAG, "Position: "+ position +" Set mac addr: " + adrBlee + " - Machine Id: " + idBlee);
+                Log.w(TAG, "Machine Type: " + typeBlee);
 
                 DataHolderBleData.setId(idBlee);
                 DataHolderBleData.setImg(imgBlee);
@@ -173,9 +174,18 @@ public class BleListActivity extends AppCompatActivity {
 
                 utils.wsgetMachines(deviceMac);
 
+                if(typeBlee.equals("btm_mini")){
+                    Intent goToMiniUi = new Intent(BleListActivity.this, MiniUIActivity.class);
+                    startActivity(goToMiniUi);
+                }if(typeBlee.equals("vending")){
+                    //Intent goToMiniUi = new Intent(BleListActivity.this, MiniUIActivity.class);
+                    //startActivity(goToMiniUi);
+                }if(typeBlee.equals("btm_power")){
+                    //Intent goToMiniUi = new Intent(BleListActivity.this, MiniUIActivity.class);
+                    //startActivity(goToMiniUi);
+                }
 
-                Intent goToMiniUi = new Intent(BleListActivity.this, MiniUIActivity.class);
-                startActivity(goToMiniUi);
+
             }
         });
 

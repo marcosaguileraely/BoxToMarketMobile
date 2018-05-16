@@ -204,12 +204,12 @@ public class VendingUIActivity extends AppCompatActivity {
 
         mDataField     = (TextView) findViewById(R.id.data_value);
         MachineIdTitle = (TextView) findViewById(R.id.machine_id_text);
-        text1          = (TextView) findViewById(R.id.textView1);
+
+        /*text1          = (TextView) findViewById(R.id.textView1);
         text2          = (TextView) findViewById(R.id.textView2);
         text3          = (TextView) findViewById(R.id.textView3);
         text4          = (TextView) findViewById(R.id.textView4);
         text5          = (TextView) findViewById(R.id.textView5);
-        //ble_id       = (TextView) findViewById(R.id.ble_id);
 
         img1           = (ImageView) findViewById(R.id.imageView1);
         img2           = (ImageView) findViewById(R.id.imageView2);
@@ -233,7 +233,7 @@ public class VendingUIActivity extends AppCompatActivity {
         b2             = (Button) findViewById(R.id.button2);
         b3             = (Button) findViewById(R.id.button3);
         b4             = (Button) findViewById(R.id.button4);
-        b5             = (Button) findViewById(R.id.button5);
+        b5             = (Button) findViewById(R.id.button5);*/
 
         Log.d(TAG, "Main Thread Id: " + Thread.currentThread().getId());
 
