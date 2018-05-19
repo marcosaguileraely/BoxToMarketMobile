@@ -190,6 +190,7 @@
     <string name="ui_ble_mini_blee_list_message_recommend">You\'ve denied the permission. We highly recommend to activate this feature to use BleeCard technology.</string>
     <string name="ui_ble_mini_blee_list_auth_title">For Bluetooth payments by Bleecard, the app needs access permission</string>
     <string name="ui_ble_mini_blee_list_auth_body_text">Please grant location access so this App can detects Bluetooth devices</string>
+    <string name="ui_ble_power_title">Select time</string>
 
 
 </resources>

@@ -189,6 +189,7 @@
     <string name="ui_ble_mini_blee_list_message_recommend">Has declinado los permisos. Recomendamos activar esta caracteristica para usar la tecnología BleeCard.</string>
     <string name="ui_ble_mini_blee_list_auth_title">Para pagos por Bluetooth mediante Bleecard, la App necesita permisos</string>
     <string name="ui_ble_mini_blee_list_auth_body_text">Por favor autorice los permisos de acceso para que la App pueda detectar dispositivos Bluetooth.</string>
+    <string name="ui_ble_power_title">Selecciona el tiempo de uso</string>
 
 
 </resources>
