@@ -651,4 +651,25 @@ public class NetActions {
         return response.body().string();
     }
 
+    /**
+     *
+     * @throws IOException
+     * @throws NullPointerException
+     */
+    public String registerCard(String datos, String username) throws IOException, NullPointerException {
+        Log.d(TAG, " Datos card list: " + datos);
+
+        String url = "https://www.boxtomarket.com/index.php?r=app/registrocard"
+                + "&username=" + username
+                + "&datos=" + datos;
+        Log.d("DEV -> NetActions ", url);
+
+        okhttp3.Request requesthttp = new okhttp3.Request.Builder()
+                .url(url)
+                .build();
+
+        okhttp3.Response response = client.newCall(requesthttp).execute();
+        return response.body().string();
+    }
+
 }

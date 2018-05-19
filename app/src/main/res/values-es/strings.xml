@@ -7,7 +7,7 @@
     <string name="action_pass">Cambiar Clave</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="pais">Seleccione el pais</string>
-    <string name="apellidos">Apellidos</string>
+    <string name="apellidos">1er Apellido</string>
     <string name="de_identificaci_n"># de Identificación del usuario</string>
     <string name="telefono_mov_l">Teléfono Movil</string>
     <string name="checkbox">Acepto términos y condiciones</string>
@@ -72,7 +72,7 @@
     <string name="cerrar">Cerrar Sesion</string>
     <string name="transferir_creditos">Transferir Saldo</string>
     <string name="informaci_n_del_destinatario">Transferir de Mi Billetera a otro usuario</string>
-    <string name="nombres">Nombres</string>
+    <string name="nombres">1er Nombre</string>
     <string name="error_monto">Ingrese un valor diferente de cero</string>
     <string name="please_check_your_info_and_clic_for_continue">Por favor verifique la info y de clic para continuar el registro</string>
 

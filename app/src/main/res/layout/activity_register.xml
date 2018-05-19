@@ -84,6 +84,7 @@
                     android:layout_marginTop="6dp"
                     android:background="@drawable/backgound_edit_text"
                     android:hint="@string/nombres"
+                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
                     android:inputType="textPersonName"
                     android:padding="6dp"
                     tools:ignore="NestedWeights" />
@@ -95,6 +96,7 @@
                     android:layout_marginTop="6dp"
                     android:background="@drawable/backgound_edit_text"
                     android:hint="@string/apellidos"
+                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
                     android:inputType="textPersonName"
                     android:padding="6dp" />
 

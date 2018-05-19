@@ -102,5 +102,4 @@ public class Request {
         return Base64.encodeToString(("aplicacionbtm1"+ret).getBytes(), Base64.DEFAULT);
     }
 
-
 }

@@ -73,7 +73,7 @@
     <string name="cerrar">Close Session</string>
     <string name="transferir_creditos">Transfer</string>
     <string name="informaci_n_del_destinatario">Transfer from My Wallet to another user</string>
-    <string name="nombres">Firts Name</string>
+    <string name="nombres">First Name</string>
     <string name="error_monto">Please enter a correct value</string>
     <string name="please_check_your_info_and_clic_for_continue">Please check your info and click for continue.</string>
 

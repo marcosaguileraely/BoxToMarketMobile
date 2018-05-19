@@ -46,7 +46,7 @@ public class RegisterActivity extends DataJp {
 
 
     //private String blockCharacterSet = "~#^|$%&*!ñÑáéíóú. ";
-    String blockCharacterSet = "~#^|$%&*!";
+    String blockCharacterSet = "~#^|$%&*!ñÑáéíóú. ";
     String data, countryName;
     int countryId;
     private Context context = this;
@@ -204,7 +204,7 @@ public class RegisterActivity extends DataJp {
             }
         }
 
-        String username_ = username.getText().toString();
+        String username_  = username.getText().toString();
         try {
             nombres_[0]   = URLEncoder.encode(nombres_[0].trim(), "ISO-8859-1");
             apellidos_[0] = URLEncoder.encode(apellidos_[0].trim(), "ISO-8859-1");
@@ -221,9 +221,10 @@ public class RegisterActivity extends DataJp {
                    +"&password="+pass_1.getText().toString()
                    +"&identificacion="+identificacion.getText().toString()
                    +"&nombre1=" + nombres_[0]                                   //+nombres.getText().toString()
-                   +"&nombre2=" + ((nombres_.length > 1)?nombre_2:"-")          //+nombres.getText().toString()
+                   +"&nombre2=" + ((nombres_.length > 1)?nombre_2:"")           //+nombres.getText().toString()
+                   //+"&nombre2=" + ((nombres_.length > 1)?nombre_2:"")           //+nombres.getText().toString()
                    +"&apellido1=" +apellidos_[0]                                //+apellidos.getText().toString()
-                   +"&apellido2=" +((apellidos_.length > 1)?apellido_2:"-")     //+apellidos.getText().toString()
+                   +"&apellido2=" +((apellidos_.length > 1)?apellido_2:"")      //+apellidos.getText().toString()
                    +"&email="+email.getText().toString()
                    +"&celular="+celular.getText().toString()
                    +"&pais="+countryId;
@@ -250,9 +251,6 @@ public class RegisterActivity extends DataJp {
         public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
 
             if (source != null && blockCharacterSet.contains(("" + source))) {
-                Toast toast = Toast.makeText(context, "El usuario no permite caracteres especiales.", Toast.LENGTH_SHORT);
-                //username.setError("Usuario no debe contener cacteres invalidos.");
-                toast.show();
                 return "";
             }
             return null;

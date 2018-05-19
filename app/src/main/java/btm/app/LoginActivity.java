@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -128,10 +129,16 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onBackPressed(){
+        super.onBackPressed();
         DataHolder dataHolder = new DataHolder();
         dataHolder.setUsername("");
         dataHolder.setPass("");
-        finish(); // finish activity
-        //System.exit(0);
+        //finish(); // finish activity
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            finishAffinity();
+        } else {
+            finish();
+        }
     }
 }
