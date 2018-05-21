@@ -267,58 +267,6 @@ public class VendingUIActivity extends AppCompatActivity {
                 payUIDialog();
             }
         });
-
-        b2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                action = "ReadBuy";
-                globalProduct = prod2;
-                globalPrice   = price2;
-                rsaBuyLine = utils.getStringJson(utils.getRsaBle(machineId));
-                Log.w(TAG, "//// Machine Id: " + machineId + " RSA Number: " + rsaBuyLine);
-                Line = "2";
-                payUIDialog();
-            }
-        });
-
-        b3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                action = "ReadBuy";
-                globalProduct = prod3;
-                globalPrice   = price3;
-                rsaBuyLine = utils.getStringJson(utils.getRsaBle(machineId));
-                Log.w(TAG, "//// Machine Id: " + machineId + " RSA Number: " + rsaBuyLine);
-                Line = "3";
-                payUIDialog();
-            }
-        });
-
-        b4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                action = "ReadBuy";
-                globalProduct = prod4;
-                globalPrice   = price4;
-                rsaBuyLine = utils.getStringJson(utils.getRsaBle(machineId));
-                Log.w(TAG, "//// Machine Id: " + machineId + " RSA Number: " + rsaBuyLine);
-                Line = "4";
-                payUIDialog();
-            }
-        });
-
-        b5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                action = "ReadBuy";
-                globalProduct = prod5;
-                globalPrice   = price5;
-                rsaBuyLine = utils.getStringJson(utils.getRsaBle(machineId));
-                Log.w(TAG, "//// Machine Id: " + machineId + " RSA Number: " + rsaBuyLine);
-                Line = "5";
-                payUIDialog();
-            }
-        });
     }
 
     @Override

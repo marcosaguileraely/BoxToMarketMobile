@@ -43,6 +43,8 @@ import java.util.List;
 
 import btm.app.Adapters.BluethAdapter;
 import btm.app.BleecardUI.Mini.MiniUIActivity;
+import btm.app.BleecardUI.Power.PowerUIActivity;
+import btm.app.BleecardUI.Vending.VendingUIActivity;
 import btm.app.DataHolder.DataHolderBleData;
 import btm.app.MainActivity;
 import btm.app.Model.BleeDetails;
@@ -178,11 +180,11 @@ public class BleListActivity extends AppCompatActivity {
                     Intent goToMiniUi = new Intent(BleListActivity.this, MiniUIActivity.class);
                     startActivity(goToMiniUi);
                 }if(typeBlee.equals("vending")){
-                    //Intent goToMiniUi = new Intent(BleListActivity.this, MiniUIActivity.class);
-                    //startActivity(goToMiniUi);
+                    Intent goToVendingUi = new Intent(BleListActivity.this, VendingUIActivity.class);
+                    startActivity(goToVendingUi);
                 }if(typeBlee.equals("btm_power")){
-                    //Intent goToMiniUi = new Intent(BleListActivity.this, MiniUIActivity.class);
-                    //startActivity(goToMiniUi);
+                    //Intent goToPowerUi = new Intent(BleListActivity.this, PowerUIActivity.class);
+                    //startActivity(goToPowerUi);
                 }
 
 

@@ -177,7 +177,7 @@
                                     android:orientation="horizontal">
 
                                     <ImageView
-                                        android:id="@+id/imageView1"
+                                        android:id="@+id/imageView1_oneicon"
                                         android:layout_width="60dp"
                                         android:layout_height="60dp"
                                         android:background="@drawable/one_power" />
@@ -267,7 +267,7 @@
                                     android:orientation="horizontal">
 
                                     <ImageView
-                                        android:id="@+id/imageView1"
+                                        android:id="@+id/imageView1_twoicon"
                                         android:layout_width="60dp"
                                         android:layout_height="60dp"
                                         android:background="@drawable/two_power" />
@@ -288,7 +288,7 @@
                                         android:orientation="horizontal">
 
                                         <TextView
-                                            android:id="@+id/textView1"
+                                            android:id="@+id/textView1_txt1_power"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
@@ -301,7 +301,7 @@
                                             android:textStyle="bold" />
 
                                         <TextView
-                                            android:id="@+id/price1"
+                                            android:id="@+id/price1_power"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
@@ -322,7 +322,7 @@
                                     android:orientation="horizontal">
 
                                     <Button
-                                        android:id="@+id/button1"
+                                        android:id="@+id/button1_power"
                                         android:layout_width="40dp"
                                         android:layout_height="40dp"
                                         android:background="@drawable/row"
@@ -357,7 +357,7 @@
                                     android:orientation="horizontal">
 
                                     <ImageView
-                                        android:id="@+id/imageView1"
+                                        android:id="@+id/imageView_threeicon"
                                         android:layout_width="60dp"
                                         android:layout_height="60dp"
                                         android:background="@drawable/three_power" />
@@ -378,7 +378,7 @@
                                         android:orientation="horizontal">
 
                                         <TextView
-                                            android:id="@+id/textView1"
+                                            android:id="@+id/textView1_txt2_power"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
@@ -391,7 +391,7 @@
                                             android:textStyle="bold" />
 
                                         <TextView
-                                            android:id="@+id/price1"
+                                            android:id="@+id/price1_power_3"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
@@ -412,7 +412,7 @@
                                     android:orientation="horizontal">
 
                                     <Button
-                                        android:id="@+id/button1"
+                                        android:id="@+id/button1_power_1"
                                         android:layout_width="40dp"
                                         android:layout_height="40dp"
                                         android:background="@drawable/row"
@@ -447,7 +447,7 @@
                                     android:orientation="horizontal">
 
                                     <ImageView
-                                        android:id="@+id/imageView1"
+                                        android:id="@+id/imageView1_sixicon"
                                         android:layout_width="60dp"
                                         android:layout_height="60dp"
                                         android:background="@drawable/six_power" />
@@ -468,7 +468,7 @@
                                         android:orientation="horizontal">
 
                                         <TextView
-                                            android:id="@+id/textView1"
+                                            android:id="@+id/textView1_txt3_power"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
@@ -481,7 +481,7 @@
                                             android:textStyle="bold" />
 
                                         <TextView
-                                            android:id="@+id/price1"
+                                            android:id="@+id/price1_power_2"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
@@ -502,7 +502,7 @@
                                     android:orientation="horizontal">
 
                                     <Button
-                                        android:id="@+id/button1"
+                                        android:id="@+id/button1_power_3"
                                         android:layout_width="40dp"
                                         android:layout_height="40dp"
                                         android:background="@drawable/row"
@@ -537,7 +537,7 @@
                                     android:orientation="horizontal">
 
                                     <ImageView
-                                        android:id="@+id/imageView1"
+                                        android:id="@+id/imageView1_twelveicon"
                                         android:layout_width="60dp"
                                         android:layout_height="60dp"
                                         android:background="@drawable/twelve_power" />
@@ -558,7 +558,7 @@
                                         android:orientation="horizontal">
 
                                         <TextView
-                                            android:id="@+id/textView1"
+                                            android:id="@+id/textView1_txt4_power"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
@@ -571,7 +571,7 @@
                                             android:textStyle="bold" />
 
                                         <TextView
-                                            android:id="@+id/price1"
+                                            android:id="@+id/price1_power_5"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
@@ -592,7 +592,7 @@
                                     android:orientation="horizontal">
 
                                     <Button
-                                        android:id="@+id/button1"
+                                        android:id="@+id/button1_power_6"
                                         android:layout_width="40dp"
                                         android:layout_height="40dp"
                                         android:background="@drawable/row"
