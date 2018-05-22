@@ -146,11 +146,11 @@
     <string name="ui_ble_mini_line_selected">Línea seleccionada:</string>
     <string name="ui_aux_payment_title">Pago</string>
     <string name="ui_ble_mini_stock_title">Selecciona la línea del producto: </string>
-
     <string name="app_name_machines">La App de las Máquinas</string>
     <string name="ui_ble_mini_message_found">No se encontraron Máquinas compatibles con Bleecard disponibles para conexión. Por favor intenta escanear nuevamente.</string>
     <string name="ui_ble_mini_blee_list_title">Máquinas</string>
     <string name="ui_ble_mini_blee_list_button_scan">Volver a escanear</string>
+    <string name="ui_ble_vending_title">Ingrese un valor a cargar</string>
 
     <!-- Library text -->
     <string name="ble_not_supported">BLE is not supported</string>

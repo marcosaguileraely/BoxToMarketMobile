@@ -135,4 +135,9 @@ public class Utils extends Activity {
             }
         }
     }
+
+    public static int convert(int n) {
+        return Integer.valueOf(String.valueOf(n), 16);
+    }
+
 }

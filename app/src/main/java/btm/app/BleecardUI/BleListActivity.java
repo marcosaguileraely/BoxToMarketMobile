@@ -186,8 +186,6 @@ public class BleListActivity extends AppCompatActivity {
                     //Intent goToPowerUi = new Intent(BleListActivity.this, PowerUIActivity.class);
                     //startActivity(goToPowerUi);
                 }
-
-
             }
         });
 
