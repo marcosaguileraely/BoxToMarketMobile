@@ -95,10 +95,7 @@ public class VendingUIActivity extends AppCompatActivity {
     private final String LIST_UUID = "UUID";
 
     String deviceName, macAddress, machineId, machineImg, machineType;
-    String price1, price2, price3, price4, price5;
-    String prod1, prod2, prod3, prod4, prod5;
-    String image_url1, image_url2, image_url3, image_url4, image_url5;
-    String Line, GlobalDataLine = "", rsaBuyLine;
+    String Line, GlobalDataLine = "";
 
     String modo, data, password_dialog_value;
     String webResponse, dataResponse;
@@ -109,12 +106,9 @@ public class VendingUIActivity extends AppCompatActivity {
     String globalProduct, globalPrice;
 
     TextView MachineIdTitle;
-    TextView namepr1, namepr2, namepr3, namepr4, namepr5;
-    TextView pr1, pr2, pr3, pr4, pr5, ble_id;
-    TextView text1, text2, text3, text4, text5;
-    ImageView img1, img2, img3, img4, img5;
 
-    Button b1, b2, b3, b4, b5;
+    EditText valueCharge;
+    Button charge;
 
     // Code to manage Service lifecycle.
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
@@ -192,7 +186,7 @@ public class VendingUIActivity extends AppCompatActivity {
         machineId           = DataHolderBleData.getId();
 
         GlobalDataLine      = "";
-        action              = "ReadStock";
+        action              = "StablishConx";
 
         Log.w(TAG, "////// Machine Id: " + machineId + " Name: " + deviceName + " Mac Addr: " + macAddress);
 
@@ -204,36 +198,8 @@ public class VendingUIActivity extends AppCompatActivity {
 
         mDataField     = (TextView) findViewById(R.id.data_value);
         MachineIdTitle = (TextView) findViewById(R.id.machine_id_text);
-
-        /*text1          = (TextView) findViewById(R.id.textView1);
-        text2          = (TextView) findViewById(R.id.textView2);
-        text3          = (TextView) findViewById(R.id.textView3);
-        text4          = (TextView) findViewById(R.id.textView4);
-        text5          = (TextView) findViewById(R.id.textView5);
-
-        img1           = (ImageView) findViewById(R.id.imageView1);
-        img2           = (ImageView) findViewById(R.id.imageView2);
-        img3           = (ImageView) findViewById(R.id.imageView3);
-        img4           = (ImageView) findViewById(R.id.imageView4);
-        img5           = (ImageView) findViewById(R.id.imageView5);
-
-        pr1            = (TextView) findViewById(R.id.price1);
-        pr2            = (TextView) findViewById(R.id.price2);
-        pr3            = (TextView) findViewById(R.id.price3);
-        pr4            = (TextView) findViewById(R.id.price4);
-        pr5            = (TextView) findViewById(R.id.price5);
-
-        namepr1        = (TextView) findViewById(R.id.product_name1);
-        namepr2        = (TextView) findViewById(R.id.product_name2);
-        namepr3        = (TextView) findViewById(R.id.product_name3);
-        namepr4        = (TextView) findViewById(R.id.product_name4);
-        namepr5        = (TextView) findViewById(R.id.product_name5);
-
-        b1             = (Button) findViewById(R.id.button1);
-        b2             = (Button) findViewById(R.id.button2);
-        b3             = (Button) findViewById(R.id.button3);
-        b4             = (Button) findViewById(R.id.button4);
-        b5             = (Button) findViewById(R.id.button5);*/
+        charge         = (Button) findViewById(R.id.button_charge);
+        valueCharge    = (EditText) findViewById(R.id.value_charge);
 
         Log.d(TAG, "Main Thread Id: " + Thread.currentThread().getId());
 
@@ -251,20 +217,16 @@ public class VendingUIActivity extends AppCompatActivity {
             }
         }, 2000); //Timer 1500/2000 (1,5 secs / 2 secs) is a optimal time.
 
-        dialog2.setCanceledOnTouchOutside(false);
-        dialog2.setMessage(getString(R.string.inf_dialog));
-        dialog2.show();
+        //dialog2.setCanceledOnTouchOutside(false);
+        //dialog2.setMessage(getString(R.string.inf_dialog));
+        //dialog2.show();
 
-        b1.setOnClickListener(new View.OnClickListener() {
+        charge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                action = "ReadBuy";
-                globalProduct = prod1;
-                globalPrice   = price1;
-                rsaBuyLine = utils.getStringJson(utils.getRsaBle(machineId));
-                Log.w(TAG, "//// Machine Id: " + machineId + " RSA Number: " + rsaBuyLine);
-                Line = "1";
-                payUIDialog();
+                action = "Charging";
+                String valueToCharge = valueCharge.getText().toString();
+                makeCharging(valueToCharge);
             }
         });
     }
@@ -321,7 +283,6 @@ public class VendingUIActivity extends AppCompatActivity {
             case R.id.menu_disconnect:
                 mBluetoothLeService.disconnect();
                 // Setting in blank all fields first
-                blankAll();
                 return true;
             case android.R.id.home:
                 onBackPressed();
@@ -351,63 +312,32 @@ public class VendingUIActivity extends AppCompatActivity {
             Log.w(TAG, " //// DATA VALUE : " + data);
 
             String is8 = is8Validate(data);
-            Log.w(TAG, " //// GETTING 8 VALUE?. " + is8);
+            Log.w(TAG, " //// ¿GETTING 8 VALUE?: " + is8);
+
+            String isNoSession = isNoSession(data);
+            Log.w(TAG, " //// ¿GETTING NO SESION VALUE?: " + isNoSession);
 
             switch (action) {
-                case "ReadStock":
-                    // Action executed when "ReadStock" var ready
-                    Log.w(TAG, " ///// ACTION: " + "ReadStock");
-
-                    if(data.length() > 1) {                                     // If 'data' variable changes and detects a 'data'.length up to 1 (eg. 1234567890 -> length = 5) it means that 'data' has a stock
-                        settingValuesToLines(data);                             // It triggers the settingValuesToLines() method and set the stock in the UI
-                        getMachinesPriceList(utils.getLinesData(machineId));    // It triggers the getMachinesPriceList() method which get product and price via WS
-                        //Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
-
-                    }else if(data.equals("9")){
-                        Log.d(TAG, "It's returning the 9 number");
-                        //Toast.makeText(context, "It's returning the 9 number, from ReadStock", Toast.LENGTH_SHORT).show();
+                case "StablishConx":
+                    if(data.equals("9")){
+                        Log.w(TAG, "It's returning the 9 number");
                     }
-
                     break;
 
-                case "ReadBuy":
-                    // Action executed when "ReadyToBuy" var ready
-                    Log.w(TAG, " ///// ACTION: " + "ReadBuy");
-                    //Toast.makeText(context, "It's returning the 9 number, from ReadBuy", Toast.LENGTH_SHORT).show();
+                case "Charging":
+                    Log.w(TAG, "It's returning " + data);
 
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Log.w(TAG, " Line Number : " + Line);
-                            passingLineNumber(Line);
-                            action = "Getting1or0";
-                        }
-                    }, 2000); //Timer is in ms here.
-
-                    break;
-
-                case "PassingLine":
-                    // Action executed when "PassingLine" var ready
-
-                    break;
-
-                case "Getting1or0":
-                    // Action executed when "Getting1o0" value from sensor
-                    if(data.equals("1")){
-                        Log.w(TAG, "It's returning the 1 number");
-                        customDialogPaymentResult("La máquina ha procesado exitosamente tu pedido.");
-                        //Toast.makeText(context, "It's returning the 1 number because the machine have sensed correctly the product.", Toast.LENGTH_LONG).show();
-
-                    }if(data.equals("0")){
-                        Log.w(TAG, "It's returning the 0 number");
-                        //Toast.makeText(context, "It's returning the 0 number because the machine doesn't sense the product.", Toast.LENGTH_LONG).show();
-                        customDialogPaymentResult("La máquina NO procesó exitosamente tu pedido. Por favor vuelve a intentarlo.");
-                    }
+                    
 
                     break;
 
                 case "Getting8":
                     customDialogGetting8("Falla en la comunicación con la máquina. Vuelve a intentarlo nuevamente.");
+
+                    break;
+
+                case "NoSession":
+                    customDialogGetting8("Falla en la sesión con la máquina. Vuelve a intentarlo nuevamente.");
 
                     break;
 
@@ -466,12 +396,11 @@ public class VendingUIActivity extends AppCompatActivity {
     ////////////////////////////////////
 
     private void makeChange(String MachineId) {
-        action = "ReadStock";
+        action = "StablishConx";
         // This value is the Machine ID eg. 5003, change and automatically and pass via to the method
         String Data  = utils.getStringJson(utils.getRsaBle(MachineId));
 
         Log.d(TAG, "////// WS Response = " + Data);
-        //Log.d(TAG, "Sending result=" + str);
 
         final byte[] tx = hexStringToByteArray(Data);
         Log.d(TAG, "Sending byte[] = " + Arrays.toString(tx));
@@ -484,227 +413,32 @@ public class VendingUIActivity extends AppCompatActivity {
             mBluetoothLeService.setCharacteristicNotification(characteristicRX,true);
             Log.w(TAG, " setCharacteristicNotification ");
         }
+
+        dialog2.dismiss();
     }
 
-    private void passRsaToBuyChange() {
-        action = "ReadBuy";
-        String rsa = utils.getStringJson(utils.buyRsaBle(machineId));
-        Log.d(TAG, "////// RSA Passed = " + rsa);
+    private void makeCharging(String valueToCharge) {
+        action = "Charging";
+        // This value is the Machine ID eg. 5003, change and automatically and pass via to the method
 
-        final byte[] tx = hexStringToByteArray(rsa);
-        Log.d(TAG, "Sending byte[] = " + Arrays.toString(tx));
+        Log.w(TAG, "////// Charging value = " + valueToCharge);
+
+        //final byte[] tx = hexStringToByteArray(Hex);
+        //Log.d(TAG, "Sending byte[] = " + Arrays.toString(tx));
 
         if(mConnected) {
-            Log.w(TAG, " It's entering : ok ");
-            characteristicTX.setValue(tx);
-            Log.w(TAG, " characteristicTX : ok ");
+            characteristicTX.setValue(valueToCharge);
+            Log.w(TAG, " Setting characteristicTX value ");
             mBluetoothLeService.writeCharacteristic(characteristicTX);
-            Log.w(TAG, " writeCharacteristic : ok");
-            mBluetoothLeService.setCharacteristicNotification(characteristicRX, true);
-            GlobalDataLine = "LineReady";
-        }
-    }
-
-    private void passingLineNumber(String lineNumber) {
-        action = "ReadBuy";
-        Log.w(TAG, "Sending line number = " + lineNumber);
-        if(mConnected) {
-            characteristicTX.setValue(lineNumber);
-            mBluetoothLeService.writeCharacteristic(characteristicTX);
+            Log.w(TAG, " writeCharacteristic ");
             mBluetoothLeService.setCharacteristicNotification(characteristicRX,true);
+            Log.w(TAG, " setCharacteristicNotification ");
         }
     }
 
     ////////////////////////////////////
     //////// Other Actions /////////////
     ////////////////////////////////////
-
-    private void settingValuesToLines(String data) {
-        // This kind of Mini Btm has 5 lines, it goes since 1 to 5
-        // the data is ordered in couples, in e.x.
-        // For a response like: 1201232010 means 12 - 01 - 23 - 20 - 10
-        // it means that for line 1 there are 12 products, line 2 there is 01 (1) product and so on...
-
-        String subStringDataSure = beSureDataString(data);
-        Log.d(TAG, "-> Sub Full String: " + "full string " + subStringDataSure);
-
-        String subString1 = subStringDataSure.substring(0, 2);
-        String subString2 = subStringDataSure.substring(2, 4);
-        String subString3 = subStringDataSure.substring(4, 6);
-        String subString4 = subStringDataSure.substring(6, 8);
-        String subString5 = subStringDataSure.substring(8, 10);
-
-        int value1 = Integer.valueOf(subString1);
-        int value2 = Integer.valueOf(subString2);
-        int value3 = Integer.valueOf(subString3);
-        int value4 = Integer.valueOf(subString4);
-        int value5 = Integer.valueOf(subString5);
-
-        Log.d(TAG, "-> Stock now: " + "Line #1 " + value1);
-        Log.d(TAG, "-> Stock now: " + "Line #2 " + value2);
-        Log.d(TAG, "-> Stock now: " + "Line #3 " + value3);
-        Log.d(TAG, "-> Stock now: " + "Line #4 " + value4);
-        Log.d(TAG, "-> Stock now: " + "Line #5 " + value5);
-
-        text1.setText("Disponible: " + String.valueOf(value1));
-        text2.setText("Disponible: " + String.valueOf(value2));
-        text3.setText("Disponible: " + String.valueOf(value3));
-        text4.setText("Disponible: " + String.valueOf(value4));
-        text5.setText("Disponible: " + String.valueOf(value5));
-
-        if(value1==0){
-            b1.setEnabled(false);
-            text1.setText("No Disponible");
-            pr1.setText("$0");
-        }if(value2==0){
-            b2.setEnabled(false);
-            text2.setText("No Disponible");
-            pr2.setText("$0");
-        }if(value3==0){
-            b3.setEnabled(false);
-            text3.setText("No Disponible");
-            pr3.setText("$0");
-        }if(value4==0){
-            b4.setEnabled(false);
-            text4.setText("No Disponible");
-            pr4.setText("$0");
-        }if(value5==0){
-            b5.setEnabled(false);
-            text5.setText("No Disponible");
-            pr5.setText("$0");
-        }
-    }
-
-    public void getMachinesPriceList(String inDatum){
-        String[] mainToken = inDatum.split("\\|");
-        Log.d(TAG, "---->" + inDatum);
-
-        String values1 = mainToken[0];
-        String values2 = mainToken[1];
-        String values3 = mainToken[2];
-        String values4 = mainToken[3];
-        String values5 = mainToken[4];
-
-        Log.d(TAG, "---->" + values1);
-        Log.d(TAG, "---->" + values2);
-        Log.d(TAG, "---->" + values3);
-        Log.d(TAG, "---->" + values4);
-        Log.d(TAG, "---->" + values5);
-
-        String subValues1[] = values1.split(",");
-        String subValues2[] = values2.split(",");
-        String subValues3[] = values3.split(",");
-        String subValues4[] = values4.split(",");
-        String subValues5[] = values5.split(",");
-
-        price1     = subValues1[0];
-        prod1      = subValues1[1];
-        image_url1 = subValues1[2];
-
-        price2     = subValues2[0];
-        prod2      = subValues2[1];
-        image_url2 = subValues2[2];
-
-        price3     = subValues3[0];
-        prod3      = subValues3[1];
-        image_url3 = subValues3[2];
-
-        price4     = subValues4[0];
-        prod4      = subValues4[1];
-        image_url4 = subValues4[2];
-
-        price5     = subValues5[0];
-        prod5      = subValues5[1];
-        image_url5 = subValues5[2];
-
-        Log.d(TAG, "-> Line #1 - Name: " + prod1 + " Price: " + price1 + " Image Url: " + image_url1);
-        Log.d(TAG, "-> Line #2 - Name: " + prod2 + " Price: " + price2 + " Image Url: " + image_url2);
-        Log.d(TAG, "-> Line #3 - Name: " + prod3 + " Price: " + price3 + " Image Url: " + image_url3);
-        Log.d(TAG, "-> Line #4 - Name: " + prod4 + " Price: " + price4 + " Image Url: " + image_url4);
-        Log.d(TAG, "-> Line #5 - Name: " + prod5 + " Price: " + price5 + " Image Url: " + image_url5);
-
-        pr1.setText(price1);
-        pr2.setText(price2);
-        pr3.setText(price3);
-        pr4.setText(price4);
-        pr5.setText(price5);
-
-        namepr1.setText(prod1);
-        namepr2.setText(prod2);
-        namepr3.setText(prod3);
-        namepr4.setText(prod4);
-        namepr5.setText(prod5);
-
-        Glide.with(context)
-                .load("https://www.boxtomarket.com/img/beneficios/" + image_url1)
-                .thumbnail(0.5f)
-                .crossFade()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(img1);
-
-        Glide.with(context)
-                .load("https://www.boxtomarket.com/img/beneficios/" + image_url2)
-                .thumbnail(0.5f)
-                .crossFade()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(img2);
-
-        Glide.with(context)
-                .load("https://www.boxtomarket.com/img/beneficios/" + image_url3)
-                .thumbnail(0.5f)
-                .crossFade()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(img3);
-
-        Glide.with(context)
-                .load("https://www.boxtomarket.com/img/beneficios/" + image_url4)
-                .thumbnail(0.5f)
-                .crossFade()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(img4);
-
-        Glide.with(context)
-                .load("https://www.boxtomarket.com/img/beneficios/" + image_url5)
-                .thumbnail(0.5f)
-                .crossFade()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(img5);
-
-        dialog2.dismiss();
-    }
-
-    private String beSureDataString(String data) {
-        if(data.contains("/")){
-            String newString = data.replace("/", "0");
-            return newString;
-        } else if(data.contains(".")){
-            String newString2 = data.replace("/", "0");
-            return newString2;
-        }
-        else {
-            return data;
-        }
-    }
-
-    private void blankAll(){
-        text1.setText("Disponible: ");
-        text2.setText("Disponible: ");
-        text3.setText("Disponible: ");
-        text4.setText("Disponible: ");
-        text5.setText("Disponible: ");
-
-        pr1.setText("");
-        pr2.setText("");
-        pr3.setText("");
-        pr4.setText("");
-        pr5.setText("");
-
-        namepr1.setText("");
-        namepr2.setText("");
-        namepr3.setText("");
-        namepr4.setText("");
-        namepr5.setText("");
-    }
 
     private String is8Validate(String inDatum){
         if(inDatum.equals("8")){
@@ -713,6 +447,16 @@ public class VendingUIActivity extends AppCompatActivity {
         }else{
             // Nothing to-do
             return "Nope, isn't 8 :)";
+        }
+    }
+
+    private String isNoSession(String inDatum){
+        if(inDatum.equals("NO SESION")){
+            action = "NoSession";
+            return "Yes, NO_SESSION returned :(";
+        }else{
+            // Nothing to-do
+            return "Nope, isn't NO_SESSION :)";
         }
     }
 
@@ -1031,7 +775,7 @@ public class VendingUIActivity extends AppCompatActivity {
                         dialog2.setMessage(getString(R.string.inf_dialog));
                         dialog2.show();
 
-                        passRsaToBuyChange();
+                        //passRsaToBuyChange();
 
                     }else{
                         dialog_pass_ui.dismiss();
@@ -1063,7 +807,7 @@ public class VendingUIActivity extends AppCompatActivity {
                         dialog2.show();
 
                         //buyProductByLine(DataHolderBleBuy.getLiSelected()); //this execute the Ble trigger
-                        passRsaToBuyChange();
+                        //passRsaToBuyChange();
 
                     }else{
                         dialog_pass_ui.dismiss();
@@ -1096,7 +840,7 @@ public class VendingUIActivity extends AppCompatActivity {
                             dialog2.show();
 
                             //buyProductByLine(DataHolderBleBuy.getLiSelected()); //this execute the Ble trigger
-                            passRsaToBuyChange();
+                            //passRsaToBuyChange();
 
                         }else{
                             dialog_pass_ui.dismiss();
@@ -1110,4 +854,5 @@ public class VendingUIActivity extends AppCompatActivity {
             }
         });
     }
+
 }
