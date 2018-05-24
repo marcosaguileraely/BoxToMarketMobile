@@ -151,6 +151,10 @@
     <string name="ui_ble_mini_blee_list_title">Máquinas</string>
     <string name="ui_ble_mini_blee_list_button_scan">Volver a escanear</string>
     <string name="ui_ble_vending_title">Ingrese un valor a cargar</string>
+    <string name="ui_aux_power_available">BtM Power Dispobible</string>
+    <string name="ui_aux_power_available_message">La máquina BtM Power esta lista para ser usada. Por favor selecciona el tiempo a usar, y deja fluir la energía .</string>
+
+
 
     <!-- Library text -->
     <string name="ble_not_supported">BLE is not supported</string>

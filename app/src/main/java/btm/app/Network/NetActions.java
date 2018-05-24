@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import btm.app.DataHolder.DataHolder;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
@@ -84,7 +85,7 @@ public class NetActions {
         return Base64.encodeToString(datos.getBytes(), Base64.DEFAULT);
     }
 
-    /*
+    /**
     * Este metódo obtiene el listado de suscripciones del usuario
     * Interfaz Inicial > Botón Subscripciones BTM Mini
     * ::Listview
@@ -115,7 +116,7 @@ public class NetActions {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
     }
 
-    /*
+    /**
     * Este metódo obtiene el listado de suscripciones de la sección
     * Interfaz Inicial > Botón Subscripciones BTM Mini> Comprar Subcripciones
     * ::Gridview -> 3 columnas (Cardview)
@@ -146,7 +147,7 @@ public class NetActions {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
     }
 
-    /*
+    /**
     * Este metódo obtiene el listado de clubes de la sección
     * Interfaz Inicial > Botón Subscripciones BTM Mini> Comprar Subcripciones
     * ::RecyclerView -> Scroll Horizontal
@@ -177,7 +178,7 @@ public class NetActions {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
     }
 
-    /*
+    /**
      * Using OkHTTP
      * Este metódo obtiene el listado de clubes de la sección
      * Interfaz Inicial > Botón Subscripciones BTM Mini> Comprar Subcripciones
@@ -233,6 +234,26 @@ public class NetActions {
     public String btmMiniPayment(String datos) throws IOException, NullPointerException {
         Log.d(TAG, " Datos card list: " + datos);
         String url = "https://www.boxtomarket.com/index.php?r=app/btmminiconsumo"
+                + "&token=" + this.tkTime()
+                + "&datos=" + this.datoBase64(datos);
+        Log.d("DEV -> NetActions ", url);
+
+        okhttp3.Request requesthttp = new okhttp3.Request.Builder()
+                .url(url)
+                .build();
+
+        okhttp3.Response response = client.newCall(requesthttp).execute();
+        return response.body().string();
+    }
+
+    /**
+     *
+     * @throws IOException
+     * @throws NullPointerException
+     */
+    public String btmPowerPayment(String datos) throws IOException, NullPointerException {
+        Log.d(TAG, " Datos card list: " + datos);
+        String url = "https://www.boxtomarket.com/index.php?r=app/btmpowerpago"
                 + "&token=" + this.tkTime()
                 + "&datos=" + this.datoBase64(datos);
         Log.d("DEV -> NetActions ", url);
@@ -429,6 +450,23 @@ public class NetActions {
         return response.body().string();
     }
 
+    public String btmPowerPriceAndNames(String datos) throws IOException, NullPointerException {
+        Log.d(TAG, " Datos card list: " + datos);
+
+        String url = "https://www.boxtomarket.com/index.php?r=app/datospower"
+                + "&username=" + DataHolder.getUsername()
+                + "&token=" + this.tkTime()
+                + "&datos=" + datos;
+        Log.d("DEV -> NetActions ", url);
+
+        okhttp3.Request requesthttp = new okhttp3.Request.Builder()
+                .url(url)
+                .build();
+
+        okhttp3.Response response = client.newCall(requesthttp).execute();
+        return response.body().string();
+    }
+
     public void http_get_data(String metodo, String datos, Response.Listener<String> response) {
 
         String url = "https://www.boxtomarket.com/index.php?r=app/"
@@ -491,7 +529,7 @@ public class NetActions {
         return response.body().string();
     }
 
-    /*
+    /**
     * Este metódo permite la Transfer Money to another user
     * Interfaz Inicial > Transfer
     * */
@@ -514,10 +552,11 @@ public class NetActions {
         return response.body().string();
     }
 
-    /*
+    /**
     * Este metódo permite la Transfer de Compensación a Mi Billetera
     * Interfaz Inicial > Transfer -> Transferor de Compensación a Mi Billetera
-    * */
+    */
+
     /**
      *
      * @throws IOException
@@ -537,7 +576,7 @@ public class NetActions {
         return response.body().string();
     }
 
-    /*
+    /**
     * Este metódo permite la compra de tokens
     * Interfaz Inicial > Comprar Token
     * */
@@ -555,7 +594,7 @@ public class NetActions {
         return response.body().string();
     }
 
-    /*
+    /**
     * Este metódo permite la compra de suscripciones
     * Interfaz Inicial > Botón Subscripciones BTM Mini> Comprar Subcripciones > Seleccionar suscripciones > detalles > comprar
     * */
@@ -573,7 +612,7 @@ public class NetActions {
         return response.body().string();
     }
 
-    /*
+    /**
     * Este metódo permite obtener el código RSA enviando el id del Bleecard y el precio a pagar
     * Interfaz Inicial > Botón Bleecard > Listado de dispositivos Bluethooth > detalles del
     * bleecard seleccionado

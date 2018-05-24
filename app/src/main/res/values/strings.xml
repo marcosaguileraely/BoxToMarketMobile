@@ -147,6 +147,9 @@
     <string name="ui_aux_payment_title">Payment</string>
     <string name="ui_ble_mini_stock_title">Select a product line: </string>
     <string name="ui_ble_vending_title">Enter a value to charge</string>
+    <string name="ui_aux_power_available">BtM Power Available</string>
+    <string name="ui_aux_power_available_message">BtM Power machine is ready for use. Please select a time and leave the power flow. </string>
+
 
     <!-- Library text -->
     <string name="ble_not_supported">BLE is not supported</string>

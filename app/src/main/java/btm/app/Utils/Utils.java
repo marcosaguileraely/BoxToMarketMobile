@@ -85,6 +85,17 @@ public class Utils extends Activity {
         return dataResponseLineValue;
     }
 
+    public String getPowerLinesData(String MachineId){
+        try {
+            dataResponseLineValue = new btm.app.Network.NetActions(context).btmPowerPriceAndNames(MachineId);
+            Log.d(TAG, " oKHttp response: " + dataResponseLineValue);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return dataResponseLineValue;
+    }
+
     public static byte[] hexStringToByteArray(String s) {
         int len = s.length();
         byte[] data = new byte[len / 2];

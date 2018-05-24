@@ -183,8 +183,8 @@ public class BleListActivity extends AppCompatActivity {
                     Intent goToVendingUi = new Intent(BleListActivity.this, VendingUIActivity.class);
                     startActivity(goToVendingUi);
                 }if(typeBlee.equals("btm_power")){
-                    //Intent goToPowerUi = new Intent(BleListActivity.this, PowerUIActivity.class);
-                    //startActivity(goToPowerUi);
+                    Intent goToPowerUi = new Intent(BleListActivity.this, PowerUIActivity.class);
+                    startActivity(goToPowerUi);
                 }
             }
         });

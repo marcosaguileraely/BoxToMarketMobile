@@ -327,7 +327,7 @@ public class VendingUIActivity extends AppCompatActivity {
                 case "Charging":
                     Log.w(TAG, "It's returning " + data);
 
-                    
+
 
                     break;
 
