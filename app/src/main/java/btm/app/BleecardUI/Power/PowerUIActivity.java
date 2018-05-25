@@ -398,11 +398,19 @@ public class PowerUIActivity extends AppCompatActivity {
 
                     if(data.equals("9")){
                         Log.d(TAG, "It's returning the 9 number");
-                        //dialog2.dismiss();
+                        dialog2.dismiss();
                     }else if(data.equals("1")){
                         Log.d(TAG, "It's returning the 1 number: Machine available");
-                        getMachinesPriceList(utils.getPowerLinesData(machineId));
-                        machineAvailableDialog();
+                        //getMachinesPriceList(utils.getPowerLinesData(machineId));
+                        //machineAvailableDialog();
+                    }else if(data.equals("2")){
+                        Log.d(TAG, "It's returning the 2 number: Machine saturated");
+                        //getMachinesPriceList(utils.getPowerLinesData(machineId));
+                        machineSaturatedbleDialog();
+                    }else if(data.equals("3")){
+                        Log.d(TAG, "It's returning the 3 number: Machine bussy");
+                        //getMachinesPriceList(utils.getPowerLinesData(machineId));
+                        machineBussybleDialog();
                     }
 
                     break;
@@ -862,6 +870,56 @@ public class PowerUIActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         dialog_pass_ui.dismiss();
+                    }
+                });
+
+        dialog_pass_ui = builder_pass_dialog.create();
+        dialog_pass_ui.show();
+    }
+
+    public void machineSaturatedbleDialog(){
+
+        AlertDialog.Builder builder_pass_dialog = new AlertDialog.Builder(context);
+        final LayoutInflater inflater = PowerUIActivity.this.getLayoutInflater();
+
+        View viewInflated = LayoutInflater.from(context).inflate(R.layout.ui_aux_power_saturated, (ViewGroup) findViewById(android.R.id.content), false);
+
+        // Inflate and set the layout for the dialog
+        // Pass null as the parent view because its going in the dialog layout
+        builder_pass_dialog.setCancelable(false);
+        builder_pass_dialog.setView(viewInflated)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog_pass_ui.dismiss();
+                        mBluetoothLeService.close(); //After recieve 2=Saturated. We disconnect the gatt server for other users can use it
+                        Intent goToMain = new Intent(context, MainActivity.class);
+                        startActivity(goToMain);
+                    }
+                });
+
+        dialog_pass_ui = builder_pass_dialog.create();
+        dialog_pass_ui.show();
+    }
+
+    public void machineBussybleDialog(){
+
+        AlertDialog.Builder builder_pass_dialog = new AlertDialog.Builder(context);
+        final LayoutInflater inflater = PowerUIActivity.this.getLayoutInflater();
+
+        View viewInflated = LayoutInflater.from(context).inflate(R.layout.ui_aux_power_bussy, (ViewGroup) findViewById(android.R.id.content), false);
+
+        // Inflate and set the layout for the dialog
+        // Pass null as the parent view because its going in the dialog layout
+        builder_pass_dialog.setCancelable(false);
+        builder_pass_dialog.setView(viewInflated)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog_pass_ui.dismiss();
+                        mBluetoothLeService.close(); //After recieve 3=Busy. We disconnect the gatt server for other users can use it
+                        Intent goToMain = new Intent(context, MainActivity.class);
+                        startActivity(goToMain);
                     }
                 });
 
