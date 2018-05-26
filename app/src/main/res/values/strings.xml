@@ -153,6 +153,7 @@
     <string name="ui_aux_power_bussy_message">BtM Power is busy. Remain time: </string>
     <string name="ui_aux_power_saturated">BtM Power Saturated</string>
     <string name="ui_aux_power_saturated_message">BtM Power is actually saturated. Try again later.</string>
+    <string name="ui_ble_vending_button">Pay</string>
 
     <!-- Library text -->
     <string name="ble_not_supported">BLE is not supported</string>

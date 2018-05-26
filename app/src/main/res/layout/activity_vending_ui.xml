@@ -12,30 +12,25 @@
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:layout_marginTop="60dp"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1.40"
-            android:gravity="top|center_horizontal"
+            android:gravity="center"
             android:orientation="vertical"
-            android:paddingLeft="70dp">
-
-            <ImageView
-                android:id="@+id/btm_logo"
-                android:layout_width="140dp"
-                android:layout_height="80dp"
-                app:srcCompat="@drawable/btmmini" />
+            android:paddingLeft="50dp">
 
             <TextView
                 android:id="@+id/machine_id_text"
-                android:layout_width="140dp"
-                android:layout_height="wrap_content"
-                android:text="Machine#"
-                android:textAlignment="viewStart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Vending Machine #"
+                android:textAlignment="center"
                 android:textColor="@color/TextColor"
-                android:textSize="30sp"
+                android:textSize="24sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -164,7 +159,7 @@
                                 android:text="@string/ui_ble_vending_title"
                                 android:textAlignment="center"
                                 android:textColor="@color/TextColor"
-                                android:textSize="18sp"
+                                android:textSize="22sp"
                                 android:textStyle="bold" />
 
                             <EditText
@@ -178,6 +173,7 @@
                                 android:inputType="number"
                                 android:textAlignment="center"
                                 android:textColor="@color/colorOrange"
+                                android:textSize="26sp"
                                 android:textStyle="bold" />
 
                             <Button
@@ -188,7 +184,7 @@
                                 android:layout_marginRight="50dp"
                                 android:layout_marginTop="50dp"
                                 android:background="@drawable/background_button"
-                                android:text="Pay and Charge"
+                                android:text="@string/ui_ble_vending_button"
                                 android:textColor="@color/colorWhite" />
 
                         </LinearLayout>

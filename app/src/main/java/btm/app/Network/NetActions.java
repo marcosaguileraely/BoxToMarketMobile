@@ -251,6 +251,26 @@ public class NetActions {
      * @throws IOException
      * @throws NullPointerException
      */
+    public String vendingPayment(String datos) throws IOException, NullPointerException {
+        Log.d(TAG, " Datos card list: " + datos);
+        String url = "https://www.boxtomarket.com/index.php?r=app/bleecardconsumo1"
+                + "&token=" + this.tkTime()
+                + "&datos=" + this.datoBase64(datos);
+        Log.d("DEV -> NetActions ", url);
+
+        okhttp3.Request requesthttp = new okhttp3.Request.Builder()
+                .url(url)
+                .build();
+
+        okhttp3.Response response = client.newCall(requesthttp).execute();
+        return response.body().string();
+    }
+
+    /**
+     *
+     * @throws IOException
+     * @throws NullPointerException
+     */
     public String btmPowerPayment(String datos) throws IOException, NullPointerException {
         Log.d(TAG, " Datos card list: " + datos);
         String url = "https://www.boxtomarket.com/index.php?r=app/btmpowerpago"
@@ -457,6 +477,21 @@ public class NetActions {
                 + "&username=" + DataHolder.getUsername()
                 + "&token=" + this.tkTime()
                 + "&datos=" + datos;
+        Log.d("DEV -> NetActions ", url);
+
+        okhttp3.Request requesthttp = new okhttp3.Request.Builder()
+                .url(url)
+                .build();
+
+        okhttp3.Response response = client.newCall(requesthttp).execute();
+        return response.body().string();
+    }
+
+    public String btmVendingPriceAndNames(String datos) throws IOException, NullPointerException {
+
+        String url = "https://www.boxtomarket.com/index.php?r=app/validavending"
+                + "&token=" + this.tkTime()
+                + "&serial=" + datos;
         Log.d("DEV -> NetActions ", url);
 
         okhttp3.Request requesthttp = new okhttp3.Request.Builder()

@@ -104,6 +104,8 @@ public class VendingUIActivity extends AppCompatActivity {
 
     String card_info, card_id;
     String globalProduct, globalPrice;
+    String allowEdit;
+    String value;
 
     TextView MachineIdTitle;
 
@@ -208,7 +210,7 @@ public class VendingUIActivity extends AppCompatActivity {
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
         bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
 
-        MachineIdTitle.setText("#" + machineId);
+        MachineIdTitle.setText("Vending Machine \n# " + machineId);
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -217,16 +219,17 @@ public class VendingUIActivity extends AppCompatActivity {
             }
         }, 2000); //Timer 1500/2000 (1,5 secs / 2 secs) is a optimal time.
 
-        //dialog2.setCanceledOnTouchOutside(false);
-        //dialog2.setMessage(getString(R.string.inf_dialog));
-        //dialog2.show();
+        dialog2.setCanceledOnTouchOutside(false);
+        dialog2.setMessage(getString(R.string.inf_dialog));
+        dialog2.show();
 
         charge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 action = "Charging";
                 String valueToCharge = valueCharge.getText().toString();
-                makeCharging(valueToCharge);
+                payUIDialog();
+                //makeCharging(value);
             }
         });
     }
@@ -321,13 +324,12 @@ public class VendingUIActivity extends AppCompatActivity {
                 case "StablishConx":
                     if(data.equals("9")){
                         Log.w(TAG, "It's returning the 9 number");
+                        getPriceActivator(utils.getVendingPriceData(DataHolderBleData.getId()));
                     }
                     break;
 
                 case "Charging":
                     Log.w(TAG, "It's returning " + data);
-
-
 
                     break;
 
@@ -413,8 +415,6 @@ public class VendingUIActivity extends AppCompatActivity {
             mBluetoothLeService.setCharacteristicNotification(characteristicRX,true);
             Log.w(TAG, " setCharacteristicNotification ");
         }
-
-        dialog2.dismiss();
     }
 
     private void makeCharging(String valueToCharge) {
@@ -529,11 +529,11 @@ public class VendingUIActivity extends AppCompatActivity {
                 if(modo.equals("Tarjeta de Crédito") || modo.equals("Credit Card")){
                     creditCardData = DataHolder.getUsername()
                             + "|" + DataHolder.getPass()
-                            + "|" + DataHolderBleData.getId()
-                            + "|" + getIdSubscription()
-                            + "|" + card_id
+                            + "|" // Empty value for token bleecard
+                            + "|" + DataHolderBleData.getMac()
+                            + "|" + value
                             + "|" + paymentMethod(modo)
-                            + "|" + Line
+                            + "|" + card_id
                             + "|" ;
 
                     Log.d(TAG, " --> Datos: " + creditCardData);
@@ -542,11 +542,11 @@ public class VendingUIActivity extends AppCompatActivity {
                 }if(modo.equals("My Wallet") || modo.equals("Mi Billetera")){
                     walletData = DataHolder.getUsername()
                             + "|" + DataHolder.getPass()
-                            + "|" + DataHolderBleData.getId()
-                            + "|" + getIdSubscription()
-                            + "|"
+                            + "|" // Empty value for token bleecard
+                            + "|" + DataHolderBleData.getMac()
+                            + "|" + value
                             + "|" + paymentMethod(modo)
-                            + "|" + Line
+                            + "|" + card_id
                             + "|" ;
 
                     Log.w(TAG, "--> Datos: " + walletData);
@@ -766,7 +766,7 @@ public class VendingUIActivity extends AppCompatActivity {
             public void run() {
 
                 try {
-                    webResponse = new NetActions(context).btmMiniPayment(creditCardData);
+                    webResponse = new NetActions(context).vendingPayment(creditCardData);
                     Log.d(TAG, " oKHttp response: " + webResponse);
 
                     if(webResponse.equals("Consumo exitoso")){
@@ -776,6 +776,7 @@ public class VendingUIActivity extends AppCompatActivity {
                         dialog2.show();
 
                         //passRsaToBuyChange();
+                        makeCharging(value);
 
                     }else{
                         dialog_pass_ui.dismiss();
@@ -796,7 +797,7 @@ public class VendingUIActivity extends AppCompatActivity {
             public void run() {
 
                 try {
-                    webResponse = new NetActions(context).btmMiniPayment(walletData);
+                    webResponse = new NetActions(context).vendingPayment(walletData);
                     Log.w(TAG, " oKHttp response: " + webResponse);
 
                     if(webResponse.equals("Consumo exitoso")){
@@ -808,6 +809,7 @@ public class VendingUIActivity extends AppCompatActivity {
 
                         //buyProductByLine(DataHolderBleBuy.getLiSelected()); //this execute the Ble trigger
                         //passRsaToBuyChange();
+                        makeCharging(value);
 
                     }else{
                         dialog_pass_ui.dismiss();
@@ -855,4 +857,24 @@ public class VendingUIActivity extends AppCompatActivity {
         });
     }
 
+    ////////////////////////////////////
+    //////// Other Actions /////////////
+    ////////////////////////////////////
+
+    public void getPriceActivator(String inDatum){
+        String[] mainData = inDatum.split(",");
+
+        allowEdit = mainData[0];
+        value     = mainData[1];
+
+        valueCharge.setText("$" + value);
+
+        if(allowEdit.equals("1")){
+            valueCharge.setEnabled(false);
+        }else {
+            valueCharge.setEnabled(true);
+        }
+
+        dialog2.dismiss();
+    }
 }
