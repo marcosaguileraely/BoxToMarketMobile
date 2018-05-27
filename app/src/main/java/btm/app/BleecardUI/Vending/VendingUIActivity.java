@@ -313,8 +313,8 @@ public class VendingUIActivity extends AppCompatActivity {
         if (data != null) {
 
             mDataField.setText(data);
-            Log.w(TAG, " //// ACTION VALUE : " + action);
-            Log.w(TAG, " //// DATA VALUE : " + data);
+            Log.e(TAG, " //// Action : " + action);
+            Log.e(TAG, " //// Data recieved : " + data);
 
             String newData = data.trim();
             Log.w(TAG, " ----> " + newData + " // " + data.length() + " // " + data.trim().length());
@@ -365,7 +365,7 @@ public class VendingUIActivity extends AppCompatActivity {
 
                     if(newData.equals("OK")){
                         Log.w(TAG, "It's returning OK :)");
-                        customDialog("El producto esta en proceso de ser entregado. Una vez se encuenre listo podrás realizar el retiro.");
+                        customDialogFinish("Entregando el producto.\n\nPresiona Salir para finalizar la compra.");
                     }
                     break;
 
@@ -587,7 +587,7 @@ public class VendingUIActivity extends AppCompatActivity {
                             + "|" + card_id
                             + "|" ;
 
-                    Log.d(TAG, " --> Datos: " + creditCardData);
+                    Log.w(TAG, " --> Datos: " + creditCardData);
                     passwordDialog("cc_payment");
 
                 }if(modo.equals("My Wallet") || modo.equals("Mi Billetera")){
@@ -616,7 +616,7 @@ public class VendingUIActivity extends AppCompatActivity {
                                 + "|" + Line
                                 + "|" ;
 
-                        Log.d(TAG, "--> Datos: " + walletData);
+                        Log.w(TAG, "--> Datos: " + walletData);
                         passwordDialog("subs_payment");
                     }else {
                         customDialogNoMove("Actualmente no tienes una Suscripción Abierta para este producto. Por favor compra una Suscripción.");
@@ -787,6 +787,24 @@ public class VendingUIActivity extends AppCompatActivity {
         builder.setMessage(inDatum);
         builder.setCancelable(false);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+                //mBluetoothLeService.disconnect();
+                mBluetoothLeService.close(); //I thing i could fix some stuff
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public void customDialogFinish(String inDatum){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(inDatum);
+        builder.setCancelable(false);
+        builder.setPositiveButton("Salir", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.dismiss();
                 //mBluetoothLeService.disconnect();
