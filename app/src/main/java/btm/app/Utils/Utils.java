@@ -96,6 +96,17 @@ public class Utils extends Activity {
         return dataResponseLineValue;
     }
 
+    public String gettingBackMoney(String inDatum){
+        try {
+            String dataResponse = new btm.app.Network.NetActions(context).btmMiniChargeBack(inDatum);
+            Log.d(TAG, " oKHttp response: " + dataResponse);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return dataResponse;
+    }
+
     public String getVendingPriceData(String MachineId){
         try {
             dataResponseLineValue = new btm.app.Network.NetActions(context).btmVendingPriceAndNames(MachineId);

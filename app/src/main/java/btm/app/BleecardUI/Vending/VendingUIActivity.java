@@ -51,6 +51,7 @@ import btm.app.DataHolder.DataHolderBleData;
 import btm.app.MainActivity;
 import btm.app.Network.NetActions;
 import btm.app.R;
+import btm.app.SubscriptionsActivity;
 import btm.app.Utils.Utils;
 
 import static btm.app.Utils.Utils.hexStringToByteArray;
@@ -88,6 +89,7 @@ public class VendingUIActivity extends AppCompatActivity {
     private ArrayList<CC> listTc;
 
     AlertDialog dialog_pass_ui;
+    AlertDialog dialog_payment_ui;
     ProgressDialog dialog2;
 
     public final static UUID HM_RX_TX = UUID.fromString(SampleGattAttributes.HM_RX_TX);
@@ -96,6 +98,7 @@ public class VendingUIActivity extends AppCompatActivity {
 
     String deviceName, macAddress, machineId, machineImg, machineType;
     String Line, GlobalDataLine = "";
+    String rsaForChargeBack;
 
     String modo, data, password_dialog_value;
     String webResponse, dataResponse;
@@ -226,10 +229,9 @@ public class VendingUIActivity extends AppCompatActivity {
         charge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                action = "Charging";
+                action = "ChargingValue";
                 String valueToCharge = valueCharge.getText().toString();
                 payUIDialog();
-                //makeCharging(value);
             }
         });
     }
@@ -314,35 +316,66 @@ public class VendingUIActivity extends AppCompatActivity {
             Log.w(TAG, " //// ACTION VALUE : " + action);
             Log.w(TAG, " //// DATA VALUE : " + data);
 
-            String is8 = is8Validate(data);
+            String newData = data.trim();
+            Log.w(TAG, " ----> " + newData + " // " + data.length() + " // " + data.trim().length());
+
+            String is8 = is8Validate(newData);
             Log.w(TAG, " //// ¿GETTING 8 VALUE?: " + is8);
 
-            String isNoSession = isNoSession(data);
+            String isNoSession = isNoSession(newData);
             Log.w(TAG, " //// ¿GETTING NO SESION VALUE?: " + isNoSession);
 
+            String isChargeBack = isChargeBack(newData);
+            Log.w(TAG, " //// ¿GETTING CHARGE BACK VALUE?: " + isChargeBack);
+
+            String isOk = isGettingOK(newData);
+            Log.w(TAG, " //// ¿GETTING OK VALUE?: " + isOk);
+
+            Log.w(TAG, " //// ACTION VALUE : " + action);
+
             switch (action) {
+
                 case "StablishConx":
-                    if(data.equals("9")){
+                    if(newData.equals("9")){
                         Log.w(TAG, "It's returning the 9 number");
                         getPriceActivator(utils.getVendingPriceData(DataHolderBleData.getId()));
+                    }else if(newData.equals("OK_CHARGE")){
+                        customDialog("Falla en la comuniación con la máquina. Vuelve a intentarlo nuevamente.");
                     }
                     break;
 
-                case "Charging":
-                    Log.w(TAG, "It's returning " + data);
+                case "ChargingValue":
+                    dialog2.dismiss();
 
+                    if(newData.equals("OK_CHARGE")){
+                        Log.w(TAG, "It's returning OK_CHARGE :)");
+                        customMessageDialog("Seleccione un producto en la Vending Machine.");
+                    }
+                    break;
+
+                case "SelectingProduct":
+                    dialog2.dismiss();
+
+                    if(newData.equals("CHARGE_BACK")){
+                        Log.w(TAG, "It's returning OK_CHARGE :)");
+                        String datos = DataHolder.getUsername() + "|" + rsaForChargeBack;
+                        utils.gettingBackMoney(datos);
+                        customDialog("El valor del producto seleccionado es diferente al valor transferido a la máquina.\n\nLa transacción ha sido reversada. Por favor verifica tu saldo.");
+                    }
+
+                    if(newData.equals("OK")){
+                        Log.w(TAG, "It's returning OK :)");
+                        customDialog("El producto esta en proceso de ser entregado. Una vez se encuenre listo podrás realizar el retiro.");
+                    }
                     break;
 
                 case "Getting8":
                     customDialogGetting8("Falla en la comunicación con la máquina. Vuelve a intentarlo nuevamente.");
-
                     break;
 
                 case "NoSession":
-                    customDialogGetting8("Falla en la sesión con la máquina. Vuelve a intentarlo nuevamente.");
-
+                    customDialog("Falla en la sesión con la máquina. Vuelve a intentarlo nuevamente.");
                     break;
-
             }
         }
     }
@@ -401,6 +434,7 @@ public class VendingUIActivity extends AppCompatActivity {
         action = "StablishConx";
         // This value is the Machine ID eg. 5003, change and automatically and pass via to the method
         String Data  = utils.getStringJson(utils.getRsaBle(MachineId));
+        rsaForChargeBack = data;
 
         Log.d(TAG, "////// WS Response = " + Data);
 
@@ -418,7 +452,7 @@ public class VendingUIActivity extends AppCompatActivity {
     }
 
     private void makeCharging(String valueToCharge) {
-        action = "Charging";
+        action = "ChargingValue";
         // This value is the Machine ID eg. 5003, change and automatically and pass via to the method
 
         Log.w(TAG, "////// Charging value = " + valueToCharge);
@@ -453,10 +487,27 @@ public class VendingUIActivity extends AppCompatActivity {
     private String isNoSession(String inDatum){
         if(inDatum.equals("NO SESION")){
             action = "NoSession";
-            return "Yes, NO_SESSION returned :(";
+            return "Yes, NO SESION returned :(";
         }else{
-            // Nothing to-do
-            return "Nope, isn't NO_SESSION :)";
+            return "Nope, all is ok :)";
+        }
+    }
+
+    private String isChargeBack(String inDatum){
+        if(inDatum.equals("CHARGE_BACK")){
+            action = "SelectingProduct";
+            return "Yes, CHARGE BACK returned :)";
+        }else{
+            return "Nope, it's not :(";
+        }
+    }
+
+    private String isGettingOK(String inDatum){
+        if(inDatum.equals("OK")){
+            action = "SelectingProduct";
+            return "Yes, OK returned :)";
+        }else{
+            return "Nope, it's not :(";
         }
     }
 
@@ -620,6 +671,20 @@ public class VendingUIActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    public void customMessageDialog(String inDatum){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(inDatum);
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
     public void customPasswordDialog(String inDatum){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
@@ -692,10 +757,13 @@ public class VendingUIActivity extends AppCompatActivity {
                         password_dialog_value = input.getText().toString();
                         if(password_dialog_value.equals(DataHolder.getPass())){
                             if(inDatum.equals("cc_payment")){
+                                action = "ChargingValue";
                                 payWithCreditCard();
                             }if(inDatum.equals("wallet_payment")){
+                                action = "ChargingValue";
                                 payWithWallet();
                             }if(inDatum.equals("subs_payment")){
+                                action = "ChargingValue";
                                 payWithSubscriptions();
                             }
                         }else {
@@ -801,7 +869,6 @@ public class VendingUIActivity extends AppCompatActivity {
                     Log.w(TAG, " oKHttp response: " + webResponse);
 
                     if(webResponse.equals("Consumo exitoso")){
-
                         dialog_pass_ui.dismiss();
                         dialog2.setCanceledOnTouchOutside(false);
                         dialog2.setMessage(getString(R.string.inf_dialog));
@@ -841,9 +908,6 @@ public class VendingUIActivity extends AppCompatActivity {
                             dialog2.setMessage(getString(R.string.inf_dialog));
                             dialog2.show();
 
-                            //buyProductByLine(DataHolderBleBuy.getLiSelected()); //this execute the Ble trigger
-                            //passRsaToBuyChange();
-
                         }else{
                             dialog_pass_ui.dismiss();
                             customDialog(webResponse);
@@ -876,5 +940,10 @@ public class VendingUIActivity extends AppCompatActivity {
         }
 
         dialog2.dismiss();
+    }
+
+    public void onBackPressed() {
+        Intent gotoMain = new Intent(context, BleListActivity.class);
+        startActivity(gotoMain);
     }
 }

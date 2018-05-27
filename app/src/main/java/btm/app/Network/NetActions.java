@@ -311,9 +311,9 @@ public class NetActions {
      * @throws NullPointerException
      */
     public String btmMiniChargeBack(String datos) throws IOException, NullPointerException {
-        String url = "https://www.boxtomarket.com/index.php?r=app/btmminidevolucion"
-                + "&token=" + this.tkTime()
-                + "&datos=" + this.datoBase64(datos);
+        String url = "https://www.boxtomarket.com/index.php?r=app/bleecardchargeback"
+                   + "&token=" + this.tkTime()
+                   + "&datos=" + this.datoBase64(datos);
         Log.d("DEV -> NetActions ", url);
 
         okhttp3.Request requesthttp = new okhttp3.Request.Builder()
