@@ -150,7 +150,15 @@
     <string name="ui_ble_mini_message_found">No se encontraron Máquinas compatibles con Bleecard disponibles para conexión. Por favor intenta escanear nuevamente.</string>
     <string name="ui_ble_mini_blee_list_title">Máquinas</string>
     <string name="ui_ble_mini_blee_list_button_scan">Volver a escanear</string>
-    <string name="ui_ble_vending_title">Ingrese un valor a cargar</string>
+    <string name="ui_ble_vending_title">Ingrese el valor a pagar</string>
+    <string name="ui_aux_power_available">BtM Power Disponible</string>
+    <string name="ui_aux_power_available_message">La máquina BtM Power esta lista para ser usada. Por favor selecciona el tiempo a usar, y deja fluir la energía .</string>
+    <string name="ui_aux_power_bussy">BtM Power Ocupado</string>
+    <string name="ui_aux_power_bussy_message">La máquina BtM Power esta actualmente en uso. El tiempo restante es:</string>
+    <string name="ui_aux_power_saturated">BtM Power En Sobrecarga</string>
+    <string name="ui_aux_power_saturated_message">La máquina BtM Power se encuentra en sobrecarga. Intenta nuevamente más tarde.</string>
+    <string name="ui_aux_vending_message">Ingrese el valor a pagar</string>
+    <string name="ui_ble_vending_button">Pagar</string>
 
     <!-- Library text -->
     <string name="ble_not_supported">BLE is not supported</string>

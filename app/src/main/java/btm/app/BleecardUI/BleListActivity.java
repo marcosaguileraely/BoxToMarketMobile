@@ -176,15 +176,16 @@ public class BleListActivity extends AppCompatActivity {
 
                 utils.wsgetMachines(deviceMac);
 
-                if(typeBlee.equals("btm_mini")){
+                /*if(typeBlee.equals("btm_mini")){
                     Intent goToMiniUi = new Intent(BleListActivity.this, MiniUIActivity.class);
                     startActivity(goToMiniUi);
-                }if(typeBlee.equals("vending")){
+                }*/if(typeBlee.equals("vending")){
                     Intent goToVendingUi = new Intent(BleListActivity.this, VendingUIActivity.class);
                     startActivity(goToVendingUi);
-                }if(typeBlee.equals("btm_power")){
-                    //Intent goToPowerUi = new Intent(BleListActivity.this, PowerUIActivity.class);
-                    //startActivity(goToPowerUi);
+                //}if(typeBlee.equals("btm_power")){
+                }if(typeBlee.equals("btm_mini")){
+                    Intent goToPowerUi = new Intent(BleListActivity.this, PowerUIActivity.class);
+                    startActivity(goToPowerUi);
                 }
             }
         });

@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="107dp"
         android:layout_marginTop="60dp"
         android:orientation="horizontal">
 
@@ -19,7 +19,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1.40"
             android:gravity="top|center_horizontal"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:paddingLeft="55dp">
 
             <ImageView
@@ -32,7 +32,7 @@
                 android:id="@+id/machine_id_text"
                 android:layout_width="135dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="15dp"
                 android:text="Machine#"
                 android:textAlignment="viewStart"
                 android:textColor="@color/TextColor"
@@ -178,8 +178,8 @@
 
                                     <ImageView
                                         android:id="@+id/imageView1_oneicon"
-                                        android:layout_width="60dp"
-                                        android:layout_height="60dp"
+                                        android:layout_width="45dp"
+                                        android:layout_height="45dp"
                                         android:background="@drawable/one_power" />
                                 </LinearLayout>
 
@@ -198,7 +198,7 @@
                                         android:orientation="horizontal">
 
                                         <TextView
-                                            android:id="@+id/textView1"
+                                            android:id="@+id/textView1_txt1_power"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
@@ -207,19 +207,19 @@
                                             android:text="Hora"
                                             android:textAlignment="viewStart"
                                             android:textColor="@color/GrennPowerColor"
-                                            android:textSize="29sp"
+                                            android:textSize="26sp"
                                             android:textStyle="bold" />
 
                                         <TextView
-                                            android:id="@+id/price1"
+                                            android:id="@+id/price1_power_1"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
                                             android:gravity="center_vertical"
-                                            android:text="$2.000"
+                                            android:text="$2000"
                                             android:textAlignment="textStart"
                                             android:textColor="@color/TextColor"
-                                            android:textSize="29sp"
+                                            android:textSize="26sp"
                                             android:textStyle="bold" />
                                     </LinearLayout>
 
@@ -232,7 +232,7 @@
                                     android:orientation="horizontal">
 
                                     <Button
-                                        android:id="@+id/button1"
+                                        android:id="@+id/b1_power"
                                         android:layout_width="40dp"
                                         android:layout_height="40dp"
                                         android:background="@drawable/row"
@@ -268,8 +268,8 @@
 
                                     <ImageView
                                         android:id="@+id/imageView1_twoicon"
-                                        android:layout_width="60dp"
-                                        android:layout_height="60dp"
+                                        android:layout_width="45dp"
+                                        android:layout_height="45dp"
                                         android:background="@drawable/two_power" />
                                 </LinearLayout>
 
@@ -288,7 +288,7 @@
                                         android:orientation="horizontal">
 
                                         <TextView
-                                            android:id="@+id/textView1_txt1_power"
+                                            android:id="@+id/textView1_txt2_power"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
@@ -297,19 +297,19 @@
                                             android:text="Horas"
                                             android:textAlignment="viewStart"
                                             android:textColor="@color/GrennPowerColor"
-                                            android:textSize="29sp"
+                                            android:textSize="26sp"
                                             android:textStyle="bold" />
 
                                         <TextView
-                                            android:id="@+id/price1_power"
+                                            android:id="@+id/price1_power_2"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
                                             android:gravity="center_vertical"
-                                            android:text="$3.000"
+                                            android:text="$3000"
                                             android:textAlignment="textStart"
                                             android:textColor="@color/TextColor"
-                                            android:textSize="29sp"
+                                            android:textSize="26sp"
                                             android:textStyle="bold" />
                                     </LinearLayout>
 
@@ -322,7 +322,7 @@
                                     android:orientation="horizontal">
 
                                     <Button
-                                        android:id="@+id/button1_power"
+                                        android:id="@+id/b2_power"
                                         android:layout_width="40dp"
                                         android:layout_height="40dp"
                                         android:background="@drawable/row"
@@ -358,8 +358,8 @@
 
                                     <ImageView
                                         android:id="@+id/imageView_threeicon"
-                                        android:layout_width="60dp"
-                                        android:layout_height="60dp"
+                                        android:layout_width="45dp"
+                                        android:layout_height="45dp"
                                         android:background="@drawable/three_power" />
                                 </LinearLayout>
 
@@ -378,7 +378,7 @@
                                         android:orientation="horizontal">
 
                                         <TextView
-                                            android:id="@+id/textView1_txt2_power"
+                                            android:id="@+id/textView1_txt3_power"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
@@ -387,7 +387,7 @@
                                             android:text="Horas"
                                             android:textAlignment="viewStart"
                                             android:textColor="@color/GrennPowerColor"
-                                            android:textSize="29sp"
+                                            android:textSize="26sp"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -396,10 +396,10 @@
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
                                             android:gravity="center_vertical"
-                                            android:text="$5.000"
+                                            android:text="$5000"
                                             android:textAlignment="textStart"
                                             android:textColor="@color/TextColor"
-                                            android:textSize="29sp"
+                                            android:textSize="26sp"
                                             android:textStyle="bold" />
                                     </LinearLayout>
 
@@ -412,7 +412,7 @@
                                     android:orientation="horizontal">
 
                                     <Button
-                                        android:id="@+id/button1_power_1"
+                                        android:id="@+id/b3_power"
                                         android:layout_width="40dp"
                                         android:layout_height="40dp"
                                         android:background="@drawable/row"
@@ -448,8 +448,8 @@
 
                                     <ImageView
                                         android:id="@+id/imageView1_sixicon"
-                                        android:layout_width="60dp"
-                                        android:layout_height="60dp"
+                                        android:layout_width="45dp"
+                                        android:layout_height="45dp"
                                         android:background="@drawable/six_power" />
                                 </LinearLayout>
 
@@ -468,7 +468,7 @@
                                         android:orientation="horizontal">
 
                                         <TextView
-                                            android:id="@+id/textView1_txt3_power"
+                                            android:id="@+id/textView1_txt4_power"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
@@ -477,19 +477,19 @@
                                             android:text="Horas"
                                             android:textAlignment="viewStart"
                                             android:textColor="@color/GrennPowerColor"
-                                            android:textSize="29sp"
+                                            android:textSize="26sp"
                                             android:textStyle="bold" />
 
                                         <TextView
-                                            android:id="@+id/price1_power_2"
+                                            android:id="@+id/price1_power_4"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
                                             android:gravity="center_vertical"
-                                            android:text="$10.000"
+                                            android:text="$10000"
                                             android:textAlignment="textStart"
                                             android:textColor="@color/TextColor"
-                                            android:textSize="29sp"
+                                            android:textSize="26sp"
                                             android:textStyle="bold" />
                                     </LinearLayout>
 
@@ -502,7 +502,7 @@
                                     android:orientation="horizontal">
 
                                     <Button
-                                        android:id="@+id/button1_power_3"
+                                        android:id="@+id/b4_power"
                                         android:layout_width="40dp"
                                         android:layout_height="40dp"
                                         android:background="@drawable/row"
@@ -538,8 +538,8 @@
 
                                     <ImageView
                                         android:id="@+id/imageView1_twelveicon"
-                                        android:layout_width="60dp"
-                                        android:layout_height="60dp"
+                                        android:layout_width="45dp"
+                                        android:layout_height="45dp"
                                         android:background="@drawable/twelve_power" />
                                 </LinearLayout>
 
@@ -558,7 +558,7 @@
                                         android:orientation="horizontal">
 
                                         <TextView
-                                            android:id="@+id/textView1_txt4_power"
+                                            android:id="@+id/textView1_txt5_power"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
@@ -567,7 +567,7 @@
                                             android:text="Horas"
                                             android:textAlignment="viewStart"
                                             android:textColor="@color/GrennPowerColor"
-                                            android:textSize="29sp"
+                                            android:textSize="26sp"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -576,10 +576,10 @@
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
                                             android:gravity="center_vertical"
-                                            android:text="$12.000"
+                                            android:text="$12000"
                                             android:textAlignment="textStart"
                                             android:textColor="@color/TextColor"
-                                            android:textSize="29sp"
+                                            android:textSize="26sp"
                                             android:textStyle="bold" />
                                     </LinearLayout>
 
@@ -592,7 +592,7 @@
                                     android:orientation="horizontal">
 
                                     <Button
-                                        android:id="@+id/button1_power_6"
+                                        android:id="@+id/b5_power"
                                         android:layout_width="40dp"
                                         android:layout_height="40dp"
                                         android:background="@drawable/row"
