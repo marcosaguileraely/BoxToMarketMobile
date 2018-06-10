@@ -97,8 +97,10 @@ public class PowerUIActivity extends AppCompatActivity {
     String deviceName, macAddress, machineId, machineImg, machineType;
     String price1, price2, price3, price4, price5;
     String prod1, prod2, prod3, prod4, prod5;
-    String num_hours_1, num_hours_2, num_hours_3;
+    String num_hours_1, num_hours_2, num_hours_3, num_hours_4, num_hours_5;
     String Line, GlobalDataLine = "", rsaBuyLine;
+
+    String ProductPrice;
 
     String modo, data, password_dialog_value;
     String webResponse, dataResponse;
@@ -209,11 +211,11 @@ public class PowerUIActivity extends AppCompatActivity {
         text4          = (TextView) findViewById(R.id.textView1_txt4_power);
         text5          = (TextView) findViewById(R.id.textView1_txt5_power);
 
-        pr1            = (TextView) findViewById(R.id.product_name1);
-        pr2            = (TextView) findViewById(R.id.product_name2);
-        pr3            = (TextView) findViewById(R.id.product_name3);
-        pr4            = (TextView) findViewById(R.id.product_name4);
-        pr5            = (TextView) findViewById(R.id.product_name5);
+        pr1            = (TextView) findViewById(R.id.price1_power_1);
+        pr2            = (TextView) findViewById(R.id.price1_power_2);
+        pr3            = (TextView) findViewById(R.id.price1_power_3);
+        pr4            = (TextView) findViewById(R.id.price1_power_4);
+        pr5            = (TextView) findViewById(R.id.price1_power_5);
 
         b1             = (Button) findViewById(R.id.b1_power);
         b2             = (Button) findViewById(R.id.b2_power);
@@ -245,11 +247,10 @@ public class PowerUIActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 action = "ReadyToPay";
-                //globalProduct = prod1;
-                //globalPrice   = price1;
+                globalProduct = prod1;
+                globalPrice   = price1.replace("$","");
                 rsaBuyLine = utils.getStringJson(utils.getRsaBle(machineId));
                 Log.w(TAG, "//// Machine Id: " + machineId + " RSA Number: " + rsaBuyLine);
-                Line = "1";
                 payUIDialog();
             }
         });
@@ -258,11 +259,10 @@ public class PowerUIActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 action = "ReadyToPay";
-                //globalProduct = prod2;
-                //globalPrice   = price2;
+                globalProduct = prod2;
+                globalPrice   = price2.replace("$","");
                 rsaBuyLine = utils.getStringJson(utils.getRsaBle(machineId));
                 Log.w(TAG, "//// Machine Id: " + machineId + " RSA Number: " + rsaBuyLine);
-                Line = "2";
                 payUIDialog();
             }
         });
@@ -271,11 +271,10 @@ public class PowerUIActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 action = "ReadyToPay";
-                //globalProduct = prod3;
-                //globalPrice   = price3;
+                globalProduct = prod3;
+                globalPrice   = price3.replace("$","");
                 rsaBuyLine = utils.getStringJson(utils.getRsaBle(machineId));
                 Log.w(TAG, "//// Machine Id: " + machineId + " RSA Number: " + rsaBuyLine);
-                Line = "3";
                 payUIDialog();
             }
         });
@@ -284,11 +283,10 @@ public class PowerUIActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 action = "ReadyToPay";
-                //globalProduct = prod4;
-                //globalPrice   = price4;
+                globalProduct = prod4;
+                globalPrice   = price4.replace("$","");
                 rsaBuyLine = utils.getStringJson(utils.getRsaBle(machineId));
                 Log.w(TAG, "//// Machine Id: " + machineId + " RSA Number: " + rsaBuyLine);
-                Line = "6";
                 payUIDialog();
             }
         });
@@ -297,11 +295,10 @@ public class PowerUIActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 action = "ReadyToPay";
-                //globalProduct = prod5;
-                //globalPrice   = price5;
+                globalProduct = prod5;
+                globalPrice   = price5.replace("$","");
                 rsaBuyLine = utils.getStringJson(utils.getRsaBle(machineId));
                 Log.w(TAG, "//// Machine Id: " + machineId + " RSA Number: " + rsaBuyLine);
-                Line = "12";
                 payUIDialog();
             }
         });
@@ -385,60 +382,64 @@ public class PowerUIActivity extends AppCompatActivity {
         if (data != null) {
 
             mDataField.setText(data);
-            Log.w(TAG, " //// ACTION VALUE : " + action);
-            Log.w(TAG, " //// DATA VALUE : " + data);
+            Log.e(TAG, " //// Action : " + action);
+            Log.e(TAG, " //// Data received : " + data);
 
             String is8 = is8Validate(data);
-            Log.w(TAG, " //// GETTING 8 VALUE?. " + is8);
+            Log.w(TAG, " //// ¿Getting 8 value? " + is8);
 
             switch (action) {
                 case "StablishConx":
-                    // Action executed when "StablishConx" var ready
-                    Log.w(TAG, " Action : " + "StablishConx");
+                    Log.e(TAG, " Entering to : " + "StablishConx");
 
                     if(data.equals("9")){
                         Log.d(TAG, "It's returning the 9 number");
                         dialog2.dismiss();
+
                     }else if(data.equals("1")){
                         Log.d(TAG, "It's returning the 1 number: Machine available");
-                        //getMachinesPriceList(utils.getPowerLinesData(machineId));
-                        //machineAvailableDialog();
-                    }else if(data.equals("2")){
+                        getMachinesPriceList(utils.getPowerLinesData(machineId));
+
+                    }else if(data.endsWith("2")){
                         Log.d(TAG, "It's returning the 2 number: Machine saturated");
-                        //getMachinesPriceList(utils.getPowerLinesData(machineId));
+                        dialog2.dismiss();
                         machineSaturatedbleDialog();
-                    }else if(data.equals("3")){
+
+                    }else if(data.endsWith("3")){
                         Log.d(TAG, "It's returning the 3 number: Machine bussy");
-                        //getMachinesPriceList(utils.getPowerLinesData(machineId));
-                        machineBussybleDialog();
+                        dialog2.dismiss();
+                        machineBussybleDialog(data);
+
                     }
 
                     break;
 
                 case "ReadyToPay":
-                    // Action executed when "ReadyToBuy" var ready
-                    Log.w(TAG, " ///// ACTION: " + "ReadyToPay");
-                    //Toast.makeText(context, "It's returning the 9 number, from ReadyToPay", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "///// Entering to: " + "ReadyToPay");
 
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Log.w(TAG, " Line Number : " + Line);
-                            //passingLineNumber(Line);
-                            action = "Getting1or0";
-                        }
-                    }, 2000); //Timer is in ms here.
+                    if(data.equals("9")){
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                passingHours("1");
+                            }
+                        }, 2000); //Timer is in ms here.
+                    }
+
 
                     break;
 
-                case "PassingLine":
-                    // Action executed when "PassingLine" var ready
+                case "Working":
+                    if(data.equals("9")){
+                        customDialog("TRANSACCIÓN EXITOSA.\n\nEl BtM Power se encuentra activo.");
+                    }
 
                     break;
 
                 case "Getting8":
                     dialog2.dismiss();
                     customDialogGetting8("Falla en la comunicación con la máquina. Vuelve a intentarlo nuevamente.");
+                    //customDialogGetting8("TRANSACCIÓN EXITOSA.\n\nEl BtM Power se encuentra activo.");
 
                     break;
 
@@ -530,12 +531,12 @@ public class PowerUIActivity extends AppCompatActivity {
             mBluetoothLeService.writeCharacteristic(characteristicTX);
             Log.w(TAG, " writeCharacteristic : ok");
             mBluetoothLeService.setCharacteristicNotification(characteristicRX, true);
-            GlobalDataLine = "LineReady";
+            action = "ReadyToPay";
         }
     }
 
-    private void passingLineNumber(String lineNumber) {
-        action = "ReadyToPay";
+    private void passingHours(String lineNumber) {
+        action = "Working";
         Log.w(TAG, "Sending line number = " + lineNumber);
         if(mConnected) {
             characteristicTX.setValue(lineNumber);
@@ -550,43 +551,62 @@ public class PowerUIActivity extends AppCompatActivity {
 
     public void getMachinesPriceList(String inDatum){
         String[] mainToken = inDatum.split("\\|");
-        Log.d(TAG, "---->" + inDatum);
 
         String values1 = mainToken[0];
         String values2 = mainToken[1];
         String values3 = mainToken[2];
+        String values4 = mainToken[3];
+        String values5 = mainToken[4];
 
-        Log.d(TAG, "---->" + values1);
-        Log.d(TAG, "---->" + values2);
-        Log.d(TAG, "---->" + values3);
+        Log.w(TAG, "Value 1: " + values1);
+        Log.w(TAG, "Value 2: " + values2);
+        Log.w(TAG, "Value 3: " + values3);
+        Log.w(TAG, "Value 3: " + values4);
+        Log.w(TAG, "Value 3: " + values5);
 
         String subValues1[] = values1.split(",");
         String subValues2[] = values2.split(",");
         String subValues3[] = values3.split(",");
+        String subValues4[] = values4.split(",");
+        String subValues5[] = values5.split(",");
 
-
-        prod1       = subValues1[1];
-        price1      = subValues1[0];
+        prod1       = subValues1[0];
+        price1      = subValues1[1];
         num_hours_1 = subValues1[2];
 
-        prod2       = subValues2[1];
-        price2      = subValues2[0];
+        prod2       = subValues2[0];
+        price2      = subValues2[1];
         num_hours_2 = subValues2[2];
 
-        prod3       = subValues3[1];
-        price3      = subValues3[0];
+        prod3       = subValues3[0];
+        price3      = subValues3[1];
         num_hours_3 = subValues3[2];
 
-        Log.d(TAG, "-> Line #1 - Name: " + prod1 + " Price: " + price1 + " Image Url: " + num_hours_1);
-        Log.d(TAG, "-> Line #2 - Name: " + prod2 + " Price: " + price2 + " Image Url: " + num_hours_2);
-        Log.d(TAG, "-> Line #3 - Name: " + prod3 + " Price: " + price3 + " Image Url: " + num_hours_3);
+        prod4       = subValues4[0];
+        price4      = subValues4[1];
+        num_hours_4 = subValues4[2];
 
+        prod5       = subValues5[0];
+        price5      = subValues5[1];
+        num_hours_5 = subValues5[2];
+
+        Log.d(TAG, "-> Line #1 - Name: " + prod1 + " Price: " + price1 + " Hours: " + num_hours_1);
+        Log.d(TAG, "-> Line #2 - Name: " + prod2 + " Price: " + price2 + " Hours: " + num_hours_2);
+        Log.d(TAG, "-> Line #3 - Name: " + prod3 + " Price: " + price3 + " Hours: " + num_hours_3);
+        Log.d(TAG, "-> Line #4 - Name: " + prod4 + " Price: " + price4 + " Hours: " + num_hours_4);
+        Log.d(TAG, "-> Line #5 - Name: " + prod5 + " Price: " + price5 + " Hours: " + num_hours_5);
 
         pr1.setText(price1);
         pr2.setText(price2);
         pr3.setText(price3);
         pr4.setText(price4);
         pr5.setText(price5);
+
+        text1.setText(prod1);
+        text2.setText(prod2);
+        text3.setText(prod3);
+        text4.setText(prod4);
+        text5.setText(prod5);
 
         dialog2.dismiss();
     }
@@ -671,10 +691,9 @@ public class PowerUIActivity extends AppCompatActivity {
                     creditCardData = DataHolder.getUsername()
                             + "|" + DataHolder.getPass()
                             + "|" + DataHolderBleData.getId()
-                            + "|" + getIdSubscription()
                             + "|" + card_id
                             + "|" + paymentMethod(modo)
-                            + "|" + Line
+                            + "|" + globalPrice
                             + "|" ;
 
                     Log.d(TAG, " --> Datos: " + creditCardData);
@@ -684,10 +703,9 @@ public class PowerUIActivity extends AppCompatActivity {
                     walletData = DataHolder.getUsername()
                             + "|" + DataHolder.getPass()
                             + "|" + DataHolderBleData.getId()
-                            + "|" + getIdSubscription()
                             + "|"
                             + "|" + paymentMethod(modo)
-                            + "|" + Line
+                            + "|" + globalPrice
                             + "|" ;
 
                     Log.w(TAG, "--> Datos: " + walletData);
@@ -902,12 +920,15 @@ public class PowerUIActivity extends AppCompatActivity {
         dialog_pass_ui.show();
     }
 
-    public void machineBussybleDialog(){
+    public void machineBussybleDialog(String inDatumTime){
 
         AlertDialog.Builder builder_pass_dialog = new AlertDialog.Builder(context);
         final LayoutInflater inflater = PowerUIActivity.this.getLayoutInflater();
 
         View viewInflated = LayoutInflater.from(context).inflate(R.layout.ui_aux_power_bussy, (ViewGroup) findViewById(android.R.id.content), false);
+        final TextView time = (TextView) viewInflated.findViewById(R.id.ui_bussy_time);
+
+        time.setText(inDatumTime.substring(0, inDatumTime.length() - 1));
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
@@ -1009,17 +1030,15 @@ public class PowerUIActivity extends AppCompatActivity {
             public void run() {
 
                 try {
-                    webResponse = new NetActions(context).btmMiniPayment(walletData);
+                    webResponse = new NetActions(context).btmPowerPayment(walletData);
                     Log.w(TAG, " oKHttp response: " + webResponse);
 
-                    if(webResponse.equals("Consumo exitoso")){
-
+                    if(webResponse.equals("Pago exitoso")){
                         dialog_pass_ui.dismiss();
                         dialog2.setCanceledOnTouchOutside(false);
                         dialog2.setMessage(getString(R.string.inf_dialog));
                         dialog2.show();
 
-                        //buyProductByLine(DataHolderBleBuy.getLiSelected()); //this execute the Ble trigger
                         passRsaToBuyChange();
 
                     }else{
