@@ -1,22 +1,23 @@
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fondoimg"
-    android:baselineAligned="false"
-    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp"
-    android:paddingTop="14dp"
-    tools:context="btm.app.MainActivity$PlaceholderFragment">
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/fondoimg"
+    android:orientation="vertical"
+    tools:context="btm.app.MainActivity$PlaceholderFragment"
+    android:baselineAligned="false">
 
     <!-- android:background="@drawable/fondoimg" -->
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="20dp">
 
         <TextView
             android:id="@+id/textViewSaldoCredito"
@@ -25,14 +26,14 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/textViewCreditos"
+            android:textAlignment="viewStart"
             android:layout_toLeftOf="@+id/button_add_money"
             android:gravity="center"
             android:text="@string/saldo"
-            android:textAlignment="viewStart"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="36sp"
-            android:textStyle="normal|bold"
-            tools:ignore="NotSibling,RtlHardcoded" />
+        android:textSize="36sp"
+        android:textStyle="normal|bold"
+        tools:ignore="NotSibling,RtlHardcoded" />
 
         <!--   android:textAlignment="viewStart" -->
 
@@ -43,69 +44,51 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
+            android:textAlignment="viewStart"
             android:layout_toLeftOf="@+id/button_add_money"
             android:layout_toStartOf="@+id/button_add_money"
             android:gravity="center"
             android:text="@string/ui_main_my_wallet_title"
-            android:textAlignment="viewStart"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            tools:ignore="NotSibling,RtlHardcoded" />
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:ignore="NotSibling" />
         <!-- android:textAlignment="viewStart" -->
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/textViewSaldoCredito"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/button_cc"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="2dp"
-                android:layout_weight="1"
-                android:background="@drawable/registrartarjeta"
-                android:onClick="onCC"
-                android:textAllCaps="false"
-                android:textColor="@android:color/white"
-                android:textSize="16sp"
-                tools:ignore="ButtonStyle" />
+            android:layout_toLeftOf="@+id/button_cc"
+            android:layout_toStartOf="@+id/button_cc"
+            android:orientation="horizontal"
+            tools:ignore="NotSibling">
 
             <Button
                 android:id="@+id/button_add_money"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="2dp"
+                android:layout_height="40dp"
+                android:layout_margin="3dp"
                 android:layout_weight="1"
-                android:background="@drawable/recargarmibilletera"
+                android:background="#007AFF"
+                android:text="@string/recarga"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
                 tools:ignore="ButtonStyle,RtlHardcoded" />
 
             <Button
-                android:id="@+id/button12"
+                android:id="@+id/button_cc"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="2dp"
+                android:layout_height="40dp"
+                android:layout_margin="3dp"
                 android:layout_weight="1"
-                android:background="@drawable/transferir"
-                android:onClick="onTransfer"
-                android:textStyle="bold"
-                tools:ignore="ButtonStyle" />
-
-            <Button
-                android:id="@+id/button10"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="2dp"
-                android:layout_weight="1"
-                android:background="@drawable/comprartoken"
-                android:onClick="onComprarToken"
-                android:textColor="@android:color/black"
-                android:textStyle="bold"
+                android:background="#007AFF"
+                android:onClick="onCC"
+                android:text="@string/tipo_tarjeta"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
                 tools:ignore="ButtonStyle" />
 
         </LinearLayout>
@@ -117,6 +100,21 @@
         android:layout_marginBottom="10dp">
 
         <TextView
+            android:id="@+id/textViewSaldoCompensacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:textAlignment="viewStart"
+            android:layout_below="@+id/textViewCompensacion"
+            android:gravity="center"
+            android:text="@string/saldo"
+            android:textColor="?android:attr/textColorPrimary"
+        android:textSize="36sp"
+        android:textStyle="bold" />
+        <!--    android:textAlignment="viewStart" -->
+
+        <TextView
             android:id="@+id/textViewCompensacion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -124,32 +122,17 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:gravity="center"
+            android:textAlignment="viewStart"
             android:text="@string/compensacion_home"
-            android:textAlignment="viewStart"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textViewSaldoCompensacion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/textViewCompensacion"
-            android:gravity="center"
-            android:text="@string/saldo"
-            android:textAlignment="viewStart"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textSize="36sp"
-            android:textStyle="bold" />
-        <!--    android:textAlignment="viewStart" -->
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
         <!--  android:textAlignment="viewStart" -->
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/textViewSaldoCompensacion"
@@ -157,48 +140,33 @@
 
             <Button
                 android:id="@+id/button_request"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:layout_margin="2dp"
+                android:layout_margin="3dp"
                 android:layout_weight="1"
-                android:background="@drawable/solicitarcompensacion"
+                android:background="@color/colorOrange"
+                android:text="@string/solicitar"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
-                tools:ignore="ButtonStyle,ObsoleteLayoutParam,RtlHardcoded" />
-
-            <Button
-                android:id="@+id/button_boxes"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="2dp"
-                android:layout_weight="1"
-                android:background="@drawable/sampling" />
-
-            <Button
-                android:id="@+id/button_redeem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="2dp"
-                android:layout_weight="1"
-                android:background="@drawable/boxes" />
+                tools:ignore="ButtonStyle,ObsoleteLayoutParam" />
 
             <Button
                 android:id="@+id/button_bank_account"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
                 android:layout_alignLeft="@+id/button_bank_account"
                 android:layout_alignRight="@+id/button_bank_account"
                 android:layout_alignStart="@+id/button_bank_account"
                 android:layout_below="@+id/button_bank_account"
-                android:layout_margin="2dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="3dp"
                 android:layout_weight="1"
-                android:background="@drawable/historial"
+                android:background="@color/colorOrange"
                 android:enabled="false"
+                android:text="@string/home_button_transactions"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
@@ -225,45 +193,65 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="135dp"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="bottom|center"
             android:orientation="horizontal"
-            android:paddingLeft="40dp"
-            android:paddingRight="40dp"
             tools:ignore="NestedWeights">
 
             <Button
-                android:id="@+id/bleecard_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:id="@+id/button10"
+                android:layout_width="110dp"
+                android:layout_height="90dp"
                 android:layout_marginLeft="2dp"
                 android:layout_marginRight="2dp"
                 android:layout_marginTop="2dp"
                 android:layout_weight="1"
-                android:background="@drawable/bleecardnew"
-                android:textSize="15sp"
+                android:background="@drawable/comprar_token"
+                android:minHeight="0dp"
+                android:onClick="onComprarToken"
+                android:textColor="@android:color/black"
                 android:textStyle="bold"
                 tools:ignore="ButtonStyle" />
 
-            <Space
-                android:layout_width="5dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/colorWhite" />
-
             <Button
                 android:id="@+id/my_subscriptions_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="110dp"
+                android:layout_height="90dp"
                 android:layout_marginLeft="2dp"
                 android:layout_marginRight="2dp"
                 android:layout_marginTop="2dp"
                 android:layout_weight="1"
-                android:background="@drawable/newmissuscripciones"
+                android:background="@drawable/market"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 tools:ignore="ButtonStyle,SpUsage" />
+
+            <Button
+                android:id="@+id/button12"
+                android:layout_width="110dp"
+                android:layout_height="90dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginTop="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/transferencia"
+                android:onClick="onTransfer"
+                android:textStyle="bold"
+                tools:ignore="ButtonStyle" />
+
+            <Button
+                android:id="@+id/bleecard_btn"
+                android:layout_width="110dp"
+                android:layout_height="90dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginTop="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/bleecard"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                tools:ignore="ButtonStyle" />
 
         </LinearLayout>
 
