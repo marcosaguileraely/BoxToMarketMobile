@@ -19,6 +19,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+//import android.support.v7.widget.SearchView;
+import android.view.Gravity;
+import android.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.app.AlertDialog;
 
@@ -61,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
     private static String pais;
     private static String data;
     private static String username_global;
-    String provider;
 
     public static final String USER_GLOBAL = "USERNAME";
     public static final String TAG = "DEV -> Main";
@@ -212,6 +214,27 @@ public class MainActivity extends AppCompatActivity {
             RequestMoney                = (Button) rootView.findViewById(R.id.button_request);
             AddBankAccount              = (Button) rootView.findViewById(R.id.button_bank_account);
             BuyToken                    = (Button) rootView.findViewById(R.id.button10);
+            SearchView searchMachine    = (SearchView) rootView.findViewById(R.id.search_machine_searchview);
+
+            searchMachine.setQueryHint("Para comprar digita el # de la máquina");
+            searchMachine.setIconifiedByDefault(false);
+            //searchMachine.setTextColor(Color.WHITE);
+            //searchMachine.setBackgroundColor();
+            //searchMachine.setGravity(Gravity.CENTER);
+
+            searchMachine.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    Log.w(TAG, "Something happens when Text Submit");
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    Log.w(TAG, "Something happens when Text Changes");
+                    return false;
+                }
+            });
 
             Subscriptions.setOnClickListener(new View.OnClickListener() {
                 @Override

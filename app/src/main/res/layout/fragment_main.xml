@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,28 +14,20 @@
 
     <!-- android:background="@drawable/fondoimg" -->
 
+    <SearchView
+        android:id="@+id/search_machine_searchview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewSaldoCredito"
+        android:background="@color/cardview_shadow_start_color"
+        android:focusable="false"
+        android:gravity="center_vertical|center_horizontal"
+        app:searchIcon="@color/colorWhite" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp">
-
-        <TextView
-            android:id="@+id/textViewSaldoCredito"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/textViewCreditos"
-            android:layout_toLeftOf="@+id/button_add_money"
-            android:gravity="center"
-            android:text="@string/saldo"
-            android:textAlignment="viewStart"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textSize="36sp"
-            android:textStyle="normal|bold"
-            tools:ignore="NotSibling,RtlHardcoded" />
-
-        <!--   android:textAlignment="viewStart" -->
 
         <TextView
             android:id="@+id/textViewCreditos"
@@ -52,6 +45,25 @@
             android:textSize="18sp"
             android:textStyle="bold"
             tools:ignore="NotSibling,RtlHardcoded" />
+
+        <TextView
+            android:id="@+id/textViewSaldoCredito"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textViewCreditos"
+            android:layout_toLeftOf="@+id/button_add_money"
+            android:gravity="center"
+            android:text="@string/saldo"
+            android:textAlignment="viewStart"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="42sp"
+            android:textStyle="normal|bold"
+            tools:ignore="NotSibling,RtlHardcoded" />
+
+        <!--   android:textAlignment="viewStart" -->
+
         <!-- android:textAlignment="viewStart" -->
 
         <LinearLayout
@@ -97,6 +109,21 @@
                 tools:ignore="ButtonStyle" />
 
             <Button
+                android:id="@+id/button_request"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/solicitarcompensacion"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                tools:ignore="ButtonStyle,ObsoleteLayoutParam,RtlHardcoded" />
+
+            <Button
                 android:id="@+id/button10"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -106,6 +133,7 @@
                 android:onClick="onComprarToken"
                 android:textColor="@android:color/black"
                 android:textStyle="bold"
+                android:visibility="gone"
                 tools:ignore="ButtonStyle" />
 
         </LinearLayout>
@@ -141,7 +169,7 @@
             android:text="@string/saldo"
             android:textAlignment="viewStart"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="36sp"
+            android:textSize="42sp"
             android:textStyle="bold" />
         <!--    android:textAlignment="viewStart" -->
 
@@ -153,22 +181,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/textViewSaldoCompensacion"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/button_request"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_margin="2dp"
-                android:layout_weight="1"
-                android:background="@drawable/solicitarcompensacion"
-                android:textAllCaps="false"
-                android:textColor="@android:color/white"
-                android:textSize="16sp"
-                tools:ignore="ButtonStyle,ObsoleteLayoutParam,RtlHardcoded" />
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <Button
                 android:id="@+id/button_boxes"
