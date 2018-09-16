@@ -5,8 +5,8 @@ package btm.app.Model;
  */
 
 public class SubscriptionsDetails {
-    private String type;
 
+    private String type;
     private String category;
     private int qty;
     private String aux;

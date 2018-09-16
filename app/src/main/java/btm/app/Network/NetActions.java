@@ -766,4 +766,34 @@ public class NetActions {
         return response.body().string();
     }
 
+    /**
+     *
+     * @throws IOException
+     * @throws NullPointerException
+     */
+    public String getListMachineSearched(String machineId) throws IOException, NullPointerException {
+        String url = "https://www.boxtomarket.com/index.php?r=app/listadoboxesbuscador"
+                + "&token=" + this.tkTime() + "&serial=" + machineId;
+        Log.d("DEV -> NetActions ", url);
+
+        okhttp3.Request requesthttp = new okhttp3.Request.Builder()
+                .url(url)
+                .build();
+
+        okhttp3.Response response = client.newCall(requesthttp).execute();
+        return response.body().string();
+    }
+
+    public String getListMachine() throws IOException, NullPointerException {
+        String url = "https://www.boxtomarket.com/index.php?r=app/listadobtmsbuscador"
+                + "&token=" + this.tkTime();
+        Log.d("DEV -> NetActions ", url);
+
+        okhttp3.Request requesthttp = new okhttp3.Request.Builder()
+                .url(url)
+                .build();
+
+        okhttp3.Response response = client.newCall(requesthttp).execute();
+        return response.body().string();
+    }
 }
