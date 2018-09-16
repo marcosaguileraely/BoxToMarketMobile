@@ -199,4 +199,10 @@
     <string name="ui_ble_power_title">Select time</string>
 
 
+    <!-- Search Machines -->
+    <string name="search_machine_gotopay">Pay</string>
+    <string name="search_machine_title">Select</string>
+
+
+
 </resources>

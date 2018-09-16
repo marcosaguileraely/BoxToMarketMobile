@@ -199,5 +199,9 @@
     <string name="ui_ble_mini_blee_list_auth_body_text">Por favor autorice los permisos de acceso para que la App pueda detectar dispositivos Bluetooth.</string>
     <string name="ui_ble_power_title">Selecciona el tiempo de uso</string>
 
+    <!-- Search Machines -->
+    <string name="search_machine_gotopay">Pagar</string>
+    <string name="search_machine_title">Seleccionar</string>
+
 
 </resources>
