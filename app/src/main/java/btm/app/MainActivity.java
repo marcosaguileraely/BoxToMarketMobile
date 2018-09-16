@@ -13,6 +13,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.LocationManager;
 import android.os.Build;
+import android.os.StrictMode;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
@@ -44,6 +45,10 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import btm.app.BleecardUI.BleListActivity;
 import btm.app.DataHolder.DataHolder;
+import btm.app.DataHolder.DataHolderMachineSearch;
+import btm.app.Utils.Utils;
+
+import static btm.app.SearchedMachineActivity.MACHINEDATA;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -66,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
     private static String username_global;
 
     public static final String USER_GLOBAL = "USERNAME";
+    public static final String MACHINEDATA = "";
     public static final String TAG = "DEV -> Main";
 
     private static final int REQUEST_ENABLE_BT = 1;
@@ -186,6 +192,8 @@ public class MainActivity extends AppCompatActivity {
         public Button Subscriptions, Bleecard, AddMoney, RequestMoney, AddBankAccount;
         public Button BuyToken;
 
+        Utils utils = new Utils();
+
         public PlaceholderFragment() {
         }
 
@@ -204,6 +212,13 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
+
+            int SDK_INT = android.os.Build.VERSION.SDK_INT;
+            if (SDK_INT > 8) {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+            }
+
             View rootView               = inflater.inflate(R.layout.fragment_main, container, false);
             textViewTrm                 = (TextView) rootView.findViewById(R.id.textViewTrm);
             textViewSaldoCompensacion   = (TextView) rootView.findViewById(R.id.textViewSaldoCompensacion);
@@ -214,24 +229,28 @@ public class MainActivity extends AppCompatActivity {
             RequestMoney                = (Button) rootView.findViewById(R.id.button_request);
             AddBankAccount              = (Button) rootView.findViewById(R.id.button_bank_account);
             BuyToken                    = (Button) rootView.findViewById(R.id.button10);
-            SearchView searchMachine    = (SearchView) rootView.findViewById(R.id.search_machine_searchview);
+            final SearchView searchMachine    = (SearchView) rootView.findViewById(R.id.search_machine_searchview);
 
             searchMachine.setQueryHint("Para comprar digita el # de la máquina");
             searchMachine.setIconifiedByDefault(false);
-            //searchMachine.setTextColor(Color.WHITE);
-            //searchMachine.setBackgroundColor();
-            //searchMachine.setGravity(Gravity.CENTER);
 
             searchMachine.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    Log.w(TAG, "Something happens when Text Submit");
+                    String wsBtmData = utils.getSearchDetails(query);
+                    Log.w(TAG, " " + wsBtmData.toString());
+
+                    DataHolderMachineSearch.setSearch_data(wsBtmData);
+                    DataHolderMachineSearch.setMachine_code(query);
+
+                    Intent goToMachineSearch = new Intent(getActivity(), SearchedMachineActivity.class);
+                    startActivity(goToMachineSearch);
                     return false;
                 }
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                    Log.w(TAG, "Something happens when Text Changes");
+                    //Log.w(TAG, "Something happens when Text Changes");
                     return false;
                 }
             });
