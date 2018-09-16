@@ -411,7 +411,4 @@ public class BuySubscriptionConfirmActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    public void customDialogLoader(){
-
-    }
 }
