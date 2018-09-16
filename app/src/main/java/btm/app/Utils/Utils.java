@@ -23,6 +23,7 @@ public class Utils extends Activity {
     String dataResponse, dataResponseLineValue;
     String rsa;
     String data;
+    String dataResponseMachineSearched; // Save String response from WS for machine searched details
 
     Context context = this;
     AuxDataHolder auxDataHolder = new AuxDataHolder();
@@ -170,6 +171,29 @@ public class Utils extends Activity {
 
     public static int convert(int n) {
         return Integer.valueOf(String.valueOf(n), 16);
+    }
+
+    public String getSearchDetails(String machineId){
+        try{
+            Log.w(TAG, " Machine Id: " + machineId);
+            dataResponseMachineSearched = new btm.app.Network.NetActions(context).getListMachineSearched(machineId);
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return dataResponseMachineSearched;
+    }
+
+    public String getMachine(){
+        try{
+            dataResponseMachineSearched = new btm.app.Network.NetActions(context).getListMachine();
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return dataResponseMachineSearched;
     }
 
 }
