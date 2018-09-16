@@ -137,8 +137,10 @@
         <activity
             android:name=".BleecardUI.Power.PowerUIActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".SearchedMachineActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".SearchedMachineActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".SearchMachinePayActivity"></activity>
     </application>
 
 </manifest>

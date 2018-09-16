@@ -202,7 +202,8 @@
     <!-- Search Machines -->
     <string name="search_machine_gotopay">Pay</string>
     <string name="search_machine_title">Select</string>
-
+    <string name="pay_search_machine_title">Confirm Payment</string>
+    <string name="pay_search_machine_confirm_msg">Are sure want to buy this?</string>
 
 
 </resources>
