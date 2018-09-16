@@ -24,6 +24,7 @@ public class Utils extends Activity {
     String rsa;
     String data;
     String dataResponseMachineSearched; // Save String response from WS for machine searched details
+    String dataResponseMachineProductsPayment; // Save String response from WS for machine searched details
 
     Context context = this;
     AuxDataHolder auxDataHolder = new AuxDataHolder();
@@ -194,6 +195,18 @@ public class Utils extends Activity {
         }
 
         return dataResponseMachineSearched;
+    }
+
+    public String payMachineProducts(String data){
+        try{
+            Log.w(TAG, " Machine data: " + data);
+            dataResponseMachineProductsPayment = new btm.app.Network.NetActions(context).paymentMachineProducts(data);
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return dataResponseMachineProductsPayment;
     }
 
 }

@@ -796,4 +796,22 @@ public class NetActions {
         okhttp3.Response response = client.newCall(requesthttp).execute();
         return response.body().string();
     }
+
+    /**
+     *
+     * @throws IOException
+     * @throws NullPointerException
+     */
+    public String paymentMachineProducts(String data) throws IOException, NullPointerException {
+        String url = "https://www.boxtomarket.com/index.php?r=app/generarqrcompra"
+                   + "&token=" + this.tkTime() + "&datos=" + this.datoBase64(data);
+        Log.d("DEV -> NetActions ", url);
+
+        okhttp3.Request requesthttp = new okhttp3.Request.Builder()
+                .url(url)
+                .build();
+
+        okhttp3.Response response = client.newCall(requesthttp).execute();
+        return response.body().string();
+    }
 }

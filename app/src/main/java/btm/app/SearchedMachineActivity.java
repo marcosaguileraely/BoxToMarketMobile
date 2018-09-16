@@ -39,8 +39,6 @@ public class SearchedMachineActivity extends AppCompatActivity {
 
     String searchedMachineData;
     String searchedMachineCode;
-    Integer i = 1;
-    Integer item_price = 0;
     String code;
     String name;
     String community;
@@ -50,6 +48,7 @@ public class SearchedMachineActivity extends AppCompatActivity {
     TextView total_pay;
     TextView machine_location;
     TextView machine_id;
+    Button   pay;
 
     Utils utils = new Utils();
 
@@ -82,6 +81,7 @@ public class SearchedMachineActivity extends AppCompatActivity {
         total_pay        = (TextView) findViewById(R.id.machine_search_total_ammount);
         machine_location = (TextView) findViewById(R.id.machine_location);
         machine_id       = (TextView) findViewById(R.id.machine_id);
+        pay              = (Button) findViewById(R.id.machine_search_pay);
 
         String Machines = utils.getMachine();
         String MachinesReplaced = Machines.replace(",,", ",-,").replace(",|", ",-|");
@@ -101,6 +101,14 @@ public class SearchedMachineActivity extends AppCompatActivity {
             machine_location.setText("");
             machine_id.setText("#"+"");
         }
+
+        pay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent goToPay =  new Intent(context, SearchMachinePayActivity.class);
+                startActivity(goToPay);
+            }
+        });
     }
 
     public void MachineslistDetails(View v, String data){
@@ -149,11 +157,11 @@ public class SearchedMachineActivity extends AppCompatActivity {
         JSONObject jsonObject = null;
         JSONObject mainObject = null;
         String[] dataSet      = data.split("\\|");
-        Log.d(TAG, "-> "+data);
+        //Log.d(TAG, "-> "+data);
 
         for (int i = 0 ; i < dataSet.length ; i++){
             String[] subDataSet   = dataSet[i].split(",");
-            Log.w(TAG, "-->" + dataSet[i]);
+            //Log.w(TAG, "-->" + dataSet[i]);
             jsonObject            = new JSONObject();
             mainObject            = new JSONObject();
 
@@ -181,17 +189,17 @@ public class SearchedMachineActivity extends AppCompatActivity {
 
             for (int i = 0; i < jsonArray.length(); i++) {
                 strArr[i] = jsonArray.getString(i);
-                Log.w(TAG, "---> " + strArr[i].toString());
+                //Log.w(TAG, "---> " + strArr[i].toString());
 
                 if(strArr[i].contains(searchedMachineCode)){
-                    Log.w(TAG, "///////// " + strArr[i].toString());
+                    //Log.w(TAG, "///////// " + strArr[i].toString());
                     JSONObject obj = new JSONObject(strArr[i]);
                     JSONObject _jObjectSub = obj.getJSONObject(searchedMachineCode);
                     code      = _jObjectSub.getString("machine_code");
                     name      = _jObjectSub.getString("machine_name");
                     community = _jObjectSub.getString("machine_comunity");
                     location  = _jObjectSub.getString("machine_location");
-                    Log.w(TAG, "///////// " + location);
+                    //Log.w(TAG, "///////// " + location);
 
                 }else {
                     // Nothing to do here!
@@ -206,7 +214,7 @@ public class SearchedMachineActivity extends AppCompatActivity {
         @Override
         public void onChanged() {
             super.onChanged();
-            Log.w(TAG, "Adapter change");
+            //Log.w(TAG, "Adapter change");
             setMealTotal();
         }
     };
@@ -216,13 +224,13 @@ public class SearchedMachineActivity extends AppCompatActivity {
         for(MachinesDetails order : orders){
             orderTotal += order.getCartQty() * Integer.parseInt(order.getPrice());
         }
-        Log.w(TAG, " Total change: " + orderTotal);
+        //Log.w(TAG, " Total change: " + orderTotal);
         return orderTotal;
 
     }
 
     public void setMealTotal(){
-        Log.w(TAG, " Setting value: " + DataHolderMachineSearch.getTotal_pay());
+        //Log.w(TAG, " Setting value: " + DataHolderMachineSearch.getTotal_pay());
         total_pay.setText("Total: $" + DataHolderMachineSearch.getTotal_pay());
     }
 
