@@ -13,24 +13,12 @@
         android:orientation="vertical"
         tools:ignore="UselessParent">
 
-        <ScrollView
+        <ListView
+            android:id="@+id/machine_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <ListView
-                    android:id="@+id/machine_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:focusable="true" />
-            </LinearLayout>
-        </ScrollView>
+            android:layout_weight="1"
+            android:focusable="true" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -49,11 +37,11 @@
 
                 <ImageView
                     android:id="@+id/machine_gps_img"
-                    android:layout_width="10dp"
-                    android:layout_height="40dp"
+                    android:layout_width="20dp"
+                    android:layout_height="30dp"
                     android:layout_weight="0.17"
                     android:paddingLeft="5dp"
-                    app:srcCompat="@android:drawable/ic_menu_mylocation" />
+                    app:srcCompat="@drawable/gpsicon" />
 
                 <TextView
                     android:id="@+id/machine_location"
