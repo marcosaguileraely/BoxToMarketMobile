@@ -118,7 +118,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_margin="2dp"
                 android:layout_weight="1"
-                android:background="@drawable/solicitarcompensacion"
+                android:background="@drawable/compensacion"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
@@ -240,43 +240,73 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_weight="1"
-            android:gravity="bottom|center"
+            android:layout_height="50dp"
+            android:layout_weight="1.54"
+            android:gravity="center"
             android:orientation="horizontal"
             tools:ignore="NestedWeights">
 
-            <Button
-                android:id="@+id/bleecard_btn"
-                android:layout_width="180dp"
+            <LinearLayout
+                android:layout_width="125dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="2dp"
-                android:layout_marginTop="2dp"
-                android:layout_weight="1"
-                android:background="@drawable/bleecardnew"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                tools:ignore="ButtonStyle" />
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/bleecard_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/bleecardnew"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    tools:ignore="ButtonStyle" />
+
+                <TextView
+                    android:id="@+id/main_text_icon_bluethoot"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Comprar por Bluetooth"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
 
             <Button
-                android:id="@+id/button11"
+                android:id="@+id/vertical_line"
                 android:layout_width="3dp"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:background="@color/colorWhite" />
 
-            <Button
-                android:id="@+id/my_subscriptions_btn"
-                android:layout_width="180dp"
+            <LinearLayout
+                android:layout_width="125dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="2dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="2dp"
-                android:layout_weight="1"
-                android:background="@drawable/newmissuscripciones"
-                android:textColor="@android:color/white"
-                android:textStyle="bold"
-                tools:ignore="ButtonStyle,SpUsage" />
+                android:gravity="bottom|center"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/my_subscriptions_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/logoqrcolor"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    tools:ignore="ButtonStyle,SpUsage" />
+
+                <TextView
+                    android:id="@+id/main_text_icon_buy_qr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="QR Disponibles"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
