@@ -105,7 +105,7 @@ public class MachinesDetails {
     }
 
     public void totalAmmount(){
-        this.CartTotal = Integer.parseInt(this.price) * this.CartQty;
+        this.CartTotal += Integer.parseInt(this.price) * this.CartQty;
         DataHolderMachineSearch.setTotal_pay(this.CartTotal);
         Log.w("DEV ", " Total ammount: " + this.CartTotal);
     }

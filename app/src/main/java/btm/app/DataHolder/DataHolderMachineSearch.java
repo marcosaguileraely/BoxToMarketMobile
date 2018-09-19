@@ -11,6 +11,15 @@ public class DataHolderMachineSearch {
     public static String search_data;
     public static Integer total_pay;
     public static String machine_code;
+    public static String lines_to_pay;
+
+    public static String getLines_to_pay() {
+        return lines_to_pay;
+    }
+
+    public static void setLines_to_pay(String lines_to_pay) {
+        DataHolderMachineSearch.lines_to_pay = lines_to_pay;
+    }
 
     public static String getMachine_code() {
         return machine_code;

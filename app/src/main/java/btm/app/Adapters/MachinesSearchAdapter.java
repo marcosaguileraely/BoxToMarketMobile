@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
+import btm.app.DataHolder.DataHolderMachineSearch;
 import btm.app.Model.MachinesDetails;
 import btm.app.Model.Subscriptions;
 import btm.app.R;
@@ -76,14 +77,20 @@ public class MachinesSearchAdapter extends ArrayAdapter<MachinesDetails> {
         Glide.with(context).load(static_uri + machinesDetails.getImage()).into(img);
         qty.setText(""+machinesDetails.getCartQty());
 
-        Log.w(TAG, "" + machinesDetails.getCartQty());
+        Log.w(TAG, " Position=" + position
+                 + " Id=" + machinesDetails.getId()
+                 + " Line=" + machinesDetails.getPosition()
+                 + " Name=" + machinesDetails.getName()
+                 + " Price= "+ machinesDetails.getPrice()
+                 + " Qty=" + machinesDetails.getCartQty() );
 
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 machinesDetails.addToQuantity();
                 qty.setText(""+machinesDetails.getCartQty());
-                machinesDetails.totalAmmount();
+                Log.w(TAG, " NEW GRAND TOTAL = " + getTotal(machinesDetailsArrayList));
+                Log.w(TAG, " STRING CONCAT = " + getConcatLinesQty(machinesDetailsArrayList));
                 notifyDataSetChanged();
             }
         });
@@ -93,13 +100,39 @@ public class MachinesSearchAdapter extends ArrayAdapter<MachinesDetails> {
             public void onClick(View v) {
                 machinesDetails.removeFromQuantity();
                 qty.setText(""+machinesDetails.getCartQty());
-                machinesDetails.totalAmmount();
+                Log.w(TAG, " NEW GRAND TOTAL = " + getTotal(machinesDetailsArrayList));
+                Log.w(TAG, " STRING CONCAT = " + getConcatLinesQty(machinesDetailsArrayList));
                 notifyDataSetChanged();
             }
         });
 
         // 5. return rowView
         return rowView;
+    }
+
+    public int getTotal(ArrayList<MachinesDetails> list){
+
+        int total = 0;
+        for(int i = 0; i < list.size() ; i++){
+            total = total + ( list.get(i).getCartQty() * Integer.parseInt(list.get(i).getPrice()) );
+        }
+        DataHolderMachineSearch.setTotal_pay(total);
+        return total;
+    }
+
+    public String getConcatLinesQty(ArrayList<MachinesDetails> list){
+        String concatCart = "";
+        for(int i = 0; i < list.size() ; i++){
+            if( list.get(i).getCartQty() > 0 ){
+                concatCart = concatCart + ( list.get(i).getPosition() + "," + list.get(i).getCartQty() + "-");
+            }else {
+                Log.w(TAG, " Position=" + list.get(i).getPosition() + " has been ignored! ");
+            }
+        }
+        String concatCartFixed = concatCart.substring(0, concatCart.length() - 1);
+        DataHolderMachineSearch.setLines_to_pay(concatCartFixed);
+        Log.w(TAG, "Cart= " + concatCartFixed);
+        return concatCartFixed;
     }
 
 
