@@ -48,7 +48,11 @@
     <string-array name="pago_subs">
         <item>@string/ui_subscriptions_payment_method_credit_card</item>
         <item>@string/ui_subscriptions_payment_method_mywallet</item>
-        <item>@string/ui_subscriptions_payment_method_token</item>
+    </string-array>
+
+    <string-array name="pago_lines">
+        <item>@string/ui_subscriptions_payment_method_credit_card</item>
+        <item>@string/ui_subscriptions_payment_method_mywallet</item>
     </string-array>
 
     <string-array name="pago_blee_mini">
