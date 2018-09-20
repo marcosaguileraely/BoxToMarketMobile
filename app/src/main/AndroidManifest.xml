@@ -140,7 +140,10 @@
         <activity
             android:name=".SearchedMachineActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".SearchMachinePayActivity"></activity>
+        <activity android:name=".SearchMachinePayActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SearchedMachinePaidQrActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

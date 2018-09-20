@@ -6,7 +6,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-
         <item name="android:windowActionBarOverlay">true</item>
         <item name="windowActionBarOverlay">true</item>
     </style>
@@ -25,14 +24,16 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:textColorPrimary">@color/TextColor</item>
         <item name="android:background">@color/colorWhite</item>
-
-
     </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
         <item name="android:textColorPrimary">@color/TextColor</item>
         <item name="android:background">@color/colorWhite</item>
+    </style>
 
+    <style name="AppTheme.SearchView" parent="Widget.AppCompat.SearchView">
+       <!-- <item name="searchIcon">@drawable/ic_action_search</item>
+        <item name="closeIcon">@drawable/ic_action_close</item> -->
     </style>
 
     <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -70,7 +71,6 @@
         <item name="contentPaddingTop">24dp</item>
         <item name="contentPaddingLeft">16dp</item>
         <item name="contentPaddingRight">16dp</item>
-
     </style>
 
     <style name="ListCardView" parent="Theme.AppCompat.Light">
