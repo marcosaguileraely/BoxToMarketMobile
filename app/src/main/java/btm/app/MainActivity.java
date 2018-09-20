@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setIcon(R.mipmap.ic_home_white_24dp);
         //getSupportActionBar().setTitle("  "+getString(R.string.mi_billetera));
-        getSupportActionBar().setTitle("  "+getString(R.string.app_name_machines));
+        getSupportActionBar().setTitle("  "+getString(R.string.app_name));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // Ensures Bluetooth is enabled on the device.  If Bluetooth is not currently enabled,
@@ -259,10 +259,10 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Log.d("DEV -> Main ", "-> " + username_global);
-                    Intent intent = new Intent(getActivity(), BuyActivity.class);
+                    //Intent intent = new Intent(getActivity(), BuyActivity.class);
                     //Intent intent = new Intent(getActivity(), SubscriptionsActivity.class); <-- Before
-                    startActivity(intent.putExtra(USER_GLOBAL, username_global));
-                    startActivity(intent);
+                    //startActivity(intent.putExtra(USER_GLOBAL, username_global));
+                    //startActivity(intent);
                 }
             });
 
