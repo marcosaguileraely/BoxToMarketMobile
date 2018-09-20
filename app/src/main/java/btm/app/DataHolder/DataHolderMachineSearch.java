@@ -9,7 +9,7 @@ import android.util.Log;
 
 public class DataHolderMachineSearch {
     public static String search_data;
-    public static Integer total_pay;
+    public static Integer total_pay = 0;
     public static String machine_code;
     public static String lines_to_pay;
     public static String qr_code;

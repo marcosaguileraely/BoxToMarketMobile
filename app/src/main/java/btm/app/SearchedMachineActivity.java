@@ -92,9 +92,9 @@ public class SearchedMachineActivity extends AppCompatActivity {
         getMachineInf(MachineArray);
 
         machine_location.setText(location);
-        machine_id.setText("#"+searchedMachineCode);
+        machine_id.setText("# "+searchedMachineCode);
 
-        if (searchedMachineData.length() > 0){
+        if (searchedMachineData.length() > 0 && !searchedMachineData.equals("BtM no encontrada")){
             this.MachineslistDetails(v, searchedMachineData);
         }else{
             Toast.makeText(context, "No hemos encontrado máquinas con el código: " + searchedMachineCode, Toast.LENGTH_LONG ).show();
@@ -105,8 +105,13 @@ public class SearchedMachineActivity extends AppCompatActivity {
         pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent goToPay =  new Intent(context, SearchMachinePayActivity.class);
-                startActivity(goToPay);
+
+                if( DataHolderMachineSearch.getTotal_pay() > 0){
+                    Intent goToPay =  new Intent(context, SearchMachinePayActivity.class);
+                    startActivity(goToPay);
+                }else{
+                    Toast.makeText(context, "Debe seleccionar al menos un producto.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

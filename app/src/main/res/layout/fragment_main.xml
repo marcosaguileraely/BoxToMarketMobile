@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/textViewSaldoCredito"
-        android:background="@color/cardview_shadow_start_color"
+        android:background="?android:attr/colorBackground"
         android:focusable="false"
         android:gravity="center_vertical|center_horizontal"
         android:inputType="number"
@@ -28,7 +28,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp">
 
         <TextView
             android:id="@+id/textViewCreditos"
@@ -59,7 +60,7 @@
             android:text="@string/saldo"
             android:textAlignment="viewStart"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="42sp"
+            android:textSize="36sp"
             android:textStyle="normal|bold"
             tools:ignore="NotSibling,RtlHardcoded" />
 
@@ -143,7 +144,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="15dp">
 
         <TextView
             android:id="@+id/textViewCompensacion"
@@ -170,7 +171,7 @@
             android:text="@string/saldo"
             android:textAlignment="viewStart"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="42sp"
+            android:textSize="36sp"
             android:textStyle="bold" />
         <!--    android:textAlignment="viewStart" -->
 
@@ -240,24 +241,24 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="55dp"
             android:layout_weight="1.54"
             android:gravity="center"
             android:orientation="horizontal"
             tools:ignore="NestedWeights">
 
             <LinearLayout
-                android:layout_width="125dp"
+                android:layout_width="130dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <Button
                     android:id="@+id/bleecard_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/bleecardnew"
+                    android:background="@drawable/blee_logo"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     tools:ignore="ButtonStyle" />
@@ -269,7 +270,8 @@
                     android:text="Comprar por Bluetooth"
                     android:textAlignment="center"
                     android:textColor="@color/colorWhite"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
@@ -282,7 +284,7 @@
                 android:background="@color/colorWhite" />
 
             <LinearLayout
-                android:layout_width="125dp"
+                android:layout_width="130dp"
                 android:layout_height="match_parent"
                 android:gravity="bottom|center"
                 android:orientation="vertical">
@@ -292,7 +294,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/logoqrcolor"
+                    android:background="@drawable/logo_qr"
                     android:textColor="@android:color/white"
                     android:textStyle="bold"
                     tools:ignore="ButtonStyle,SpUsage" />
@@ -304,7 +306,8 @@
                     android:text="QR Disponibles"
                     android:textAlignment="center"
                     android:textColor="@color/colorWhite"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:visibility="gone" />
 
             </LinearLayout>
 

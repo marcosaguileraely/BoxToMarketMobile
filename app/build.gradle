@@ -5,14 +5,14 @@ android {
         Release_config {
         }
     }
-    compileSdkVersion 25
+    compileSdkVersion 26
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "btm.app"
         //minSdkVersion 16
         minSdkVersion 18
-        targetSdkVersion 25
-        versionCode 30
+        targetSdkVersion 26
+        versionCode 33
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }

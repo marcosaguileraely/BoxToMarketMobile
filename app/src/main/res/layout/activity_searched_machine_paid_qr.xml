@@ -55,7 +55,7 @@
                 android:id="@+id/textView11"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:text="Ahora puede acercarse a la máquina a reclamar el producto." />
+                android:text="Ahora puede acercarse a la máquina a reclamar los productos." />
 
             <TextView
                 android:id="@+id/textView12"

@@ -201,7 +201,7 @@
 
     <!-- Search Machines -->
     <string name="search_machine_gotopay">Pagar</string>
-    <string name="search_machine_title">Seleccionar</string>
+    <string name="search_machine_title">Seleccionar Productos</string>
     <string name="pay_search_machine_title">Confirmar Pago</string>
     <string name="pay_search_machine_confirm_msg">¿Estás seguro que deseas realizar esta compra?</string>
 
