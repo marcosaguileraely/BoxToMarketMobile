@@ -35,6 +35,7 @@ import btm.app.DataHolder.DataHolder;
 import btm.app.DataHolder.DataHolderMachineSearch;
 import btm.app.DataHolder.DataHolderSubs;
 import btm.app.Network.NetActions;
+import btm.app.Utils.Utils;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -57,9 +58,9 @@ public class SearchMachinePayActivity extends AppCompatActivity {
     public String modo, datafull, username, data, datos;
     public String card_info;
     public String card_id;
-    public String token_number;
     String finalmodel = "";
     String password_dialog;
+    Utils utils = new Utils();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -212,32 +213,6 @@ public class SearchMachinePayActivity extends AppCompatActivity {
 
                     AlertDialog dialog = builder.create();
                     dialog.show();
-
-                }else{
-
-                    token_number = token.getText().toString();
-                    if(token.getText().toString().isEmpty()){
-                        Toast.makeText(getApplicationContext(), R.string.ui_buy_token_empty_fields, Toast.LENGTH_LONG).show();
-
-                    }else{
-                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                        // Add the buttons
-                        builder.setMessage(R.string.ui_subscriptions_message_dialog);
-                        builder.setCancelable(false);
-                        builder.setPositiveButton(R.string.ui_buy_token_ok_button, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                new AsyncGetHttpData().execute("");
-                            }
-                        });
-                        builder.setNegativeButton(R.string.ui_buy_token_cancel_button, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.dismiss();
-                            }
-                        });
-
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
-                    }
                 }
             }
         });
@@ -256,23 +231,29 @@ public class SearchMachinePayActivity extends AppCompatActivity {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
-                    // datos = "h0m3data|g0ldfish1|username|clave|metodopago|monto|idTarjetas|email||"
+                    // datos = username|clave|serial_buscado|metodo_de_pago|idTarjetas|monto|productos|
+                    // productos = posicion1,cantidad1-posicion2,cantidad2-posicion3,cantidad3-... //LISTA DE BOXES CON LA CANTIDAD SOLICITADA
+                    // idTarjetas = es obligatorio sólo para el método de pago Tarjeta de Crédito
+
                     datafull = getDataConcat(DataHolder.getUsername(),
-                            password_dialog,
-                            convertPaymentMode(modo),
-                            card_id, token_number,
-                            DataHolderSubs.getId());
+                                             password_dialog,
+                                             DataHolderMachineSearch.getMachine_code(),
+                                             convertPaymentMode(modo),
+                                             card_id,
+                                             DataHolderMachineSearch.total_pay,
+                                             DataHolderMachineSearch.getLines_to_pay());
 
                     Log.d(TAG, " --> " + password_dialog + " Datos : " + datafull);
 
-                    try {
-                        data = new btm.app.Network.NetActions(context).buySubscription(datafull);
-                        Log.d(TAG, " oKHttp response: " + data);
-                        progress.dismiss();
+                    data = utils.payMachineProducts(datafull);
+                    Log.d(TAG, " oKHttp response: " + data);
+                    progress.dismiss();
+                    if( data.contains(".png") ){
+                        DataHolderMachineSearch.setQr_code(data);
+                        Intent goToResumeQr = new Intent(context, SearchedMachinePaidQrActivity.class);
+                        startActivity(goToResumeQr);
+                    }else {
                         customDialog(data);
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
                     }
                 }
             });
@@ -324,15 +305,12 @@ public class SearchMachinePayActivity extends AppCompatActivity {
         dialog_pass_ui.show();
     }
 
-    public String getDataConcat(String user, String pass, String payment_method, String idcard, String token, int idClub){
+    public String getDataConcat(String user, String pass, String serial, String payment_method, String idcard, int total_pay, String line_to_pay ){
         if(payment_method.equals("Tarjeta")){
-            return user +"|"+ pass +"|"+ payment_method + "|" + idcard +"|" + "|"+ idClub +"|";
+            return user +"|"+ pass +"|"+ serial + "|" + payment_method + "|" + idcard +"|" + total_pay + "|"+ line_to_pay +"|";
 
-        } else if(payment_method.equals("Creditos")){
-            return user +"|"+ pass +"|"+ payment_method + "|" + "|"+  "|" + idClub + "|";
-
-        } else{
-            return user +"|"+ DataHolder.getPass() +"|"+ payment_method + "|" + "|"+ token + "|" + idClub + "|";
+        } else {
+            return user +"|"+ pass +"|"+ serial + "|" + payment_method + "|" + "|" + total_pay + "|" + line_to_pay + "|";
         }
     }
 

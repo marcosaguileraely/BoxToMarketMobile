@@ -122,6 +122,7 @@ public class MachinesSearchAdapter extends ArrayAdapter<MachinesDetails> {
 
     public String getConcatLinesQty(ArrayList<MachinesDetails> list){
         String concatCart = "";
+        String concatCartFixed = "";
         for(int i = 0; i < list.size() ; i++){
             if( list.get(i).getCartQty() > 0 ){
                 concatCart = concatCart + ( list.get(i).getPosition() + "," + list.get(i).getCartQty() + "-");
@@ -129,7 +130,10 @@ public class MachinesSearchAdapter extends ArrayAdapter<MachinesDetails> {
                 Log.w(TAG, " Position=" + list.get(i).getPosition() + " has been ignored! ");
             }
         }
-        String concatCartFixed = concatCart.substring(0, concatCart.length() - 1);
+        if(concatCart.length() > 0 ){
+            concatCartFixed = concatCart.substring(0, concatCart.length() - 1);
+        }
+
         DataHolderMachineSearch.setLines_to_pay(concatCartFixed);
         Log.w(TAG, "Cart= " + concatCartFixed);
         return concatCartFixed;

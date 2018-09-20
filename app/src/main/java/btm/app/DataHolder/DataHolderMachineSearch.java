@@ -12,6 +12,15 @@ public class DataHolderMachineSearch {
     public static Integer total_pay;
     public static String machine_code;
     public static String lines_to_pay;
+    public static String qr_code;
+
+    public static String getQr_code() {
+        return qr_code;
+    }
+
+    public static void setQr_code(String qr_code) {
+        DataHolderMachineSearch.qr_code = qr_code;
+    }
 
     public static String getLines_to_pay() {
         return lines_to_pay;
