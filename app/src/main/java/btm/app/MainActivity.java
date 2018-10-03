@@ -93,23 +93,23 @@ public class MainActivity extends AppCompatActivity {
         //getSupportActionBar().setTitle("  "+getString(R.string.mi_billetera));
         getSupportActionBar().setTitle("  "+getString(R.string.app_name));
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        ////if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // Ensures Bluetooth is enabled on the device.  If Bluetooth is not currently enabled,
             // fire an intent to display a dialog asking the user to grant permission to enable it.
             // REQUEST ACCESS_FINE_LOCATION for +M versions
-            checkLocationPermission();
-        } else {
-            Log.d(TAG, "Your android version is -M. Bluethoot ya activado");
-        }
+            ////checkLocationPermission();
+        ////} else {
+        ////    Log.d(TAG, "Your android version is -M. Bluethoot ya activado");
+        ////}
 
-        final BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
-        mBluetoothAdapter = bluetoothManager.getAdapter();
+        ////final BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+        ////mBluetoothAdapter = bluetoothManager.getAdapter();
         // Use this check to determine whether BLE is supported on the device.  Then you can
         // selectively disable BLE-related features.
-        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
-            Toast.makeText(this, "Device not supported", Toast.LENGTH_SHORT).show();
-            finish();
-        }
+        ////if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
+        ////    Toast.makeText(this, "Device not supported", Toast.LENGTH_SHORT).show();
+        ////    finish();
+        ////}
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
