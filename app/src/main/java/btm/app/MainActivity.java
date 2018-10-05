@@ -259,10 +259,10 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Log.d("DEV -> Main ", "-> " + username_global);
-                    //Intent intent = new Intent(getActivity(), BuyActivity.class);
-                    //Intent intent = new Intent(getActivity(), SubscriptionsActivity.class); <-- Before
-                    //startActivity(intent.putExtra(USER_GLOBAL, username_global));
-                    //startActivity(intent);
+                    Intent intent = new Intent(getActivity(), BuyActivity.class);
+                    //Intent intent = new Intent(getActivity(), SubscriptionsActivity.class); //<-- Before
+                    startActivity(intent.putExtra(USER_GLOBAL, username_global));
+                    startActivity(intent);
                 }
             });
 

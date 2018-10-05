@@ -205,5 +205,9 @@
     <string name="pay_search_machine_title">Confirm Payment</string>
     <string name="pay_search_machine_confirm_msg">Are sure want to buy this?</string>
 
+    <!-- QR Availables -->
+    <string name="qr_availables">Available QR</string>
+    <string name="qr_view">View QR</string>
+
 
 </resources>

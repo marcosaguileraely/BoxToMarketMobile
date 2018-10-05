@@ -211,6 +211,46 @@ public class NetActions {
      * @throws IOException
      * @throws NullPointerException
      */
+    public String getQRConsumed(String username) throws IOException, NullPointerException {
+        Log.d(TAG, " Username: " + username);
+        String url = "https://www.boxtomarket.com/index.php?r=app/historialqr&username="
+                   + username
+                   + "&token=" + this.tkTime();
+        Log.d("DEV -> NetActions ", url);
+
+        okhttp3.Request requesthttp = new okhttp3.Request.Builder()
+                .url(url)
+                .build();
+
+        okhttp3.Response response = client.newCall(requesthttp).execute();
+        return response.body().string();
+    }
+
+    /**
+     *
+     * @throws IOException
+     * @throws NullPointerException
+     */
+    public String getBrands(String username) throws IOException, NullPointerException {
+        String url = "https://www.boxtomarket.com/index.php?r=app/listamarcas&username="
+                + username
+                + "&token=" + this.tkTime();
+
+        Log.d("DEV -> NetActions ", url);
+
+        okhttp3.Request requesthttp = new okhttp3.Request.Builder()
+                .url(url)
+                .build();
+
+        okhttp3.Response response = client.newCall(requesthttp).execute();
+        return response.body().string();
+    }
+
+    /**
+     *
+     * @throws IOException
+     * @throws NullPointerException
+     */
     public String getCardList(String datos) throws IOException, NullPointerException {
         Log.d(TAG, " Datos card list: " + datos);
         String url = "https://www.boxtomarket.com/index.php?r=app/menutarjetas"

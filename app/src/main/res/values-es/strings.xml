@@ -205,5 +205,8 @@
     <string name="pay_search_machine_title">Confirmar Pago</string>
     <string name="pay_search_machine_confirm_msg">¿Estás seguro que deseas realizar esta compra?</string>
 
+    <!-- QR Availables -->
+    <string name="qr_availables">QR Disponibles</string>
+    <string name="qr_view">Ver QR</string>
 
 </resources>

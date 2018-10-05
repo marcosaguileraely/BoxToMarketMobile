@@ -32,7 +32,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textAlignment="center"
-                android:textStyle="bold"
+                android:textSize="12sp"
                 tools:text="Text11111" />
 
             <TextView
@@ -51,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="@string/buy_subscriptions"
+                android:text="@string/qr_view"
                 android:textAllCaps="false"
                 android:theme="@style/OrangeButton" />
         </LinearLayout>

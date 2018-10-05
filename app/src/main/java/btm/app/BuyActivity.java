@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -24,10 +25,10 @@ import java.util.ArrayList;
 
 import btm.app.Adapters.ClubAdapter;
 import btm.app.Adapters.SubsPublicAdapter;
-import btm.app.Adapters.SubscriptionAdapter;
+import btm.app.DataHolder.DataHolder;
 import btm.app.Model.Clubs;
-import btm.app.Model.Subscriptions;
 import btm.app.Model.SubscriptionsPublic;
+import btm.app.Utils.Utils;
 
 public class BuyActivity extends AppCompatActivity {
     private static String username_global;
@@ -40,9 +41,11 @@ public class BuyActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter adapter;
     private SubsPublicAdapter subsPublicAdapter;
+    private Button view_qr_history;
     private View v;
 
     Context context  = this;
+    Utils utils = new Utils();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,47 +53,46 @@ public class BuyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_buy);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(getString(R.string.buy_clubs_subscription));
+        getSupportActionBar().setTitle(getString(R.string.qr_availables));
 
         username_global =  getIntent().getStringExtra(SubscriptionsActivity.USER_GLOBAL);
         subsGridView    = (GridView) findViewById(R.id.SubsGridView);
+
+        view_qr_history = (Button) findViewById(R.id.qr_code_history);
 
         //Log.d(TAG, username_global);
 
         listClubsPublic(v);
         listSubscriptionsPublic(v);
+
+        view_qr_history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent goToHistory =  new Intent(context, QrHistoryActivity.class);
+                startActivity(goToHistory);
+            }
+        });
     }
 
     public void listClubsPublic(View view){
-        final ProgressDialog progress = new ProgressDialog(this);
-        progress.setMessage(getString(R.string.inf_dialog));
-        //progress.show();
+        String response = utils.getBrandsMachines(DataHolder.getUsername());
 
-        Response.Listener<String> response = new Response.Listener<String>(){
-            @Override
-            public void onResponse(String response) {
-                Log.d(TAG, "1 "+ response);
+        if(response.contains("png") || response.contains("jpg")){
+            SharedPreferences sharedPref    = getSharedPreferences("preferencias", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
 
-                progress.dismiss();
-                if(response.contains("png") || response.contains("jpg")){
-                    SharedPreferences sharedPref    = getSharedPreferences("preferencias", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPref.edit();
+            //Log.d(TAG, "Tiene al menos un resultado.");
 
-                    //Log.d(TAG, "Tiene al menos un resultado.");
+            recyclerView  = (RecyclerView) findViewById(R.id.ClubsRVCardView);
+            recyclerView.setHasFixedSize(true);
+            layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+            recyclerView.setLayoutManager(layoutManager);
+            adapter = new ClubAdapter(getClubsList(response));
+            recyclerView.setAdapter(adapter);
 
-                    recyclerView = (RecyclerView) findViewById(R.id.ClubsRVCardView);
-                    recyclerView.setHasFixedSize(true);
-                    layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-                    recyclerView.setLayoutManager(layoutManager);
-                    adapter = new ClubAdapter(getClubsList(response));
-                    recyclerView.setAdapter(adapter);
-                } else {
-                    Toast.makeText(context, response, Toast.LENGTH_LONG).show();
-                }
-            }
-        };
-
-        new btm.app.Network.NetActions(this).listClubsPublic(username_global, response, progress);
+        } else {
+            Toast.makeText(context, response, Toast.LENGTH_LONG).show();
+        }
     }
 
     public void listSubscriptionsPublic(View view){
@@ -129,29 +131,31 @@ public class BuyActivity extends AppCompatActivity {
     }
 
     public ArrayList<Clubs> getClubsList(String response){
-        ArrayList<Clubs> items = new ArrayList<Clubs>();
 
+        ArrayList<Clubs> items = new ArrayList<Clubs>();
         JSONArray jsonArray   = new JSONArray();
         JSONObject jsonObject = null;
         String[] mainToken    = response.split("\\|");
 
-        for(int i=0;i<mainToken.length;i++){
+        for(int i=0 ; i < mainToken.length ; i++){
             String subToken[] = mainToken[i].split(",");
             jsonObject        = new JSONObject();
+
             try {
-                jsonObject.put("id", subToken[0]);
-                jsonObject.put("title", subToken[1]);
-                jsonObject.put("img_uri", subToken[2]);
-                jsonObject.put("available_qty", subToken[3]);
+                jsonObject.put("type", subToken[0]);
+                jsonObject.put("img_uri", subToken[1]);
+                jsonObject.put("available_qty", subToken[2]);
+
                 jsonArray.put(jsonObject);
-                items.add(new Clubs(subToken[0], subToken[1], subToken[2], subToken[3]));
+
+                items.add(new Clubs(subToken[0], subToken[1], subToken[2]));
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
 
-        Log.d(TAG, jsonArray.toString());
+        //Log.d(TAG, jsonArray.toString());
         return items;
     }
 

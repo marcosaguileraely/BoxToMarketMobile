@@ -209,4 +209,34 @@ public class Utils extends Activity {
         return dataResponseMachineProductsPayment;
     }
 
+    public String getBrandsMachines(String data){
+
+        String brandsMachines = "";
+
+        try{
+            Log.w(TAG, " Data: " + data);
+            brandsMachines = new btm.app.Network.NetActions(context).getBrands(data);
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return brandsMachines;
+    }
+
+    public String getQRHistory(String data){
+
+        String qrHistoryData = "";
+
+        try{
+            Log.w(TAG, " Data: " + data);
+            qrHistoryData = new btm.app.Network.NetActions(context).getQRConsumed(data);
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return qrHistoryData;
+    }
+
 }

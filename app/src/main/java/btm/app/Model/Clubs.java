@@ -6,32 +6,22 @@ package btm.app.Model;
 
 public class Clubs {
 
-    public String id;
-    public String title;
+    public String type;
     public String img_uri;
     public String available_qty;
 
-    public Clubs(String id, String title, String img_uri, String available_qty) {
-        this.id = id;
-        this.title = title;
-        this.img_uri = img_uri;
+    public Clubs(String type, String available_qty, String img_uri) {
+        this.type = type;
         this.available_qty = available_qty;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+        this.img_uri = img_uri;
     }
 
     public String getTitle() {
-        return title;
+        return type;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTitle(String type) {
+        this.type = type;
     }
 
     public String getImg_uri() {

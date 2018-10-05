@@ -7,10 +7,6 @@
     android:baselineAligned="false"
     android:gravity="center"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp"
-    android:paddingTop="14dp"
     tools:context="btm.app.MainActivity$PlaceholderFragment">
 
     <!-- android:background="@drawable/fondoimg" -->
@@ -20,6 +16,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/textViewSaldoCredito"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
         android:background="?android:attr/colorBackground"
         android:focusable="false"
         android:gravity="center_vertical|center_horizontal"
@@ -29,8 +29,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="18dp">
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="10dp"
+        android:paddingBottom="6dp"
+        android:paddingEnd="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="14dp">
 
         <TextView
             android:id="@+id/textViewCreditos"
@@ -63,7 +67,7 @@
             android:text="@string/saldo"
             android:textAlignment="viewStart"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="36sp"
+            android:textSize="34sp"
             android:textStyle="normal|bold"
             tools:ignore="NotSibling,RtlHardcoded" />
 
@@ -147,8 +151,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:background="@color/colorWhiteTint">
+        android:layout_marginBottom="7dp"
+        android:background="@color/colorWhiteTint"
+        android:paddingBottom="10dp"
+        android:paddingEnd="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="14dp">
 
         <TextView
             android:id="@+id/textViewCompensacion"
@@ -177,7 +185,7 @@
             android:text="@string/saldo"
             android:textAlignment="viewStart"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="36sp"
+            android:textSize="34sp"
             android:textStyle="bold" />
         <!--    android:textAlignment="viewStart" -->
 
@@ -241,22 +249,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        tools:ignore="InefficientWeight">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1.30"
-            android:gravity="center"
+            android:layout_weight="1.35"
+            android:gravity="top|center"
             android:orientation="horizontal"
             android:padding="5dp"
             tools:ignore="NestedWeights">
 
             <LinearLayout
-                android:layout_width="180dp"
-                android:layout_height="match_parent"
+                android:layout_width="160dp"
+                android:layout_height="150dp"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:padding="5dp">
@@ -283,15 +289,15 @@
 
             <Button
                 android:id="@+id/vertical_line"
-                android:layout_width="3dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
+                android:layout_width="2dp"
+                android:layout_height="150dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:background="@color/colorWhite" />
 
             <LinearLayout
-                android:layout_width="180dp"
-                android:layout_height="match_parent"
+                android:layout_width="160dp"
+                android:layout_height="150dp"
                 android:gravity="bottom|center"
                 android:orientation="vertical"
                 android:padding="5dp">
@@ -323,7 +329,8 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="top|center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
         </LinearLayout>
 
