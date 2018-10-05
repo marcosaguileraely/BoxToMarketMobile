@@ -1,6 +1,7 @@
 package btm.app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -23,6 +25,8 @@ import btm.app.Adapters.QRHistoryAdapter;
 import btm.app.DataHolder.DataHolder;
 import btm.app.Model.QRHistory;
 import btm.app.Utils.Utils;
+
+import static btm.app.BuyActivity.USER_GLOBAL_SENDER;
 
 public class QrHistoryActivity extends AppCompatActivity {
 
@@ -40,6 +44,9 @@ public class QrHistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr_history);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getString(R.string.qr_history));
 
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
         if (SDK_INT > 8) {
@@ -65,7 +72,6 @@ public class QrHistoryActivity extends AppCompatActivity {
         } else {
             Toast.makeText(context, response, Toast.LENGTH_LONG).show();
         }
-
     }
 
     public ArrayList<QRHistory> getQRHistoryList(String response){
@@ -96,5 +102,22 @@ public class QrHistoryActivity extends AppCompatActivity {
 
         Log.d(TAG, jsonArray.toString());
         return items;
+    }
+
+    public void onBackPressed(){
+        Intent gotoBuy = new Intent(QrHistoryActivity.this, BuyActivity.class);
+        gotoBuy.putExtra(USER_GLOBAL_SENDER, DataHolder.getUsername());
+        startActivity(gotoBuy);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
