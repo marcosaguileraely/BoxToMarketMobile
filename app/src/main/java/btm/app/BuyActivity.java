@@ -152,35 +152,6 @@ public class BuyActivity extends AppCompatActivity {
         new btm.app.Network.NetActions(this).listSubscriptionsPublic(username_global, response, progress);
     }
 
-    /*public void listSubscriptionsPublic(View view){
-
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                String response = utils.getQRActives(DataHolder.getUsername());
-                Log.w(TAG, "-->" + response);
-
-                if(response.contains("png") || response.contains("jpg")){
-                    SharedPreferences sharedPref    = getSharedPreferences("preferencias", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPref.edit();
-
-                    qrActivesAdapter = new QrActivesAdapter(context, getActivesQRList(response), DataHolder.getUsername());
-                    subsGridView.setAdapter(qrActivesAdapter);
-
-                    *//* Si estas viendo esta pieza de código quizá
-                     * estes buscando la función que realiza el Intent,
-                     * dicha funcion no se encuentra aquí, para verla dirigete la clase: Adapters > SubsPublicAdapter.class
-                     * y en la línea 58 lo encontrarás.
-                     *//*
-
-                } else {
-                    Toast.makeText(context, response, Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-    }*/
-
     public ArrayList<Clubs> getClubsList(String response){
 
         ArrayList<Clubs> items = new ArrayList<Clubs>();
