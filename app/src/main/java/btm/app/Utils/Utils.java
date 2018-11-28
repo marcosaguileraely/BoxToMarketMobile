@@ -239,4 +239,19 @@ public class Utils extends Activity {
         return qrHistoryData;
     }
 
+    public String getQRActives(String data){
+
+        String QrActivesData = "";
+
+        try{
+            Log.w(TAG, " Data: " + data);
+            QrActivesData = new btm.app.Network.NetActions(context).getQRActives(data);
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return QrActivesData;
+    }
+
 }

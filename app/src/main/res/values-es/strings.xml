@@ -209,5 +209,6 @@
     <string name="qr_availables">QR Disponibles</string>
     <string name="qr_view">Ver QR</string>
     <string name="qr_history">Historial QR consumidos</string>
+    <string name="qr_detail">Detalle de QR </string>
 
 </resources>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="btm.app.QrActiveDetailActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="100dp">
+
+        <ImageView
+            android:id="@+id/qr_img"
+            android:layout_width="280dp"
+            android:layout_height="280dp"
+            app:srcCompat="@drawable/bleecard" />
+
+        <TextView
+            android:id="@+id/serial_text"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Máquina #"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/date_text"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="--"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/value_text"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="$"
+            android:textAlignment="center"
+            android:textColor="@color/colorOrange"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</LinearLayout>

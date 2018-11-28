@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             // Ensures Bluetooth is enabled on the device.  If Bluetooth is not currently enabled,
             // fire an intent to display a dialog asking the user to grant permission to enable it.
             // REQUEST ACCESS_FINE_LOCATION for +M versions
-            ////checkLocationPermission();
+        ////checkLocationPermission();
         ////} else {
         ////    Log.d(TAG, "Your android version is -M. Bluethoot ya activado");
         ////}
@@ -123,9 +123,9 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
 
         //pais          = getIntent().getStringArrayExtra(LoginActivity.PAIS)[1];
-               pais     = DataHolder.getId_country();
+        pais     = DataHolder.getId_country();
         String username = DataHolder.getUsername();
-               data     = DataHolder.getData();
+        data     = DataHolder.getData();
 
         //Log.d(TAG, "-> pais:" + pais + "-> user:"+ username + "-> data:" + data);
         data            = getIntent().getStringExtra(LoginActivity.DATOS);

@@ -10,7 +10,6 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -46,12 +45,12 @@ public class SubsPublicAdapter extends BaseAdapter{
 
         if(convertView == null){
             layoutInflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.list_items_subspublic, null);
+            convertView = layoutInflater.inflate(R.layout.list_items_qr_actives, null);
         }
 
         final SubscriptionsPublic subscriptionsPublic = (SubscriptionsPublic) subscriptionsPublics.get(position);
 
-        TextView title    = (TextView) convertView.findViewById(R.id.subs_title);
+        /*TextView title    = (TextView) convertView.findViewById(R.id.subs_title);
         TextView value    = (TextView) convertView.findViewById(R.id.value);
         ImageView img_uri = (ImageView) convertView.findViewById(R.id.subs_img_url);
         Button buy_btn    = (Button) convertView.findViewById(R.id.subs_buy);
@@ -76,7 +75,7 @@ public class SubsPublicAdapter extends BaseAdapter{
                 context.startActivity(goToDetails.putExtra(TITLE, subscriptionsPublic.getTitle()));
                 context.startActivity(goToDetails);
             }
-        });
+        });*/
 
         return convertView;
     }

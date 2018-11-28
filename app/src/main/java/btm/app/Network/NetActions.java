@@ -117,68 +117,6 @@ public class NetActions {
     }
 
     /**
-    * Este metódo obtiene el listado de suscripciones de la sección
-    * Interfaz Inicial > Botón Subscripciones BTM Mini> Comprar Subcripciones
-    * ::Gridview -> 3 columnas (Cardview)
-    * */
-    public void listSubscriptionsPublic(String username, Response.Listener<String> response, final ProgressDialog pd) {
-        pd.show();
-
-        Log.d("DEV -> NetActions ", this.tkTime());
-        //listadoclubes
-        String url = "https://www.boxtomarket.com/index.php?r=app/suscripciones&username=" + username + "&token=" + this.tkTime();
-        Log.d("DEV -> NetActions ", url);
-
-        RequestQueue queue = Volley.newRequestQueue(context);
-
-        // Request a string response from the provided URL.
-        StringRequest Request = new StringRequest(GET, url,
-                response,
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("DEV -> NetActions ", "That didn't work!");
-                        Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-        queue.add(Request.setRetryPolicy(new DefaultRetryPolicy(30000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
-    }
-
-    /**
-    * Este metódo obtiene el listado de clubes de la sección
-    * Interfaz Inicial > Botón Subscripciones BTM Mini> Comprar Subcripciones
-    * ::RecyclerView -> Scroll Horizontal
-    * */
-    public void listClubsPublic(String username, Response.Listener<String> response, final ProgressDialog pd) {
-        pd.show();
-
-        Log.d("DEV -> NetActions ", this.tkTime());
-        //listadoclubes
-        String url = "https://www.boxtomarket.com/index.php?r=app/listadoclubes&username=" + username + "&token=" + this.tkTime();
-        Log.d("DEV -> NetActions ", url);
-
-        RequestQueue queue = Volley.newRequestQueue(context);
-
-        // Request a string response from the provided URL.
-        StringRequest Request = new StringRequest(GET, url,
-                response,
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("DEV -> NetActions ", "That didn't work!");
-                        Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-        queue.add(Request.setRetryPolicy(new DefaultRetryPolicy(30000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
-    }
-
-    /**
      * Using OkHTTP
      * Este metódo obtiene el listado de clubes de la sección
      * Interfaz Inicial > Botón Subscripciones BTM Mini> Comprar Subcripciones
@@ -231,6 +169,57 @@ public class NetActions {
      * @throws IOException
      * @throws NullPointerException
      */
+    public String getQRActives(String username) throws IOException, NullPointerException {
+        Log.d(TAG, " Username: " + username);
+        String url = "https://www.boxtomarket.com/index.php?r=app/listaqractivos&username="
+                + username
+                + "&token=" + this.tkTime();
+        Log.d("DEV -> NetActions ", url);
+
+        okhttp3.Request requesthttp = new okhttp3.Request.Builder()
+                .url(url)
+                .build();
+
+        okhttp3.Response response = client.newCall(requesthttp).execute();
+        return response.body().string();
+    }
+
+    /**
+     * Este metódo obtiene el listado de suscripciones de la sección
+     * Interfaz Inicial > Botón Subscripciones BTM Mini> Comprar Subcripciones
+     * ::Gridview -> 3 columnas (Cardview)
+     * */
+    public void listSubscriptionsPublic(String username, Response.Listener<String> response, final ProgressDialog pd) {
+        pd.show();
+
+        Log.d("DEV -> NetActions ", this.tkTime());
+        //listadoclubes
+        String url = "https://www.boxtomarket.com/index.php?r=app/listaqractivos&username=" + username + "&token=" + this.tkTime();
+        Log.d("DEV -> NetActions ", url);
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+
+        // Request a string response from the provided URL.
+        StringRequest Request = new StringRequest(GET, url,
+                response,
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("DEV -> NetActions ", "That didn't work!");
+                        Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        queue.add(Request.setRetryPolicy(new DefaultRetryPolicy(30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
+    }
+
+    /**
+     *
+     * @throws IOException
+     * @throws NullPointerException
+     */
     public String getBrands(String username) throws IOException, NullPointerException {
         String url = "https://www.boxtomarket.com/index.php?r=app/listamarcas&username="
                 + username
@@ -244,6 +233,37 @@ public class NetActions {
 
         okhttp3.Response response = client.newCall(requesthttp).execute();
         return response.body().string();
+    }
+
+    /**
+     * Este metódo obtiene el listado de clubes de la sección
+     * Interfaz Inicial > Botón Subscripciones BTM Mini> Comprar Subcripciones
+     * ::RecyclerView -> Scroll Horizontal
+     * */
+    public void listClubsPublic(String username, Response.Listener<String> response, final ProgressDialog pd) {
+        pd.show();
+
+        Log.d("DEV -> NetActions ", this.tkTime());
+        //listadoclubes
+        String url = "https://www.boxtomarket.com/index.php?r=app/listamarcas&username=" + username + "&token=" + this.tkTime();
+        Log.d("DEV -> NetActions ", url);
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+
+        // Request a string response from the provided URL.
+        StringRequest Request = new StringRequest(GET, url,
+                response,
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("DEV -> NetActions ", "That didn't work!");
+                        Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        queue.add(Request.setRetryPolicy(new DefaultRetryPolicy(30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)));
     }
 
     /**

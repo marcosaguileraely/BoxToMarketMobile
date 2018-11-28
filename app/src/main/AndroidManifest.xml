@@ -146,8 +146,11 @@
         <activity
             android:name=".SearchedMachinePaidQrActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".QrHistoryActivity"
+        <activity
+            android:name=".QrHistoryActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".QrActiveDetailActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
